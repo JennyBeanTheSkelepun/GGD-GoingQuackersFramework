@@ -16,18 +16,155 @@
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{3008305e-22dd-4494-a13f-6c791b25f776}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Graphics">
+      <UniqueIdentifier>{4d66b045-20fb-428f-897a-a8de1d84aa84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Input">
+      <UniqueIdentifier>{d94bbae8-63db-4086-8d93-6efd1796819b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\DirectX">
+      <UniqueIdentifier>{063f1fdb-edab-4f93-91f4-35efbdc74450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\GameObject">
+      <UniqueIdentifier>{11c11276-6fbb-42e3-bbe1-a5d0250f861b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\GameCamera">
+      <UniqueIdentifier>{5daf4ecb-6ad2-48dc-a310-679d0ced3fb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\ColorShaderClass">
+      <UniqueIdentifier>{2450db55-83fa-455f-9720-c62694a76d46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\ColorShaderClass\ShaderFiles">
+      <UniqueIdentifier>{610f9f57-d6aa-4e5b-b74a-966aa9e73e58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Texture">
+      <UniqueIdentifier>{5056a72f-f313-4a5f-abb8-62747e6d48a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\ImGui">
+      <UniqueIdentifier>{725445b5-454e-47a4-9587-45eb5a676174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\ImGui\Source Files">
+      <UniqueIdentifier>{45ba31fc-9b51-4e2e-bdc2-ceb64ee50a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\VectorClasses">
+      <UniqueIdentifier>{688eeea5-39a7-4001-9319-fc3d11b14511}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EngineMain.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Code\EngineBase\Input\Input.cpp">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\Graphics.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\EngineMain.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\DirectX\DirectXClass.cpp">
+      <Filter>Source Files\Engine\Graphics\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\GameObject\GameObject.cpp">
+      <Filter>Source Files\Engine\Graphics\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\GameCamera\Camera.cpp">
+      <Filter>Source Files\Engine\Graphics\GameCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\Shader\Shader.cpp">
+      <Filter>Source Files\Engine\Graphics\ColorShaderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\Texture\TextureClass.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_draw.cpp">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_impl_dx11.cpp">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_impl_win32.cpp">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_tables.cpp">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_widgets.cpp">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp">
+      <Filter>Source Files\Engine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Source Files\Engine\VectorClasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EngineMain.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Code\EngineBase\Input\Input.h">
+      <Filter>Source Files\Engine\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\Graphics.h">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\EngineMain.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\DirectX\DirectXClass.h">
+      <Filter>Source Files\Engine\Graphics\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\GameObject\GameObject.h">
+      <Filter>Source Files\Engine\Graphics\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\GameCamera\Camera.h">
+      <Filter>Source Files\Engine\Graphics\GameCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\Shader\Shader.h">
+      <Filter>Source Files\Engine\Graphics\ColorShaderClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\Texture\TextureClass.h">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.h">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_impl_dx11.h">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_impl_win32.h">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_internal.h">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_rectpack.h">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_textedit.h">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h">
+      <Filter>Source Files\Engine\ImGui\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h">
+      <Filter>Source Files\Engine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Source Files\Engine\VectorClasses</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Code\EngineBase\Graphics\Shader\Shaders\BlockColourShader.fx">
+      <Filter>Source Files\Engine\Graphics\ColorShaderClass\ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="Code\EngineBase\Graphics\Shader\Shaders\TextureSimple.fx">
+      <Filter>Source Files\Engine\Graphics\ColorShaderClass\ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
