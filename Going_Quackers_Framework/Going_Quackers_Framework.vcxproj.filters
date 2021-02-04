@@ -49,6 +49,9 @@
     <Filter Include="Source Files\Engine\VectorClasses">
       <UniqueIdentifier>{688eeea5-39a7-4001-9319-fc3d11b14511}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Graphics\GameObject\Components">
+      <UniqueIdentifier>{c72dc340-f543-4560-880d-b9032f0fd58d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>Source Files\Engine\VectorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Component.cpp">
+      <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Source Files\Engine\VectorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\Component.h">
+      <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
