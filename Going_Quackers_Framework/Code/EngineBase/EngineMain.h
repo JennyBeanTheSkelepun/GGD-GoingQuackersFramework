@@ -5,6 +5,7 @@
 
 #include "Graphics/Graphics.h"
 #include "Input/Input.h"
+#include "Time/Time.h"
 
 class EngineMain
 {
