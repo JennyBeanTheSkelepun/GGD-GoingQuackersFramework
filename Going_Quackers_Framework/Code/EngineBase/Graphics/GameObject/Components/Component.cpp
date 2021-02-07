@@ -1,28 +1,22 @@
 #include "Component.h"
 
-void Component::Initialize(GameObject* parent)
+Component::Component(GameObject* object)
 {
-	this->parent = parent;
+	this->object = object;
+}
+
+Component::~Component()
+{
+}
+
+void Component::Initialize()
+{
 }
 
 void Component::Update()
 {
-	if (!active)
-		return;
 }
 
 void Component::Render(ID3D11DeviceContext* deviceContext)
 {
-	if (!active)
-		return;
-}
-
-void Component::SetActive(bool active)
-{
-	this->active = active;
-}
-
-GameObject* Component::GetParent()
-{
-	return parent;
 }

@@ -1,2 +1,9 @@
-﻿  Component.cpp
+﻿  EngineMain.cpp
+  Component.cpp
+  SpriteRenderer.cpp
+  GameObject.cpp
+  Graphics.cpp
+  Main.cpp
+  Generating Code...
+C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics\GameObject\GameObject.h(31): warning C4715: 'GameObject::GetComponent<SpriteRenderer>': not all control paths return a value
   Going_Quackers_Framework.vcxproj -> C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

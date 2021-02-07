@@ -1,21 +1,22 @@
 #pragma once
 #include <d3d11.h>
+#include <directxmath.h>
 
 class GameObject;
 
 class Component
 {
-protected:
-	GameObject* parent;
-	
-	bool active;
-
 public:
-	virtual void Initialize(GameObject* parent);
+	Component(GameObject* object);
+	~Component();
+
+	virtual void Initialize();
+
 	virtual void Update();
 	virtual void Render(ID3D11DeviceContext* deviceContext);
 
-	void SetActive(bool active);
+	GameObject* GetOwner() { return object; }
 
-	GameObject* GetParent();
+protected:
+	GameObject* object;
 };
