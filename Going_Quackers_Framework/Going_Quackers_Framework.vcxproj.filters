@@ -49,11 +49,11 @@
     <Filter Include="Source Files\Engine\VectorClasses">
       <UniqueIdentifier>{688eeea5-39a7-4001-9319-fc3d11b14511}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Time">
+      <UniqueIdentifier>{f436ae7d-97bb-436a-a2dd-a2e7b779ae5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Input\Input.cpp">
       <Filter>Source Files\Engine\Input</Filter>
     </ClCompile>
@@ -101,6 +101,12 @@
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>Source Files\Engine\VectorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source Files\Engine\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Source Files\Engine\VectorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Time\Time.h">
+      <Filter>Source Files\Engine\Time</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
