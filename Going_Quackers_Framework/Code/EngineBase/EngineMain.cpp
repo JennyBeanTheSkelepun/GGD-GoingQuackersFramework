@@ -76,6 +76,8 @@ void EngineMain::Run()
 			if (!lb_result)
 				lb_done = true;
 		}
+
+		Time::FrameEnd();
 	}
 
 	return;

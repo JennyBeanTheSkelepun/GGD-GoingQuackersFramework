@@ -157,6 +157,7 @@
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_widgets.cpp" />
     <ClCompile Include="Code\EngineBase\Input\Input.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +180,7 @@
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_textedit.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h" />
     <ClInclude Include="Code\EngineBase\Input\Input.h" />
+    <ClInclude Include="Code\EngineBase\Time\Time.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
