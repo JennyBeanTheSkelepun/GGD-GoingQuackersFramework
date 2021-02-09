@@ -46,11 +46,14 @@
     <Filter Include="Source Files\Engine\ImGui\Source Files">
       <UniqueIdentifier>{45ba31fc-9b51-4e2e-bdc2-ceb64ee50a46}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\VectorClasses">
-      <UniqueIdentifier>{688eeea5-39a7-4001-9319-fc3d11b14511}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Time">
       <UniqueIdentifier>{f436ae7d-97bb-436a-a2dd-a2e7b779ae5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\GameObject\Components">
+      <UniqueIdentifier>{f9344b1d-e72e-4694-bcc2-494dab5afd9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Maths">
+      <UniqueIdentifier>{7d7c6b2d-242d-4d20-be47-f38712f7e5b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -99,14 +102,20 @@
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp">
       <Filter>Source Files\Engine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Source Files\Engine\VectorClasses</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Time\Time.cpp">
       <Filter>Source Files\Engine\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Component.cpp">
+      <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Transform.cpp">
+      <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Maths\Vector3.cpp">
+      <Filter>Source Files\Engine\Maths</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,11 +170,17 @@
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h">
       <Filter>Source Files\Engine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Source Files\Engine\VectorClasses</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Time\Time.h">
       <Filter>Source Files\Engine\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\Component.h">
+      <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\Transform.h">
+      <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Maths\Vector3.h">
+      <Filter>Source Files\Engine\Maths</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

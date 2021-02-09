@@ -1,8 +1,25 @@
 ﻿  EngineMain.cpp
-G:\Program Files (x86)\Unity Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Time\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Main.cpp
-G:\Program Files (x86)\Unity Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Time\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Time\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  DirectXClass.cpp
+  Camera.cpp
+  Component.cpp
+  Transform.cpp
+  GameObject.cpp
+  Graphics.cpp
+  Shader.cpp
+  TextureClass.cpp
+  EngineGuiClass.cpp
+  imgui.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  Input.cpp
+  Vector3.cpp
+C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Maths\Vector3.h(7,10): fatal error C1083: Cannot open include file: 'Code/EngineBase/ImGui/ImGui SourceCode/imgui.h': No such file or directory
   Time.cpp
-G:\Program Files (x86)\Unity Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Time\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Time\Time.cpp(1,10): fatal error C1083: Cannot open include file: 'Code\EngineBase\Time\Time.h': No such file or directory
+  Main.cpp
+C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Time\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Generating Code...
-  Going_Quackers_Framework.vcxproj -> G:\Program Files (x86)\Unity Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
