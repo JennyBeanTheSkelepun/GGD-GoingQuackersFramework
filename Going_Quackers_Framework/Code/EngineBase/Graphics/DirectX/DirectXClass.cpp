@@ -17,6 +17,89 @@ DirectXClass::DirectXClass(const DirectXClass& other)
 
 DirectXClass::~DirectXClass()
 {
+	// Before shutting down set to windowed mode or when you release the swap chain it will throw an exception.
+	if (mp_swapChain)
+	{
+		mp_swapChain->SetFullscreenState(false, NULL);
+	}
+
+	if (mp_rasterState)
+	{
+		mp_rasterState->Release();
+		delete mp_rasterState;
+		mp_rasterState = nullptr;
+	}
+
+	if (mp_depthStencilView)
+	{
+		mp_depthStencilView->Release();
+		delete mp_depthStencilView;
+		mp_depthStencilView = nullptr;
+	}
+
+	if (mp_depthStencilState)
+	{
+		mp_depthStencilState->Release();
+		delete mp_depthStencilState;
+		mp_depthStencilState = nullptr;
+	}
+
+	if (mp_depthStencilBuffer)
+	{
+		mp_depthStencilBuffer->Release();
+		delete mp_depthStencilBuffer;
+		mp_depthStencilBuffer = nullptr;
+	}
+
+	if (mp_renderTargetView)
+	{
+		mp_renderTargetView->Release();
+		delete mp_renderTargetView;
+		mp_renderTargetView = nullptr;
+	}
+
+	if (mp_deviceContext)
+	{
+		mp_deviceContext->Release();
+		delete mp_deviceContext;
+		mp_deviceContext = nullptr;
+	}
+
+	if (mp_device)
+	{
+		mp_device->Release();
+		delete mp_device;
+		mp_device = nullptr;
+	}
+
+	if (mp_swapChain)
+	{
+		mp_swapChain->Release();
+		delete mp_swapChain;
+		mp_swapChain = nullptr;
+	}
+
+	if (mp_renderTextureTargetTexture)
+	{
+		mp_renderTextureTargetTexture->Release();
+		delete mp_renderTextureTargetTexture;
+		mp_renderTextureTargetTexture = nullptr;
+	}
+
+	if (mp_renderTextureRenderTargetView)
+	{
+		mp_renderTextureRenderTargetView->Release();
+		delete mp_renderTextureRenderTargetView;
+		mp_renderTextureRenderTargetView = nullptr;
+	}
+
+	if (mp_renderTextureResourceView)
+	{
+		mp_renderTextureResourceView->Release();
+		delete mp_renderTextureResourceView;
+		mp_renderTextureResourceView = nullptr;
+	}
+
 }
 
 bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vsync,
@@ -230,13 +313,13 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	textureDesc.CPUAccessFlags = 0;
 	textureDesc.MiscFlags = 0;
 
-	mp_device->CreateTexture2D(&textureDesc, NULL, &targetTexture);
+	mp_device->CreateTexture2D(&textureDesc, NULL, &mp_renderTextureTargetTexture);
 
 	renderTargetVeiwDesc.Format = textureDesc.Format;
 	renderTargetVeiwDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
 	renderTargetVeiwDesc.Texture2D.MipSlice = 0;
 
-	mp_device->CreateRenderTargetView(targetTexture, &renderTargetVeiwDesc, &renderTargetView);
+	mp_device->CreateRenderTargetView(mp_renderTextureTargetTexture, &renderTargetVeiwDesc, &mp_renderTextureRenderTargetView);
 
 	//resourchView
 	shaderResourceViewDesc.Format = textureDesc.Format;
@@ -244,7 +327,7 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
 
-	mp_device->CreateShaderResourceView(targetTexture, &shaderResourceViewDesc, &resourchView);
+	mp_device->CreateShaderResourceView(mp_renderTextureTargetTexture, &shaderResourceViewDesc, &mp_renderTextureResourceView);
 
 	// Release pointer to the back buffer as we no longer need it.
 	backBufferPtr->Release();
@@ -332,7 +415,7 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	}
 
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
-	mp_deviceContext->OMSetRenderTargets(1, &renderTargetView, mp_depthStencilView);
+	mp_deviceContext->OMSetRenderTargets(1, &mp_renderTextureRenderTargetView, mp_depthStencilView);
 
 	// Setup the raster description which will determine how and what polygons will be drawn.
 	rasterDesc.AntialiasedLineEnable = false;
@@ -383,63 +466,6 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	return true;
 }
 
-void DirectXClass::Shutdown()
-{
-	// Before shutting down set to windowed mode or when you release the swap chain it will throw an exception.
-	if (mp_swapChain)
-	{
-		mp_swapChain->SetFullscreenState(false, NULL);
-	}
-
-	if (mp_rasterState)
-	{
-		mp_rasterState->Release();
-		mp_rasterState = 0;
-	}
-
-	if (mp_depthStencilView)
-	{
-		mp_depthStencilView->Release();
-		mp_depthStencilView = 0;
-	}
-
-	if (mp_depthStencilState)
-	{
-		mp_depthStencilState->Release();
-		mp_depthStencilState = 0;
-	}
-
-	if (mp_depthStencilBuffer)
-	{
-		mp_depthStencilBuffer->Release();
-		mp_depthStencilBuffer = 0;
-	}
-
-	if (mp_renderTargetView)
-	{
-		mp_renderTargetView->Release();
-		mp_renderTargetView = 0;
-	}
-
-	if (mp_deviceContext)
-	{
-		mp_deviceContext->Release();
-		mp_deviceContext = 0;
-	}
-
-	if (mp_device)
-	{
-		mp_device->Release();
-		mp_device = 0;
-	}
-
-	if (mp_swapChain)
-	{
-		mp_swapChain->Release();
-		mp_swapChain = 0;
-	}
-}
-
 void DirectXClass::BeginScene(float red, float green, float blue, float alpha)
 {
 	float color[4]{red, green, blue, alpha};
@@ -471,7 +497,6 @@ ID3D11Device* DirectXClass::GetDevice()
 	return mp_device;
 }
 
-
 ID3D11DeviceContext* DirectXClass::GetDeviceContext()
 {
 	return mp_deviceContext;
@@ -486,7 +511,6 @@ void DirectXClass::GetWorldMatrix(DirectX::XMMATRIX& worldMatrix)
 {
 	worldMatrix = m_worldMatrix;
 }
-
 
 void DirectXClass::GetOrthoMatrix(DirectX::XMMATRIX& orthoMatrix)
 {

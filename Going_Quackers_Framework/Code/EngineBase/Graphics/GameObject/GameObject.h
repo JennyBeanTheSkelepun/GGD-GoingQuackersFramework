@@ -1,12 +1,11 @@
 #ifndef _GAMEOBJECT_H_
 #define _GAMEOBJECT_H_
 
-#include <d3d11.h>
-#include <memory>
+#include <Windows.h>
 #include <vector>
 
-#include "../Texture/TextureClass.h"
-#include "../GameObject/Components/Component.h"
+#include "Components/Component.h"
+#include "Components/Transform.h"
 
 class GameObject
 {
@@ -14,10 +13,22 @@ public:
 	GameObject();
 	~GameObject();
 
+	void Initialize();
 	void Update();
-	void Render(ID3D11DeviceContext* deviceContext);
+	void Render();
 
-	///<summary>Retuns a component from the list in the gameobject.</summary>
+	///<summary>Adds a Component to the entity, requires that the Component need no initial parameters other than reference to it's object.</summary>
+	template<class T>
+	T* AddComponent()
+	{
+		if(std::is_base_of<Component, T>::value)
+		{
+			m_components.push_back(static_cast<Component*>(new T(this)));
+			return static_cast<T*>(m_components[m_components.size() - 1]);
+		}
+	}
+
+	///<summary>Retuns a Component from the list in the gameobject.</summary>
 	template<class T>
 	T* GetComponent()
 	{
@@ -28,39 +39,18 @@ public:
 				return static_cast<T*>(m_components[i]);
 			}
 		}
+
+		//Component not found
+		//MessageBox(hwnd, "Error", L"Error", MB_OK));
+		return nullptr;
 	}
 
-	///<summary>Removes a component from the entity, if multiple of same type of components are in play it removes the first one in the list IE the first one added to it.</summary>
-	template<class T>
-	T* AddComponent()
-	{
-		if (std::is_base_of<Component, T>::value)
-		{
-			m_components.push_back(static_cast<Component*>(new T(this)));
-			return static_cast<T*>(m_components[m_components.size() - 1]);
-		}
-	}
-
-	///<summary>Removes a component from the entity, if multiple of same type of components are in play it removes the first one in the list IE the first one added to it.</summary>
-	template<class T>
-	void RemoveComponent()
-	{
-		for (size_t i = 0; i < m_components.size(); i++)
-		{
-			if (dynamic_cast<T*>(m_components[i]) != nullptr)
-			{
-				m_components.erase(m_components.begin(), m_components.begin() + i);
-				return; //Only delete first instance
-			}
-		}
-	}
-
-	void SetActive(bool value) { this->active = value; }
-
+	Transform* GetTransform() { return mp_transform; }
 private:
-	std::vector<Component*> m_components;
+	Transform* mp_transform;
 
-	bool active;
+	std::vector<Component*> m_components;
+	std::vector<GameObject*> m_children;
 };
 
 #endif // !_GAMEOBJECT_H_

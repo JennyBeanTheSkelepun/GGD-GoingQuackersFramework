@@ -1,22 +1,21 @@
-#pragma once
-#include <d3d11.h>
-#include <directxmath.h>
+#ifndef _COMPONENT_H_
+#define _COMPONENT_H_
 
 class GameObject;
 
 class Component
 {
 public:
-	Component(GameObject* object);
+	Component(GameObject* owner);
 	~Component();
 
 	virtual void Initialize();
-
 	virtual void Update();
-	virtual void Render(ID3D11DeviceContext* deviceContext);
+	virtual void Render();
 
-	GameObject* GetOwner() { return object; }
-
-protected:
-	GameObject* object;
+	GameObject* GetOwner() { return mp_owner; }
+private:
+	GameObject* mp_owner;
 };
+
+#endif

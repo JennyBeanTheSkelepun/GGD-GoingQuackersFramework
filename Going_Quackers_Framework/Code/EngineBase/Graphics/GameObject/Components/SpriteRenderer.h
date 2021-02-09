@@ -1,38 +1,46 @@
-#pragma once
-#include "Component.h"
+#ifndef _SPRITERENDERER_H_
+#define _SPRITERENDERER_H_
 
-class Texture;
+#include "Component.h"
+#include "../../Texture/TextureClass.h"
+
+#include <d3d11.h>
+#include <directxmath.h>
 
 class SpriteRenderer : public Component
 {
 public:
-	SpriteRenderer(GameObject* parent);
+	SpriteRenderer(GameObject* owner);
 	~SpriteRenderer();
 
 	void Initialize() override;
-	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileName);
+	void Render() override;
 
-	void Render(ID3D11DeviceContext* deviceContext) override;
+	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 
-	int GetIndexCount() { return m_indexCount; }
-	ID3D11ShaderResourceView* GetTexture();
+	void SetSprite(char* fileName);
+
+	Texture* GetTexture() { return mp_texture; }
+
+private:
+	ID3D11Device* mp_device;
+	ID3D11DeviceContext* mp_deviceContext;
+
+	ID3D11Buffer* mp_vertexBuffer;
+	ID3D11Buffer* mp_indexBuffer;
+	int m_vertexCount;
+	int m_indexCount;
+
+	Texture* mp_texture;
 
 private:
 	bool InitializeBuffers(ID3D11Device* device);
-	void ShutdownBuffers();
+	void RenderBuffers(ID3D11DeviceContext* deviceContext);
 
 	bool LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName);
+
+	void ShutdownBuffers();
 	void ReleaseTexture();
-
-private:
-	struct VertexType
-	{
-		DirectX::XMFLOAT3 position;
-		DirectX::XMFLOAT2 texture;
-	};
-
-	ID3D11Buffer* m_vertexBuffer;
-	ID3D11Buffer* m_indexBuffer;
-	int m_vertexCount, m_indexCount;
-	Texture* m_Texture;
 };
+
+#endif

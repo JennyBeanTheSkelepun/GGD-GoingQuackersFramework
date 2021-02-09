@@ -2,7 +2,7 @@
 
 GameObject::GameObject()
 {
-	active = true;
+	Initialize();
 }
 
 GameObject::~GameObject()
@@ -11,26 +11,57 @@ GameObject::~GameObject()
 	{
 		delete m_components[i];
 	}
+
+	for (size_t i = 0; i < m_children.size(); i++)
+	{
+		delete m_children[i];
+	}
+}
+
+void GameObject::Initialize()
+{
+	mp_transform = AddComponent<Transform>();
+
+	for (size_t i = 0; i < m_components.size(); i++)
+	{
+		m_components[i]->Initialize();
+	}
+
+	for (size_t i = 0; i < m_children.size(); i++)
+	{
+		m_children[i]->Initialize();
+	}
 }
 
 void GameObject::Update()
 {
-	if (!active)
-		return;
+	Vector3 newPosition = mp_transform->GetPosition();
+	Vector3 offset = Vector3(0.001f, 0, 0);
+	//mp_transform->SetPosition(newPosition + offset);
+
+	//mp_transform->SetRotation(mp_transform->GetRotation() + 0.0001f);
+	mp_transform->SetScale(mp_transform->GetScale() + Vector3(0.0001f, 0.0001f, 0.0f));
 
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		m_components[i]->Update();
 	}
+
+	for (size_t i = 0; i < m_children.size(); i++)
+	{
+		m_children[i]->Update();
+	}
 }
 
-void GameObject::Render(ID3D11DeviceContext* deviceContext)
+void GameObject::Render()
 {
-	if (!active)
-		return;
-
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
-		m_components[i]->Render(deviceContext);
+		m_components[i]->Render();
+	}
+
+	for (size_t i = 0; i < m_children.size(); i++)
+	{
+		m_children[i]->Render();
 	}
 }

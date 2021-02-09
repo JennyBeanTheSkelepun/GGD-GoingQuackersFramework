@@ -1,8 +1,8 @@
 #include "Component.h"
 
-Component::Component(GameObject* object)
+Component::Component(GameObject* owner)
 {
-	this->object = object;
+	this->mp_owner = owner;
 }
 
 Component::~Component()
@@ -17,6 +17,6 @@ void Component::Update()
 {
 }
 
-void Component::Render(ID3D11DeviceContext* deviceContext)
+void Component::Render()
 {
 }
