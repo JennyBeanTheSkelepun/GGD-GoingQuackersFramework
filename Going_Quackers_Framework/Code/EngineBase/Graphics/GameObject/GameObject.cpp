@@ -13,6 +13,8 @@ GameObject::GameObject(const GameObject& other)
 
 GameObject::~GameObject()
 {
+	ReleaseTexture();
+	ShutdownBuffers();
 }
 
 bool GameObject::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileName)
@@ -36,13 +38,6 @@ bool GameObject::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCon
 
 
 	return true;
-}
-
-void GameObject::Shutdown()
-{
-	ReleaseTexture();
-
-	ShutdownBuffers();
 }
 
 void GameObject::Update()

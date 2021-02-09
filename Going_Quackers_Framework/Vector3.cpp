@@ -43,3 +43,17 @@ ImVec4 Vector3::ConvertToImGuiVec4()
 	//- Converting to ImVec4 -//
 	return ImVec4(x, y, z, 0);
 }
+
+float Vector3::Avrage()
+{
+	float Mag = x + y + z;
+	Mag /= 3;
+	return Mag;
+}
+
+float Vector3::Avrage(float ai_x, float ai_y, float ai_z)
+{
+	float Mag = ai_x + ai_y + ai_z;
+	Mag /= 3;
+	return Mag;
+}

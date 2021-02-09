@@ -15,9 +15,7 @@ public:
 	DirectXClass(const DirectXClass& other);
 	~DirectXClass();
 
-	bool Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vsync, HWND hwnd, 
-		bool ab_fullScreen, float af_screenDepth, float af_screenNear);
-	void Shutdown();
+	bool Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vsync, HWND hwnd, bool ab_fullScreen, float af_screenDepth, float af_screenNear);
 
 	void BeginScene(float red, float green, float blue, float aplha);
 	void EndScene();
@@ -44,9 +42,9 @@ public:
 	ID3D11DepthStencilView* mp_depthStencilView;
 	ID3D11RasterizerState* mp_rasterState;
 
-	ID3D11Texture2D* targetTexture;
-	ID3D11RenderTargetView* renderTargetView;
-	ID3D11ShaderResourceView* resourchView;
+	ID3D11Texture2D* mp_renderTextureTargetTexture;
+	ID3D11RenderTargetView* mp_renderTextureRenderTargetView;
+	ID3D11ShaderResourceView* mp_renderTextureResourceView;
 
 	DirectX::XMMATRIX m_projectionMatrix;
 	DirectX::XMMATRIX m_worldMatrix;
