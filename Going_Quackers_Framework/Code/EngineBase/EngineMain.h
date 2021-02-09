@@ -30,8 +30,8 @@ private:
 	HINSTANCE m_hInstance;
 	HWND m_hwnd;
 
-	std::unique_ptr<Input> mp_Input;
-	std::unique_ptr<Graphics> mp_Graphics;
+	Input* mp_Input;
+	Graphics* mp_Graphics;
 };
 
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam);

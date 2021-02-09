@@ -5,9 +5,9 @@ bool tempToggle = false;
 Graphics::Graphics()
 {
 	mp_DirectX = 0;
-	m_Camera = 0;
-	m_Model = 0;
-	m_Shader = 0;
+	mp_Camera = 0;
+	mp_Model = 0;
+	mp_Shader = 0;
 }
 
 Graphics::Graphics(const Graphics& other)
@@ -17,11 +17,25 @@ Graphics::Graphics(const Graphics& other)
 
 Graphics::~Graphics()
 {
+	delete mp_DirectX;
+	mp_DirectX = nullptr;
+
+	delete mp_Camera;
+	mp_Camera = nullptr;
+
+	delete mp_Model;
+	mp_Model = nullptr;
+
+	delete mp_Shader;
+	mp_Shader = nullptr;
+
+	delete mp_ImGui;
+	mp_ImGui = nullptr;
 }
 
 bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 {
-	mp_DirectX = std::make_unique<DirectXClass>();
+	mp_DirectX = new DirectXClass();
 	if (!mp_DirectX)
 	{
 		return false;
@@ -44,24 +58,24 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 
 	//- OBject Creation -//
 	// Create the camera object.
-	m_Camera = std::make_unique<Camera>();
-	if (!m_Camera)
+	mp_Camera = new Camera();
+	if (!mp_Camera)
 	{
 		return false;
 	}
 
 	// Set the initial position of the camera.
-	m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
+	mp_Camera->SetPosition(0.0f, 0.0f, -5.0f);
 
 	// Create the model object.
-	m_Model = std::make_unique<GameObject>();
-	if (!m_Model)
+	mp_Model = new GameObject();
+	if (!mp_Model)
 	{
 		return false;
 	}
 
 	// Initialize the model object.
-	result = m_Model->Initialize(mp_DirectX->GetDevice(), mp_DirectX->GetDeviceContext(), ((char*)"stone.tga"));
+	result = mp_Model->Initialize(mp_DirectX->GetDevice(), mp_DirectX->GetDeviceContext(), ((char*)"stone.tga"));
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -69,14 +83,14 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 	}
 
 	// Create the color shader object.
-	m_Shader = std::make_unique<Shader>();
-	if (!m_Shader)
+	mp_Shader = new Shader();
+	if (!mp_Shader)
 	{
 		return false;
 	}
 
 	// Initialize the color shader object.
-	result = m_Shader->Initialize(mp_DirectX->GetDevice(), hwnd);
+	result = mp_Shader->Initialize(mp_DirectX->GetDevice(), hwnd);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the color shader object.", L"Error", MB_OK);
@@ -84,7 +98,7 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 	}
 
 
-	mp_ImGui = std::make_unique<EngineGuiClass>();
+	mp_ImGui = new EngineGuiClass();
 	mp_ImGui->Initalize();
 	if (!mp_ImGui)
 		return false;
@@ -95,22 +109,22 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 void Graphics::Shutdown()
 {
 	// Release the model object.
-	if (m_Model)
-		m_Model->Shutdown();
+	if (mp_Model)
+		mp_Model->Shutdown();
 
-	if (mp_DirectX)
-		mp_DirectX->Shutdown();
+	//if (mp_DirectX)
+	//	mp_DirectX->Shutdown();
 
 	return;
 }
 
 void Graphics::Update()
 {
-	m_Camera->Update();
-	m_Model->Update();
+	mp_Camera->Update();
+	mp_Model->Update();
 
 
-	mp_ImGui->Update(mp_DirectX->resourchView);
+	mp_ImGui->Update(mp_DirectX->mp_renderTextureResourceView);
 }
 
 bool Graphics::Render()
@@ -123,24 +137,24 @@ bool Graphics::Render()
 	bool result;
 
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
-	mp_DirectX->mp_deviceContext->OMSetRenderTargets(1, &mp_DirectX->renderTargetView, mp_DirectX->mp_depthStencilView);
+	mp_DirectX->mp_deviceContext->OMSetRenderTargets(1, &mp_DirectX->mp_renderTextureRenderTargetView, mp_DirectX->mp_depthStencilView);
 
 	// Clear the buffers to begin the scene.
 	mp_DirectX->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// Generate the view matrix based on the camera's position.
-	m_Camera->Render();
+	mp_Camera->Render();
 
 	// Get the world, view, and projection matrices from the camera and d3d objects.
 	mp_DirectX->GetWorldMatrix(worldMatrix);
-	m_Camera->GetViewMatrix(viewMatrix);
+	mp_Camera->GetViewMatrix(viewMatrix);
 	mp_DirectX->GetProjectionMatrix(projectionMatrix);
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	m_Model->Render(mp_DirectX->GetDeviceContext());
+	mp_Model->Render(mp_DirectX->GetDeviceContext());
 
 	// Render the model using the color shader.
-	result = m_Shader->Render(mp_DirectX->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture());
+	result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), mp_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, mp_Model->GetTexture());
 	if (!result)
 	{
 		return false;
@@ -155,11 +169,11 @@ bool Graphics::Render()
 	mp_DirectX->BeginScene(0.0f, 0.0f, 0.0f, 0.0f); //<-- Background colour for editor
 
 	// Generate the view matrix based on the camera's position.
-	m_Camera->Render();
+	mp_Camera->Render();
 
 	// Get the world, view, and projection matrices from the camera and d3d objects.
 	mp_DirectX->GetWorldMatrix(worldMatrix);
-	m_Camera->GetViewMatrix(viewMatrix);
+	mp_Camera->GetViewMatrix(viewMatrix);
 	mp_DirectX->GetProjectionMatrix(projectionMatrix);
 
 	//- ImGui Call to render -//

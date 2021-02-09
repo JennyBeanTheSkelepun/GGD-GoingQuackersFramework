@@ -26,12 +26,12 @@ bool EngineMain::Initalize()
 
 	InitalizeWindows(li_screenWidth, li_screenHeight);
 
-	mp_Input = std::make_unique<Input>();
+	mp_Input = new Input();
 	if (!mp_Input) 
 		return false;
 	mp_Input->Initialize();
 
-	mp_Graphics = std::make_unique<Graphics>();
+	mp_Graphics = new Graphics();
 	if (!mp_Graphics) 
 		return false;
 	

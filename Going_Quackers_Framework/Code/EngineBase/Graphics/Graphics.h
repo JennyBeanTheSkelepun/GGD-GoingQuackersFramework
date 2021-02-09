@@ -33,11 +33,11 @@ public:
 	bool Render();
 
 private:
-	std::unique_ptr<DirectXClass> mp_DirectX;
-	std::unique_ptr<Camera> m_Camera;
-	std::unique_ptr<GameObject> m_Model;
-	std::unique_ptr<Shader> m_Shader;
-	std::unique_ptr<EngineGuiClass> mp_ImGui;
+	DirectXClass* mp_DirectX;
+	Camera* mp_Camera;
+	GameObject* mp_Model;
+	Shader* mp_Shader;
+	EngineGuiClass* mp_ImGui;
 
 };
 
