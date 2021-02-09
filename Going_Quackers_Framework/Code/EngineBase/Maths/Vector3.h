@@ -20,21 +20,27 @@ public:
 	ImVec2 ConvertToImGuiVec2();
 	ImVec4 ConvertToImGuiVec4();
 
+	float Avrage();
+	float Avrage(float x, float y, float z);
+
 	float x = 0.0f, y = 0.0f, z = 0.0f;
 
 	//- Declaring Operators -//
 	inline Vector3 operator++()	{ return Vector3(x++, y++, z++); }
 	inline Vector3 operator--()	{ return Vector3(x--, y--, z--); }
+	
 	inline friend Vector3 operator+(Vector3 lhs, const Vector3& rhs) { return Vector3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z); }
 	inline friend Vector3 operator-(Vector3 lhs, const Vector3& rhs) { return Vector3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z); }
 	inline friend Vector3 operator*(Vector3 lhs, const Vector3& rhs) { return Vector3(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z); }
 	inline friend Vector3 operator/(Vector3 lhs, const Vector3& rhs) { return Vector3(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z); }
+	
 	inline bool operator==(const Vector3& rhs) { return (x == rhs.x && y == rhs.y && z == rhs.y); }
 	inline bool operator!=(const Vector3& rhs) { return (x != rhs.x && y != rhs.y && z != rhs.y); }
-	inline bool operator< (const Vector3& rhs) { return (x < rhs.x && y < rhs.y && z < rhs.y); }
-	inline bool operator> (const Vector3& rhs) { return (x > rhs.x && y > rhs.y && z > rhs.y); }
-	inline bool operator<=(const Vector3& rhs) { return (x <= rhs.x && y <= rhs.y && z <= rhs.y); }
-	inline bool operator>=(const Vector3& rhs) { return (x >= rhs.x && y >= rhs.y && z >= rhs.y); }
+
+	inline bool operator< (const Vector3& rhs) { return (this->Avrage() < Avrage(rhs.x, rhs.y, rhs.z)); }
+	inline bool operator> (const Vector3& rhs) { return (this->Avrage() > Avrage(rhs.x, rhs.y, rhs.z)); }
+	inline bool operator<=(const Vector3& rhs) { return (this->Avrage() <= Avrage(rhs.x, rhs.y, rhs.z)); }
+	inline bool operator>=(const Vector3& rhs) { return (this->Avrage() >= Avrage(rhs.x, rhs.y, rhs.z)); }
 };
 
 #endif // !_VECTOR_3_

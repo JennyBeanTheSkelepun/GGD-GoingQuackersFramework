@@ -10,7 +10,5 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline,
 	if (result)
 		Engine->Run();
 
-	Engine->ShutDown();
-
 	return 0;
 }
