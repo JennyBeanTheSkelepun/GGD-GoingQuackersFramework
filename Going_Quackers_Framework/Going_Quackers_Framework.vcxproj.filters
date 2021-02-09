@@ -188,6 +188,9 @@
     <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.h">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Code\EngineBase\Maths\Vertex.h">
+      <Filter>Source Files\Engine\Maths</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Code\EngineBase\Graphics\Shader\Shaders\BlockColourShader.fx">

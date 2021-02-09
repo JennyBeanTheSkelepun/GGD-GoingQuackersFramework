@@ -183,6 +183,7 @@
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h" />
     <ClInclude Include="Code\EngineBase\Input\Input.h" />
     <ClInclude Include="Code\EngineBase\Maths\Vector3.h" />
+    <ClInclude Include="Code\EngineBase\Maths\Vertex.h" />
     <ClInclude Include="Code\EngineBase\Time\Time.h" />
   </ItemGroup>
   <ItemGroup>

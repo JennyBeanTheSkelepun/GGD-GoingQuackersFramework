@@ -16,24 +16,14 @@ public:
 	void Initialize() override;
 	void Render() override;
 
-	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileName);
-	bool InitializeBuffers(ID3D11Device* device);
-	void RenderBuffers(ID3D11DeviceContext* deviceContext);
+	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 
-	bool LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName);
+	void SetSprite(char* fileName);
 
-	void ShutdownBuffers();
-	void ReleaseTexture();
-
-	int GetIndexCount() { return m_indexCount; }
 	Texture* GetTexture() { return mp_texture; }
-private:
-	struct VertexType
-	{
-		DirectX::XMFLOAT3 position;
-		DirectX::XMFLOAT2 texture;
-	};
 
+private:
+	ID3D11Device* mp_device;
 	ID3D11DeviceContext* mp_deviceContext;
 
 	ID3D11Buffer* mp_vertexBuffer;
@@ -42,6 +32,15 @@ private:
 	int m_indexCount;
 
 	Texture* mp_texture;
+
+private:
+	bool InitializeBuffers(ID3D11Device* device);
+	void RenderBuffers(ID3D11DeviceContext* deviceContext);
+
+	bool LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName);
+
+	void ShutdownBuffers();
+	void ReleaseTexture();
 };
 
 #endif

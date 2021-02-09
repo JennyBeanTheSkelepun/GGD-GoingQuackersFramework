@@ -2,14 +2,46 @@
 
 GameObject::GameObject()
 {
+	Initialize();
 }
 
 GameObject::~GameObject()
 {
+	for (size_t i = 0; i < m_components.size(); i++)
+	{
+		delete m_components[i];
+	}
+
+	for (size_t i = 0; i < m_children.size(); i++)
+	{
+		delete m_children[i];
+	}
+}
+
+void GameObject::Initialize()
+{
+	mp_transform = AddComponent<Transform>();
+
+	for (size_t i = 0; i < m_components.size(); i++)
+	{
+		m_components[i]->Initialize();
+	}
+
+	for (size_t i = 0; i < m_children.size(); i++)
+	{
+		m_children[i]->Initialize();
+	}
 }
 
 void GameObject::Update()
 {
+	Vector3 newPosition = mp_transform->GetPosition();
+	Vector3 offset = Vector3(0.001f, 0, 0);
+	//mp_transform->SetPosition(newPosition + offset);
+
+	//mp_transform->SetRotation(mp_transform->GetRotation() + 0.0001f);
+	mp_transform->SetScale(mp_transform->GetScale() + Vector3(0.0001f, 0.0001f, 0.0f));
+
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		m_components[i]->Update();

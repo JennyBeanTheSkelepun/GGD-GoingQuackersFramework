@@ -48,8 +48,6 @@ void EngineGuiClass::Update(ID3D11ShaderResourceView* a_RenderTexture)
 
 void EngineGuiClass::Render()
 {
-
 	//- ImGui Call to render -//
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
 }

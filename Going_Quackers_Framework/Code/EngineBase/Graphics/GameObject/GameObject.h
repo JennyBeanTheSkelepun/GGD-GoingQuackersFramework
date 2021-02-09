@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Components/Component.h"
+#include "Components/Transform.h"
 
 class GameObject
 {
@@ -12,6 +13,7 @@ public:
 	GameObject();
 	~GameObject();
 
+	void Initialize();
 	void Update();
 	void Render();
 
@@ -43,7 +45,10 @@ public:
 		return nullptr;
 	}
 
+	Transform* GetTransform() { return mp_transform; }
 private:
+	Transform* mp_transform;
+
 	std::vector<Component*> m_components;
 	std::vector<GameObject*> m_children;
 };

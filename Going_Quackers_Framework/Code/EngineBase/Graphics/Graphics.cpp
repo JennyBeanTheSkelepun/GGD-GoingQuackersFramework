@@ -74,15 +74,17 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 	{
 		return false;
 	}
-	mp_Model->AddComponent<SpriteRenderer>();
+	SpriteRenderer* spriteRenderer =  mp_Model->AddComponent<SpriteRenderer>();
+	
 
 	// Initialize the model object.
-	result = mp_Model->GetComponent<SpriteRenderer>()->Initialize(mp_DirectX->GetDevice(), mp_DirectX->GetDeviceContext(), ((char*)"stone.tga"));
+	result = spriteRenderer->Initialize(mp_DirectX->GetDevice(), mp_DirectX->GetDeviceContext());
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
+	spriteRenderer->SetSprite((char*)"stone.tga");
 
 	// Create the color shader object.
 	mp_Shader = new Shader();
@@ -144,7 +146,7 @@ bool Graphics::Render()
 	mp_Model->Render();
 
 	// Render the model using the color shader.
-	result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), mp_Model->GetComponent<SpriteRenderer>()->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, mp_Model->GetComponent<SpriteRenderer>()->GetTexture()->GetTexture());
+	result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), 6, mp_Model->GetComponent<Transform>()->GetWorldMatrix(), viewMatrix, projectionMatrix, mp_Model->GetComponent<SpriteRenderer>()->GetTexture()->GetTexture());
 	if (!result)
 	{
 		return false;
