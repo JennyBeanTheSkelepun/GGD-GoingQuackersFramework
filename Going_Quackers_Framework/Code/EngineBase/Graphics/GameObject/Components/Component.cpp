@@ -2,7 +2,7 @@
 
 Component::Component(GameObject* owner)
 {
-	this->owner = owner;
+	this->mp_owner = owner;
 }
 
 Component::~Component()

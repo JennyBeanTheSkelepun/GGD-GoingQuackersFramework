@@ -143,6 +143,7 @@
     <ClCompile Include="Code\EngineBase\Graphics\DirectX\DirectXClass.cpp" />
     <ClCompile Include="Code\EngineBase\Graphics\GameCamera\Camera.cpp" />
     <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Component.cpp" />
+    <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Transform.cpp" />
     <ClCompile Include="Code\EngineBase\Graphics\GameObject\GameObject.cpp" />
     <ClCompile Include="Code\EngineBase\Graphics\Graphics.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Code\EngineBase\Graphics\DirectX\DirectXClass.h" />
     <ClInclude Include="Code\EngineBase\Graphics\GameCamera\Camera.h" />
     <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\Component.h" />
+    <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.h" />
     <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\Transform.h" />
     <ClInclude Include="Code\EngineBase\Graphics\GameObject\GameObject.h" />
     <ClInclude Include="Code\EngineBase\Graphics\Graphics.h" />

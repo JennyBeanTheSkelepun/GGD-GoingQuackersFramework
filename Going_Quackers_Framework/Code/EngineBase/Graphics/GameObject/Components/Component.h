@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _COMPONENT_H_
+#define _COMPONENT_H_
 
 class GameObject;
 
@@ -12,7 +13,9 @@ public:
 	virtual void Update();
 	virtual void Render();
 
-	GameObject* GetOwner() { return owner; }
+	GameObject* GetOwner() { return mp_owner; }
 private:
-	GameObject* owner;
+	GameObject* mp_owner;
 };
+
+#endif

@@ -117,6 +117,9 @@
     <ClCompile Include="Code\EngineBase\Maths\Vector3.cpp">
       <Filter>Source Files\Engine\Maths</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.cpp">
+      <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\Input\Input.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Maths\Vector3.h">
       <Filter>Source Files\Engine\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.h">
+      <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

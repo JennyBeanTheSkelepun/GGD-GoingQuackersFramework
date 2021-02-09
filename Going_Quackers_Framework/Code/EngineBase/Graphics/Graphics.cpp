@@ -1,4 +1,5 @@
 #include "Graphics.h"
+#include "GameObject/Components/SpriteRenderer.h"
 
 bool tempToggle = false;
 
@@ -73,9 +74,10 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 	{
 		return false;
 	}
+	mp_Model->AddComponent<SpriteRenderer>();
 
 	// Initialize the model object.
-	result = mp_Model->Initialize(mp_DirectX->GetDevice(), mp_DirectX->GetDeviceContext(), ((char*)"stone.tga"));
+	result = mp_Model->GetComponent<SpriteRenderer>()->Initialize(mp_DirectX->GetDevice(), mp_DirectX->GetDeviceContext(), ((char*)"stone.tga"));
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -139,10 +141,10 @@ bool Graphics::Render()
 	mp_DirectX->GetProjectionMatrix(projectionMatrix);
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	mp_Model->Render(mp_DirectX->GetDeviceContext());
+	mp_Model->Render();
 
 	// Render the model using the color shader.
-	result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), mp_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, mp_Model->GetTexture());
+	result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), mp_Model->GetComponent<SpriteRenderer>()->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, mp_Model->GetComponent<SpriteRenderer>()->GetTexture()->GetTexture());
 	if (!result)
 	{
 		return false;
