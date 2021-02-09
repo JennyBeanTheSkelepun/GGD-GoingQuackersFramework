@@ -102,11 +102,11 @@
     <ClCompile Include="Vector3.cpp">
       <Filter>Source Files\Engine\VectorClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Source Files\Engine\Time</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Time\Time.cpp">
+      <Filter>Source Files\Engine\Time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
