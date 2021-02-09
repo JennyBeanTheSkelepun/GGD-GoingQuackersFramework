@@ -14,7 +14,6 @@ public:
 	~GameObject();
 
 	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileNames);
-	void Shutdown();
 
 	void Update();
 	void Render(ID3D11DeviceContext* deviceContext);

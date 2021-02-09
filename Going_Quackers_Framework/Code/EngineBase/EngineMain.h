@@ -11,10 +11,8 @@ class EngineMain
 {
 public:
 	EngineMain();
-	EngineMain(const EngineMain& ar_EngineMain);
 	~EngineMain();
 
-	void ShutDown();
 	void Run();
 	bool Initalize();
 

@@ -27,7 +27,6 @@ public:
 	~Graphics();
 
 	bool Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd);
-	void Shutdown();
 
 	void Update();
 	bool Render();

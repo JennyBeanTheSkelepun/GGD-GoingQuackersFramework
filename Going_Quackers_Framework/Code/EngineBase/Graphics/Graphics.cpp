@@ -106,18 +106,6 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 	return true;
 }
 
-void Graphics::Shutdown()
-{
-	// Release the model object.
-	if (mp_Model)
-		mp_Model->Shutdown();
-
-	//if (mp_DirectX)
-	//	mp_DirectX->Shutdown();
-
-	return;
-}
-
 void Graphics::Update()
 {
 	mp_Camera->Update();

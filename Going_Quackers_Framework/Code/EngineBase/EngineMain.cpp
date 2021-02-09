@@ -9,14 +9,10 @@ EngineMain::EngineMain()
 	mp_Graphics = 0;
 }
 
-EngineMain::EngineMain(const EngineMain& ar_EngineMain)
-{
-
-}
-
 EngineMain::~EngineMain()
 {
-
+	delete mp_Input;
+	mp_Input = nullptr;
 }
 
 bool EngineMain::Initalize()
@@ -40,15 +36,6 @@ bool EngineMain::Initalize()
 		return false;
 
 	return true;
-}
-
-void EngineMain::ShutDown()
-{
-	if (mp_Graphics) 
-		return mp_Graphics->Shutdown();
-	
-	ShutdownWindows();
-	return;
 }
 
 void EngineMain::Run()
