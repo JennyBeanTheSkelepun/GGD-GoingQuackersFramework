@@ -33,7 +33,7 @@ void SpriteRenderer::SetSprite(char* fileName)
 }
 
 bool SpriteRenderer::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
-{
+{	
 	bool result;
 
 	// Initialize the vertex and index buffers.

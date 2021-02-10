@@ -3,10 +3,6 @@
 
 #include <cmath>
 
-#include "../ImGui/ImGui SourceCode/imgui.h"
-#include "../ImGui/ImGui SourceCode/imgui_impl_win32.h"
-#include "../ImGui/ImGui SourceCode/imgui_impl_dx11.h"
-
 struct Vector2
 {
 	float X;
@@ -44,8 +40,8 @@ struct Vector2
 	bool operator==(const Vector2& rhs) const { return (X == rhs.X) && (Y == rhs.Y); }
 	bool operator!=(const Vector2& rhs) const { return (X != rhs.X) && (Y != rhs.Y); }
 
-	DirectX::XMFLOAT2 ConvertToXMFLOAT2() { return DirectX::XMFLOAT2(X, Y); }
-	ImVec2 ConvertToImGuiVector2() { return ImVec2(X, Y); }
+	//DirectX::XMFLOAT2 ConvertToXMFLOAT2() { return DirectX::XMFLOAT2(X, Y); }
+	//ImVec2 ConvertToImGuiVector2() { return ImVec2(X, Y); }
 };
 
 #endif

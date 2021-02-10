@@ -76,9 +76,8 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 	}
 	SpriteRenderer* spriteRenderer =  mp_Model->AddComponent<SpriteRenderer>();
 	
-
 	// Initialize the model object.
-	result = spriteRenderer->Initialize(mp_DirectX->GetDevice(), mp_DirectX->GetDeviceContext());
+	result = spriteRenderer->Initialize(mp_DirectX->mp_device, mp_DirectX->mp_deviceContext);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);

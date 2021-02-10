@@ -1,3 +1,2 @@
-﻿  Transform.cpp
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics\GameObject\Components\Transform.cpp(27,123): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  Graphics.cpp
   Going_Quackers_Framework.vcxproj -> C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
