@@ -99,14 +99,14 @@
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp">
       <Filter>Source Files\Engine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Source Files\Engine\VectorClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Source Files\Engine\Time</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Graphics\Vector2\Vector2.cpp">
+      <Filter>Source Files\Engine\VectorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Time\Time.cpp">
+      <Filter>Source Files\Engine\Time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,11 +161,11 @@
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h">
       <Filter>Source Files\Engine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Source Files\Engine\VectorClasses</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Time\Time.h">
       <Filter>Source Files\Engine\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Graphics\Vector2\Vector2.h">
+      <Filter>Source Files\Engine\VectorClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -466,9 +466,23 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	return true;
 }
 
-void DirectXClass::BeginScene(float red, float green, float blue, float alpha)
+void DirectXClass::BeginGameScene(float red, float green, float blue, float alpha)
 {
 	float color[4]{red, green, blue, alpha};
+
+	// Clear the back buffer.
+	mp_deviceContext->ClearRenderTargetView(mp_renderTargetView, color);
+
+	// Clear the depth buffer.
+	mp_deviceContext->ClearDepthStencilView(mp_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+	// Clear Render Texture
+	mp_deviceContext->ClearRenderTargetView(mp_renderTextureRenderTargetView, color);
+}
+
+void DirectXClass::BeginEditorScene(float red, float green, float blue, float alpha)
+{
+	float color[4]{ red, green, blue, alpha };
 
 	// Clear the back buffer.
 	mp_deviceContext->ClearRenderTargetView(mp_renderTargetView, color);

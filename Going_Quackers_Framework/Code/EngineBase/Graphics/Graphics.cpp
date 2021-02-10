@@ -128,7 +128,7 @@ bool Graphics::Render()
 	mp_DirectX->mp_deviceContext->OMSetRenderTargets(1, &mp_DirectX->mp_renderTextureRenderTargetView, mp_DirectX->mp_depthStencilView);
 
 	// Clear the buffers to begin the scene.
-	mp_DirectX->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+	mp_DirectX->BeginGameScene(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// Generate the view matrix based on the camera's position.
 	mp_Camera->Render();
@@ -154,7 +154,7 @@ bool Graphics::Render()
 	mp_DirectX->mp_deviceContext->OMSetRenderTargets(1, &mp_DirectX->mp_renderTargetView, mp_DirectX->mp_depthStencilView);
 
 	// Clear the buffers to begin the scene.
-	mp_DirectX->BeginScene(0.0f, 0.0f, 0.0f, 0.0f); //<-- Background colour for editor
+	mp_DirectX->BeginEditorScene(0.0f, 0.0f, 0.0f, 0.0f); //<-- Background colour for editor
 
 	// Generate the view matrix based on the camera's position.
 	mp_Camera->Render();
