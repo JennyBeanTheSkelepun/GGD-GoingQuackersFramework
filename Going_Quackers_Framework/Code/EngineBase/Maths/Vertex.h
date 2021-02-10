@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _VERTEX_H_
+#define _VERTEX_H_
+
 #include <DirectXMath.h>
 
 struct Vertex2D
@@ -9,3 +11,5 @@ struct Vertex2D
 	DirectX::XMFLOAT3 position;
 	DirectX::XMFLOAT2 texCoord;
 };
+
+#endif

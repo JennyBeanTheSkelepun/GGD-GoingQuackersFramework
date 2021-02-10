@@ -134,6 +134,9 @@ bool Graphics::Render()
 	// Clear the buffers to begin the scene.
 	mp_DirectX->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
+	float color[4]{ 0.0f, 0.0f, 0.0f, 1.0f };
+	mp_DirectX->GetDeviceContext()->ClearRenderTargetView(mp_DirectX->mp_renderTextureRenderTargetView, color);
+
 	// Generate the view matrix based on the camera's position.
 	mp_Camera->Render();
 

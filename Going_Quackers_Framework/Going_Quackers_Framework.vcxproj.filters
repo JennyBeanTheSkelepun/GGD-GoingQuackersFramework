@@ -114,9 +114,6 @@
     <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Transform.cpp">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Maths\Vector3.cpp">
-      <Filter>Source Files\Engine\Maths</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.cpp">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClCompile>
@@ -182,13 +179,13 @@
     <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\Transform.h">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Maths\Vector3.h">
-      <Filter>Source Files\Engine\Maths</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.h">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Maths\Vertex.h">
+      <Filter>Source Files\Engine\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Maths\Vectors.h">
       <Filter>Source Files\Engine\Maths</Filter>
     </ClInclude>
   </ItemGroup>
