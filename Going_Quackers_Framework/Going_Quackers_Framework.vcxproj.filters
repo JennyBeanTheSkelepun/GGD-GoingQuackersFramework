@@ -52,6 +52,9 @@
     <Filter Include="Source Files\Engine\Time">
       <UniqueIdentifier>{f436ae7d-97bb-436a-a2dd-a2e7b779ae5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\SceneManager">
+      <UniqueIdentifier>{f5c69f9a-4a74-4e05-a84b-56a082f705a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\Input\Input.cpp">
@@ -107,6 +110,12 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
+      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +176,15 @@
     <ClInclude Include="Code\EngineBase\Time\Time.h">
       <Filter>Source Files\Engine\Time</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Code\EngineBase\Graphics\Shader\Shaders\BlockColourShader.fx">
@@ -175,5 +193,10 @@
     <FxCompile Include="Code\EngineBase\Graphics\Shader\Shaders\TextureSimple.fx">
       <Filter>Source Files\Engine\Graphics\ColorShaderClass\ShaderFiles</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Going_Quackers_Framework.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

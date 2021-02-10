@@ -154,6 +154,8 @@
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_tables.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_widgets.cpp" />
     <ClCompile Include="Code\EngineBase\Input\Input.cpp" />
+    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
+    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Vector3.cpp" />
@@ -176,6 +178,9 @@
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_textedit.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h" />
     <ClInclude Include="Code\EngineBase\Input\Input.h" />
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Code\EngineBase\Time\Time.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
@@ -186,6 +191,9 @@
     <FxCompile Include="Code\EngineBase\Graphics\Shader\Shaders\TextureSimple.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Going_Quackers_Framework.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
