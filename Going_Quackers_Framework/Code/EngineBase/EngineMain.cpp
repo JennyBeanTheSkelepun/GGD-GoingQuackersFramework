@@ -78,7 +78,7 @@ bool EngineMain::UpdateRenderLoop()
 
 	mp_Graphics->Update();
 	lb_result = mp_Graphics->Render();
-	if (!lb_result)
+	if (!lb_result || mp_Graphics->mp_ImGui->mb_closeEditor)
 		return false;
 
 	return true;
