@@ -105,3 +105,11 @@ const char* EngineGuiClass::BoolToString(bool Input)
 	else
 		return "False";
 }
+
+const char* EngineGuiClass::BoolToString(bool Input)
+{
+	if (Input)
+		return "True";
+	else
+		return "False";
+}

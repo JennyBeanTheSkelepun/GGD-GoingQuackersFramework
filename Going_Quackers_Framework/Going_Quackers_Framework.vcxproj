@@ -149,6 +149,7 @@
     <ClCompile Include="Code\EngineBase\Graphics\Graphics.cpp" />
     <ClCompile Include="Code\EngineBase\Graphics\Shader\Shader.cpp" />
     <ClCompile Include="Code\EngineBase\Graphics\Texture\TextureClass.cpp" />
+    <ClCompile Include="Code\EngineBase\Graphics\Vector2\Vector2.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_draw.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Code\EngineBase\Graphics\Graphics.h" />
     <ClInclude Include="Code\EngineBase\Graphics\Shader\Shader.h" />
     <ClInclude Include="Code\EngineBase\Graphics\Texture\TextureClass.h" />
+    <ClInclude Include="Code\EngineBase\Graphics\Vector2\Vector2.h" />
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.h" />
