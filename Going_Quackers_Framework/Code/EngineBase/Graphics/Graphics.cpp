@@ -201,10 +201,10 @@ bool Graphics::ActiveGameRender()
 	mp_DirectX->GetProjectionMatrix(projectionMatrix);
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	mp_Model->Render(mp_DirectX->GetDeviceContext());
+	mp_Model->Render();
 
 	// Render the model using the color shader.
-	result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), mp_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, mp_Model->GetTexture());
+	result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), 6, worldMatrix, viewMatrix, projectionMatrix, mp_Model->GetComponent<SpriteRenderer>()->GetTexture()->GetTexture());
 	if (!result)
 	{
 		return false;
