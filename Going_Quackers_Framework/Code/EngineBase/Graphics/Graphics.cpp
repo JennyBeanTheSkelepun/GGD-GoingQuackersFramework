@@ -1,4 +1,5 @@
 #include "Graphics.h"
+#include "GameObject/Components/SpriteRenderer.h"
 
 bool tempToggle = false;
 
@@ -73,14 +74,16 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 	{
 		return false;
 	}
-
+	SpriteRenderer* spriteRenderer =  mp_Model->AddComponent<SpriteRenderer>();
+	
 	// Initialize the model object.
-	result = mp_Model->Initialize(mp_DirectX->GetDevice(), mp_DirectX->GetDeviceContext(), ((char*)"stone.tga"));
+	result = spriteRenderer->Initialize(mp_DirectX->mp_device, mp_DirectX->mp_deviceContext);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
+	spriteRenderer->SetSprite((char*)"stone.tga");
 
 	// Create the color shader object.
 	mp_Shader = new Shader();
@@ -130,6 +133,9 @@ bool Graphics::Render()
 	// Clear the buffers to begin the scene.
 	mp_DirectX->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
+	float color[4]{ 0.0f, 0.0f, 0.0f, 1.0f };
+	mp_DirectX->GetDeviceContext()->ClearRenderTargetView(mp_DirectX->mp_renderTextureRenderTargetView, color);
+
 	// Generate the view matrix based on the camera's position.
 	mp_Camera->Render();
 
@@ -139,10 +145,10 @@ bool Graphics::Render()
 	mp_DirectX->GetProjectionMatrix(projectionMatrix);
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	mp_Model->Render(mp_DirectX->GetDeviceContext());
+	mp_Model->Render();
 
 	// Render the model using the color shader.
-	result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), mp_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, mp_Model->GetTexture());
+	result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), 6, mp_Model->GetComponent<Transform>()->GetWorldMatrix(), viewMatrix, projectionMatrix, mp_Model->GetComponent<SpriteRenderer>()->GetTexture()->GetTexture());
 	if (!result)
 	{
 		return false;

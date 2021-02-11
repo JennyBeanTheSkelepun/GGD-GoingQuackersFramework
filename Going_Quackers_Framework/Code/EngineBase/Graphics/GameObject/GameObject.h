@@ -1,45 +1,56 @@
 #ifndef _GAMEOBJECT_H_
 #define _GAMEOBJECT_H_
 
-#include <d3d11.h>
-#include <directxmath.h>
+#include <Windows.h>
+#include <vector>
 
-#include "../Texture/TextureClass.h"
+#include "Components/Component.h"
+#include "Components/Transform.h"
 
 class GameObject
 {
 public:
 	GameObject();
-	GameObject(const GameObject& other);
 	~GameObject();
 
-	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileNames);
-
+	void Initialize();
 	void Update();
-	void Render(ID3D11DeviceContext* deviceContext);
+	void Render();
 
-	int GetIndexCount();
-
-	ID3D11ShaderResourceView* GetTexture();
-
-private:
-	struct VertexType
+	///<summary>Adds a Component to the entity, requires that the Component need no initial parameters other than reference to it's object.</summary>
+	template<class T>
+	T* AddComponent()
 	{
-		DirectX::XMFLOAT3 position;
-		DirectX::XMFLOAT2 texture;
-	};
+		if(std::is_base_of<Component, T>::value)
+		{
+			m_components.push_back(static_cast<Component*>(new T(this)));
+			return static_cast<T*>(m_components[m_components.size() - 1]);
+		}
+	}
 
-	bool InitializeBuffers(ID3D11Device* device);
-	void ShutdownBuffers();
-	void RenderBuffers(ID3D11DeviceContext* deviceContext);
-	
-	bool LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char*);
-	void ReleaseTexture();
+	///<summary>Retuns a Component from the list in the gameobject.</summary>
+	template<class T>
+	T* GetComponent()
+	{
+		for (size_t i = 0; i < m_components.size(); i++)
+		{
+			if (dynamic_cast<T*>(m_components[i]) != nullptr)
+			{
+				return static_cast<T*>(m_components[i]);
+			}
+		}
 
-	ID3D11Buffer* m_vertexBuffer;
-	ID3D11Buffer* m_indexBuffer;
-	int m_vertexCount, m_indexCount;
-	Texture* m_Texture;
+		//Component not found
+		//MessageBox(hwnd, "Error", L"Error", MB_OK));
+		return nullptr;
+	}
+
+	Transform* GetTransform() { return mp_transform; }
+private:
+	Transform* mp_transform;
+
+	std::vector<Component*> m_components;
+	std::vector<GameObject*> m_children;
 };
 
 #endif // !_GAMEOBJECT_H_

@@ -497,7 +497,6 @@ ID3D11Device* DirectXClass::GetDevice()
 	return mp_device;
 }
 
-
 ID3D11DeviceContext* DirectXClass::GetDeviceContext()
 {
 	return mp_deviceContext;
@@ -512,7 +511,6 @@ void DirectXClass::GetWorldMatrix(DirectX::XMMATRIX& worldMatrix)
 {
 	worldMatrix = m_worldMatrix;
 }
-
 
 void DirectXClass::GetOrthoMatrix(DirectX::XMMATRIX& orthoMatrix)
 {
