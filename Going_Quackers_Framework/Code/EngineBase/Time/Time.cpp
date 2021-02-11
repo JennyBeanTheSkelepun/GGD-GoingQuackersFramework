@@ -1,6 +1,6 @@
 #include "Time.h"
 
-float Time::mf_timeScale = 0.0f;
+float Time::mf_timeScale = 1.0f;
 float Time::mf_totalTime = 0.0f;
 std::chrono::time_point<std::chrono::steady_clock> Time::m_lastFrame = std::chrono::steady_clock::now();
 std::chrono::duration<float> Time::m_deltaTime = std::chrono::duration<float>::zero();

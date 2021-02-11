@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "../../Time/Time.h"
 
 GameObject::GameObject()
 {
@@ -39,7 +40,7 @@ void GameObject::Update()
 	Vector2 offset = Vector2(0.001f, 0);
 	//mp_transform->SetPosition(newPosition + offset);
 
-	mp_transform->SetRotation(mp_transform->GetRotation() + 0.0001f);
+	mp_transform->SetRotation((mp_transform->GetRotation() + (0.1f *  Time::GetDeltaTime())));
 	//mp_transform->SetScale(mp_transform->GetScale() + Vector2(0.0001f, 0.0001f, 0.0f));
 
 	for (size_t i = 0; i < m_components.size(); i++)
