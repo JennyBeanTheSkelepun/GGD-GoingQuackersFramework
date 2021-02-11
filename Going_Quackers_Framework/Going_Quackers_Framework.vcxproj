@@ -149,7 +149,6 @@
     <ClCompile Include="Code\EngineBase\Graphics\Graphics.cpp" />
     <ClCompile Include="Code\EngineBase\Graphics\Shader\Shader.cpp" />
     <ClCompile Include="Code\EngineBase\Graphics\Texture\TextureClass.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics\Vector2\Vector2.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_draw.cpp" />
@@ -158,8 +157,7 @@
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_tables.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_widgets.cpp" />
     <ClCompile Include="Code\EngineBase\Input\Input.cpp" />
-    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
-    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
+    <ClCompile Include="Code\EngineBase\Time\Time.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,7 +171,6 @@
     <ClInclude Include="Code\EngineBase\Graphics\Graphics.h" />
     <ClInclude Include="Code\EngineBase\Graphics\Shader\Shader.h" />
     <ClInclude Include="Code\EngineBase\Graphics\Texture\TextureClass.h" />
-    <ClInclude Include="Code\EngineBase\Graphics\Vector2\Vector2.h" />
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.h" />
@@ -184,8 +181,6 @@
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_textedit.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h" />
     <ClInclude Include="Code\EngineBase\Input\Input.h" />
-    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
-    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Code\EngineBase\Time\Time.h" />
   </ItemGroup>

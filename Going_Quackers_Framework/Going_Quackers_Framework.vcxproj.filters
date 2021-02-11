@@ -111,17 +111,8 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Time\Time.cpp">
-      <Filter>Source Files\Engine\Time</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Component.cpp">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
-      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
       <Filter>Source Files\Engine\SceneManager</Filter>
@@ -134,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.cpp">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Time\Time.cpp">
+      <Filter>Source Files\Engine\Time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,12 +188,6 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -217,12 +205,6 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.h">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Maths\Vertex.h">
-      <Filter>Source Files\Engine\Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Maths\Vectors.h">
-      <Filter>Source Files\Engine\Maths</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
