@@ -11,11 +11,6 @@ Graphics::Graphics()
 	mp_Shader = 0;
 }
 
-Graphics::Graphics(const Graphics& other)
-{
-
-}
-
 Graphics::~Graphics()
 {
 	delete mp_DirectX;
@@ -54,7 +49,7 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	ImGui_ImplWin32_Init(hwnd);
-	ImGui_ImplDX11_Init(this->mp_DirectX->GetDevice(), this->mp_DirectX->GetDeviceContext());
+	ImGui_ImplDX11_Init(mp_DirectX->GetDevice(), mp_DirectX->GetDeviceContext());
 	ImGui::StyleColorsDark();
 
 	//- OBject Creation -//
@@ -102,7 +97,6 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 
 
 	mp_ImGui = new EngineGuiClass();
-	mp_ImGui->Initalize();
 	if (!mp_ImGui)
 		return false;
 
@@ -114,16 +108,27 @@ void Graphics::Update()
 	mp_Camera->Update();
 	mp_Model->Update();
 
-
 	mp_ImGui->Update(mp_DirectX->mp_renderTextureResourceView);
 }
 
 bool Graphics::Render()
 {	
-	//-----------------------//
-	//- Inital Scene Render -//
-	//-----------------------//
+	if (mp_ImGui->mb_playGame)
+		ActiveGameRender();
+	else
+		EditorRender();
+	
+	return true;
+}
 
+//---------------------------------------------------------------------------//
+//------------ Dont touch below unless your sure what your doing ------------//
+//---------------------------------------------------------------------------//
+
+//- Editor View with Render Texture -//
+bool Graphics::EditorRender()
+{
+	//- Decliration of matix -//
 	DirectX::XMMATRIX worldMatrix, viewMatrix, projectionMatrix;
 	bool result;
 
@@ -131,7 +136,7 @@ bool Graphics::Render()
 	mp_DirectX->mp_deviceContext->OMSetRenderTargets(1, &mp_DirectX->mp_renderTextureRenderTargetView, mp_DirectX->mp_depthStencilView);
 
 	// Clear the buffers to begin the scene.
-	mp_DirectX->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+	mp_DirectX->BeginGameScene(0.0f, 0.0f, 0.0f, 1.0f);
 
 	float color[4]{ 0.0f, 0.0f, 0.0f, 1.0f };
 	mp_DirectX->GetDeviceContext()->ClearRenderTargetView(mp_DirectX->mp_renderTextureRenderTargetView, color);
@@ -160,7 +165,32 @@ bool Graphics::Render()
 	mp_DirectX->mp_deviceContext->OMSetRenderTargets(1, &mp_DirectX->mp_renderTargetView, mp_DirectX->mp_depthStencilView);
 
 	// Clear the buffers to begin the scene.
-	mp_DirectX->BeginScene(0.0f, 0.0f, 0.0f, 0.0f); //<-- Background colour for editor
+	mp_DirectX->BeginEditorScene(0.0f, 0.0f, 0.0f, 0.0f); //<-- Background colour for editor
+
+	// Generate the view matrix based on the camera's position.
+	mp_Camera->Render();
+
+	// Get the world, view, and projection matrices from the camera and d3d objects.
+	mp_DirectX->GetWorldMatrix(worldMatrix);
+	mp_Camera->GetViewMatrix(viewMatrix);
+	mp_DirectX->GetProjectionMatrix(projectionMatrix);
+	
+	//- ImGui Call to render -//
+	mp_ImGui->Render();
+	mp_DirectX->EndScene();
+}
+
+//- Game View -//
+bool Graphics::ActiveGameRender()
+{
+	DirectX::XMMATRIX worldMatrix, viewMatrix, projectionMatrix;
+	bool result;
+
+	// Bind the render target view and depth stencil buffer to the output render pipeline.
+	mp_DirectX->mp_deviceContext->OMSetRenderTargets(1, &mp_DirectX->mp_renderTargetView, mp_DirectX->mp_depthStencilView);
+
+	// Clear the buffers to begin the scene.
+	mp_DirectX->BeginGameScene(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// Generate the view matrix based on the camera's position.
 	mp_Camera->Render();
@@ -170,10 +200,16 @@ bool Graphics::Render()
 	mp_Camera->GetViewMatrix(viewMatrix);
 	mp_DirectX->GetProjectionMatrix(projectionMatrix);
 
-	//- ImGui Call to render -//
+	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	mp_Model->Render(mp_DirectX->GetDeviceContext());
+
+	// Render the model using the color shader.
+	result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), mp_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, mp_Model->GetTexture());
+	if (!result)
+	{
+		return false;
+	}
+
 	mp_ImGui->Render();
-
 	mp_DirectX->EndScene();
-
-	return true;
 }

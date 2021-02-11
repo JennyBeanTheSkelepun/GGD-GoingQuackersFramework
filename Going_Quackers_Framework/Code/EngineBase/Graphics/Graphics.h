@@ -23,7 +23,6 @@ class Graphics
 {
 public:
 	Graphics();
-	Graphics(const Graphics& other);
 	~Graphics();
 
 	bool Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd);
@@ -31,13 +30,17 @@ public:
 	void Update();
 	bool Render();
 
+	EngineGuiClass* mp_ImGui;
+
 private:
+
+	bool EditorRender();
+	bool ActiveGameRender();
+
 	DirectXClass* mp_DirectX;
 	Camera* mp_Camera;
 	GameObject* mp_Model;
 	Shader* mp_Shader;
-	EngineGuiClass* mp_ImGui;
-
 };
 
 #endif // !_GRAPHICS_H_
