@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Engine\Maths">
       <UniqueIdentifier>{7d7c6b2d-242d-4d20-be47-f38712f7e5b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\JSON">
+      <UniqueIdentifier>{f3b060e0-f2f2-434c-9b9f-56545b5e4db1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\JSON\nlohmann">
+      <UniqueIdentifier>{f1839d68-c0f6-4b0b-ba0c-72716466f2f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\Input\Input.cpp">
@@ -114,12 +120,6 @@
     <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Component.cpp">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Transform.cpp">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClCompile>
@@ -128,6 +128,12 @@
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Time\Time.cpp">
       <Filter>Source Files\Engine\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
+      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,12 +197,6 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\Component.h">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
     </ClInclude>
@@ -205,6 +205,15 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.h">
       <Filter>Source Files\Engine\Graphics\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\JSON\nlohmann\json.hpp">
+      <Filter>Source Files\Engine\JSON\nlohmann</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
