@@ -5,8 +5,6 @@
 #include <memory>
 #include <string>
 
-#include "../Graphics/DirectX/DirectXClass.h"
-
 #include "ImGui SourceCode/imgui.h"
 #include "ImGui SourceCode/imgui_impl_win32.h"
 #include "ImGui SourceCode/imgui_impl_dx11.h"

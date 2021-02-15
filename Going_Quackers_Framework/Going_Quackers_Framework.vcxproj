@@ -139,16 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Code\EngineBase\Data Structures\Texture2D.cpp" />
     <ClCompile Include="Code\EngineBase\EngineMain.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics\DirectX\DirectXClass.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics\GameCamera\Camera.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Component.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics\GameObject\Components\Transform.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics\GameObject\GameObject.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics\Graphics.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics\Shader\Shader.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics\Texture\TextureClass.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Camera.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\GameObject.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Input.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Time.cpp" />
+    <ClCompile Include="Code\EngineBase\Graphics.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_draw.cpp" />
@@ -156,23 +157,24 @@
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_impl_win32.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_tables.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_widgets.cpp" />
-    <ClCompile Include="Code\EngineBase\Input\Input.cpp" />
-    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
-    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
-    <ClCompile Include="Code\EngineBase\Time\Time.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectXClass.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\Shader.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Code\EngineBase\Data Structures\Texture2D.h" />
+    <ClInclude Include="Code\EngineBase\Data Structures\Vectors.h" />
+    <ClInclude Include="Code\EngineBase\Data Structures\Vertex.h" />
     <ClInclude Include="Code\EngineBase\EngineMain.h" />
-    <ClInclude Include="Code\EngineBase\Graphics\DirectX\DirectXClass.h" />
-    <ClInclude Include="Code\EngineBase\Graphics\GameCamera\Camera.h" />
-    <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\Component.h" />
-    <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\SpriteRenderer.h" />
-    <ClInclude Include="Code\EngineBase\Graphics\GameObject\Components\Transform.h" />
-    <ClInclude Include="Code\EngineBase\Graphics\GameObject\GameObject.h" />
-    <ClInclude Include="Code\EngineBase\Graphics\Graphics.h" />
-    <ClInclude Include="Code\EngineBase\Graphics\Shader\Shader.h" />
-    <ClInclude Include="Code\EngineBase\Graphics\Texture\TextureClass.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Camera.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Transform.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\GameObject.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Input.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Time.h" />
+    <ClInclude Include="Code\EngineBase\Graphics.h" />
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.h" />
@@ -182,20 +184,9 @@
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_rectpack.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_textedit.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h" />
-    <ClInclude Include="Code\EngineBase\Input\Input.h" />
-    <ClInclude Include="Code\EngineBase\JSON\nlohmann\json.hpp" />
-    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
-    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectXClass.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\Shader.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Code\EngineBase\Time\Time.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Code\EngineBase\Graphics\Shader\Shaders\BlockColourShader.fx">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </FxCompile>
-    <FxCompile Include="Code\EngineBase\Graphics\Shader\Shaders\TextureSimple.fx">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Going_Quackers_Framework.rc" />
