@@ -3,9 +3,9 @@
 
 #define WIN32_LEAN_AND_MEAN
 
-#include "Graphics/Graphics.h"
-#include "Input/Input.h"
-#include "Time/Time.h"
+#include "Graphics.h"
+#include "Game Systems/Input.h"
+#include "Game Systems/Time.h"
 
 class EngineMain
 {
