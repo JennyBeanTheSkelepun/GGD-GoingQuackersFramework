@@ -12,46 +12,52 @@ public:
 	Transform(GameObject* owner);
 
 	void Initialize() override;
-	void Update() override;
 
-	//Creates a Matrix that converts from local space to the coordinate space of the parent transform
-	DirectX::XMMATRIX CalculateLocalMatrix();
-
-	//Gets the matrix that converts from local to world space
+	///<summary>Returns a matrix that converts from local space to world space</summary>
 	DirectX::XMMATRIX GetLocalToWorldMatrix();
-
+	///<summary>Returns a matrix that converts from world space to local space</summary>
 	DirectX::XMMATRIX GetWorldToLocalMatrix();
 
+	///<summary>Transforms a point from local space to world space</summary>
+	Vector2 TransformPoint(Vector2 point);
+	///<summary>Transforms a point from world space to local space</summary>
+	Vector2 InverseTransformPoint(Vector2 point);
+
 	//Setters and Getters
-	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; m_isDirty = true; }
-	Vector2 GetLocalPosition() { return m_localPosition; }
+	void SetPosition(Vector2 position) { this->m_position = position; this->m_localPosition = InverseTransformPoint(position); }
+	Vector2 GetPosition() { return m_position; }
+	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; }
+	Vector2 GetLocalPosition() { return this->m_localPosition; }
 
-	void SetLocalRotation(double rotation) { this->m_localRotation = rotation; m_isDirty = true; }
-	double GetLocalRotation() { return m_localRotation; }
+	void SetRotation(double rotation) { this->m_rotation = rotation; }
+	double GetRotation() { return m_rotation; }
+	void SetLocalRotation(double rotation) { this->m_localRotation = rotation; }
+	double GetLocalRotation() { return this->m_localRotation; }
 
-	void SetLocalScale(Vector2 scale) { this->m_localScale = scale; m_isDirty = true; }
-	Vector2 GetLocalScale() { return m_localScale; }
-
-	DirectX::XMMATRIX GetWorldMatrix() { return GetLocalToWorldMatrix(); }
+	void SetScale(Vector2 scale) { this->m_scale = scale; }
+	Vector2 GetScale() { return this->m_scale; }
+	void SetLocalScale(Vector2 scale) { this->m_localScale = scale; }
+	Vector2 GetLocalScale() { return this->m_localScale; }
 
 private:
-	//Position relative to the parent transform
+	//World Positions
+	Vector2 m_position;
+	double m_rotation;
+	Vector2 m_scale;
+
+	//Local Positions
 	Vector2 m_localPosition;
-
-	//Rotation relative to the parent transform
 	double m_localRotation;
-
-	//Scale releative to the parent transform
 	Vector2 m_localScale;
 
-	//Boolean to say if the local positions need to be recalculated
-	bool m_isDirty;
+	//Transform that converts from local space to world space
+	DirectX::XMMATRIX localToWorldMatrix;
 
-	//Transform that converts from local to world space
-	DirectX::XMMATRIX m_localToWorldMatrix;
+	//Transform that converts from world space to local space
+	DirectX::XMMATRIX worldToLocalMatrix;
 
-	//Transform that converts from world to local space
-	DirectX::XMMATRIX m_worldToLocalMatrix;
+	//Creates a Matrix that converts from local space to the coordinate space of the parent transform (If there is one) 
+	DirectX::XMMATRIX CalculateLocalMatrix();
 };
 
 #endif

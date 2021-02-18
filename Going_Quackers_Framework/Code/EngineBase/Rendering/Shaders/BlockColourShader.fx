@@ -1,8 +1,9 @@
 cbuffer MatrixBuffer
 {
-	matrix worldMatrix;
-	matrix viewMatrix;
-	matrix projectionMatrix;
+    float4x4 WVP;
+	//matrix worldMatrix;
+	//matrix viewMatrix;
+	//matrix projectionMatrix;
 };
 
 struct VertexInputType 
@@ -25,9 +26,9 @@ PixelInputType ColorVertexShader(VertexInputType input)
     input.position.w = 1.0f;
 
     // Calculate the position of the vertex against the world, view, and projection matrices.
-    output.position = mul(input.position, worldMatrix);
-    output.position = mul(output.position, viewMatrix);
-    output.position = mul(output.position, projectionMatrix);
+    output.position = mul(input.position, WVP);
+    //output.position = mul(output.position, viewMatrix);
+    //output.position = mul(output.position, projectionMatrix);
 
     // Store the input color for the pixel shader to use.
     output.color = input.color;

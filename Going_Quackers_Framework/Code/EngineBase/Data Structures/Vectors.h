@@ -2,6 +2,7 @@
 #define _VECTORS_H
 
 #include <cmath>
+#include <iostream>
 
 struct Vector2
 {
@@ -42,6 +43,8 @@ struct Vector2
 
 	//DirectX::XMFLOAT2 ConvertToXMFLOAT2() { return DirectX::XMFLOAT2(X, Y); }
 	//ImVec2 ConvertToImGuiVector2() { return ImVec2(X, Y); }
+
+	friend std::ostream& operator<<(std::ostream& os, const Vector2& vec) { os << "(" << vec.X << ", " << vec.Y << ")"; return os; }
 };
 
 #endif

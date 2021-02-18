@@ -41,12 +41,14 @@ public:
 		}
 
 		//Component not found
-		//MessageBox(hwnd, "Error", L"Error", MB_OK));
 		return nullptr;
 	}
 
 	GameObject* GetParent() { return mp_parent; }
-	void SetParent(GameObject* newParent) { mp_parent = newParent; }
+	void SetParent(GameObject* newParent) { mp_parent = newParent; mp_parent->AddChild(this); }
+
+	void AddChild(GameObject* child) { m_children.push_back(child); }
+	std::vector<GameObject*> GetChildren() { return m_children; }
 
 	Transform* GetTransform() { return mp_transform; }
 
@@ -55,11 +57,15 @@ public:
 private:
 	Transform* mp_transform;
 
+	//A List of Components for the GameObject
 	std::vector<Component*> m_components;
 
 	std::vector<GameObject*> m_children;
+
+	//The parent of the current GameObject
 	GameObject* mp_parent;
 
+	//Is the GameObject currently updating and rendering?
 	bool m_active;
 };
 

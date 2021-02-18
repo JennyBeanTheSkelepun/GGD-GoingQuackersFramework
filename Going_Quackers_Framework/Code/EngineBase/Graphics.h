@@ -39,8 +39,7 @@ private:
 
 	DirectXClass* mp_DirectX;
 	Camera* mp_Camera;
-	GameObject* mp_Model;
-	GameObject* mp_Model2;
+	std::vector<GameObject*> gameObjects;
 	Shader* mp_Shader;
 };
 
