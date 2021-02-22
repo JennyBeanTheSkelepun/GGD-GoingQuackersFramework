@@ -231,6 +231,12 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -334,6 +340,12 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

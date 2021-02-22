@@ -5,7 +5,7 @@
 #include <filesystem>
 #include "../JSON/nlohmann/json.hpp" // Adding JSON for modern C++
 
-#include "../Graphics/GameObject/GameObject.h"
+#include "../Game Systems/GameObject.h"
 
 // For Convienience
 using json = nlohmann::json;
@@ -65,8 +65,7 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 
 	// Create game objects and add to scene
 	for (int i = 0; i < sizeof(l_SceneConfig["objects"]); i++) {
-		GameObject* lp_NewObject = new GameObject(); //TODO: Startpos and object ID, awaiting progress from others
-		lp_NewScene->AddObject(lp_NewObject);
+
 	}
 
 	// Close file
@@ -81,5 +80,33 @@ void SceneManager::UnloadScene()
 {
 	if (mp_CurrentScene != nullptr) {
 		delete mp_CurrentScene;
+	}
+}
+
+ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
+{
+	if (as_id == "debugSquare") {
+		return debugSquare;
+	}
+	else {
+		return invalidOption;
+	}
+}
+
+void SceneManager::BuildObjectFromID(std::string as_id, float af_startX, float af_startY)
+{
+	// Convert String ID to Enum ID
+	ObjectIDs l_ObjectID = ObjectIDStringToEnum(as_id);
+
+	// Determine object type and set it up
+	switch (l_ObjectID) {
+	// Basic Object
+	case debugSquare:
+		GameObject* l_NewDebugSquare = new GameObject();
+		
+		mp_CurrentScene->AddObject(l_NewDebugSquare);
+		break;
+	default:
+		break;
 	}
 }
