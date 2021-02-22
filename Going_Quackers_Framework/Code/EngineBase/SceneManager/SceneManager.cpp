@@ -5,6 +5,8 @@
 #include <filesystem>
 #include "../JSON/nlohmann/json.hpp" // Adding JSON for modern C++
 
+#include "../Graphics/GameObject/GameObject.h"
+
 // For Convienience
 using json = nlohmann::json;
 
@@ -61,9 +63,15 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		l_SceneConfig["sceneName"],
 		l_SceneConfig["sceneType"]);
 
-	// TODO: Objects
+	// Create game objects and add to scene
+	for (int i = 0; i < sizeof(l_SceneConfig["objects"]); i++) {
+		GameObject* lp_NewObject = new GameObject(); //TODO: Startpos and object ID, awaiting progress from others
+		lp_NewScene->AddObject(lp_NewObject);
+	}
 
+	// Close file
 	l_file.close();
+	// Return loaded Scene
 	return lp_NewScene;
 }
 
@@ -71,5 +79,7 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 */
 void SceneManager::UnloadScene()
 {
-	delete mp_CurrentScene;
+	if (mp_CurrentScene != nullptr) {
+		delete mp_CurrentScene;
+	}
 }
