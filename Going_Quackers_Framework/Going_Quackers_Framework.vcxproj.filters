@@ -132,12 +132,6 @@
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp">
       <Filter>Source Files\Engine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -217,12 +211,6 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Graphics.h">
       <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
