@@ -159,6 +159,8 @@
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_widgets.cpp" />
     <ClCompile Include="Code\EngineBase\Rendering\DirectXClass.cpp" />
     <ClCompile Include="Code\EngineBase\Rendering\Shader.cpp" />
+    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
+    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +188,8 @@
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectXClass.h" />
     <ClInclude Include="Code\EngineBase\Rendering\Shader.h" />
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

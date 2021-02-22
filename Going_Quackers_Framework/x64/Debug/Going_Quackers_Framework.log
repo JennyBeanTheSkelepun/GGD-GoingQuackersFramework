@@ -1,2 +1,51 @@
-﻿  Shader.cpp
-  Going_Quackers_Framework.vcxproj -> C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+﻿  Texture2D.cpp
+  EngineMain.cpp
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Camera.cpp
+  Component.cpp
+  Sprite.cpp
+  SpriteRenderer.cpp
+  Transform.cpp
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(26,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  GameObject.cpp
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Input.cpp
+  Time.cpp
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Graphics.cpp
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  EngineGuiClass.cpp
+  imgui.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  DirectXClass.cpp
+  Shader.cpp
+  Generating Code...
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(245): warning C4715: 'Graphics::ActiveGameRender': not all control paths return a value
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(211): warning C4715: 'Graphics::EditorRender': not all control paths return a value
+  Compiling...
+  Scene.cpp
+  SceneManager.cpp
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.h(22,68): error C2086: 'float startX': redefinition
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.h(22): message : see declaration of 'startX'
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.h(22,82): error C2086: 'float startX': redefinition
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.h(22): message : see declaration of 'startX'
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.h(22,90): error C2059: syntax error: ')'
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.h(24,24): error C2143: syntax error: missing ')' before ';'
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.h(16,36): error C2065: 'mp_CurrentScene': undeclared identifier
+  The contents of <filesystem> are available only with C++17 or later.
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(15,2): error C2065: 'mp_CurrentScene': undeclared identifier
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(20,9): error C2065: 'mp_CurrentScene': undeclared identifier
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(20,24): error C2541: 'delete': cannot delete objects that are not pointers
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(32,2): error C2065: 'mp_CurrentScene': undeclared identifier
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(39,2): error C2065: 'mp_CurrentScene': undeclared identifier
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(46,2): error C2065: 'mp_CurrentScene': undeclared identifier
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(82,6): error C2065: 'mp_CurrentScene': undeclared identifier
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(83,10): error C2065: 'mp_CurrentScene': undeclared identifier
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(83,25): error C2541: 'delete': cannot delete objects that are not pointers
+  Main.cpp
+F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Generating Code...
