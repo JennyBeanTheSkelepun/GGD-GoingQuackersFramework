@@ -30,8 +30,14 @@ void Scene::AddObject(GameObject* ap_newObject)
 
 void Scene::Update(float af_deltaTime)
 {
+	for (auto lp_object : mp_SceneObjects) {
+		lp_object->Update();
+	}
 }
 
 void Scene::Draw()
 {
+	for (auto lp_object : mp_SceneObjects) {
+		lp_object->Render();
+	}
 }
