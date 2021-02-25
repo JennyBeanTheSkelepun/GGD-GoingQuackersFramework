@@ -93,9 +93,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp">
-      <Filter>Source Files\Engine\Game Systems\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>

@@ -6,12 +6,30 @@ class GameObject;
 class Component
 {
 public:
-	Component(GameObject* owner);
-	~Component();
+	Component(GameObject* owner)
+	{
+		this->mp_owner = owner;
+	}
 
-	virtual void Initialize();
-	virtual void Update();
-	virtual void Render();
+	~Component()
+	{
+	}
+
+	virtual void Initialize()
+	{
+	}
+
+	virtual void Update()
+	{
+	}
+
+	virtual void Render()
+	{
+	}
+
+	virtual void ImGUIUpdate()
+	{
+	}
 
 	GameObject* GetOwner() { return mp_owner; }
 
