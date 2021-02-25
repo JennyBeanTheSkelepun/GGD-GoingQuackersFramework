@@ -17,8 +17,9 @@ public:
 	bool Render(ID3D11DeviceContext* deviceContext, int indexCount , DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX rotationMatrix, DirectX::XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture);
 
 private:
-	struct MatrixBufferType
+	struct MatrixBuffer
 	{
+		//DirectX::XMMATRIX WVP;
 		DirectX::XMMATRIX world;
 		DirectX::XMMATRIX view;
 		DirectX::XMMATRIX projection;

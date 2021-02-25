@@ -12,11 +12,8 @@ GameObject::~GameObject()
 	{
 		delete m_components[i];
 	}
-
-	for (size_t i = 0; i < m_children.size(); i++)
-	{
-		delete m_children[i];
-	}
+	mp_transform = nullptr;
+	mp_parent = nullptr;
 }
 
 void GameObject::Initialize()
@@ -26,11 +23,6 @@ void GameObject::Initialize()
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		m_components[i]->Initialize();
-	}
-
-	for (size_t i = 0; i < m_children.size(); i++)
-	{
-		m_children[i]->Initialize();
 	}
 }
 

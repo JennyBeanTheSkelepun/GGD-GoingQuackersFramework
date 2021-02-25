@@ -145,7 +145,7 @@ bool Shader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFilename
 	
 	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	matrixBufferDesc.ByteWidth = sizeof(MatrixBufferType);
+	matrixBufferDesc.ByteWidth = sizeof(MatrixBuffer);
 	matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	matrixBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	matrixBufferDesc.MiscFlags = 0;
@@ -256,14 +256,13 @@ bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext, DirectX::XM
 {
 	HRESULT result;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	MatrixBufferType* dataPtr;
+	MatrixBuffer* dataPtr;
 	unsigned int bufferNumber;
 	
-	// Transpose the matrices to prepare them for the shader.
-	worldMatrix = DirectX::XMMatrixTranspose(worldMatrix);
-	viewMatrix = DirectX::XMMatrixTranspose(viewMatrix);
-	projectionMatrix = DirectX::XMMatrixTranspose(projectionMatrix);
-	
+	/*
+	DirectX::XMMATRIX WVP = worldMatrix * viewMatrix * projectionMatrix;
+	WVP = DirectX::XMMatrixTranspose(WVP);
+
 	// Lock the constant buffer so it can be written to.
 	result = deviceContext->Map(m_matrixBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 	if (FAILED(result))
@@ -272,7 +271,31 @@ bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext, DirectX::XM
 	}
 
 	// Get a pointer to the data in the constant buffer.
-	dataPtr = (MatrixBufferType*)mappedResource.pData;
+	dataPtr = (MatrixBuffer*)mappedResource.pData;
+
+	dataPtr->WVP = WVP;
+
+	deviceContext->Unmap(m_matrixBuffer, 0);
+
+	deviceContext->UpdateSubresource(m_matrixBuffer, 0, NULL, dataPtr, 0, 0);
+	deviceContext->VSSetConstantBuffers(0, 1, &m_matrixBuffer);
+	*/
+
+	
+	// Transpose the matrices to prepare them for the shader.
+	worldMatrix = DirectX::XMMatrixTranspose(worldMatrix);
+	viewMatrix = DirectX::XMMatrixTranspose(viewMatrix);
+	projectionMatrix = DirectX::XMMatrixTranspose(projectionMatrix);
+
+	// Lock the constant buffer so it can be written to.
+	result = deviceContext->Map(m_matrixBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	// Get a pointer to the data in the constant buffer.
+	dataPtr = (MatrixBuffer*)mappedResource.pData;
 
 	// Copy the matrices into the constant buffer.
 	dataPtr->world = worldMatrix;
@@ -286,8 +309,10 @@ bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext, DirectX::XM
 	bufferNumber = 0;
 
 	// Finanly set the constant buffer in the vertex shader with the updated values.
+	//deviceContext->UpdateSubresource(m_matrixBuffer, 0, NULL, dataPtr, 0, 0);
 	deviceContext->VSSetConstantBuffers(bufferNumber, 1, &m_matrixBuffer);
 
+	
 	deviceContext->PSSetShaderResources(0, 1, &texture);
 
 	return true;

@@ -1,5 +1,6 @@
 cbuffer MatrixBuffer
 {
+    //float4x4 WVP;
 	matrix worldMatrix;
 	matrix viewMatrix;
 	matrix projectionMatrix;
@@ -25,7 +26,7 @@ PixelInputType TextureVertexShader(VertexInputType input)
     PixelInputType output;
 
     // Change the position vector to be 4 units for proper matrix calculations.
-    input.position.w = 1.0f;
+    //input.position.w = 0.5f;
 
     // Calculate the position of the vertex against the world, view, and projection matrices.
     output.position = mul(input.position, worldMatrix);
