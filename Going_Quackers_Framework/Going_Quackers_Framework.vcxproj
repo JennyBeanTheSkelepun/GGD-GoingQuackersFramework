@@ -142,7 +142,6 @@
     <ClCompile Include="Code\EngineBase\Data Structures\Texture2D.cpp" />
     <ClCompile Include="Code\EngineBase\EngineMain.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Camera.cpp" />
-    <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
