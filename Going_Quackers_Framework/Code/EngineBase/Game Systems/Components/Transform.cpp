@@ -44,23 +44,30 @@ DirectX::XMMATRIX Transform::GetWorldToLocalMatrix()
 Vector2 Transform::TransformPoint(Vector2 point)
 {
 	DirectX::XMFLOAT4 floatTemp;
-	DirectX::XMVECTOR tempVector = DirectX::XMVector4Transform(DirectX::XMVectorSet(point.X, point.Y, 0.0f, 0.0f), GetLocalToWorldMatrix());
+	DirectX::XMVECTOR tempVector = DirectX::XMVector4Transform(DirectX::XMVectorSet(point.X, point.Y, 0.0f, 1.0f), GetLocalToWorldMatrix());
 	DirectX::XMStoreFloat4(&floatTemp, tempVector);
 	return Vector2(floatTemp.x, floatTemp.y);
 }
 
 Vector2 Transform::InverseTransformPoint(Vector2 point)
 {
+	if (mp_owner->GetParent() != nullptr)
+		return mp_owner->GetParent()->GetTransform()->GetPosition() + point;
+	else
+		return point;
+
+	/*
 	DirectX::XMFLOAT4 floatTemp;
-	DirectX::XMVECTOR tempVector = DirectX::XMVector4Transform(DirectX::XMVectorSet(point.X, point.Y, 0.0f, 0.0f), GetWorldToLocalMatrix());
+	DirectX::XMVECTOR tempVector = DirectX::XMVector4Transform(DirectX::XMVectorSet(point.X, point.Y, 0.0f, 1.0f), GetWorldToLocalMatrix());
 	DirectX::XMStoreFloat4(&floatTemp, tempVector);
 	return Vector2(floatTemp.x, floatTemp.y);
+	*/
 }
 
 DirectX::XMMATRIX Transform::CalculateLocalMatrix()
 {
-	return DirectX::XMMatrixTranslation(m_localPosition.X, m_localPosition.Y, 0.0f) *
-		DirectX::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, m_localRotation * (3.14159265359 / 180)) *
-		DirectX::XMMatrixScaling(m_localScale.X, m_localScale.Y, 1.0f);
+	return DirectX::XMMatrixScaling(m_localScale.X, m_localScale.Y, 1.0f) *
+		DirectX::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, m_localRotation * (DirectX::XM_PI / 180.0f)) *
+		DirectX::XMMatrixTranslation(m_localPosition.X, m_localPosition.Y, 0.0f);
 }
 

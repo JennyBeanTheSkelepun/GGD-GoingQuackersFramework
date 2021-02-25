@@ -85,6 +85,8 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 		return false;
 	}
 
+	mp_Model->GetTransform()->SetPosition(Vector2(2.0f, 0.0f));
+
 	// Create the model object.
 	GameObject* mp_Model2 = new GameObject();
 	if (!mp_Model2)
@@ -100,7 +102,7 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 	}
 	//mp_Model2->GetTransform()->SetLocalPosition(Vector2(-2.5f, 0.0f));
 	mp_Model2->GetTransform()->SetPosition(Vector2(-2.5f, 0.0f));
-	mp_Model2->GetTransform()->SetScale(Vector2(0.5f, 0.5f));
+	mp_Model2->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
 	mp_Model2->SetParent(mp_Model);
 	
 	// Create the model object.
@@ -117,7 +119,7 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 		return false;
 	}
 
-	mp_Model3->GetTransform()->SetLocalPosition(Vector2(-5.0f, 0.0f));
+	mp_Model3->GetTransform()->SetPosition(Vector2(-5.0f, 0.0f));
 	mp_Model3->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
 	mp_Model3->SetParent(mp_Model2);
 
@@ -158,10 +160,10 @@ void Graphics::Update()
 	}
 
 	//mp_Model2->GetTransform()->SetLocalPosition(mp_Model2->GetTransform()->GetLocalPosition() + Vector2(-0.8f, 0.0f) * Time::GetDeltaTime());
-	//gameObjects[0]->GetTransform()->SetPosition(gameObjects[0]->GetTransform()->GetPosition() + Vector2(0.5f, 0.0f) * Time::GetDeltaTime());
+	//gameObjects[0]->GetTransform()->SetPosition(gameObjects[0]->GetTransform()->GetPosition() + Vector2(-0.1f, 0.0f) * Time::GetDeltaTime());
 	//gameObjects[1]->GetTransform()->SetPosition(gameObjects[1]->GetTransform()->GetPosition() + Vector2(0.5f, 0.0f) * Time::GetDeltaTime());
 	//gameObjects[0]->GetTransform()->SetLocalRotation(gameObjects[0]->GetTransform()->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
-	//gameObjects[1]->GetTransform()->SetLocalRotation(gameObjects[1]->GetTransform()->GetLocalRotation() + 40.0f * Time::GetDeltaTime());
+	gameObjects[1]->GetTransform()->SetLocalScale(gameObjects[1]->GetTransform()->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
 	//gameObjects[2]->GetTransform()->SetLocalRotation(gameObjects[2]->GetTransform()->GetLocalRotation() + 100.0f * Time::GetDeltaTime());
 	//mp_Model->GetTransform()->SetLocalScale(mp_Model->GetTransform()->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
 

@@ -24,7 +24,7 @@ public:
 	Vector2 InverseTransformPoint(Vector2 point);
 
 	//Setters and Getters
-	void SetPosition(Vector2 position) { this->m_position = position; this->m_localPosition = InverseTransformPoint(position); }
+	void SetPosition(Vector2 position) { this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
 	Vector2 GetPosition() { return m_position; }
 	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; }
 	Vector2 GetLocalPosition() { return this->m_localPosition; }
