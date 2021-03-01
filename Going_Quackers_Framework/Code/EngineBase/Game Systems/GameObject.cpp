@@ -1,8 +1,13 @@
 #include "GameObject.h"
-#include "Time.h"
 
-GameObject::GameObject()
+GameObject::GameObject(const char* name, GameObject* parent)
 {
+	this->name = name;
+	this->mp_parent = parent;
+
+	m_components = std::vector<Component*>();
+	m_children = std::vector<GameObject*>();
+
 	Initialize();
 }
 
@@ -12,13 +17,14 @@ GameObject::~GameObject()
 	{
 		delete m_components[i];
 	}
-	mp_transform = nullptr;
+
+	transform = nullptr;
 	mp_parent = nullptr;
 }
 
 void GameObject::Initialize()
 {
-	mp_transform = AddComponent<Transform>();
+	transform = AddComponent<Transform>();
 
 	for (size_t i = 0; i < m_components.size(); i++)
 	{

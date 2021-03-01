@@ -29,7 +29,7 @@ DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
 	}
 	else
 	{
-		localToWorldMatrix = CalculateLocalMatrix() * parent->GetTransform()->GetLocalToWorldMatrix();
+		localToWorldMatrix = CalculateLocalMatrix() * parent->transform->GetLocalToWorldMatrix();
 	}
 
 	return localToWorldMatrix;
@@ -51,17 +51,10 @@ Vector2 Transform::TransformPoint(Vector2 point)
 
 Vector2 Transform::InverseTransformPoint(Vector2 point)
 {
-	if (mp_owner->GetParent() != nullptr)
-		return mp_owner->GetParent()->GetTransform()->GetPosition() + point;
-	else
-		return point;
-
-	/*
 	DirectX::XMFLOAT4 floatTemp;
 	DirectX::XMVECTOR tempVector = DirectX::XMVector4Transform(DirectX::XMVectorSet(point.X, point.Y, 0.0f, 1.0f), GetWorldToLocalMatrix());
 	DirectX::XMStoreFloat4(&floatTemp, tempVector);
 	return Vector2(floatTemp.x, floatTemp.y);
-	*/
 }
 
 DirectX::XMMATRIX Transform::CalculateLocalMatrix()
