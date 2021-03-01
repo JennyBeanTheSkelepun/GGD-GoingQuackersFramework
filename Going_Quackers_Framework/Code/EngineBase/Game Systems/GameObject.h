@@ -10,12 +10,20 @@
 class GameObject
 {
 public:
-	GameObject();
+	GameObject() : GameObject("Unnamed-Object", nullptr) {};
+	GameObject(const char* name) : GameObject(name, nullptr) {};
+	GameObject(const char* name, GameObject* parent);
+
 	~GameObject();
 
 	void Initialize();
 	void Update();
 	void Render();
+
+	///<summary>The Transform attached to the GameObject.</summary>
+	Transform* transform;
+	///<summary>The name given to the GameObject</summary>
+	std::string name;
 
 	///<summary>Adds a Component to the entity, requires that the Component need no initial parameters other than reference to it's object.</summary>
 	template<class T>
@@ -44,25 +52,26 @@ public:
 		return nullptr;
 	}
 
-	GameObject* GetParent() { return mp_parent; }
+	///<summary>Sets the parent for the GameObject.</summary>
 	void SetParent(GameObject* newParent) { mp_parent = newParent; mp_parent->AddChild(this); }
+	///<summary>Returns the parent of the GameObject.</summary>
+	GameObject* GetParent() { return mp_parent; }
 
+	///<summary>Assigns the GameObject as the parent of the given child.</summary>
 	void AddChild(GameObject* child) { m_children.push_back(child); }
-	std::vector<GameObject*> GetChildren() { return m_children; }
 
-	Transform* GetTransform() { return mp_transform; }
-
-	bool IsActive() { return m_active; }
+	///<summary>Activate/Deactivate the GameObject depending on the given true/false value.</summary>
 	void SetActive(bool value) { m_active = value; }
+	///<summary>Returns if the GameObject is currently active (Updating/Rendering).</summary>
+	bool IsActive() { return m_active; }
 private:
-	Transform* mp_transform;
-
-	//A List of Components for the GameObject
+	//A list of Components for the GameObject
 	std::vector<Component*> m_components;
 
+	//A list of Children that the GameObject is a parent of
 	std::vector<GameObject*> m_children;
 
-	//The parent of the current GameObject
+	//The parent of the GameObject
 	GameObject* mp_parent;
 
 	//Is the GameObject currently updating and rendering?

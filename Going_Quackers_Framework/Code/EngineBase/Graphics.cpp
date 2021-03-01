@@ -85,10 +85,10 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 		return false;
 	}
 
-	mp_Model->GetTransform()->SetPosition(Vector2(2.0f, 0.0f));
+	mp_Model->transform->SetPosition(Vector2(2.0f, 0.0f));
 
 	// Create the model object.
-	GameObject* mp_Model2 = new GameObject();
+	GameObject* mp_Model2 = new GameObject("Model 2", mp_Model);
 	if (!mp_Model2)
 	{
 		return false;
@@ -100,10 +100,8 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
-	//mp_Model2->GetTransform()->SetLocalPosition(Vector2(-2.5f, 0.0f));
-	mp_Model2->GetTransform()->SetPosition(Vector2(-2.5f, 0.0f));
-	mp_Model2->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
-	mp_Model2->SetParent(mp_Model);
+
+	mp_Model2->transform->SetPosition(Vector2(-2.0f, 0.0f));
 	
 	// Create the model object.
 	GameObject* mp_Model3 = new GameObject();
@@ -111,17 +109,6 @@ bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 	{
 		return false;
 	}
-	mp_Model3->AddComponent<Sprite>()->LoadSprite(mp_DirectX->mp_device, mp_DirectX->mp_deviceContext, "stone.tga");
-	result = mp_Model3->AddComponent<SpriteRenderer>()->Initialize(mp_DirectX->mp_device, mp_DirectX->mp_deviceContext);
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
-		return false;
-	}
-
-	mp_Model3->GetTransform()->SetPosition(Vector2(-5.0f, 0.0f));
-	mp_Model3->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
-	mp_Model3->SetParent(mp_Model2);
 
 	gameObjects.push_back(mp_Model);
 	gameObjects.push_back(mp_Model2);
@@ -162,8 +149,8 @@ void Graphics::Update()
 	//mp_Model2->GetTransform()->SetLocalPosition(mp_Model2->GetTransform()->GetLocalPosition() + Vector2(-0.8f, 0.0f) * Time::GetDeltaTime());
 	//gameObjects[0]->GetTransform()->SetPosition(gameObjects[0]->GetTransform()->GetPosition() + Vector2(-0.1f, 0.0f) * Time::GetDeltaTime());
 	//gameObjects[1]->GetTransform()->SetPosition(gameObjects[1]->GetTransform()->GetPosition() + Vector2(0.5f, 0.0f) * Time::GetDeltaTime());
-	//gameObjects[0]->GetTransform()->SetLocalRotation(gameObjects[0]->GetTransform()->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
-	gameObjects[1]->GetTransform()->SetLocalScale(gameObjects[1]->GetTransform()->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
+	gameObjects[0]->transform->SetLocalRotation(gameObjects[0]->transform->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
+	//gameObjects[0]->transform->SetLocalScale(gameObjects[0]->transform->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
 	//gameObjects[2]->GetTransform()->SetLocalRotation(gameObjects[2]->GetTransform()->GetLocalRotation() + 100.0f * Time::GetDeltaTime());
 	//mp_Model->GetTransform()->SetLocalScale(mp_Model->GetTransform()->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
 
@@ -214,7 +201,7 @@ bool Graphics::EditorRender()
 		gameObjects[i]->Render();
 
 		// Render the model using the color shader.
-		result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), 6, gameObjects[i]->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture());
+		result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), 6, gameObjects[i]->transform->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture());
 		if (!result)
 		{
 			return false;
