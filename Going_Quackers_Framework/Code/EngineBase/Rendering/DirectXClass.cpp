@@ -1,5 +1,13 @@
 #include "DirectXClass.h"
 
+DirectXClass* DirectXClass::SingletonInstance = 0;
+DirectXClass* DirectXClass::getInstance()
+{
+	if (SingletonInstance == 0)
+		SingletonInstance = new DirectXClass();
+	return SingletonInstance;
+}
+
 DirectXClass::DirectXClass()
 {
 	mp_swapChain = 0;
@@ -9,10 +17,6 @@ DirectXClass::DirectXClass()
 	mp_depthStencilState = 0;
 	mp_depthStencilView = 0;
 	mp_rasterState = 0;
-}
-
-DirectXClass::DirectXClass(const DirectXClass& other)
-{
 }
 
 DirectXClass::~DirectXClass()

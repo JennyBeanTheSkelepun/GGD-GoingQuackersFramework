@@ -7,7 +7,7 @@ bool tempToggle = false;
 
 Graphics::Graphics()
 {
-	mp_DirectX = 0;
+	mp_DirectX = DirectXClass::getInstance();
 	mp_Camera = 0;
 	mp_Shader = 0;
 }
@@ -36,13 +36,13 @@ Graphics::~Graphics()
 
 bool Graphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
 {
-	mp_DirectX = new DirectXClass();
-	if (!mp_DirectX)
-	{
-		return false;
-	}
+	//mp_DirectX = DirectXClass::getInstance();
+	//if (!DirectXClass::getInstance())
+	//{
+	//	return false;
+	//}
 
-	bool result = mp_DirectX->Initalize(ai_screenWidth, ai_screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
+	bool result = DirectXClass::getInstance()->Initalize(ai_screenWidth, ai_screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could Not Initalized Direct X 11", L"Error", MB_OK);

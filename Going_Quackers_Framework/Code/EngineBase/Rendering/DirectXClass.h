@@ -11,8 +11,17 @@
 class DirectXClass
 {
 public:
+	static DirectXClass* getInstance();
+
+	DirectXClass(DirectXClass const&) = delete;
+	void operator=(DirectXClass const&) = delete;
+
+private:
+
+	static DirectXClass* SingletonInstance;
 	DirectXClass();
-	DirectXClass(const DirectXClass& other);
+
+public:
 	~DirectXClass();
 
 	bool Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vsync, HWND hwnd, bool ab_fullScreen, float af_screenDepth, float af_screenNear);
@@ -29,7 +38,6 @@ public:
 	void GetOrthoMatrix(DirectX::XMMATRIX& orthoMatrix);
 
 	void GetVideoCardInfo(char* cardName, int& memory);
-
 
 	bool mb_vsync_enabled;
 	int mi_videoCardMemory;
