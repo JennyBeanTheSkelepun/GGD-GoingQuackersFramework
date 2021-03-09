@@ -7,12 +7,18 @@ EngineMain::EngineMain()
 {
 	mp_Input = 0;
 	mp_Graphics = 0;
+
+	mb_sizeMovement = false;
+	mb_minamised = false;
 }
 
 EngineMain::~EngineMain()
 {
 	delete mp_Input;
 	mp_Input = nullptr;
+
+	delete mp_Graphics;
+	mp_Graphics = nullptr;
 }
 
 bool EngineMain::Initalize()
@@ -88,6 +94,41 @@ LRESULT CALLBACK EngineMain::MessageHandler(HWND hwnd, UINT uint, WPARAM wParam,
 {
 	switch (uint)
 	{
+		case WM_SIZE:
+		{
+			if (wParam == SIZE_MINIMIZED)
+			{
+				mb_minamised = true;
+				return 0;
+			}
+			else if (mb_minamised)
+			{
+				mb_minamised = false;
+				return 0;
+			}
+		}
+
+		case WM_ENTERSIZEMOVE:
+		{
+			mb_sizeMovement = true;
+			return 0;
+		}
+
+		case WM_EXITSIZEMOVE:
+		{
+			mb_sizeMovement = false;
+			return 0;
+		}
+
+		case WM_GETMINMAXINFO:
+		{
+			auto info = reinterpret_cast<MINMAXINFO*>(lParam);
+			info->ptMinTrackSize.x = 320;
+			info->ptMinTrackSize.y = 200;
+			return 0;
+		}
+
+
 	case WM_KEYDOWN:
 		mp_Input->KeyDown((unsigned int) wParam);
 		return 0;
@@ -158,18 +199,19 @@ void EngineMain::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 		li_posY = (GetSystemMetrics(SM_CYSCREEN) - ai_screenHeight) / 2;
 	}
 
-	m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
-		WS_CAPTION | WS_SYSMENU | WS_VISIBLE,
+	m_hwnd = CreateWindowEx(0, m_applicationName, m_applicationName,
+		WS_OVERLAPPEDWINDOW,
 		li_posX, li_posY, ai_screenWidth, ai_screenHeight, NULL, NULL, m_hInstance, NULL);
+
+	//m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
+	//	WS_CAPTION | WS_SYSMENU | WS_VISIBLE,
+	//	li_posX, li_posY, ai_screenWidth, ai_screenHeight, NULL, NULL, m_hInstance, NULL);
 
 	ShowWindow(m_hwnd, SW_SHOW);
 	SetForegroundWindow(m_hwnd);
 	SetFocus(m_hwnd);
 
 	ShowCursor(true);
-
-	ai_screenHeight -= 49; //<------------------------- IGNORE ITS A DUCTTAPE FIX AT 6PM
-	ai_screenWidth -= 10; //<-------------------------- IGNORE ITS A DUCTTAPE FIX AT 6PM
 
 	return;
 }
@@ -204,12 +246,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam)
 			PostQuitMessage(0);
 			return 0;
 		}
+
 		// Check if the window is being closed.
 		case WM_CLOSE:
 		{
 			PostQuitMessage(0);
 			return 0;
 		}
+
 		// All other messages pass to the message handler in the system class.
 		default:
 		{

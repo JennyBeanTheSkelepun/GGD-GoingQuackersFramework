@@ -21,94 +21,116 @@ DirectXClass::DirectXClass()
 
 DirectXClass::~DirectXClass()
 {
-	// Before shutting down set to windowed mode or when you release the swap chain it will throw an exception.
-	if (mp_swapChain)
-	{
-		mp_swapChain->SetFullscreenState(false, NULL);
-	}
+	//// Before shutting down set to windowed mode or when you release the swap chain it will throw an exception.
+	//if (mp_swapChain)
+	//{
+	//	mp_swapChain->SetFullscreenState(false, NULL);
+	//}
 
-	if (mp_rasterState)
-	{
-		mp_rasterState->Release();
-		delete mp_rasterState;
-		mp_rasterState = nullptr;
-	}
+	//if (mp_rasterState)
+	//{
+	//	mp_rasterState->Release();
+	//	delete mp_rasterState;
+	//	//mp_rasterState = nullptr;
+	//}
 
-	if (mp_depthStencilView)
-	{
-		mp_depthStencilView->Release();
-		delete mp_depthStencilView;
-		mp_depthStencilView = nullptr;
-	}
+	//if (mp_depthStencilView)
+	//{
+	//	mp_depthStencilView->Release();
+	//	delete mp_depthStencilView;
+	//	mp_depthStencilView = nullptr;
+	//}
 
-	if (mp_depthStencilState)
-	{
-		mp_depthStencilState->Release();
-		delete mp_depthStencilState;
-		mp_depthStencilState = nullptr;
-	}
+	//if (mp_depthStencilState)
+	//{
+	//	mp_depthStencilState->Release();
+	//	delete mp_depthStencilState;
+	//	mp_depthStencilState = nullptr;
+	//}
 
-	if (mp_depthStencilBuffer)
-	{
-		mp_depthStencilBuffer->Release();
-		delete mp_depthStencilBuffer;
-		mp_depthStencilBuffer = nullptr;
-	}
+	//if (mp_depthStencilBuffer)
+	//{
+	//	mp_depthStencilBuffer->Release();
+	//	delete mp_depthStencilBuffer;
+	//	mp_depthStencilBuffer = nullptr;
+	//}
 
-	if (mp_renderTargetView)
-	{
-		mp_renderTargetView->Release();
-		delete mp_renderTargetView;
-		mp_renderTargetView = nullptr;
-	}
+	//if (mp_renderTargetView)
+	//{
+	//	mp_renderTargetView->Release();
+	//	delete mp_renderTargetView;
+	//	mp_renderTargetView = nullptr;
+	//}
 
-	if (mp_deviceContext)
-	{
-		mp_deviceContext->Release();
-		delete mp_deviceContext;
-		mp_deviceContext = nullptr;
-	}
+	//if (mp_deviceContext)
+	//{
+	//	mp_deviceContext->Release();
+	//	delete mp_deviceContext;
+	//	mp_deviceContext = nullptr;
+	//}
 
-	if (mp_device)
-	{
-		mp_device->Release();
-		delete mp_device;
-		mp_device = nullptr;
-	}
+	//if (mp_device)
+	//{
+	//	mp_device->Release();
+	//	delete mp_device;
+	//	mp_device = nullptr;
+	//}
 
-	if (mp_swapChain)
-	{
-		mp_swapChain->Release();
-		delete mp_swapChain;
-		mp_swapChain = nullptr;
-	}
+	//if (mp_swapChain)
+	//{
+	//	mp_swapChain->Release();
+	//	delete mp_swapChain;
+	//	mp_swapChain = nullptr;
+	//}
 
-	if (mp_renderTextureTargetTexture)
-	{
-		mp_renderTextureTargetTexture->Release();
-		delete mp_renderTextureTargetTexture;
-		mp_renderTextureTargetTexture = nullptr;
-	}
+	//if (mp_renderTextureTargetTexture)
+	//{
+	//	mp_renderTextureTargetTexture->Release();
+	//	delete mp_renderTextureTargetTexture;
+	//	mp_renderTextureTargetTexture = nullptr;
+	//}
 
-	if (mp_renderTextureRenderTargetView)
-	{
-		mp_renderTextureRenderTargetView->Release();
-		delete mp_renderTextureRenderTargetView;
-		mp_renderTextureRenderTargetView = nullptr;
-	}
+	//if (mp_renderTextureRenderTargetView)
+	//{
+	//	mp_renderTextureRenderTargetView->Release();
+	//	delete mp_renderTextureRenderTargetView;
+	//	mp_renderTextureRenderTargetView = nullptr;
+	//}
 
-	if (mp_renderTextureResourceView)
-	{
-		mp_renderTextureResourceView->Release();
-		delete mp_renderTextureResourceView;
-		mp_renderTextureResourceView = nullptr;
-	}
+	//if (mp_renderTextureResourceView)
+	//{
+	//	mp_renderTextureResourceView->Release();
+	//	delete mp_renderTextureResourceView;
+	//	mp_renderTextureResourceView = nullptr;
+	//}
 
+}
+
+bool DirectXClass::ResizeRenderBuffers(HWND hwnd)
+{
+	RECT clientRect;
+	GetClientRect(hwnd, &clientRect);
+
+	// Set up the description of the depth buffer.
+	int ai_screenWidth = clientRect.right;
+	int ai_screenHeight = clientRect.bottom;
+
+
+
+
+	return true;
 }
 
 bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vsync,
 	HWND hwnd, bool ab_fullScreen, float af_screenDepth, float af_screenNear)
 {
+	RECT clientRect;
+	GetClientRect(hwnd, &clientRect);
+
+	// Set up the description of the depth buffer.
+	ai_screenWidth = clientRect.right;
+	ai_screenHeight = clientRect.bottom;
+
 	HRESULT result;
 	IDXGIFactory* factory;
 	IDXGIAdapter* adapter;
@@ -339,13 +361,6 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 
 	// Initialize the description of the depth buffer.
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
-
-	//RECT clientRect;
-	//GetClientRect(hwnd, &clientRect);
-
-	//// Set up the description of the depth buffer.
-	//depthBufferDesc.Width = clientRect.right;
-	//depthBufferDesc.Height = clientRect.left;
 	
 	//depthBufferDesc.Width = 1280;
 	//depthBufferDesc.Height = 780;

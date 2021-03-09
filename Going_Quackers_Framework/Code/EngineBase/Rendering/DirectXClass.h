@@ -24,6 +24,8 @@ private:
 public:
 	~DirectXClass();
 
+	bool ResizeRenderBuffers(HWND hwnd);
+
 	bool Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vsync, HWND hwnd, bool ab_fullScreen, float af_screenDepth, float af_screenNear);
 
 	void BeginGameScene(float red, float green, float blue, float alpha);

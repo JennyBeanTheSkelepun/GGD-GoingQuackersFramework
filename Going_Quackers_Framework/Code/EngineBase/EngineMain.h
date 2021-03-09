@@ -21,7 +21,7 @@ public:
 private:
 
 	bool UpdateRenderLoop();
-	void InitalizeWindows(int&, int&);
+	void InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight);
 	void ShutdownWindows();
 
 	LPCWSTR m_applicationName;
@@ -30,6 +30,10 @@ private:
 
 	Input* mp_Input;
 	Graphics* mp_Graphics;
+
+
+	bool mb_sizeMovement;
+	bool mb_minamised;
 };
 
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
