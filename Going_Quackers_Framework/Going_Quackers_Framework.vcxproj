@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Code\EngineBase\Data Structures\Texture2D.cpp" />
     <ClCompile Include="Code\EngineBase\EngineMain.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
@@ -161,10 +160,13 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.cpp" />
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp" />
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTexture2D.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Code\EngineBase\Data Structures\Texture2D.h" />
     <ClInclude Include="Code\EngineBase\Data Structures\Vectors.h" />
     <ClInclude Include="Code\EngineBase\Data Structures\Vertex.h" />
     <ClInclude Include="Code\EngineBase\EngineMain.h" />
@@ -191,6 +193,10 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTexture2D.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h" />
     <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

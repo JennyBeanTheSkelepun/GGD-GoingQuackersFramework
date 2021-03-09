@@ -14,11 +14,11 @@ DirectXShader::~DirectXShader()
 	ShutdownShader();
 }
 
-bool DirectXShader::Initialize(ID3D11Device* device, HWND hwnd)
+bool DirectXShader::Initialize(ID3D11Device* device, HWND hwnd, std::string FileLocation)
 {
 	bool result;
 	// Initialize the vertex and pixel shaders.
-	result = InitializeShader(device, hwnd, (WCHAR*)(L"Code/EngineBase/Rendering/Shaders/TextureSimple.fx"), (WCHAR*)(L"Code/EngineBase/Rendering/Shaders/TextureSimple.fx"));
+	result = InitializeShader(device, hwnd, (WCHAR*)(FileLocation.c_str()), (WCHAR*)(FileLocation.c_str()));
 	if (!result)
 	{
 		return false;

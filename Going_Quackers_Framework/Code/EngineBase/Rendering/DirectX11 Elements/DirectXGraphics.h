@@ -6,9 +6,7 @@
 
 #include "../../Rendering/Interface/Graphics_API_Interface.h"
 
-#include "../../Game Systems/Camera.h"
 #include "../../Game Systems/GameObject.h"
-#include "../../Rendering/Shader.h"
 
 #include "../../ImGui/ImGui SourceCode/imgui.h"
 #include "../../ImGui/ImGui SourceCode/imgui_impl_win32.h"
@@ -18,6 +16,9 @@
 #include "../../Rendering/DirectX11 Elements/DirectXImGui.h"
 #include "../../Rendering/DirectX11 Elements/DirectXClass.h"
 #include "../../Rendering/DirectX11 Elements/DirectXRenderLoop.h"
+#include "../../Rendering/DirectX11 Elements/DirectXCamera.h"
+#include "../../Rendering/DirectX11 Elements/DirectXTextureManager.h"
+#include "../../Rendering/DirectX11 Elements/DirectXShaderManager.h"
 
 const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = false;
@@ -64,11 +65,10 @@ private:
 	bool Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd);
 
 	void Update();
-	bool Render();
 
-	DirectXCamera* mp_Camera;
 	std::vector<GameObject*> gameObjects;
-	DirectXShader* mp_Shader;
+
+
 
 
 	// Direct X and Render Texture Setup
@@ -80,6 +80,17 @@ private:
 	// RenderLoop 
 	DirectXRenderLoop* mp_DirectXRenderLoop;
 
+	// Camera
+	DirectXCamera* mp_Camera;
+
+	// Shader
+	DirectXShader* mp_Shader;
+
+	// Texture Manager
+	DirectXTextureManager* mp_TextureManager;
+
+	// Shader Manager
+	DirectXShaderManager* mp_ShaderManager;
 };
 
 #endif // !_DIRECTX_GRAPHICS_H_

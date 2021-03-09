@@ -15,7 +15,7 @@ SpriteRenderer::SpriteRenderer(GameObject* owner) : Component(owner)
 
 SpriteRenderer::~SpriteRenderer()
 {
-	ShutdownBuffers();;
+	ShutdownBuffers();
 }
 
 void SpriteRenderer::Initialize()
@@ -26,8 +26,6 @@ void SpriteRenderer::Initialize()
 void SpriteRenderer::Render()
 {
 	RenderBuffers(mp_deviceContext);
-
-
 }
 
 bool SpriteRenderer::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext)

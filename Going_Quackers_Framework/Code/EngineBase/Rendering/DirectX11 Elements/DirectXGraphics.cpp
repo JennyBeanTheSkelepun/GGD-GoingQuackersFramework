@@ -125,9 +125,29 @@ bool DirectXGraphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND h
 	{
 		return false;
 	}
-
 	// Set the initial position of the camera.
-	mp_Camera->SetPosition(0.0f, 0.0f, -5.0f);
+	mp_Camera->SetPosition(Vector3(0.0f, 0.0f, -5.0f));
+
+	mp_TextureManager = new DirectXTextureManager();
+	if (!mp_TextureManager)
+	{
+		return false;
+	}
+
+	// Create the color shader object.
+	mp_Shader = new DirectXShader();
+	if (!mp_Shader)
+	{
+		return false;
+	}
+
+	// Initialize the color shader object.
+	result = mp_Shader->Initialize(mp_DirectX->GetDevice(), hwnd);
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the color shader object.", L"Error", MB_OK);
+		return false;
+	}
 
 	//// Create the model object.
 	//GameObject* mp_Model = new GameObject();
@@ -187,21 +207,6 @@ bool DirectXGraphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND h
 	//gameObjects.push_back(mp_Model);
 	//gameObjects.push_back(mp_Model2);
 	////gameObjects.push_back(mp_Model3);
-
-	// Create the color shader object.
-	mp_Shader = new DirectXShader();
-	if (!mp_Shader)
-	{
-		return false;
-	}
-
-	// Initialize the color shader object.
-	result = mp_Shader->Initialize(mp_DirectX->GetDevice(), hwnd);
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the color shader object.", L"Error", MB_OK);
-		return false;
-	}
 
 	return true;
 }

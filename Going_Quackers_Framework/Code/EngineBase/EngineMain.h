@@ -3,7 +3,7 @@
 
 #define WIN32_LEAN_AND_MEAN
 
-#include "Graphics.h"
+#include "../../Code/EngineBase/Rendering/Graphics.h"
 #include "Game Systems/Input.h"
 #include "Game Systems/Time.h"
 
