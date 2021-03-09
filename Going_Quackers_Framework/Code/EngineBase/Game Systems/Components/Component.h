@@ -3,6 +3,15 @@
 
 class GameObject;
 
+enum ComponentTypes
+{
+	Not_Usefull = 0,
+	Two_D_Sprite_Renderer = 1,
+	Three_D_Object_Renderer = 2,
+	TileSheet_Sprite_Renderer = 3,
+	Virtual_Camera = 4
+};
+
 class Component
 {
 public:
@@ -35,6 +44,7 @@ public:
 
 protected:
 	GameObject* mp_owner;
+	ComponentTypes type;
 };
 
 #endif

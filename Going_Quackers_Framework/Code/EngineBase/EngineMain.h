@@ -19,7 +19,6 @@ public:
 	LRESULT CALLBACK MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam);
 
 private:
-
 	bool UpdateRenderLoop();
 	void InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight);
 	void ShutdownWindows();
@@ -29,8 +28,7 @@ private:
 	HWND m_hwnd;
 
 	Input* mp_Input;
-	Graphics* mp_Graphics;
-
+	DirectXGraphics* mp_Graphics;
 
 	bool mb_sizeMovement;
 	bool mb_minamised;

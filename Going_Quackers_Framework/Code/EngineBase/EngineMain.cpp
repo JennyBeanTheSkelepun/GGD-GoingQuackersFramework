@@ -33,7 +33,7 @@ bool EngineMain::Initalize()
 		return false;
 	mp_Input->Initialize();
 
-	mp_Graphics = new Graphics();
+	mp_Graphics = new DirectXGraphics();
 	if (!mp_Graphics) 
 		return false;
 	
@@ -202,10 +202,6 @@ void EngineMain::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 	m_hwnd = CreateWindowEx(0, m_applicationName, m_applicationName,
 		WS_OVERLAPPEDWINDOW,
 		li_posX, li_posY, ai_screenWidth, ai_screenHeight, NULL, NULL, m_hInstance, NULL);
-
-	//m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
-	//	WS_CAPTION | WS_SYSMENU | WS_VISIBLE,
-	//	li_posX, li_posY, ai_screenWidth, ai_screenHeight, NULL, NULL, m_hInstance, NULL);
 
 	ShowWindow(m_hwnd, SW_SHOW);
 	SetForegroundWindow(m_hwnd);

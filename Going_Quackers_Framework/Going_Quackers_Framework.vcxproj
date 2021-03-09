@@ -141,7 +141,6 @@
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\Data Structures\Texture2D.cpp" />
     <ClCompile Include="Code\EngineBase\EngineMain.cpp" />
-    <ClCompile Include="Code\EngineBase\Game Systems\Camera.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
@@ -156,8 +155,12 @@
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_impl_win32.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_tables.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_widgets.cpp" />
-    <ClCompile Include="Code\EngineBase\Rendering\DirectXClass.cpp" />
-    <ClCompile Include="Code\EngineBase\Rendering\Shader.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +168,6 @@
     <ClInclude Include="Code\EngineBase\Data Structures\Vectors.h" />
     <ClInclude Include="Code\EngineBase\Data Structures\Vertex.h" />
     <ClInclude Include="Code\EngineBase\EngineMain.h" />
-    <ClInclude Include="Code\EngineBase\Game Systems\Camera.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h" />
@@ -183,8 +185,13 @@
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_rectpack.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_textedit.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h" />
-    <ClInclude Include="Code\EngineBase\Rendering\DirectXClass.h" />
-    <ClInclude Include="Code\EngineBase\Rendering\Shader.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

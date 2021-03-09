@@ -5,25 +5,35 @@
 #include <memory>
 #include <string>
 
+//- only knows windows Elements of Imgui to prevent anyone from messing up Api template code -//
 #include "ImGui SourceCode/imgui.h"
 #include "ImGui SourceCode/imgui_impl_win32.h"
-#include "ImGui SourceCode/imgui_impl_dx11.h"
-
-class Graphics;
 
 class EngineGuiClass
 {
+//- Singleton Decliration -//
 public:
+	static EngineGuiClass* getInstance();
+
+	EngineGuiClass(EngineGuiClass const&) = delete;
+	void operator=(EngineGuiClass const&) = delete;
+
+private:
+	static EngineGuiClass* SingletonInstance;
 	EngineGuiClass();
 	~EngineGuiClass();
 
-	void Update(ID3D11ShaderResourceView* a_RenderTexture);
+public:
+	void Update();
 	void GameUpdate();
-	void EditorUpdate(ID3D11ShaderResourceView* a_RenderTexture);
-	void Render();
+	void EditorUpdate();
+	void SetImGuiStyle();
 
 	const char* BoolToString(bool Input);
 
+	inline bool IsInPlayMode() { return mb_playGame; }
+
+private:
 	bool mb_maxEditor = false;
 	bool mb_maxOnPlay = false;
 	bool mb_playGame = false;
