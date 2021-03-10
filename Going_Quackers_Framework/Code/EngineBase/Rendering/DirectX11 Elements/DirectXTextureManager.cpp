@@ -35,9 +35,10 @@ int DirectXTextureManager::CreateTexture(DirectXClass& ar_DirectXClass , std::st
 	return texturePool.size() - 1;
 }
 
-void DirectXTextureManager::DeleteTexture(int index)
+int DirectXTextureManager::DeleteTexture(int index)
 {
 	texturePool[index].UsedByCount--;
+	return -1;
 }
 
 Texture2D* DirectXTextureManager::GetTexture(int index)

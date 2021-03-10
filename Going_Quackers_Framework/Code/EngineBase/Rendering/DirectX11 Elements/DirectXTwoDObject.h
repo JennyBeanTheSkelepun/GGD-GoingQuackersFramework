@@ -2,11 +2,11 @@
 
 #include "DirectXClass.h"
 
-class DirectX2DObject
+class DirectXTwoDObject
 {
 public:
-	DirectX2DObject();
-	~DirectX2DObject();
+	DirectXTwoDObject();
+	~DirectXTwoDObject();
 
 	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 	void Render();

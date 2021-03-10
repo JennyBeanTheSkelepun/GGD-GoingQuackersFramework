@@ -11,7 +11,7 @@ SpriteRenderer::SpriteRenderer(GameObject* owner) : Component(owner, ComponentTy
 	mi_Shader = 0;
 
 	//- Add To Rendering Loop -//
-	mi_ID = Graphics::getInstance()->AddObjectToRenderLoop<DirectXGraphics*>(this);
+	mi_ID = Graphics::getInstance()->AddObjectToApiRenderILoop(this);
 }
 
 SpriteRenderer::~SpriteRenderer()
@@ -51,17 +51,17 @@ SpriteRenderer::~SpriteRenderer()
 void SpriteRenderer::Initialze(std::string TextureLocation, std::string ShaderLocation)
 {
 	//- If Texture/Shader/Object is instantiated then dont try and remake it  -//
-	if (mi_Texture == -1) { mi_Texture = Graphics::getInstance()->LoadTexture<DirectXGraphics*>(TextureLocation); }
-	if (mi_Shader == -1) { mi_Shader = Graphics::getInstance()->LoadShader<DirectXGraphics*>(ShaderLocation); }
-	if (mi_ID == -1) { mi_ID = Graphics::getInstance()->AddObjectToRenderLoop<DirectXGraphics*>(this); }
+	if (mi_Texture == -1) { mi_Texture = Graphics::getInstance()->LoadTexture(TextureLocation); }
+	if (mi_Shader == -1) { mi_Shader = Graphics::getInstance()->LoadShader(ShaderLocation); }
+	if (mi_ID == -1) { mi_ID = Graphics::getInstance()->AddObjectToApiRenderILoop(this); }
 }
 
 void SpriteRenderer::RemoveTextureShader()
 {
 	//- If Texture/Shader/Object isnt instantiated then dont try and remove it -//
-	if (mi_Texture != -1) { mi_Texture = Graphics::getInstance()->RemoveTexture<DirectXGraphics*>(mi_Texture); }
-	if (mi_Shader != -1) { mi_Shader = Graphics::getInstance()->RemoveShader<DirectXGraphics*>(mi_Shader); }
-	if (mi_ID != -1) { mi_ID = Graphics::getInstance()->RemoveObjectFromRenderLoop<DirectXGraphics*>(mi_ID); }
+	if (mi_Texture != -1) { mi_Texture = Graphics::getInstance()->RemoveTexture(mi_Texture); }
+	if (mi_Shader != -1) { mi_Shader = Graphics::getInstance()->RemoveShader(mi_Shader); }
+	if (mi_ID != -1) { mi_ID = Graphics::getInstance()->RemoveObjectFromRenderLoop(mi_ID); }
 }
 
 //bool SpriteRenderer::InitializeBuffers(ID3D11Device* device)

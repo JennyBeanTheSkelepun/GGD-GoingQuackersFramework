@@ -1,8 +1,9 @@
 #include "DirectXRenderLoop.h"
 
-DirectXRenderLoop::DirectXRenderLoop(DirectXClass& ar_DirectXClass) 
+DirectXRenderLoop::DirectXRenderLoop(DirectXClass* ap_DirectX) 
 {
-	mr_directXClass = ar_DirectXClass;
+	mp_2DModel = new DirectXTwoDObject();
+	mp_2DModel->Initialize(ap_DirectX->GetDevice(), ap_DirectX->GetDeviceContext());
 }
 
 DirectXRenderLoop::~DirectXRenderLoop()
@@ -52,21 +53,18 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	for (size_t i = 0; i < GameObjectsToRender.size(); i++)
 	{
-		// Vertex and index
-		//GameObjectsToRender[i]->RenderBuffers(ar_DirectX.GetDeviceContext());
+		//- universal Plane for 2d elements -//
+		mp_2DModel->Render();
+		DirectXShader* tempShader = ar_Shader.GetShader(GameObjectsToRender[i]->GetShader());
+		Texture2D* tempTexture = ar_texture.GetTexture(GameObjectsToRender[i]->GetShader());
 
-		//Sprite* temp = GameObjectsToRender[i]->mp_spriteReference;
+		GameObject* tempGameObject = GameObjectsToRender[i]->GetOwner();
 
-		//GameObject* temp1 = GameObjectsToRender[i]->GetOwner();
-
-		ar_Shader.GetShader(temp->GetTexture())->Render(ar_DirectX.GetDeviceContext(), 6, temp1->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, ar_Shader.GetShader(temp1->GetComponent<Sprite>()->GetTexture())->);
-
-		// Render the model using the color shader.
-		//result = ar_Shader.Render(ar_DirectX.GetDeviceContext(), 6, gameObjects[i]->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture());
-		//if (!result)
-		//{
-		//	return false;
-		//}
+		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, tempGameObject->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
+		if (!result)
+		{
+			return false;
+		}
 	}
 
 	//-----------------//
@@ -114,21 +112,26 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	for (size_t i = 0; i < GameObjectsToRender.size(); i++)
 	{
-		//gameObjects[i]->Render();
+		//- universal Plane for 2d elements -//
+		mp_2DModel->Render();
+		DirectXShader* tempShader = ar_Shader.GetShader(GameObjectsToRender[i]->GetShader());
+		Texture2D* tempTexture = ar_texture.GetTexture(GameObjectsToRender[i]->GetShader());
 
-		//// Render the model using the color shader.
-		//result = ar_Shader.Render(ar_DirectX.GetDeviceContext(), 6, worldMatrix, viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture());
-		//if (!result)
-		//{
-		//	return false;
-		//}
+		GameObject* tempGameObject = GameObjectsToRender[i]->GetOwner();
+
+		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, tempGameObject->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
+		if (!result)
+		{
+			return false;
+		}
 	}
 
 	ar_ImGui.Render();
 	ar_DirectX.EndScene();
 }
 
-void DirectXRenderLoop::SetObjectToRender(SpriteRenderer* ObjToRender)
+int DirectXRenderLoop::SetObjectToRender(SpriteRenderer* ObjToRender)
 {
 	GameObjectsToRender.push_back(ObjToRender);
+	return GameObjectsToRender.size() - 1;
 }

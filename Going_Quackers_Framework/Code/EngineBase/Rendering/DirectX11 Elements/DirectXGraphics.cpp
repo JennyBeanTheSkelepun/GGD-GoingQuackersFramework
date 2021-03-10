@@ -1,52 +1,16 @@
 #include "DirectXGraphics.h"
-#include "../../Game Systems/Components/SpriteRenderer.h"
-#include "../../Game Systems/Components/Sprite.h"
-#include "../../Game Systems/Time.h"
 
-bool tempToggle = false;
+class SpriteRenderer;
 
-void DirectXGraphics::StartAPIRenderLoop()
+DirectXGraphics::DirectXGraphics() : GraphicsInterface() //<-------------- TODO NULLPTR INTIALISATION
 {
-	mp_DirectXRenderLoop->Render(*mp_DirectX, *mp_Camera, *mp_ShaderManager, *mp_TextureManager, *mp_ImGui);
-}
-
-void DirectXGraphics::AddObjectToRenderLoop(Component& ar_component)
-{
-	return mp_DirectXRenderLoop->SetObjectToRender(ar_component);
-}
-
-bool DirectXGraphics::InitalizeGraphicalApi()
-{
-	return Initialize();
-}
-
-void DirectXGraphics::SetNewActiveCamera(VirtualCamera& NextActiveCamera)
-{
-}
-
-int DirectXGraphics::LoadTexture(std::string TextureLocation)
-{
-	return mp_TextureManager->CreateTexture(*mp_DirectX, TextureLocation);
-}
-
-int DirectXGraphics::LoadShader(std::string ShaderLocation)
-{
-	return mp_ShaderManager->CreateShader(*mp_DirectX, *mp_Window, ShaderLocation);
-}
-
-int DirectXGraphics::LoadSpriteSheet(std::string SpriteSheetLocation)
-{
-	return 0;
-}
-
-void DirectXGraphics::GraphicsAPIUpdate()
-{
-	Update();
-}
-
-
-DirectXGraphics::DirectXGraphics() //<-------------- TODO NULLPTR INTIALISATION
-{
+	mp_Camera = nullptr;
+	mp_DirectX = nullptr;
+	mp_DirectXRenderLoop = nullptr;
+	mp_ImGui = nullptr;
+	mp_ShaderManager = nullptr;
+	mp_TextureManager = nullptr;
+	mp_Window = nullptr;
 }
 
 DirectXGraphics::~DirectXGraphics()
@@ -58,17 +22,90 @@ DirectXGraphics::~DirectXGraphics()
 	mp_Camera = nullptr;
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	for (size_t i = 0; i < gameObjects.size(); i++)
-	{
-		delete gameObjects[i];
-		gameObjects[i] = nullptr;
-	}
+	//for (size_t i = 0; i < gameObjects.size(); i++)
+	//{
+	//	delete gameObjects[i];
+	//	gameObjects[i] = nullptr;
+	//}
 
 	delete mp_ShaderManager;
 	mp_ShaderManager = nullptr;
 
 	delete mp_ImGui;
 	mp_ImGui = nullptr;
+}
+
+void DirectXGraphics::StartAPIRenderLoop()
+{
+	mp_DirectXRenderLoop->Render(*mp_DirectX, *mp_Camera, *mp_ShaderManager, *mp_TextureManager, *mp_ImGui);
+}
+
+int DirectXGraphics::AddObjectToRenderLoop(SpriteRenderer* ar_component)
+{
+	return mp_DirectXRenderLoop->SetObjectToRender(ar_component);
+}
+
+int DirectXGraphics::RemoveObjectFromRenderLoop(int index) //<---------------------------------------- TODO ACTUALY REMOVE OBJECTS
+{
+	return -1;
+}
+
+bool DirectXGraphics::InitalizeGraphicalApi()
+{
+	return Initialize();
+}
+
+//void DirectXGraphics::SetNewActiveCamera(VirtualCamera& NextActiveCamera)
+//{
+//}
+
+int DirectXGraphics::LoadTexture(std::string TextureLocation)
+{
+	return mp_TextureManager->CreateTexture(*mp_DirectX, TextureLocation);
+}
+
+int DirectXGraphics::RemoveTexture(int index)
+{
+	return mp_TextureManager->DeleteTexture(index);
+}
+
+void DirectXGraphics::CleanUpTexturePool()
+{
+	mp_TextureManager->RemoveUnusedTextures();
+}
+
+int DirectXGraphics::LoadShader(std::string ShaderLocation)
+{
+	return mp_ShaderManager->CreateShader(*mp_DirectX, *mp_Window, ShaderLocation);
+}
+
+int DirectXGraphics::RemoveShader(int index)
+{
+	return mp_ShaderManager->DeleteShader(index);
+}
+
+void DirectXGraphics::CleanUpShaderPool()
+{
+	mp_ShaderManager->RemoveUnusedShader();
+}
+
+int DirectXGraphics::LoadSpriteSheet(std::string SpriteSheetLocation)
+{
+	return -1;
+}
+
+int DirectXGraphics::RemoveSpriteSheet(int index)
+{
+	return -1;
+}
+
+void DirectXGraphics::CleanUpSpriteSheetPool()
+{
+}
+
+void DirectXGraphics::GraphicsAPIUpdate()
+{
+	Update();
 }
 
 bool DirectXGraphics::Initialize()
@@ -116,6 +153,8 @@ bool DirectXGraphics::Initialize()
 		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Texture shader object.", L"Error", MB_OK);
 		return false;
 	}
+
+	mp_DirectXRenderLoop = new DirectXRenderLoop(mp_DirectX);
 
 	//// Create the model object.
 	//GameObject* mp_Model = new GameObject();

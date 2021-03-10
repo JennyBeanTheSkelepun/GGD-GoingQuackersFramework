@@ -1,14 +1,14 @@
-#include "DirectX2DObject.h"
+#include "DirectXTwoDObject.h"
 #include "../../Data Structures/Vertex.h"
 #include <vector>
 
 
-DirectX2DObject::DirectX2DObject()
+DirectXTwoDObject::DirectXTwoDObject()
 {
 
 }
 
-DirectX2DObject::~DirectX2DObject()
+DirectXTwoDObject::~DirectXTwoDObject()
 {
 	// Release the index buffer.
 	if (mp_indexBuffer)
@@ -25,7 +25,7 @@ DirectX2DObject::~DirectX2DObject()
 	}
 }
 
-bool DirectX2DObject::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
+bool DirectXTwoDObject::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
 {	
 	bool result;
 
@@ -42,9 +42,7 @@ bool DirectX2DObject::Initialize(ID3D11Device* device, ID3D11DeviceContext* devi
 	return true;
 }
 
-
-
-bool DirectX2DObject::InitializeBuffers(ID3D11Device* device)
+bool DirectXTwoDObject::InitializeBuffers(ID3D11Device* device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -108,12 +106,12 @@ bool DirectX2DObject::InitializeBuffers(ID3D11Device* device)
 	return true;
 }
 
-void DirectX2DObject::Render()
+void DirectXTwoDObject::Render()
 {
 	RenderBuffers(mp_deviceContext);
 }
 
-void DirectX2DObject::RenderBuffers(ID3D11DeviceContext* deviceContext)
+void DirectXTwoDObject::RenderBuffers(ID3D11DeviceContext* deviceContext)
 {
 	unsigned int stride;
 	unsigned int offset;

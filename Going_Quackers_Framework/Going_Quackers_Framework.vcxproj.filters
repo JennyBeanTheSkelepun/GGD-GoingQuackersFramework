@@ -228,7 +228,7 @@
     <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
       <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectX2DObject.cpp">
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -332,7 +332,7 @@
     <ClInclude Include="Code\EngineBase\Rendering\Graphics.h">
       <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectX2DObject.h">
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object</Filter>
     </ClInclude>
   </ItemGroup>

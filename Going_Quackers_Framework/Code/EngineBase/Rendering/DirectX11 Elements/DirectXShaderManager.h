@@ -22,7 +22,7 @@ public:
 	~DirectXShaderManager();
 
 	int CreateShader(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow, std::string fileLocation);
-	void DeleteShader(int index);
+	int DeleteShader(int index);
 	DirectXShader* GetShader(int index);
 	void RemoveUnusedShader();
 

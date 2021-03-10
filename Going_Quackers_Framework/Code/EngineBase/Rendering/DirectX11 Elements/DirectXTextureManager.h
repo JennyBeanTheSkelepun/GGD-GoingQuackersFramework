@@ -21,7 +21,7 @@ public:
 	~DirectXTextureManager();
 
 	int CreateTexture(DirectXClass& ar_DirectXClass, std::string fileLocation);
-	void DeleteTexture(int index);
+	int DeleteTexture(int index);
 	void RemoveUnusedTextures();
 	Texture2D* GetTexture(int index);
 

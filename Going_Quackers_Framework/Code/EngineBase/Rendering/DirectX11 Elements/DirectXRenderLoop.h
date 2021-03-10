@@ -3,6 +3,9 @@
 
 #include <vector>
 
+//- TEMP INCLUDE UNTILL MOVE OVER MATRIXES -//
+#include "../../Game Systems/GameObject.h"
+
 #include "../../Game Systems/Components/SpriteRenderer.h"
 #include "../../ImGui/EngineGuiClass.h"
 
@@ -12,29 +15,26 @@
 #include "DirectXShaderManager.h"
 #include "DirectXTextureManager.h"
 
-#include "../../Game Systems/Components/Sprite.h"
+#include "../../../../Code/EngineBase/Rendering/DirectX11 Elements/DirectXTwoDObject.h"
 
 class DirectXRenderLoop
 {
 public: 
-	DirectXRenderLoop(DirectXClass& ar_DirectXClass);
+	DirectXRenderLoop(DirectXClass* ap_DirectX);
 	~DirectXRenderLoop();
-
-	DirectXClass& mr_directXClass;
 	
-	bool Render(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader,
-				DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
+	bool Render(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
 	
-	void SetObjectToRender(SpriteRenderer* ObjToRender);
+	int SetObjectToRender(SpriteRenderer* ObjToRender);
 
 private:
 	std::vector<SpriteRenderer*> GameObjectsToRender;
+	DirectXTwoDObject* mp_2DModel;
 
-	bool EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader,
-					  DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
 
-	bool ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, 
-					  DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
+	bool EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
+
+	bool ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
 };
 
 #endif /* _DIRECT_X_RENDER_LOOP_H_ */

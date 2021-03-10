@@ -35,9 +35,10 @@ int DirectXShaderManager::CreateShader(DirectXClass& ar_DirectXClass, DirectXWin
 	return ShaderPool.size() - 1;
 }
 
-void DirectXShaderManager::DeleteShader(int index)
+int DirectXShaderManager::DeleteShader(int index)
 {
 	ShaderPool[index].UsedByCount--;
+	return -1;
 }
 
 DirectXShader* DirectXShaderManager::GetShader(int index)

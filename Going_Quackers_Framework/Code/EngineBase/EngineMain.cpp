@@ -72,8 +72,8 @@ bool EngineMain::UpdateRenderLoop()
 
 
 
-	Graphics::getInstance()->StartApiUpdateLoop<DirectXGraphics*>();
+	Graphics::getInstance()->StartApiUpdateLoop();
 	//- UPDATE LOOP END -//
 
-	Graphics::getInstance()->StartRenderLoop<DirectXGraphics*>();
+	Graphics::getInstance()->StartRenderLoop();
 }
