@@ -1,6 +1,6 @@
 #include "DirectXRenderLoop.h"
 
-DirectXRenderLoop::DirectXRenderLoop(DirectXClass& ar_DirectXClass)
+DirectXRenderLoop::DirectXRenderLoop(DirectXClass& ar_DirectXClass) 
 {
 	mr_directXClass = ar_DirectXClass;
 }
@@ -9,7 +9,8 @@ DirectXRenderLoop::~DirectXRenderLoop()
 {
 }
 
-bool DirectXRenderLoop::Render(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShader& ar_Shader, DirectXTexture& ar_texture, DirectXImGui& ar_ImGui)
+bool DirectXRenderLoop::Render(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, 
+							   DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui)
 {
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 		ActiveGameRender(ar_DirectX, ar_Camera, ar_Shader, ar_texture, ar_ImGui);
@@ -24,7 +25,8 @@ bool DirectXRenderLoop::Render(DirectXClass& ar_DirectX, DirectXCamera& ar_Camer
 //---------------------------------------------------------------------------//
 
 //- Editor View with Render Texture -//
-bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShader& ar_Shader, DirectXTexture& ar_texture, DirectXImGui& ar_ImGui)
+bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, 
+									 DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui)
 {
 	//- Decliration of matix -//
 	DirectX::XMMATRIX worldMatrix, viewMatrix, projectionMatrix;
@@ -50,14 +52,21 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	for (size_t i = 0; i < GameObjectsToRender.size(); i++)
 	{
-		gameObjects[i]->Render();
+		// Vertex and index
+		//GameObjectsToRender[i]->RenderBuffers(ar_DirectX.GetDeviceContext());
+
+		//Sprite* temp = GameObjectsToRender[i]->mp_spriteReference;
+
+		//GameObject* temp1 = GameObjectsToRender[i]->GetOwner();
+
+		ar_Shader.GetShader(temp->GetTexture())->Render(ar_DirectX.GetDeviceContext(), 6, temp1->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, ar_Shader.GetShader(temp1->GetComponent<Sprite>()->GetTexture())->);
 
 		// Render the model using the color shader.
-		result = ar_Shader.Render(ar_DirectX.GetDeviceContext(), 6, gameObjects[i]->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture());
-		if (!result)
-		{
-			return false;
-		}
+		//result = ar_Shader.Render(ar_DirectX.GetDeviceContext(), 6, gameObjects[i]->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture());
+		//if (!result)
+		//{
+		//	return false;
+		//}
 	}
 
 	//-----------------//
@@ -82,7 +91,8 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 }
 
 //- Game View -//
-bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShader& ar_Shader, DirectXTexture& ar_texture, DirectXImGui& ar_ImGui)
+bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, 
+										 DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui)
 {
 	DirectX::XMMATRIX worldMatrix, viewMatrix, projectionMatrix;
 	bool result;
@@ -102,23 +112,23 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 	ar_DirectX.GetProjectionMatrix(projectionMatrix);
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	for (size_t i = 0; i < gameObjects.size(); i++)
+	for (size_t i = 0; i < GameObjectsToRender.size(); i++)
 	{
-		gameObjects[i]->Render();
+		//gameObjects[i]->Render();
 
-		// Render the model using the color shader.
-		result = ar_Shader.Render(ar_DirectX.GetDeviceContext(), 6, worldMatrix, viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture());
-		if (!result)
-		{
-			return false;
-		}
+		//// Render the model using the color shader.
+		//result = ar_Shader.Render(ar_DirectX.GetDeviceContext(), 6, worldMatrix, viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture());
+		//if (!result)
+		//{
+		//	return false;
+		//}
 	}
 
 	ar_ImGui.Render();
 	ar_DirectX.EndScene();
 }
 
-void DirectXRenderLoop::SetObjectToRender(Component& ObjToRender)
+void DirectXRenderLoop::SetObjectToRender(SpriteRenderer* ObjToRender)
 {
 	GameObjectsToRender.push_back(ObjToRender);
 }

@@ -34,15 +34,17 @@ Impliment Singleton Graphics (TYPED)
 										|
 										|
 										|_Create DirectXWindow For DirectXShader Manager To Use
-											|_ move WIndow elements  to a new file and class
-												|_
-
+										|	|_ move WIndow elements  to a new file and class
+										|		
+										|_Update Sprite to handel Textures
+											|_ Redo Component Type (add it fully to base)
+												|_ Compleate Sprite Coversion
+													|_ Realise Width And Height is broken <-------------------------------------------------------------------------------------------------------------Feture WORK 
+														|_ Realise sprite is useless and merge into sprite renderer 
+															|_ 
 
 
 
 
 Need To Do:
 Add TexturePoolCheck Function to Interface to manage texture pool;
-				
-ToTalkAbout: 
-What should garbageCollectortexturePool() be called???

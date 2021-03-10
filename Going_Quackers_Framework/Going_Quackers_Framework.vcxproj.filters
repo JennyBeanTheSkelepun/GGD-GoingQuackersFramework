@@ -139,8 +139,14 @@
     <Filter Include="Source Files\Engine\Rendering\DirectX11 Element\DirectX Window">
       <UniqueIdentifier>{2e653c1a-babf-4cca-9d6f-db3a84a20457}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Rendering\DirectX11 Element\DirectXWindow">
+    <Filter Include="Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object">
+      <UniqueIdentifier>{537905e5-03da-48ba-8d2d-e7eef8382a67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Rendering\DirectX11 Element\DirectX Window">
       <UniqueIdentifier>{ad219c3e-c52c-42e0-82a5-d767fc0816d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object">
+      <UniqueIdentifier>{b24d0c98-550f-46a9-aa31-c448af9211e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +198,6 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Graphics.cpp">
-      <Filter>Source Files\Engine\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Scene Setup</Filter>
     </ClCompile>
@@ -221,6 +224,12 @@
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectX2DObject.cpp">
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +302,6 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Graphics.h">
-      <Filter>Header Files\Engine\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Scene Setup</Filter>
     </ClInclude>
@@ -321,7 +327,13 @@
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader Manager</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectXWindow</Filter>
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\Graphics.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectX2DObject.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

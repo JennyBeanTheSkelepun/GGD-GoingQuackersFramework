@@ -16,27 +16,12 @@ public:
 	void Run();
 	bool Initalize();
 
-	LRESULT CALLBACK MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam);
-
 private:
 	bool UpdateRenderLoop();
-	void InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight);
-	void ShutdownWindows();
-
-	LPCWSTR m_applicationName;
-	HINSTANCE m_hInstance;
-	HWND m_hwnd;
 
 	Input* mp_Input;
-	DirectXGraphics* mp_Graphics;
 
-	bool mb_sizeMovement;
-	bool mb_minamised;
 };
-
-static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
-
-static EngineMain* ApplicationHandle = 0;
 
 #endif // !ENGINE_MAIN_H
 

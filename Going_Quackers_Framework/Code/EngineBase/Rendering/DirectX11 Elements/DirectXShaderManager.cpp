@@ -26,7 +26,7 @@ int DirectXShaderManager::CreateShader(DirectXClass& ar_DirectXClass, DirectXWin
 	newshader.FileLocation = fileLocation;
 	newshader.UsedByCount = 1;
 	newshader.Shader = new DirectXShader();
-	newshader.Shader->Initialize(ar_DirectXClass.GetDevice(), ar_DirectXWindow->GetHWND(), fileLocation.c_str());
+	newshader.Shader->Initialize(ar_DirectXClass.GetDevice(), ar_DirectXWindow.m_hwnd, fileLocation.c_str());
 
 	//- add to pool after -//
 	ShaderPool.push_back(newshader);

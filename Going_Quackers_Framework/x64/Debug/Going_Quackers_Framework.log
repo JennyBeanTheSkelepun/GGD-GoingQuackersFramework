@@ -1,7 +1,8 @@
 ﻿  EngineMain.cpp
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(18,37): error C2061: syntax error: identifier 'Component'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(9,1): error C2011: 'GraphicsInterface': 'class' type redefinition
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8,1): error C2011: 'VirtualCamera': 'class' type redefinition
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(7): message : see declaration of 'VirtualCamera'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(15,1): error C2011: 'GraphicsInterface': 'class' type redefinition
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(14): message : see declaration of 'GraphicsInterface'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(772,1): error C2528: 'pointer': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(659): message : see reference to class template instantiation 'std::allocator<Component &>' being compiled
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(715): message : see reference to class template instantiation 'std::_Default_allocator_traits<_Alloc>' being compiled
@@ -19,7 +20,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Ty=Component &
           ]
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(22): message : see reference to class template instantiation 'std::vector<Component &,std::allocator<Component &>>' being compiled
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(29): message : see reference to class template instantiation 'std::vector<Component &,std::allocator<Component &>>' being compiled
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(773,1): error C2528: 'const_pointer': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(789,1): error C2528: 'address': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(793,1): error C2528: 'address': pointer to reference is illegal
@@ -67,128 +68,13 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
               _Ty=Component &
           ]
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(758,1): error C2528: 'abstract declarator': pointer to reference is illegal
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(28,1): error C2504: 'GraphicsInterface': base class undefined
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(29,1): error C2504: 'GraphicsInterface': base class undefined
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(40,74): error C2248: 'DirectXGraphics::Initialize': cannot access private member declared in class 'DirectXGraphics'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(64): message : see declaration of 'DirectXGraphics::Initialize'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(27): message : see declaration of 'DirectXGraphics'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(85,22): error C2248: 'DirectXGraphics::Update': cannot access private member declared in class 'DirectXGraphics'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(66): message : see declaration of 'DirectXGraphics::Update'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(27): message : see declaration of 'DirectXGraphics'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(86,34): error C2248: 'DirectXGraphics::Render': cannot access private member declared in class 'DirectXGraphics'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(67): message : see declaration of 'DirectXGraphics::Render'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(27): message : see declaration of 'DirectXGraphics'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(87,31): error C2248: 'DirectXGraphics::mp_ImGui': cannot access private member declared in class 'DirectXGraphics'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(78): message : see declaration of 'DirectXGraphics::mp_ImGui'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(27): message : see declaration of 'DirectXGraphics'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(87,43): error C2039: 'mb_closeEditor': is not a member of 'DirectXImGui'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h(12): message : see declaration of 'DirectXImGui'
   Sprite.cpp
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Sprite.h(5,10): fatal error C1083: Cannot open include file: '../../Data Structures/Texture2D.h': No such file or directory
   SpriteRenderer.cpp
-  Transform.cpp
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(70,69): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  GameObject.cpp
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Graphics.cpp
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(18,37): error C2061: syntax error: identifier 'Component'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(9,1): error C2011: 'GraphicsInterface': 'class' type redefinition
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(772,1): error C2528: 'pointer': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(659): message : see reference to class template instantiation 'std::allocator<Component &>' being compiled
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(715): message : see reference to class template instantiation 'std::_Default_allocator_traits<_Alloc>' being compiled
-          with
-          [
-              _Alloc=std::allocator<Component &>
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(422): message : see reference to class template instantiation 'std::allocator_traits<_Alloc>' being compiled
-          with
-          [
-              _Alloc=std::allocator<Component &>
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(422): message : see reference to alias template instantiation 'std::_Rebind_alloc_t<std::allocator<Component &>,_Ty>' being compiled
-          with
-          [
-              _Ty=Component &
-          ]
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(22): message : see reference to class template instantiation 'std::vector<Component &,std::allocator<Component &>>' being compiled
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(773,1): error C2528: 'const_pointer': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(789,1): error C2528: 'address': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(793,1): error C2528: 'address': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(803,1): error C2528: '_Ptr': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(808,1): error C2528: 'allocate': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(813,1): error C2528: 'allocate': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(661,1): error C2528: 'abstract declarator': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(662,1): error C2528: 'abstract declarator': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(680,1): error C2528: '<template-parameter>': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(685,1): error C2528: '<template-parameter>': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(747,1): error C2528: 'abstract declarator': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(439): message : see reference to variable template 'const bool _Is_simple_alloc_v<std::allocator<Component &> >' being compiled
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(747,1): error C2528: '<template-parameter>': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(748,1): error C2528: 'abstract declarator': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(748,1): error C2528: '<template-parameter>': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(440,88): error C2528: '<template-parameter>': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(727,1): error C2535: 'void std::vector<Component &,std::allocator<Component &>>::push_back(_Ty)': member function already defined or declared
-          with
-          [
-              _Ty=Component &
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(723): message : see declaration of 'std::vector<Component &,std::allocator<Component &>>::push_back'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(811,1): error C2535: 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>> std::vector<_Ty,std::allocator<_Ty>>::insert(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,_Ty)': member function already defined or declared
-          with
-          [
-              _Ty=Component &
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(807): message : see declaration of 'std::vector<Component &,std::allocator<Component &>>::insert'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(1408,1): error C2528: 'data': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(1412,1): error C2528: 'data': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(757,1): error C2528: 'abstract declarator': pointer to reference is illegal
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(367): message : see reference to class template instantiation 'std::_Simple_types<_Ty>' being compiled
-          with
-          [
-              _Ty=Component &
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(1326): message : see reference to class template instantiation 'std::_Vector_val<std::_Simple_types<_Ty>>' being compiled
-          with
-          [
-              _Ty=Component &
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(1757): message : see reference to class template instantiation 'std::_Compressed_pair<std::allocator<Component &>,std::_Vector_val<std::_Simple_types<_Ty>>,true>' being compiled
-          with
-          [
-              _Ty=Component &
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(758,1): error C2528: 'abstract declarator': pointer to reference is illegal
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(28,1): error C2504: 'GraphicsInterface': base class undefined
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(17,38): error C2440: '=': cannot convert from 'DirectXGraphics *' to 'GraphicsInterface *'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(17,36): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(58,5): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(64,5): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(70,5): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(76,5): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(87,27): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(92,27): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(97,27): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(102,27): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(107,27): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(112,27): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(117,27): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Graphics.cpp(122,27): error C2027: use of undefined type 'GraphicsInterface'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
-  EngineGuiClass.cpp
-  DirectXClass.cpp
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\SpriteRenderer.h(5,10): fatal error C1083: Cannot open include file: '../../Data Structures/Texture2D.h': No such file or directory
   DirectXGraphics.cpp
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(18,37): error C2061: syntax error: identifier 'Component'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(772,1): error C2528: 'pointer': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(659): message : see reference to class template instantiation 'std::allocator<Component &>' being compiled
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(715): message : see reference to class template instantiation 'std::_Default_allocator_traits<_Alloc>' being compiled
@@ -206,7 +92,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Ty=Component &
           ]
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(22): message : see reference to class template instantiation 'std::vector<Component &,std::allocator<Component &>>' being compiled
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(29): message : see reference to class template instantiation 'std::vector<Component &,std::allocator<Component &>>' being compiled
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(773,1): error C2528: 'const_pointer': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(789,1): error C2528: 'address': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(793,1): error C2528: 'address': pointer to reference is illegal
@@ -254,9 +140,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
               _Ty=Component &
           ]
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(758,1): error C2528: 'abstract declarator': pointer to reference is illegal
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.cpp(203,29): error C2512: 'DirectXImGui::DirectXImGui': no appropriate default constructor available
-  DirectXImGui.cpp
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\SpriteRenderer.h(5,10): fatal error C1083: Cannot open include file: '../../Data Structures/Texture2D.h': No such file or directory
   DirectXRenderLoop.cpp
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(772,1): error C2528: 'pointer': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(659): message : see reference to class template instantiation 'std::allocator<Component &>' being compiled
@@ -275,7 +159,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Ty=Component &
           ]
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(22): message : see reference to class template instantiation 'std::vector<Component &,std::allocator<Component &>>' being compiled
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(29): message : see reference to class template instantiation 'std::vector<Component &,std::allocator<Component &>>' being compiled
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(773,1): error C2528: 'const_pointer': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(789,1): error C2528: 'address': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(793,1): error C2528: 'address': pointer to reference is illegal
@@ -324,55 +208,38 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           ]
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(758,1): error C2528: 'abstract declarator': pointer to reference is illegal
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(4,1): error C2530: 'DirectXRenderLoop::mr_directXClass': references must be initialized
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(34,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(34,55): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(34,101): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(37,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(40,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(40,56): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(43,2): error C2065: 'mp_Camera': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(46,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(47,2): error C2065: 'mp_Camera': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(48,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(51,25): error C2065: 'gameObjects': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(53,3): error C2065: 'gameObjects': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(56,12): error C2065: 'mp_Shader': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(56,30): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(56,65): error C2065: 'gameObjects': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(56,152): error C2065: 'gameObjects': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(56,181): error C2065: 'Sprite': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(56,189): error C2059: syntax error: ')'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(66,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(66,55): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(66,88): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(69,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(72,2): error C2065: 'mp_Camera': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(75,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(76,2): error C2065: 'mp_Camera': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(77,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(80,2): error C2065: 'mp_ImGui': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(81,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(91,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(91,55): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(91,88): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(94,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(97,2): error C2065: 'mp_Camera': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(100,2): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(101,2): error C2065: 'mp_Camera': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(102,2): error C2065: 'mp_DirectX': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(12,110): error C2061: syntax error: identifier 'DirectXTexture'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(13,1): error C2511: 'bool DirectXRenderLoop::Render(DirectXClass &,DirectXCamera &,DirectXShader &)': overloaded member function not found in 'DirectXRenderLoop'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(15): message : see declaration of 'DirectXRenderLoop'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(15,54): error C2065: 'ar_texture': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(15,66): error C2065: 'ar_ImGui': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(17,50): error C2065: 'ar_texture': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(17,62): error C2065: 'ar_ImGui': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(27,116): error C2061: syntax error: identifier 'DirectXTexture'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(28,1): error C2511: 'bool DirectXRenderLoop::EditorRender(DirectXClass &,DirectXCamera &,DirectXShader &)': overloaded member function not found in 'DirectXRenderLoop'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(15): message : see declaration of 'DirectXRenderLoop'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(53,24): error C2597: illegal reference to non-static member 'DirectXRenderLoop::GameObjectsToRender'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(53,24): error C3867: 'DirectXRenderLoop::GameObjectsToRender': non-standard syntax; use '&' to create a pointer to member
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(53,24): error C2109: subscript requires array or pointer type
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(56,63): error C2065: 'gameObjects': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(56,150): error C2065: 'gameObjects': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(56,179): error C2065: 'Sprite': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(56,187): error C2059: syntax error: ')'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(80,2): error C2065: 'ar_ImGui': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(85,120): error C2061: syntax error: identifier 'DirectXTexture'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(86,1): error C2511: 'bool DirectXRenderLoop::ActiveGameRender(DirectXClass &,DirectXCamera &,DirectXShader &)': overloaded member function not found in 'DirectXRenderLoop'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(15): message : see declaration of 'DirectXRenderLoop'
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(105,25): error C2065: 'gameObjects': undeclared identifier
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(107,3): error C2065: 'gameObjects': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(110,12): error C2065: 'mp_Shader': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(110,30): error C2065: 'mp_DirectX': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(110,108): error C2065: 'gameObjects': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(110,137): error C2065: 'Sprite': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(110,145): error C2059: syntax error: ')'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(117,2): error C2065: 'mp_ImGui': undeclared identifier
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(118,2): error C2065: 'mp_DirectX': undeclared identifier
-  Main.cpp
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(18,37): error C2061: syntax error: identifier 'Component'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(9,1): error C2011: 'GraphicsInterface': 'class' type redefinition
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8): message : see declaration of 'GraphicsInterface'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(110,106): error C2065: 'gameObjects': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(110,135): error C2065: 'Sprite': undeclared identifier
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(110,143): error C2059: syntax error: ')'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(117,2): error C2065: 'ar_ImGui': undeclared identifier
+  Graphics.cpp
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8,1): error C2011: 'VirtualCamera': 'class' type redefinition
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(7): message : see declaration of 'VirtualCamera'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(15,1): error C2011: 'GraphicsInterface': 'class' type redefinition
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(14): message : see declaration of 'GraphicsInterface'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(772,1): error C2528: 'pointer': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(659): message : see reference to class template instantiation 'std::allocator<Component &>' being compiled
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(715): message : see reference to class template instantiation 'std::_Default_allocator_traits<_Alloc>' being compiled
@@ -390,7 +257,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Ty=Component &
           ]
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(22): message : see reference to class template instantiation 'std::vector<Component &,std::allocator<Component &>>' being compiled
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(29): message : see reference to class template instantiation 'std::vector<Component &,std::allocator<Component &>>' being compiled
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(773,1): error C2528: 'const_pointer': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(789,1): error C2528: 'address': pointer to reference is illegal
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(793,1): error C2528: 'address': pointer to reference is illegal
@@ -438,7 +305,77 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
               _Ty=Component &
           ]
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(758,1): error C2528: 'abstract declarator': pointer to reference is illegal
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(28,1): error C2504: 'GraphicsInterface': base class undefined
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(29,1): error C2504: 'GraphicsInterface': base class undefined
+  Main.cpp
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(8,1): error C2011: 'VirtualCamera': 'class' type redefinition
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(7): message : see declaration of 'VirtualCamera'
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(15,1): error C2011: 'GraphicsInterface': 'class' type redefinition
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h(14): message : see declaration of 'GraphicsInterface'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(772,1): error C2528: 'pointer': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(659): message : see reference to class template instantiation 'std::allocator<Component &>' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(715): message : see reference to class template instantiation 'std::_Default_allocator_traits<_Alloc>' being compiled
+          with
+          [
+              _Alloc=std::allocator<Component &>
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(422): message : see reference to class template instantiation 'std::allocator_traits<_Alloc>' being compiled
+          with
+          [
+              _Alloc=std::allocator<Component &>
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(422): message : see reference to alias template instantiation 'std::_Rebind_alloc_t<std::allocator<Component &>,_Ty>' being compiled
+          with
+          [
+              _Ty=Component &
+          ]
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h(29): message : see reference to class template instantiation 'std::vector<Component &,std::allocator<Component &>>' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(773,1): error C2528: 'const_pointer': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(789,1): error C2528: 'address': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(793,1): error C2528: 'address': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(803,1): error C2528: '_Ptr': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(808,1): error C2528: 'allocate': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(813,1): error C2528: 'allocate': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(661,1): error C2528: 'abstract declarator': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(662,1): error C2528: 'abstract declarator': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(680,1): error C2528: '<template-parameter>': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(685,1): error C2528: '<template-parameter>': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(747,1): error C2528: 'abstract declarator': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(439): message : see reference to variable template 'const bool _Is_simple_alloc_v<std::allocator<Component &> >' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(747,1): error C2528: '<template-parameter>': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(748,1): error C2528: 'abstract declarator': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(748,1): error C2528: '<template-parameter>': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(440,88): error C2528: '<template-parameter>': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(727,1): error C2535: 'void std::vector<Component &,std::allocator<Component &>>::push_back(_Ty)': member function already defined or declared
+          with
+          [
+              _Ty=Component &
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(723): message : see declaration of 'std::vector<Component &,std::allocator<Component &>>::push_back'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(811,1): error C2535: 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>> std::vector<_Ty,std::allocator<_Ty>>::insert(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,_Ty)': member function already defined or declared
+          with
+          [
+              _Ty=Component &
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(807): message : see declaration of 'std::vector<Component &,std::allocator<Component &>>::insert'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(1408,1): error C2528: 'data': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(1412,1): error C2528: 'data': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(757,1): error C2528: 'abstract declarator': pointer to reference is illegal
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(367): message : see reference to class template instantiation 'std::_Simple_types<_Ty>' being compiled
+          with
+          [
+              _Ty=Component &
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(1326): message : see reference to class template instantiation 'std::_Vector_val<std::_Simple_types<_Ty>>' being compiled
+          with
+          [
+              _Ty=Component &
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\vector(1757): message : see reference to class template instantiation 'std::_Compressed_pair<std::allocator<Component &>,std::_Vector_val<std::_Simple_types<_Ty>>,true>' being compiled
+          with
+          [
+              _Ty=Component &
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xmemory(758,1): error C2528: 'abstract declarator': pointer to reference is illegal
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(29,1): error C2504: 'GraphicsInterface': base class undefined
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Generating Code...
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.cpp(45): error C4716: 'DirectXImGui::Render': must return a value

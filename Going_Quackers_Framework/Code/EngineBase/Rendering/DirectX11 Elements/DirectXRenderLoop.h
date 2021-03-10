@@ -3,15 +3,16 @@
 
 #include <vector>
 
-#include "../../Game Systems/Components/Component.h"
+#include "../../Game Systems/Components/SpriteRenderer.h"
 #include "../../ImGui/EngineGuiClass.h"
 
 #include "DirectXClass.h"
 #include "DirectXImGui.h"
 #include "DirectXCamera.h"
-#include "DirectXShader.h"
+#include "DirectXShaderManager.h"
+#include "DirectXTextureManager.h"
 
-class DirectXTexture;
+#include "../../Game Systems/Components/Sprite.h"
 
 class DirectXRenderLoop
 {
@@ -21,14 +22,19 @@ public:
 
 	DirectXClass& mr_directXClass;
 	
-	bool Render(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShader& ar_Shader, DirectXTexture& ar_texture, DirectXImGui& ar_ImGui);
-	void SetObjectToRender(Component& ObjToRender);
+	bool Render(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader,
+				DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
+	
+	void SetObjectToRender(SpriteRenderer* ObjToRender);
 
 private:
-	std::vector<Component&> GameObjectsToRender;
+	std::vector<SpriteRenderer*> GameObjectsToRender;
 
-	bool EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShader& ar_Shader, DirectXTexture& ar_texture, DirectXImGui& ar_ImGui);
-	bool ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShader& ar_Shader, DirectXTexture& ar_texture, DirectXImGui& ar_ImGui);
+	bool EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader,
+					  DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
+
+	bool ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, 
+					  DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
 };
 
 #endif /* _DIRECT_X_RENDER_LOOP_H_ */

@@ -19,8 +19,8 @@
 #include "../../Rendering/DirectX11 Elements/DirectXCamera.h"
 #include "../../Rendering/DirectX11 Elements/DirectXTextureManager.h"
 #include "../../Rendering/DirectX11 Elements/DirectXShaderManager.h"
+#include "../../Rendering/DirectX11 Elements/DirectXWindow.h"
 
-const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = false;
 const float SCREEN_DEPTH = 1000.0f;
 const float SCREEN_NEAR = 0.1f;
@@ -29,47 +29,26 @@ class DirectXGraphics : public GraphicsInterface
 {
 public:
 
-	bool SetupRenderingSystem();
-	bool ResizeRenderingSystem();
-	bool SetUpImGui();
-	 
-	//- Required Rendering Loop Elements -//
-	bool StartRenderLoop();
+	bool InitalizeGraphicalApi();
+	void SetNewActiveCamera(VirtualCamera& vCam);
 	void AddObjectToRenderLoop(Component& ar_component);
-
-	//- Camera Elements -//
-	bool SetUpCamera();
-	bool SetNewActiveCamera(VirtualCamera& NextActiveCamera);
-
-	//- Render Texture Setup -//
-	bool SetupRenderTexture();
-
-	//- Texture Loading -//
-	bool LoadTexture(std::string TextureLocation);
-	bool TileSheetLoad(std::string SpriteSheetLocation);
-
-	//- Shader Loading -//
-	bool CreateShader(std::string ShaderLocation);
-	bool GetShader();
-
-	//- Window Creation -//
-	bool CreateEngineWindow();
+	int LoadTexture(std::string TextureLocation);
+	int LoadShader(std::string ShaderLocation);
+	int LoadSpriteSheet(std::string SpriteSheetLocation);
+	void GraphicsAPIUpdate();
+	void StartAPIRenderLoop();
 
 	//- old functions -//
-
 	DirectXGraphics();
 	~DirectXGraphics();
 
 private:
 
-	bool Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd);
+	bool Initialize();
 
 	void Update();
 
 	std::vector<GameObject*> gameObjects;
-
-
-
 
 	// Direct X and Render Texture Setup
 	DirectXClass* mp_DirectX;
@@ -83,14 +62,13 @@ private:
 	// Camera
 	DirectXCamera* mp_Camera;
 
-	// Shader
-	DirectXShader* mp_Shader;
-
 	// Texture Manager
 	DirectXTextureManager* mp_TextureManager;
 
 	// Shader Manager
 	DirectXShaderManager* mp_ShaderManager;
+
+	DirectXWindow* mp_Window;
 };
 
 #endif // !_DIRECTX_GRAPHICS_H_

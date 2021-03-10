@@ -42,4 +42,5 @@ bool DirectXImGui::Render()
 {
 	//- ImGui Call to render -//
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	return true;
 }

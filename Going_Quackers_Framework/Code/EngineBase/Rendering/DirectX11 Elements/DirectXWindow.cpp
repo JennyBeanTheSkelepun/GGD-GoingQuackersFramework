@@ -1,18 +1,21 @@
 #include "DirectXWindow.h"
-#include <tchar.h>
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 DirectXWindow::DirectXWindow()
 {
+	mi_width = 0;
+	mi_height = 0;
 }
 
 DirectXWindow::~DirectXWindow()
 {
 }
 
-void DirectXWindow::SetupWindow()
+bool DirectXWindow::SetupWindow()
 {
+	InitalizeWindows(mi_width, mi_height);
+	return true; //<-----------------------------------------------TODO Change interface for all commands to relevent elements
 }
 
 LRESULT CALLBACK DirectXWindow::MessageHandler(HWND hwnd, UINT uint, WPARAM wParam, LPARAM lParam)

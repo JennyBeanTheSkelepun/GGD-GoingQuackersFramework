@@ -5,24 +5,9 @@
 
 bool tempToggle = false;
 
-bool DirectXGraphics::SetupRenderingSystem()
+void DirectXGraphics::StartAPIRenderLoop()
 {
-	return false;
-}
-
-bool DirectXGraphics::ResizeRenderingSystem()
-{
-	return false;
-}
-
-bool DirectXGraphics::SetUpImGui()
-{
-	return false;
-}
-
-bool DirectXGraphics::StartRenderLoop()
-{
-	return mp_DirectXRenderLoop->Render();
+	mp_DirectXRenderLoop->Render(*mp_DirectX, *mp_Camera, *mp_ShaderManager, *mp_TextureManager, *mp_ImGui);
 }
 
 void DirectXGraphics::AddObjectToRenderLoop(Component& ar_component)
@@ -30,51 +15,38 @@ void DirectXGraphics::AddObjectToRenderLoop(Component& ar_component)
 	return mp_DirectXRenderLoop->SetObjectToRender(ar_component);
 }
 
-bool DirectXGraphics::SetUpCamera()
+bool DirectXGraphics::InitalizeGraphicalApi()
 {
-	return false;
+	return Initialize();
 }
 
-bool DirectXGraphics::SetNewActiveCamera(VirtualCamera& NextActiveCamera)
+void DirectXGraphics::SetNewActiveCamera(VirtualCamera& NextActiveCamera)
 {
-	return false;
 }
 
-bool DirectXGraphics::SetupRenderTexture()
+int DirectXGraphics::LoadTexture(std::string TextureLocation)
 {
-	return false;
+	return mp_TextureManager->CreateTexture(*mp_DirectX, TextureLocation);
 }
 
-bool DirectXGraphics::LoadTexture(std::string TextureLocation)
+int DirectXGraphics::LoadShader(std::string ShaderLocation)
 {
-	return false;
+	return mp_ShaderManager->CreateShader(*mp_DirectX, *mp_Window, ShaderLocation);
 }
 
-bool DirectXGraphics::TileSheetLoad(std::string SpriteSheetLocation)
+int DirectXGraphics::LoadSpriteSheet(std::string SpriteSheetLocation)
 {
-	return false;
+	return 0;
 }
 
-bool DirectXGraphics::CreateShader(std::string ShaderLocation)
+void DirectXGraphics::GraphicsAPIUpdate()
 {
-	return false;
+	Update();
 }
 
-bool DirectXGraphics::GetShader()
-{
-	return false;
-}
 
-bool DirectXGraphics::CreateEngineWindow()
+DirectXGraphics::DirectXGraphics() //<-------------- TODO NULLPTR INTIALISATION
 {
-	return false;
-}
-
-DirectXGraphics::DirectXGraphics()
-{
-	mp_DirectX = new DirectXClass();
-	mp_Camera = 0;
-	mp_Shader = 0;
 }
 
 DirectXGraphics::~DirectXGraphics()
@@ -92,29 +64,31 @@ DirectXGraphics::~DirectXGraphics()
 		gameObjects[i] = nullptr;
 	}
 
-	delete mp_Shader;
-	mp_Shader = nullptr;
+	delete mp_ShaderManager;
+	mp_ShaderManager = nullptr;
 
 	delete mp_ImGui;
 	mp_ImGui = nullptr;
 }
 
-bool DirectXGraphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND hwnd)
+bool DirectXGraphics::Initialize()
 {
+	mp_Window = new DirectXWindow();
+
 	mp_DirectX = new DirectXClass();
 	if (!mp_DirectX)
 	{
 		return false;
 	}
 
-	bool result = mp_DirectX->Initalize(ai_screenWidth, ai_screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
+	bool result = mp_DirectX->Initalize(mp_Window->mi_width, mp_Window->mi_height, VSYNC_ENABLED, mp_Window->m_hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
 	if (!result)
 	{
-		MessageBox(hwnd, L"Could Not Initalized Direct X 11", L"Error", MB_OK);
+		MessageBox(mp_Window->m_hwnd, L"Could Not Initalized Direct X 11", L"Error", MB_OK);
 		return false;
 	}
 
-	mp_ImGui = new DirectXImGui(hwnd, mp_DirectX);
+	mp_ImGui = new DirectXImGui(mp_Window->m_hwnd, mp_DirectX);
 	if (!mp_ImGui)
 		return false;
 
@@ -128,24 +102,18 @@ bool DirectXGraphics::Initialize(int ai_screenWidth, int ai_screenHeight, HWND h
 	// Set the initial position of the camera.
 	mp_Camera->SetPosition(Vector3(0.0f, 0.0f, -5.0f));
 
-	mp_TextureManager = new DirectXTextureManager();
+
+	mp_TextureManager = new DirectXTextureManager(*mp_DirectX, "../../../../stone.tga");
 	if (!mp_TextureManager)
 	{
 		return false;
 	}
 
 	// Create the color shader object.
-	mp_Shader = new DirectXShader();
-	if (!mp_Shader)
+	mp_ShaderManager = new DirectXShaderManager(*mp_DirectX, *mp_Window, "../Shaders/TextureSimple.fx");
+	if (!mp_ShaderManager)
 	{
-		return false;
-	}
-
-	// Initialize the color shader object.
-	result = mp_Shader->Initialize(mp_DirectX->GetDevice(), hwnd);
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the color shader object.", L"Error", MB_OK);
+		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Texture shader object.", L"Error", MB_OK);
 		return false;
 	}
 

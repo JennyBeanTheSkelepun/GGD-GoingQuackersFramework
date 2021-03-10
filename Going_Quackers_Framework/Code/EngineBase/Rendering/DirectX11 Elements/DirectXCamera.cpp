@@ -37,6 +37,7 @@ void DirectXCamera::Update()
 
 void DirectXCamera::Render()
 {
+	DirectX::XMFLOAT3 temp;
 	Vector3 up, position, lookAt;
 	DirectX::XMVECTOR upVector, positionVector, lookAtVector;
 	float yaw, pitch, roll;
@@ -46,19 +47,22 @@ void DirectXCamera::Render()
 	up = Vector3(0.0f, 1.0f, 0.0f);
 
 	// Load it into a XMVECTOR structure.
-	upVector = DirectX::XMLoadFloat3(&up.ConvertToXMFLOAT3());
+	temp = up.ConvertToXMFLOAT3();
+	upVector = DirectX::XMLoadFloat3(&temp);
 
 	// Setup the position of the camera in the world.
 	position = m_position;
 
 	// Load it into a XMVECTOR structure.
-	positionVector = DirectX::XMLoadFloat3(&position.ConvertToXMFLOAT3());
+	temp = position.ConvertToXMFLOAT3();
+	positionVector = DirectX::XMLoadFloat3(&temp);
 
 	// Setup where the camera is looking by default.
 	lookAt = Vector3(0.0f, 0.0f, 1.0f);
 
 	// Load it into a XMVECTOR structure.
-	lookAtVector = DirectX::XMLoadFloat3(&lookAt.ConvertToXMFLOAT3());
+	temp = lookAt.ConvertToXMFLOAT3();
+	lookAtVector = DirectX::XMLoadFloat3(&temp);
 
 	// Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.
 	pitch = m_rotation.X * 0.0174532925f;

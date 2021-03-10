@@ -6,8 +6,7 @@
 
 #include "DirectXClass.h"
 #include "DirectXShader.h"
-
-class DirectXWindow;
+#include "DirectXWindow.h"
 
 struct DirectXSmartShader {
 
