@@ -148,6 +148,12 @@
     <Filter Include="Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object">
       <UniqueIdentifier>{b24d0c98-550f-46a9-aa31-c448af9211e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Game Systems\Physics">
+      <UniqueIdentifier>{2d00478a-a769-4001-b60d-2e82950474cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Game Systems\Physics">
+      <UniqueIdentifier>{9549ebba-ad42-4cf2-b0ff-caa04eea1462}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp">
@@ -245,6 +251,24 @@
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Game Systems\Debug.cpp">
       <Filter>Source Files\Engine\Game Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\Shader.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp">
+      <Filter>Source Files\Engine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Rigidbody.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Trigger.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityEmitter.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,6 +394,18 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Debug.h">
       <Filter>Header Files\Engine\Game Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityEmitter.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
