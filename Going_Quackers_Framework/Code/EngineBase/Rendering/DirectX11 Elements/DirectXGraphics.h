@@ -61,7 +61,7 @@ public:
 	DirectXImGui* mp_ImGui;
 
 	// RenderLoop 
-	DirectXRenderLoop *mp_DirectXRenderLoop;
+	DirectXRenderLoop* mp_DirectXRenderLoop;
 
 	// Camera
 	DirectXCamera* mp_Camera;

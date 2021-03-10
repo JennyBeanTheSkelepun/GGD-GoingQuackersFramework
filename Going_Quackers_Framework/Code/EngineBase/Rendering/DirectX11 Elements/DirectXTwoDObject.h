@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _DIRECT_2D_OBJECT_H_
+#define _DIRECT_2D_OBJECT_H_
 
 #include "DirectXClass.h"
 
@@ -22,3 +23,4 @@ private:
 	void RenderBuffers(ID3D11DeviceContext* deviceContext);
 };
 
+#endif /* _DIRECT_2D_OBJECT_H_ */
