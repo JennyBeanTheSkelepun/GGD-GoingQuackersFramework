@@ -67,6 +67,12 @@
     <Filter Include="Source Files\Engine\JSON\nlohmann">
       <UniqueIdentifier>{f1839d68-c0f6-4b0b-ba0c-72716466f2f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Game Systems\Physics">
+      <UniqueIdentifier>{2d00478a-a769-4001-b60d-2e82950474cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Game Systems\Physics">
+      <UniqueIdentifier>{9549ebba-ad42-4cf2-b0ff-caa04eea1462}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\EngineMain.cpp">
@@ -128,6 +134,18 @@
     </ClCompile>
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp">
       <Filter>Source Files\Engine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Rigidbody.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Trigger.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityEmitter.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +226,18 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Graphics.h">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityEmitter.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
