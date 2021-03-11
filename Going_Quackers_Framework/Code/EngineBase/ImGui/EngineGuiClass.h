@@ -9,6 +9,9 @@
 #include "ImGui SourceCode/imgui.h"
 #include "ImGui SourceCode/imgui_impl_win32.h"
 
+class Graphics;
+class GameObject;
+
 class EngineGuiClass
 {
 //- Singleton Decliration -//
@@ -23,11 +26,10 @@ private:
 	EngineGuiClass();
 	~EngineGuiClass();
 
-public:
-	void Update();
+	void Update(ID3D11ShaderResourceView* a_RenderTexture, GameObject* obj);
 	void GameUpdate();
-	void EditorUpdate();
-	void SetImGuiStyle();
+	void EditorUpdate(ID3D11ShaderResourceView* a_RenderTexture, GameObject* obj);
+	void Render();
 
 	const char* BoolToString(bool Input);
 

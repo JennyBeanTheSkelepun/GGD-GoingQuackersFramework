@@ -1,5 +1,5 @@
 #include "EngineGuiClass.h"
-#include "../Game Systems/Debug.h"
+#include "../Game Systems/GameObject.h"
 
 EngineGuiClass* EngineGuiClass::SingletonInstance = 0;
 
@@ -19,7 +19,7 @@ EngineGuiClass::~EngineGuiClass()
 {
 }
 
-void EngineGuiClass::Update()
+void EngineGuiClass::Update(ID3D11ShaderResourceView* a_RenderTexture, GameObject* obj)
 {
 	if (mb_playGame)
 	{
@@ -27,7 +27,7 @@ void EngineGuiClass::Update()
 	}
 	else
 	{
-		EditorUpdate();
+		EditorUpdate(a_RenderTexture, obj);
 	}
 }
 
@@ -38,7 +38,7 @@ void EngineGuiClass::GameUpdate()
 	ImGui::End();
 }
 
-void EngineGuiClass::EditorUpdate()
+void EngineGuiClass::EditorUpdate(ID3D11ShaderResourceView* a_RenderTexture, GameObject* obj)
 {
 
 	if (ImGui::BeginMainMenuBar())
@@ -77,6 +77,31 @@ void EngineGuiClass::EditorUpdate()
 
 	//- Inspector -//
 	ImGui::Begin("Inspector");
+	/*
+		if (ImGui::TreeNode("Transform"))
+		{
+			ImGui::Text("Position");
+			static float vec2a[2] = { obj->transform->GetPosition().X, obj->transform->GetPosition().Y };
+			ImGui::InputFloat2("1", vec2a);
+			obj->transform->SetLocalPosition(Vector2(vec2a[0], vec2a[1]));
+
+			ImGui::Text("Rotation");
+			static float rotation[1] = { 0.0f };
+			ImGui::InputFloat("", rotation);
+
+			ImGui::Text("Scale");
+			static float vec4b[4] = { 0.10f, 0.20f, 0.30f, 0.44f };
+			ImGui::InputFloat2("2", vec4b);
+
+			ImGui::TreePop();
+		}
+	*/
+	std::vector<Component*> components = obj->GetComponents();
+	for (size_t i = 0; i < components.size(); i++)
+	{
+		Component* component = components[i];
+		component->ImGUIUpdate();
+	}
 	ImGui::End();
 
 	//- Output Log -//

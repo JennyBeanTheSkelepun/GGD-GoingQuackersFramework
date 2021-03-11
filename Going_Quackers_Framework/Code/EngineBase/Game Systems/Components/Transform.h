@@ -12,6 +12,7 @@ public:
 	Transform(GameObject* owner);
 
 	void Initialize() override;
+	void ImGUIUpdate() override;
 
 	///<summary>Returns a matrix that converts from local space to world space</summary>
 	DirectX::XMMATRIX GetLocalToWorldMatrix();
@@ -39,9 +40,11 @@ public:
 	void SetLocalScale(Vector2 scale) { this->m_localScale = scale; }
 	Vector2 GetLocalScale() { return this->m_localScale; }
 
+	Vector2 m_position;
+
 private:
 	//World Positions
-	Vector2 m_position;
+	//Vector2 m_position;
 	double m_rotation;
 	Vector2 m_scale;
 

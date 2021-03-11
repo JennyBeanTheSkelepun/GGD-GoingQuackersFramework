@@ -1,6 +1,8 @@
 #ifndef _COMPONENT_H_
 #define _COMPONENT_H_
 
+#include "../../ImGui/EngineGuiClass.h"
+
 class GameObject;
 
 enum ComponentTypes
@@ -44,6 +46,7 @@ public:
 
 	virtual void ImGUIUpdate()
 	{
+
 	}
 
 	GameObject* GetOwner() { return mp_owner; }
