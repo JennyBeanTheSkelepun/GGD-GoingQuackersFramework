@@ -56,7 +56,6 @@ bool Graphics::InitaliseAPIs()
 
 	//- Allocate the current Grpahics Api -//
 	CurrentGraphicsAPI = APIs[0];
-	//((DirectXGraphics*)CurrentGraphicsAPI)->CreateEngineWindow();
 
 	return true;
 }

@@ -24,11 +24,13 @@ bool DirectXImGui::Update(ID3D11ShaderResourceView* ap_renderTexture)
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
+	EngineGuiClass::getInstance()->Update();
+
 	if (!EngineGuiClass::getInstance()->IsInPlayMode())
 	{
-		ImTextureID RenderTexture = 0;  
+		ImTextureID RenderTexture = ap_renderTexture;  
 		ImGui::Begin("Game/Scene View");
-		ImGui::Image(RenderTexture, ImVec2((ImGui::GetWindowWidth() - 50), (ImGui::GetWindowHeight() - 50)));
+		ImGui::Image(RenderTexture, ImVec2((ImGui::GetWindowWidth() - 15), (ImGui::GetWindowHeight() - 35)));
 		ImGui::End();
 	}
 

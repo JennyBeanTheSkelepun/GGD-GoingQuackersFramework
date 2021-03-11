@@ -7,6 +7,7 @@
 
 #include "Game Systems/Input.h"
 #include "Game Systems/Time.h"
+#include "Game Systems/GameObject.h"
 
 class EngineMain
 {
@@ -20,8 +21,9 @@ public:
 private:
 	bool UpdateRenderLoop();
 
+	std::vector<GameObject*> gameObjects;
+	
 	Input* mp_Input;
-
 };
 
 #endif // !ENGINE_MAIN_H

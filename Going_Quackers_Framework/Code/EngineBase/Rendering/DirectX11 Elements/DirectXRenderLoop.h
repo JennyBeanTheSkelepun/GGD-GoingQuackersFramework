@@ -6,27 +6,13 @@
 //- TEMP INCLUDE UNTILL MOVE OVER MATRIXES -//
 #include "../../Game Systems/GameObject.h"
 #include "../../Game Systems/Components/SpriteRenderer.h"
-//class SpriteRenderer;
 
 #include "../../ImGui/EngineGuiClass.h"
-//class EngineGuiClass;
-//
 #include "DirectXClass.h"
-//class DirectXClass;
-//
 #include "DirectXImGui.h"
-//class DirectXImGui;
-//
 #include "DirectXCamera.h"
 #include "DirectXShaderManager.h"
 #include "DirectXTextureManager.h"
-
-//class EngineGuiClass;
-//class DirectXClass;
-//class DirectXImGui;
-//class DirectXCamera;
-//class DirectXShaderManager;
-//class DirectXTextureManager;
 #include "DirectXTwoDObject.h"
 
 class DirectXRenderLoop
