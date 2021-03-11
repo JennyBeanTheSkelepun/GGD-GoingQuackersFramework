@@ -89,7 +89,7 @@ void EngineGuiClass::EditorUpdate(ID3D11ShaderResourceView* a_RenderTexture)
 	//- Output Log -//
 	ImGui::Begin("OutputLog");
 	std::string l_line;
-	std::stringstream l_log = Debug::ReadLog();
+	std::stringstream l_log = Debug::getInstance()->ReadLog();
 	while (std::getline(l_log, l_line))
 		ImGui::Text(l_line.c_str());
 

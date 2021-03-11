@@ -9,15 +9,14 @@
 
 static class Debug
 {
-	//TODO: singleton-ify
-/*public:
+public:
 	static Debug* getInstance();
 	Debug(Debug const&) = delete;
 	void operator=(Debug const&) = delete;
 private:
 	static Debug* SingletonInstance;
 	Debug();
-	~Debug();*/
+	~Debug();
 public:
 	template <typename T>
 	/// <summary>

@@ -1,6 +1,10 @@
 #include "Debug.h"
 
-/*Debug::~Debug() {
+Debug* Debug::SingletonInstance = 0;
+
+Debug::Debug(){}
+
+Debug::~Debug() {
 	if (SingletonInstance != nullptr) {
 		delete SingletonInstance;
 		SingletonInstance = nullptr;
@@ -11,7 +15,7 @@ Debug* Debug::getInstance() {
 	if (SingletonInstance == 0)
 		SingletonInstance = new Debug();
 	return SingletonInstance;
-}*/
+}
 
 std::stringstream Debug::ReadLog() {
 	std::string line;

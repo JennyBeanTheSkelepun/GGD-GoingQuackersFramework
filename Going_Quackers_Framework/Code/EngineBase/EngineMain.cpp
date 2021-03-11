@@ -81,7 +81,7 @@ bool EngineMain::UpdateRenderLoop()
 	lb_result = mp_Graphics->Render();
 	if (!lb_result || mp_Graphics->mp_ImGui->mb_closeEditor)
 		return false;
-	Debug::Log("render loop");
+	Debug::getInstance()->Log("render loop");
 	return true;
 }
 
