@@ -10,6 +10,7 @@
 #include "ImGui SourceCode/imgui_impl_dx11.h"
 
 class Graphics;
+class GameObject;
 
 class EngineGuiClass
 {
@@ -17,9 +18,9 @@ public:
 	EngineGuiClass();
 	~EngineGuiClass();
 
-	void Update(ID3D11ShaderResourceView* a_RenderTexture);
+	void Update(ID3D11ShaderResourceView* a_RenderTexture, GameObject* obj);
 	void GameUpdate();
-	void EditorUpdate(ID3D11ShaderResourceView* a_RenderTexture);
+	void EditorUpdate(ID3D11ShaderResourceView* a_RenderTexture, GameObject* obj);
 	void Render();
 
 	const char* BoolToString(bool Input);

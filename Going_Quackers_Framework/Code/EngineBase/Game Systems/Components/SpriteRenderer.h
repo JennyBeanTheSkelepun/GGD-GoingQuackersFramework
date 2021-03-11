@@ -16,9 +16,12 @@ public:
 	~SpriteRenderer();
 
 	void Initialize() override;
+	void ImGUIUpdate() override;
 	void Render() override;
 
 	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
+
+	float* GetColor() { return m_color; }
 
 private:
 	//A reference to the sprite component that SHOULD be attached
@@ -31,6 +34,8 @@ private:
 	ID3D11Buffer* mp_indexBuffer;
 	int m_vertexCount;
 	int m_indexCount;
+
+	float m_color[4];
 
 	bool InitializeBuffers(ID3D11Device* device);
 	void RenderBuffers(ID3D11DeviceContext* deviceContext);

@@ -23,6 +23,17 @@ void SpriteRenderer::Initialize()
 	mp_spriteReference = mp_owner->GetComponent<Sprite>();
 }
 
+void SpriteRenderer::ImGUIUpdate()
+{
+	if (ImGui::TreeNode("Sprite Renderer"))
+	{
+		ImGui::Text("Color");
+		ImGui::ColorEdit4("Color", m_color);
+
+		ImGui::TreePop();
+	}
+}
+
 void SpriteRenderer::Render()
 {
 	RenderBuffers(mp_deviceContext);

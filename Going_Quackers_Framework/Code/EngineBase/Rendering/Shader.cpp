@@ -31,10 +31,10 @@ bool Shader::Initialize(ID3D11Device* device, HWND hwnd)
 	return true;
 }
 
-bool Shader::Render(ID3D11DeviceContext* deviceContext, int indexCount, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture)
+bool Shader::Render(ID3D11DeviceContext* deviceContext, int indexCount, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, float color[4])
 {
 	// Set the shader parameters that it will use for rendering.
-	if (!SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture))
+	if (!SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture, color))
 		return false;
 
 	// Now render the prepared buffers with the shader.
@@ -252,35 +252,12 @@ void Shader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR
 	MessageBox(hwnd, L"Error compiling shader.  Check shader-error.txt for message.", shaderFilename, MB_OK);
 }
 
-bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture)
+bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, float color[4])
 {
 	HRESULT result;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 	MatrixBuffer* dataPtr;
 	unsigned int bufferNumber;
-	
-	/*
-	DirectX::XMMATRIX WVP = worldMatrix * viewMatrix * projectionMatrix;
-	WVP = DirectX::XMMatrixTranspose(WVP);
-
-	// Lock the constant buffer so it can be written to.
-	result = deviceContext->Map(m_matrixBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	if (FAILED(result))
-	{
-		return false;
-	}
-
-	// Get a pointer to the data in the constant buffer.
-	dataPtr = (MatrixBuffer*)mappedResource.pData;
-
-	dataPtr->WVP = WVP;
-
-	deviceContext->Unmap(m_matrixBuffer, 0);
-
-	deviceContext->UpdateSubresource(m_matrixBuffer, 0, NULL, dataPtr, 0, 0);
-	deviceContext->VSSetConstantBuffers(0, 1, &m_matrixBuffer);
-	*/
-
 	
 	// Transpose the matrices to prepare them for the shader.
 	worldMatrix = DirectX::XMMatrixTranspose(worldMatrix);
@@ -312,7 +289,6 @@ bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext, DirectX::XM
 	//deviceContext->UpdateSubresource(m_matrixBuffer, 0, NULL, dataPtr, 0, 0);
 	deviceContext->VSSetConstantBuffers(bufferNumber, 1, &m_matrixBuffer);
 
-	
 	deviceContext->PSSetShaderResources(0, 1, &texture);
 
 	return true;

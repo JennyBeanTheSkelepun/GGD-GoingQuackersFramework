@@ -149,12 +149,12 @@ void Graphics::Update()
 	//mp_Model2->GetTransform()->SetLocalPosition(mp_Model2->GetTransform()->GetLocalPosition() + Vector2(-0.8f, 0.0f) * Time::GetDeltaTime());
 	//gameObjects[0]->GetTransform()->SetPosition(gameObjects[0]->GetTransform()->GetPosition() + Vector2(-0.1f, 0.0f) * Time::GetDeltaTime());
 	//gameObjects[1]->GetTransform()->SetPosition(gameObjects[1]->GetTransform()->GetPosition() + Vector2(0.5f, 0.0f) * Time::GetDeltaTime());
-	gameObjects[0]->transform->SetLocalRotation(gameObjects[0]->transform->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
+	//gameObjects[0]->transform->SetLocalRotation(gameObjects[0]->transform->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
 	//gameObjects[0]->transform->SetLocalScale(gameObjects[0]->transform->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
 	//gameObjects[2]->GetTransform()->SetLocalRotation(gameObjects[2]->GetTransform()->GetLocalRotation() + 100.0f * Time::GetDeltaTime());
 	//mp_Model->GetTransform()->SetLocalScale(mp_Model->GetTransform()->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
 
-	mp_ImGui->Update(mp_DirectX->mp_renderTextureResourceView);
+	mp_ImGui->Update(mp_DirectX->mp_renderTextureResourceView, gameObjects[0]);
 }
 
 bool Graphics::Render()
@@ -201,7 +201,7 @@ bool Graphics::EditorRender()
 		gameObjects[i]->Render();
 
 		// Render the model using the color shader.
-		result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), 6, gameObjects[i]->transform->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture());
+		result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), 6, gameObjects[i]->transform->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture(), gameObjects[i]->GetComponent<SpriteRenderer>()->GetColor());
 		if (!result)
 		{
 			return false;
@@ -255,7 +255,7 @@ bool Graphics::ActiveGameRender()
 		gameObjects[i]->Render();
 
 		// Render the model using the color shader.
-		result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), 6, worldMatrix, viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture());
+		result = mp_Shader->Render(mp_DirectX->GetDeviceContext(), 6, worldMatrix, viewMatrix, projectionMatrix, gameObjects[i]->GetComponent<Sprite>()->GetTexture(), gameObjects[i]->GetComponent<SpriteRenderer>()->GetColor());
 		if (!result)
 		{
 			return false;

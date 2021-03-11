@@ -25,7 +25,7 @@ public:
 	///<summary>The name given to the GameObject</summary>
 	std::string name;
 
-	///<summary>Adds a Component to the entity, requires that the Component need no initial parameters other than reference to it's object.</summary>
+	///<summary>Adds a Component to the GameObject (Requires that the Component needs no initial parameters other than reference to itself)</summary>
 	template<class T>
 	T* AddComponent()
 	{
@@ -36,7 +36,7 @@ public:
 		}
 	}
 
-	///<summary>Retuns a Component from the list in the gameobject.</summary>
+	///<summary>Returns a Component in the GameObject.</summary>
 	template<class T>
 	T* GetComponent()
 	{
@@ -50,6 +50,26 @@ public:
 
 		//Component not found
 		return nullptr;
+	}
+
+	///<summary>Returns a list of all Components attached to the GameObject.</summary>
+	std::vector<Component*> GetComponents()
+	{
+		return m_components;
+	}
+
+	///<summary>Removes a Component from the GameObject (Only removes the first instance).</summary>
+	template<class T>
+	void RemoveComponent()
+	{
+		for (size_t i = 0; i < m_components.size(); i++)
+		{
+			if (dynamic_cast<T*>(m_components[i]) != nullptr)
+			{
+				m_components.erase(m_components.begin(), m_components.begin() + i);
+				return; //Only deletes the first instance
+			}
+		}
 	}
 
 	///<summary>Sets the parent for the GameObject.</summary>

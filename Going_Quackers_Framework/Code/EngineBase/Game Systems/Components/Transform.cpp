@@ -1,7 +1,6 @@
 #include "Transform.h"
 #include <DirectXMath.h>
 #include "../GameObject.h"
-#include <math.h>
 
 Transform::Transform(GameObject* owner) : Component(owner)
 {
@@ -17,6 +16,29 @@ void Transform::Initialize()
 	m_localPosition = Vector2(0.0f, 0.0f);
 	m_localRotation = 0.0f;
 	m_localScale = Vector2(1.0f, 1.0f);
+}
+
+void Transform::ImGUIUpdate()
+{
+	if (ImGui::TreeNode("Transform"))
+	{
+		ImGui::Text("Position");
+		float pVec2[2] = { m_localPosition.X, m_localPosition.Y };
+		ImGui::InputFloat2("Position", pVec2);
+		SetLocalPosition(Vector2(pVec2[0], pVec2[1]));
+
+		ImGui::Text("Rotation");
+		float rVec1[1] = { m_localRotation };
+		ImGui::InputFloat("Rotation", rVec1);
+		SetLocalRotation(rVec1[0]);
+
+		ImGui::Text("Scale");
+		float sVec2[2] = { m_localScale.X, m_localScale.Y };
+		ImGui::InputFloat2("Scale", sVec2);
+		SetLocalScale(Vector2(sVec2[0], sVec2[1]));
+
+		ImGui::TreePop();
+	}
 }
 
 DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
