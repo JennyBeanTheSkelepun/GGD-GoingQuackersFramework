@@ -1,7 +1,5 @@
 #include "DirectXGraphics.h"
 
-class SpriteRenderer;
-
 DirectXGraphics::DirectXGraphics() : GraphicsInterface() //<-------------- TODO NULLPTR INTIALISATION
 {
 	mp_Camera = nullptr;
@@ -74,7 +72,7 @@ void DirectXGraphics::CleanUpTexturePool()
 	mp_TextureManager->RemoveUnusedTextures();
 }
 
-int DirectXGraphics::LoadShader(std::string ShaderLocation)
+int DirectXGraphics::LoadShader(std::wstring ShaderLocation)
 {
 	return mp_ShaderManager->CreateShader(*mp_DirectX, *mp_Window, ShaderLocation);
 }
@@ -111,6 +109,7 @@ void DirectXGraphics::GraphicsAPIUpdate()
 bool DirectXGraphics::Initialize()
 {
 	mp_Window = new DirectXWindow();
+	mp_Window->SetupWindow();
 
 	mp_DirectX = new DirectXClass();
 	if (!mp_DirectX)
@@ -147,7 +146,7 @@ bool DirectXGraphics::Initialize()
 	}
 
 	// Create the color shader object.
-	mp_ShaderManager = new DirectXShaderManager(*mp_DirectX, *mp_Window, "../Shaders/TextureSimple.fx");
+	mp_ShaderManager = new DirectXShaderManager(*mp_DirectX, *mp_Window, L"Code/EngineBase/Rendering/Shaders/TextureSimple.fx");
 	if (!mp_ShaderManager)
 	{
 		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Texture shader object.", L"Error", MB_OK);

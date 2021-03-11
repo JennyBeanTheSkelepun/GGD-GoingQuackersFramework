@@ -26,7 +26,7 @@ int DirectXTextureManager::CreateTexture(DirectXClass& ar_DirectXClass , std::st
 	newTexture.FileLocation = fileLocation;
 	newTexture.UsedByCount = 1;
 	newTexture.texture = new Texture2D();
-	newTexture.texture->Initialize(ar_DirectXClass.GetDevice(),ar_DirectXClass.GetDeviceContext(),fileLocation.c_str());
+	newTexture.texture->Initialize(ar_DirectXClass.GetDevice(), ar_DirectXClass.GetDeviceContext(), fileLocation.c_str());
 
 	//- add to pool after -//
 	texturePool.push_back(newTexture);

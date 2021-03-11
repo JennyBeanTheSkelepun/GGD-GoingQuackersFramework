@@ -10,7 +10,7 @@
 
 struct DirectXSmartShader {
 
-	std::string FileLocation;
+	std::wstring FileLocation;
 	int UsedByCount;
 	DirectXShader* Shader;
 };
@@ -18,10 +18,10 @@ struct DirectXSmartShader {
 class DirectXShaderManager
 {
 public:
-	DirectXShaderManager(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow, std::string fileLocation);
+	DirectXShaderManager(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow, std::wstring fileLocation);
 	~DirectXShaderManager();
 
-	int CreateShader(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow, std::string fileLocation);
+	int CreateShader(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow, std::wstring fileLocation);
 	int DeleteShader(int index);
 	DirectXShader* GetShader(int index);
 	void RemoveUnusedShader();

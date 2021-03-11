@@ -3,14 +3,7 @@
 
 #include <string>
 //- Needed to forward declare Sprite renderer to prevent issues -//
-class SpriteRenderer;
-
-class VirtualCamera
-{
-public: 
-	VirtualCamera() {};
-	~VirtualCamera() {};
-};
+#include "../../Game Systems/Components/SpriteRenderer.h"
 
 class GraphicsInterface
 {
@@ -25,7 +18,7 @@ public:
 	virtual int RemoveTexture(int index) = 0;
 	virtual void CleanUpTexturePool() = 0;
 
-	virtual int LoadShader(std::string ShaderLocation) = 0;
+	virtual int LoadShader(std::wstring ShaderLocation) = 0;
 	virtual int RemoveShader(int index) = 0;
 	virtual void CleanUpShaderPool() = 0;
 
@@ -37,4 +30,4 @@ public:
 	virtual void StartAPIRenderLoop() = 0;
 };
 
-#endif _GRAPHICS_API_INTERFACE_H_
+#endif /* _GRAPHICS_API_INTERFACE_H_ */

@@ -5,11 +5,9 @@
 #include <string>
 
 //- Need to forward declare Interface as its included in DirectXGraphics -//
-class GraphicsInterface;
 class SpriteRenderer;
 
 #include "DirectX11 Elements/DirectXGraphics.h"
-
 // TODO CHANGE FROM TEMPLATE INTO WHAT I HAVE FOR COMPONENET SYSTEM
 
 enum API_TYPE {
@@ -28,6 +26,7 @@ public:
 private:
 	static Graphics* SingletonInstance;
 	Graphics();
+	~Graphics();
 
 //- Class Functions -//
 public:
@@ -40,7 +39,7 @@ public:
 	int AddObjectToApiRenderILoop(SpriteRenderer* component);
 	int RemoveObjectFromRenderLoop(int ai_ID);
 	  
-	void SetNewActiveCamera(VirtualCamera& NextActiveCamera);
+	//void SetNewActiveCamera(VirtualCamera& NextActiveCamera);
 	  
 	int LoadTexture(std::string TextureLocation);  
 	int RemoveTexture(int index);
@@ -48,7 +47,7 @@ public:
 	int LoadTileSheet(std::string TileSheetLocation);
 	int RemoveTileSheet(int index);
 	
-	int LoadShader(std::string ShaderLocation);
+	int LoadShader(std::wstring ShaderLocation);
 	int RemoveShader(int index);
 
 	API_TYPE CurrentApi = API_TYPE::DIRECT_X_11;

@@ -1,4 +1,5 @@
 #include "EngineMain.h"
+#include "../../Code/EngineBase/Rendering/Graphics.h"
 
 EngineMain::EngineMain()
 {
@@ -25,37 +26,41 @@ bool EngineMain::Initalize()
 		return false;
 	mp_Input->Initialize();
 
-	Graphics::getInstance()->InitaliseAPIs();
+	Graphics* temp = Graphics::getInstance();
+	bool temp1 = temp->InitaliseAPIs();
+	//Graphics::getInstance()->InitaliseAPIs();
 
 	return true;
 }
 
 void EngineMain::Run()
 {
-	MSG l_msg;
-	bool lb_done = false, lb_result;
+	bool exit = false;
+	//MSG l_msg;
+	//bool lb_done = false, lb_result;
 
-	ZeroMemory(&l_msg, sizeof(l_msg));
+	//ZeroMemory(&l_msg, sizeof(l_msg));
 
-	while (!lb_done)
+	while (!exit)
 	{
-		if (PeekMessage(&l_msg, NULL, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&l_msg);
-			DispatchMessage(&l_msg);
-		}
+		//if (PeekMessage(&l_msg, NULL, 0, 0, PM_REMOVE))
+		//{
+		//	TranslateMessage(&l_msg);
+		//	DispatchMessage(&l_msg);
+		//}
 
-		if (l_msg.message == WM_QUIT)
-		{
-			lb_done = true;
-		}
-		else
-		{
-			lb_result = UpdateRenderLoop();
-			if (!lb_result)
-				lb_done = true;
-		}
+		//if (l_msg.message == WM_QUIT)
+		//{
+		//	//lb_done = true;
+		//}
+		//else
+		//{
+		//	lb_result = UpdateRenderLoop();
+		//	if (!lb_result)
+		//		lb_done = true;
+		//}
 
+		UpdateRenderLoop();
 		Time::FrameEnd();
 	}
 
@@ -70,10 +75,10 @@ bool EngineMain::UpdateRenderLoop()
 
 	//- UPDATE LOOP START-//
 
-
-
+	
 	Graphics::getInstance()->StartApiUpdateLoop();
 	//- UPDATE LOOP END -//
 
 	Graphics::getInstance()->StartRenderLoop();
+	return false;
 }

@@ -1,21 +1,5 @@
 ﻿  EngineMain.cpp
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(20,7): warning C4101: 'result': unreferenced local variable
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(67,7): warning C4101: 'lb_result': unreferenced local variable
-  SpriteRenderer.cpp
-  DirectXGraphics.cpp
-  DirectXRenderLoop.cpp
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(64,19): error C2143: syntax error: missing ';' before '*'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(64,19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h(64,41): error C2238: unexpected token(s) preceding ';'
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(136,39): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  DirectXTwoDObject.cpp
-  Graphics.cpp
-  Main.cpp
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Generating Code...
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(83): warning C4715: 'Graphics::AddObjectToApiRenderILoop': not all control paths return a value
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(103): warning C4715: 'Graphics::LoadTexture': not all control paths return a value
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(123): warning C4715: 'Graphics::LoadShader': not all control paths return a value
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(113): warning C4715: 'Graphics::LoadTileSheet': not all control paths return a value
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(79): warning C4715: 'EngineMain::UpdateRenderLoop': not all control paths return a value
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(21,7): warning C4101: 'result': unreferenced local variable
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(72,7): warning C4101: 'lb_result': unreferenced local variable
+  Going_Quackers_Framework.vcxproj -> C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

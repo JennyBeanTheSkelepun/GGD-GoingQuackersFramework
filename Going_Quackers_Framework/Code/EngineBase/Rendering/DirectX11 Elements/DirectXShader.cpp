@@ -14,7 +14,7 @@ DirectXShader::~DirectXShader()
 	ShutdownShader();
 }
 
-bool DirectXShader::Initialize(ID3D11Device* device, HWND hwnd, std::string FileLocation)
+bool DirectXShader::Initialize(ID3D11Device* device, HWND hwnd, std::wstring FileLocation)
 {
 	bool result;
 	// Initialize the vertex and pixel shaders.

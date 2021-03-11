@@ -1,5 +1,7 @@
 #include "EngineGuiClass.h"
 
+EngineGuiClass* EngineGuiClass::SingletonInstance = 0;
+
 EngineGuiClass* EngineGuiClass::getInstance()
 {
 	if (SingletonInstance == 0)

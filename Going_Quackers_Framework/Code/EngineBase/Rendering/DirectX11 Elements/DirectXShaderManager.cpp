@@ -1,6 +1,6 @@
 #include "DirectXShaderManager.h"
 
-DirectXShaderManager::DirectXShaderManager(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow, std::string StandardshaderLocation)
+DirectXShaderManager::DirectXShaderManager(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow, std::wstring StandardshaderLocation)
 {
 	CreateShader(ar_DirectXClass, ar_DirectXWindow, StandardshaderLocation);
 }
@@ -9,7 +9,7 @@ DirectXShaderManager::~DirectXShaderManager()
 {
 }
 
-int DirectXShaderManager::CreateShader(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow , std::string fileLocation)
+int DirectXShaderManager::CreateShader(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow , std::wstring fileLocation)
 {
 	//- check if its already in use if so use it -//
 	for (unsigned int i = 0; i < ShaderPool.size(); i++)

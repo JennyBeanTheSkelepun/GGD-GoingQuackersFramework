@@ -1,11 +1,24 @@
 #include "Graphics.h"
+#include "../../EngineBase/Game Systems/Components/SpriteRenderer.h"
+
+Graphics* Graphics::SingletonInstance = nullptr;
 
 Graphics* Graphics::getInstance()
 {
-	if (SingletonInstance == 0)
+	if (SingletonInstance == nullptr)
 		SingletonInstance = new Graphics();
 
 	return SingletonInstance;
+}
+
+Graphics::Graphics()
+{
+
+}
+
+Graphics::~Graphics()
+{
+
 }
 
 bool Graphics::InitaliseAPIs()
@@ -17,7 +30,7 @@ bool Graphics::InitaliseAPIs()
 	lp_interface = reinterpret_cast<GraphicsInterface*>(new DirectXGraphics());
 
 	//- Setup all elements required for engine -//
-	if (!(reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->InitalizeGraphicalApi()))
+	if (!(reinterpret_cast<DirectXGraphics*>(lp_interface)->InitalizeGraphicalApi()))
 	{
 		throw std::runtime_error("DIRECT X API SETTUP FAILED");
 		return false;
@@ -83,14 +96,14 @@ int Graphics::AddObjectToApiRenderILoop(SpriteRenderer* component)
 }
 
 
-void Graphics::SetNewActiveCamera(VirtualCamera& NextActiveCamera)
-{
-	//switch (CurrentApi) {
-	//case API_TYPE::DIRECT_X_11:
-	//	return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->SetNewActiveCamera(NextActiveCamera);
-	//	break;
-	//}
-}
+//void Graphics::SetNewActiveCamera(VirtualCamera& NextActiveCamera)
+//{
+//	//switch (CurrentApi) {
+//	//case API_TYPE::DIRECT_X_11:
+//	//	return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->SetNewActiveCamera(NextActiveCamera);
+//	//	break;
+//	//}
+//}
 
 
 int Graphics::LoadTexture(std::string TextureLocation)
@@ -113,7 +126,7 @@ int Graphics::LoadTileSheet(std::string TileSheetLocaiton)
 }
 
 
-int Graphics::LoadShader(std::string ShaderLocation)
+int Graphics::LoadShader(std::wstring ShaderLocation)
 {
 	switch (CurrentApi) {
 	case API_TYPE::DIRECT_X_11:

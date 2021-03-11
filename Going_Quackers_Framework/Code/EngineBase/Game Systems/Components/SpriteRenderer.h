@@ -2,7 +2,7 @@
 #define _SPRITERENDERER_H_
 
 #include "Component.h"
-#include "../../Rendering/Graphics.h"
+#include <string>
 
 enum ModelType
 {
@@ -16,14 +16,14 @@ public:
 	SpriteRenderer(GameObject* owner);
 	~SpriteRenderer();
 
-	void Initialze(std::string TextureLocation, std::string ShaderLocation);
+	void Initialze(std::string TextureLocation, std::wstring ShaderLocation);
 
 	inline int GetTexture() { return mi_Texture; };
 	inline int GetShader() { return mi_Shader; };
 
 	void RemoveTextureShader();
 
-//private:
+private:
 
 	int ModelType = ModelType::TWO_DIMENSIONS;
 	int mi_Texture, mi_Shader, mi_ID;

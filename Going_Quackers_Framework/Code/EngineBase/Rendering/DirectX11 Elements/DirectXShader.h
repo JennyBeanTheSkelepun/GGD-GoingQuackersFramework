@@ -12,7 +12,7 @@ public:
 	DirectXShader();
 	~DirectXShader();
 
-	bool Initialize(ID3D11Device* device, HWND hwnd, std::string fileLocation);
+	bool Initialize(ID3D11Device* device, HWND hwnd, std::wstring fileLocation);
 	bool Render(ID3D11DeviceContext* deviceContext, int indexCount , DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX rotationMatrix, DirectX::XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture);
 
 private:
