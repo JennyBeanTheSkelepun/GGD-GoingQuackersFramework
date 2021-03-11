@@ -1,5 +1,6 @@
 #include "EngineMain.h"
 #include <tchar.h>
+#include "../EngineBase/Game Systems/Debug.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -80,7 +81,7 @@ bool EngineMain::UpdateRenderLoop()
 	lb_result = mp_Graphics->Render();
 	if (!lb_result || mp_Graphics->mp_ImGui->mb_closeEditor)
 		return false;
-
+	Debug::Log("render loop");
 	return true;
 }
 
