@@ -46,6 +46,7 @@ public:
 	}
 
 	GameObject* GetOwner() { return mp_owner; }
+	ComponentTypes GetTag() { return m_type; }
 
 protected:
 	GameObject* mp_owner;

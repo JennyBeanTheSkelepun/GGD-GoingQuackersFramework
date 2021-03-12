@@ -4,6 +4,7 @@
 #include "Collision.h"
 #include "Code/EngineBase/Game Systems/Time.h"
 #include "Code/EngineBase/Game Systems/Components/Component.h"
+#include "Rigidbody.h"
 
 class GravityEmitter : Collision
 {
@@ -11,14 +12,16 @@ class GravityEmitter : Collision
 public:
 	void Update() override;
 
-	bool GetCollidingBool() { return m_isColliding; }
-	std::vector<GameObject*> GetCollidingObjects() { return m_collidiedObjects; }
+	void SetGravityStrength(float strength) { m_gravityStrength = strength; }
+	float GetGravityStrength() { return m_gravityStrength; }
+	void SetGravityDirection(Vector2 direction) { m_gravityDirection = direction.Normalize(); }
+	Vector2 GetGravityDirection() { return m_gravityDirection; }
 
 private:
 	std::vector<GameObject*> m_collidiedObjects;
-	bool m_isColliding;
 
-	Collision* mp_collision;
+	float m_gravityStrength;
+	Vector2 m_gravityDirection;
 };
 
 #endif GRAVITYEMITTER

@@ -25,13 +25,13 @@ void Rigidbody::PhysicsCollide()
 {
 	std::vector<GameObject*> collidingObjects;
 
-	if (collision.GetCollisionType() == 's')
+	if (GetCollisionType() == 's')
 	{
-		collidingObjects = collision.CollisionAABB();
+		collidingObjects = CollisionAABB();
 	}
-	else if(collision.GetCollisionType() == 'a')
+	else if(GetCollisionType() == 'a')
 	{
-		collidingObjects = collision.CollisionSpherical();
+		collidingObjects = CollisionSpherical();
 	}
 
 	for (GameObject* obj : collidingObjects)
