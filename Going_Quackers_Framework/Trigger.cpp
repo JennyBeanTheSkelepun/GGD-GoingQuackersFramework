@@ -1,24 +1,14 @@
 #include "Trigger.h"
 
-void Trigger::Initialize()
-{
-	mp_collision = new Collision();
-}
-
-Trigger::~Trigger()
-{
-
-}
-
 void Trigger::Update()
 {
-	if (collision.GetCollisionType() == 's')
+	if (GetCollisionType() == 's')
 	{
-		m_collidiedObjects = collision.CollisionSpherical();
+		m_collidiedObjects = CollisionSpherical();
 	}
-	else if (collision.GetCollisionType() == 'a')
+	else if (GetCollisionType() == 'a')
 	{
-		m_collidiedObjects = collision.CollisionAABB();
+		m_collidiedObjects = CollisionAABB();
 	}
 
 	if (m_collidiedObjects.size() == 0)

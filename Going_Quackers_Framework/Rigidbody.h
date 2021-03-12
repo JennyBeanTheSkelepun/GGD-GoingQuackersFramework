@@ -21,8 +21,6 @@ private:
 
 	std::vector<Vector2> m_forces;
 
-	Collision* mp_collision;
-
 	void CalculateVelocity();
 };
 

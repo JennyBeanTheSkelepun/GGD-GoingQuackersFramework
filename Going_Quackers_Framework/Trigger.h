@@ -4,9 +4,6 @@
 class Trigger : public Collision
 {
 public:
-	void Initialize() override;
-	~Trigger();
-
 	void Update() override;
 
 	bool GetCollidingBool() { return m_isColliding; }
@@ -15,7 +12,4 @@ public:
 private:
 	std::vector<GameObject*> m_collidiedObjects;
 	bool m_isColliding;
-
-	Collision* mp_collision;
 };
-

@@ -21,6 +21,8 @@ std::vector<GameObject*> Collision::CollisionSpherical()
 			}
 		}
 	}
+
+	return collidedObjects;
 }
 
 std::vector<GameObject*> Collision::CollisionAABB()
@@ -49,4 +51,6 @@ std::vector<GameObject*> Collision::CollisionAABB()
 			}
 		}
 	}
+
+	return collidedObjects;
 }
