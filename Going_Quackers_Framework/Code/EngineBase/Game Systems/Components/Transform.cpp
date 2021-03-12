@@ -3,7 +3,7 @@
 #include "../GameObject.h"
 #include <math.h>
 
-Transform::Transform(GameObject* owner) : Component(owner)
+Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANSFORM)
 {
 	localToWorldMatrix = DirectX::XMMatrixIdentity();
 	worldToLocalMatrix = DirectX::XMMatrixIdentity();
