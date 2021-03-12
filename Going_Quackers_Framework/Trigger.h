@@ -1,9 +1,12 @@
 #include "Collision.h"
 #include "Code/EngineBase/Game Systems/Components/Component.h"
 
-class Trigger : public Component
+class Trigger : public Collision
 {
 public:
+	void Initialize() override;
+	~Trigger();
+
 	void Update() override;
 
 	bool GetCollidingBool() { return m_isColliding; }
@@ -13,6 +16,6 @@ private:
 	std::vector<GameObject*> m_collidiedObjects;
 	bool m_isColliding;
 
-	Collision collision;
+	Collision* mp_collision;
 };
 
