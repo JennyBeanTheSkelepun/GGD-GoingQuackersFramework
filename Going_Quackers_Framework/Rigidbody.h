@@ -2,7 +2,7 @@
 #include "Code/EngineBase/Game Systems/Time.h"
 #include "Code/EngineBase/Game Systems/Components/Component.h"
 
-class Rigidbody : public Component
+class Rigidbody : public Collision
 {
 public:
 	void Update() override;
@@ -21,7 +21,7 @@ private:
 
 	std::vector<Vector2> m_forces;
 
-	Collision collision;
+	Collision* mp_collision;
 
 	void CalculateVelocity();
 };

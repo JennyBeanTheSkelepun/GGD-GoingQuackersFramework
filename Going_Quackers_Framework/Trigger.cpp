@@ -1,5 +1,15 @@
 #include "Trigger.h"
 
+void Trigger::Initialize()
+{
+	mp_collision = new Collision();
+}
+
+Trigger::~Trigger()
+{
+
+}
+
 void Trigger::Update()
 {
 	if (collision.GetCollisionType() == 's')
