@@ -2,7 +2,7 @@
 #include <DirectXMath.h>
 #include "../GameObject.h"
 
-Transform::Transform(GameObject* owner) : Component(owner)
+Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANSFORM)
 {
 	localToWorldMatrix = DirectX::XMMatrixIdentity();
 	worldToLocalMatrix = DirectX::XMMatrixIdentity();
