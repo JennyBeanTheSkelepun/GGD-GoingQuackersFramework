@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{4da784a7-d310-4713-81be-51ff7cb68aea}</ProjectGuid>
     <RootNamespace>GoingQuackersFramework</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -154,6 +154,7 @@
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_tables.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_widgets.cpp" />
     <ClCompile Include="Code\EngineBase\Input\Input.cpp" />
+    <ClCompile Include="KeyboardEvents.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
@@ -175,6 +176,7 @@
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_textedit.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h" />
     <ClInclude Include="Code\EngineBase\Input\Input.h" />
+    <ClInclude Include="KeyboardEvents.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
