@@ -3,30 +3,41 @@
 
 #include <d3d11.h>
 #include <memory>
+#include <string>
 
-#include "../Graphics/DirectX/DirectXClass.h"
-
+//- only knows windows Elements of Imgui to prevent anyone from messing up Api template code -//
 #include "ImGui SourceCode/imgui.h"
 #include "ImGui SourceCode/imgui_impl_win32.h"
-#include "ImGui SourceCode/imgui_impl_dx11.h"
 
 class EngineGuiClass
 {
+//- Singleton Decliration -//
 public:
+	static EngineGuiClass* getInstance();
+
+	EngineGuiClass(EngineGuiClass const&) = delete;
+	void operator=(EngineGuiClass const&) = delete;
+
+private:
+	static EngineGuiClass* SingletonInstance;
 	EngineGuiClass();
 	~EngineGuiClass();
 
-	void Initalize();
+public:
+	void Update();
+	void GameUpdate();
+	void EditorUpdate();
+	void SetImGuiStyle();
 
-	void Update(ID3D11ShaderResourceView* a_RenderTexture);
-	void Render();
+	const char* BoolToString(bool Input);
 
+	inline bool IsInPlayMode() { return mb_playGame; }
 
 private:
-	std::shared_ptr<DirectXClass> mp_DirectX;
-	bool mb_toggleTestVar = false;
+	bool mb_maxEditor = false;
+	bool mb_maxOnPlay = false;
+	bool mb_playGame = false;
+	bool mb_closeEditor = false;
 };
-
-
 
 #endif // !_ENGINE_IM_GUI_
