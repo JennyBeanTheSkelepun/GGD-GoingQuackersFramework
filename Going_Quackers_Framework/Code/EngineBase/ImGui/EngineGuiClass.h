@@ -4,13 +4,25 @@
 #include <d3d11.h>
 #include <memory>
 #include <string>
+#include <vector>
 
 //- only knows windows Elements of Imgui to prevent anyone from messing up Api template code -//
 #include "ImGui SourceCode/imgui.h"
 #include "ImGui SourceCode/imgui_impl_win32.h"
 
-class Graphics;
 class GameObject;
+
+struct ImGUIObjectContainer
+{
+	GameObject* gameObject;
+	bool selected;
+
+	ImGUIObjectContainer(GameObject* gameObject)
+	{
+		this->gameObject = gameObject;
+		selected = false;
+	}
+};
 
 class EngineGuiClass
 {
@@ -26,7 +38,15 @@ private:
 	EngineGuiClass();
 	~EngineGuiClass();
 
-	void Update(ID3D11ShaderResourceView* a_RenderTexture, GameObject* obj);
+	void InspectorUpdate();
+
+public:
+	std::vector<ImGUIObjectContainer> gameObjects;
+	GameObject* selectedGameObject;
+
+	void InitializeObjectList(std::vector<GameObject*> gameObjects);
+
+	void Update();
 	void GameUpdate();
 	void EditorUpdate(ID3D11ShaderResourceView* a_RenderTexture, GameObject* obj);
 	void Render();

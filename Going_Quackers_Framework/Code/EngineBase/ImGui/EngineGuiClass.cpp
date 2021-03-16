@@ -19,7 +19,40 @@ EngineGuiClass::~EngineGuiClass()
 {
 }
 
-void EngineGuiClass::Update(ID3D11ShaderResourceView* a_RenderTexture, GameObject* obj)
+void EngineGuiClass::InspectorUpdate()
+{
+	if (selectedGameObject != nullptr)
+	{
+		if (ImGui::BeginTable("", 2))
+		{
+			ImGui::TableNextColumn(); ImGui::Checkbox("Active", &selectedGameObject->m_active);
+
+			ImGui::TableNextColumn(); ImGui::InputText("Name", (char*)selectedGameObject->name.c_str(), 100);
+
+			ImGui::EndTable();
+		}
+		
+		ImGui::Separator();
+
+		for (size_t i = 0; i < selectedGameObject->GetComponents().size(); i++)
+		{
+			selectedGameObject->GetComponents()[i]->ImGUIUpdate();
+		}
+	}
+}
+
+void EngineGuiClass::InitializeObjectList(std::vector<GameObject*> gameObjects)
+{
+	selectedGameObject = nullptr;
+
+	//Create a list of object containers
+	for(size_t i = 0; i < gameObjects.size(); i++)
+	{
+		this->gameObjects.push_back(ImGUIObjectContainer(gameObjects[i]));
+	}
+}
+
+void EngineGuiClass::Update()
 {
 	if (mb_playGame)
 	{
@@ -71,37 +104,31 @@ void EngineGuiClass::EditorUpdate(ID3D11ShaderResourceView* a_RenderTexture, Gam
 		}
 		ImGui::EndMainMenuBar();
 	}
+
 	//- Scene Heiarchy -//
-	ImGui::Begin("Scene Hierarchy");
+	ImGui::Begin("Scene Heiarchy");
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		if (selectedGameObject == gameObjects[i].gameObject)
+		{
+			gameObjects[i].selected = true;
+		}
+		else
+		{
+			gameObjects[i].selected = false;
+		}
+
+		ImGui::Selectable(gameObjects[i].gameObject->name.c_str(), &gameObjects[i].selected);
+		if (gameObjects[i].selected)
+		{
+			selectedGameObject = gameObjects[i].gameObject;
+		}
+	}
 	ImGui::End();
 
 	//- Inspector -//
 	ImGui::Begin("Inspector");
-	/*
-		if (ImGui::TreeNode("Transform"))
-		{
-			ImGui::Text("Position");
-			static float vec2a[2] = { obj->transform->GetPosition().X, obj->transform->GetPosition().Y };
-			ImGui::InputFloat2("1", vec2a);
-			obj->transform->SetLocalPosition(Vector2(vec2a[0], vec2a[1]));
-
-			ImGui::Text("Rotation");
-			static float rotation[1] = { 0.0f };
-			ImGui::InputFloat("", rotation);
-
-			ImGui::Text("Scale");
-			static float vec4b[4] = { 0.10f, 0.20f, 0.30f, 0.44f };
-			ImGui::InputFloat2("2", vec4b);
-
-			ImGui::TreePop();
-		}
-	*/
-	std::vector<Component*> components = obj->GetComponents();
-	for (size_t i = 0; i < components.size(); i++)
-	{
-		Component* component = components[i];
-		component->ImGUIUpdate();
-	}
+	InspectorUpdate();
 	ImGui::End();
 
 	//- Output Log -//
@@ -183,6 +210,8 @@ void EngineGuiClass::SetImGuiStyle()
 	style.Colors[ImGuiCol_PlotHistogram] = ImVec4(col_text.x, col_text.y, col_text.z, 0.63f);
 	style.Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(col_main.x, col_main.y, col_main.z, 1.00f);
 	style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(col_main.x, col_main.y, col_main.z, 0.43f);
+
+
 
 }
 

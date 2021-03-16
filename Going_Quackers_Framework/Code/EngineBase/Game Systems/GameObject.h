@@ -25,6 +25,9 @@ public:
 	///<summary>The name given to the GameObject</summary>
 	std::string name;
 
+	//Is the GameObject currently updating and rendering?
+	bool m_active;
+
 	///<summary>Adds a Component to the GameObject (Requires that the Component needs no initial parameters other than reference to itself)</summary>
 	template<class T>
 	T* AddComponent()
@@ -94,8 +97,7 @@ private:
 	//The parent of the GameObject
 	GameObject* mp_parent;
 
-	//Is the GameObject currently updating and rendering?
-	bool m_active;
+	
 };
 
 #endif // !_GAMEOBJECT_H_

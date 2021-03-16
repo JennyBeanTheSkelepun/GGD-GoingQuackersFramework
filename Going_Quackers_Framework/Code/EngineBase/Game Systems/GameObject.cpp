@@ -30,10 +30,15 @@ void GameObject::Initialize()
 	{
 		m_components[i]->Initialize();
 	}
+
+	m_active = true;
 }
 
 void GameObject::Update()
 {
+	if (!m_active)
+		return;
+
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		m_components[i]->Update();
@@ -47,6 +52,9 @@ void GameObject::Update()
 
 void GameObject::Render()
 {
+	if (!m_active)
+		return;
+
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		m_components[i]->Render();
