@@ -60,10 +60,13 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 
 		GameObject* tempGameObject = GameObjectsToRender[i]->GetOwner();
 
-		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, tempGameObject->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
-		if (!result)
+		if (tempGameObject->m_active)
 		{
-			return false;
+			result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, tempGameObject->transform->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
+			if (!result)
+			{
+				return false;
+			}
 		}
 	}
 
@@ -119,10 +122,13 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 
 		GameObject* tempGameObject = GameObjectsToRender[i]->GetOwner();
 
-		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, tempGameObject->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
-		if (!result)
+		if (tempGameObject->m_active)
 		{
-			return false;
+			result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, tempGameObject->transform->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
+			if (!result)
+			{
+				return false;
+			}
 		}
 	}
 

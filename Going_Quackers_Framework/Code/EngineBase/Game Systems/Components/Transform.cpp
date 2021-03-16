@@ -20,7 +20,7 @@ void Transform::Initialize()
 
 void Transform::ImGUIUpdate()
 {
-	if (ImGui::TreeNode("Transform"))
+	if (ImGui::CollapsingHeader("Transform"))
 	{
 		ImGui::Text("Position");
 		float pVec2[2] = { m_localPosition.X, m_localPosition.Y };
@@ -36,8 +36,6 @@ void Transform::ImGUIUpdate()
 		float sVec2[2] = { m_localScale.X, m_localScale.Y };
 		ImGui::InputFloat2("Scale", sVec2);
 		SetLocalScale(Vector2(sVec2[0], sVec2[1]));
-
-		ImGui::TreePop();
 	}
 }
 

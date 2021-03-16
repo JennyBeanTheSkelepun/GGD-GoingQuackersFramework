@@ -1,4 +1,5 @@
 #include "EngineGuiClass.h"
+#include "../Game Systems/GameObject.h"
 
 EngineGuiClass* EngineGuiClass::SingletonInstance = 0;
 
@@ -16,6 +17,39 @@ EngineGuiClass::EngineGuiClass()
 
 EngineGuiClass::~EngineGuiClass()
 {
+}
+
+void EngineGuiClass::InspectorUpdate()
+{
+	if (selectedGameObject != nullptr)
+	{
+		if (ImGui::BeginTable("", 2))
+		{
+			ImGui::TableNextColumn(); ImGui::Checkbox("Active", &selectedGameObject->m_active);
+
+			ImGui::TableNextColumn(); ImGui::InputText("Name", (char*)selectedGameObject->name.c_str(), 100);
+
+			ImGui::EndTable();
+		}
+		
+		ImGui::Separator();
+
+		for (size_t i = 0; i < selectedGameObject->GetComponents().size(); i++)
+		{
+			selectedGameObject->GetComponents()[i]->ImGUIUpdate();
+		}
+	}
+}
+
+void EngineGuiClass::InitializeObjectList(std::vector<GameObject*> gameObjects)
+{
+	selectedGameObject = nullptr;
+
+	//Create a list of object containers
+	for(size_t i = 0; i < gameObjects.size(); i++)
+	{
+		this->gameObjects.push_back(ImGUIObjectContainer(gameObjects[i]));
+	}
 }
 
 void EngineGuiClass::Update()
@@ -70,12 +104,31 @@ void EngineGuiClass::EditorUpdate()
 		}
 		ImGui::EndMainMenuBar();
 	}
+
 	//- Scene Heiarchy -//
 	ImGui::Begin("Scene Heiarchy");
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		if (selectedGameObject == gameObjects[i].gameObject)
+		{
+			gameObjects[i].selected = true;
+		}
+		else
+		{
+			gameObjects[i].selected = false;
+		}
+
+		ImGui::Selectable(gameObjects[i].gameObject->name.c_str(), &gameObjects[i].selected);
+		if (gameObjects[i].selected)
+		{
+			selectedGameObject = gameObjects[i].gameObject;
+		}
+	}
 	ImGui::End();
 
 	//- Inspector -//
 	ImGui::Begin("Inspector");
+	InspectorUpdate();
 	ImGui::End();
 
 	//- Output Log -//
@@ -138,6 +191,8 @@ void EngineGuiClass::SetImGuiStyle()
 	style.Colors[ImGuiCol_PlotHistogram] = ImVec4(col_text.x, col_text.y, col_text.z, 0.63f);
 	style.Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(col_main.x, col_main.y, col_main.z, 1.00f);
 	style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(col_main.x, col_main.y, col_main.z, 0.43f);
+
+
 
 }
 
