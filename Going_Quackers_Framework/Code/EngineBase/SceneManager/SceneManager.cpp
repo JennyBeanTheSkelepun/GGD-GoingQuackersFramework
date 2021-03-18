@@ -9,6 +9,23 @@
 #include <locale>
 
 
+SceneManager* SceneManager::mp_instance = 0;
+
+/// <summary>
+/// Returns the instance of the SceneManager Singleton and creates one if none exist.
+/// </summary>
+/// <returns>Instance of Singleton class</returns>
+SceneManager* SceneManager::GetInstance()
+{
+	if (mp_instance == 0) {
+		mp_instance = new SceneManager();
+	}
+	return mp_instance;
+}
+
+/// <summary>
+/// SceneManager Constructor
+/// </summary>
 SceneManager::SceneManager()
 {
 	mp_CurrentScene = nullptr;
