@@ -8,23 +8,6 @@
 // For Convienience
 using json = nlohmann::json;
 
-SceneManager* SceneManager::mp_instance = 0;
-
-/// <summary>
-/// Returns the instance of the SceneManager Singleton and creates one if none exist.
-/// </summary>
-/// <returns>Instance of Singleton class</returns>
-SceneManager* SceneManager::GetInstance()
-{
-	if (mp_instance == 0) {
-		mp_instance = new SceneManager();
-	}
-	return mp_instance;
-}
-
-/// <summary>
-/// SceneManager Constructor
-/// </summary>
 SceneManager::SceneManager()
 {
 	mp_CurrentScene = nullptr;
@@ -89,41 +72,4 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 void SceneManager::UnloadScene()
 {
 	delete mp_CurrentScene;
-}
-
-/// <summary>
-/// Converts Object ID string to Enum
-/// </summary>
-/// <param name="as_id">String containing ID of an object</param>
-/// <returns>Object ID Enum</returns>
-ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
-{
-	if (as_id == "debugSquare") {
-		return debugSquare;
-	}
-	else {
-		return invalidOption;
-	}
-}
-
-/// <summary>
-/// Builds Game Objects from given Enum ID
-/// </summary>
-/// <param name="a_objectConfig">Enum ID of object</param>
-void SceneManager::BuildObjectFromID(objectConfig a_objectConfig)
-{
-	// Convert String ID to Enum ID
-	ObjectIDs l_ObjectID = ObjectIDStringToEnum(a_objectConfig.id);
-
-	// Determine object type and set it up
-	//switch (l_ObjectID) {
-	//// Basic Object
-	////case debugSquare:
-	////	GameObject* l_NewDebugSquare = new GameObject();
-	////	
-	////	mp_CurrentScene->AddObject(l_NewDebugSquare);
-	////	break;
-	////default:
-	////	break;
-	//}
 }
