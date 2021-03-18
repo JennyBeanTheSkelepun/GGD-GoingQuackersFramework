@@ -28,12 +28,7 @@ struct ObjectConfig {
 
 class SceneManager
 {
-/* Singleton Stuff */
 public:
-	static SceneManager* GetInstance();
-	SceneManager(SceneManager const&) = delete;
-	void operator = (SceneManager const&) = delete;
-protected:
 	SceneManager();
 	static SceneManager* mp_instance;
 /* Singleton Stuff End */
