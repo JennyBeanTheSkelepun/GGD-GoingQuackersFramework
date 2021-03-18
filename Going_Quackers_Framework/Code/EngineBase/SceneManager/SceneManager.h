@@ -2,6 +2,21 @@
 
 #include "../SceneManager/Scene.h"
 
+// Object IDs
+enum ObjectIDs {
+	invalidOption,
+	debugSquare
+};
+
+struct objectConfig {
+	std::string id;
+	Vector2 pos;
+	float rotation;
+	float scale;
+	// Vector3 colour;
+	std::string texturePath;
+};
+
 class SceneManager
 {
 public:
