@@ -5,45 +5,19 @@
 #include <filesystem>
 #include "../JSON/nlohmann/json.hpp" // Adding JSON for modern C++
 
-#include "../Game Systems/GameObject.h"
-
 // For Convienience
 using json = nlohmann::json;
 
-SceneManager* SceneManager::mp_instance = 0;
-
-/// <summary>
-/// Returns the instance of the SceneManager Singleton and creates one if none exist.
-/// </summary>
-/// <returns></returns>
-SceneManager* SceneManager::GetInstance()
-{
-	if (mp_instance == 0) {
-		mp_instance = new SceneManager();
-	}
-	return mp_instance;
-}
-
-/// <summary>
-/// SceneManager Constructor
-/// </summary>
 SceneManager::SceneManager()
 {
 	mp_CurrentScene = nullptr;
 }
 
-/// <summary>
-/// SceneManager Deconstructor
-/// </summary>
 SceneManager::~SceneManager()
 {
 	delete mp_CurrentScene;
 }
 
-/// <summary>
-/// Changes the scene to one matching the given ID
-/// </summary>
-/// <param name="as_SceneID">String containing ID of scene</param>
 void SceneManager::ChangeScene(std::string as_SceneID)
 {
 	// Unload current Scene
@@ -56,44 +30,38 @@ void SceneManager::ChangeScene(std::string as_SceneID)
 	mp_CurrentScene = LoadScene(ls_SceneConfigPath);
 }
 
-/// <summary>
-/// Updates the currently loaded scene
-/// </summary>
-/// <param name="af_deltaTime">delta time</param>
+/* Updates currently loaded scene
+*/
 void SceneManager::Update(float af_deltaTime)
 {
 	mp_CurrentScene->Update(af_deltaTime);
 }
 
-/// <summary>
-/// Renders the currently loaded scene
-/// </summary>
+/* Draws currently loaded scene
+*/
 void SceneManager::Draw()
 {
 	mp_CurrentScene->Draw();
 }
 
-/// <summary>
-/// Loads scene from JSON config
-/// </summary>
-/// <param name="as_ID">String containing ID of scene to load</param>
-/// <returns>Loaded Scene Object</returns>
-Scene* SceneManager::LoadScene(std::string as_ID)
+/* Loads the scene from JSON config
+* 
+* as_Path - String containing path to JSON file for Scene Config
+*/
+Scene* SceneManager::LoadScene(std::string as_Path)
 {
-	// Get Local Path
-	std::string ls_path = "SceneConfig/" + as_ID + ".json";
+	// Load Config from JSON file
+	std::ifstream l_file(as_Path);
+	json l_SceneConfig;
+	l_file >> l_SceneConfig;
 
-	try {
-		// Load Config from JSON file
-		std::ifstream l_file(ls_path);
-		json l_SceneConfig;
-		l_file >> l_SceneConfig;
+	// Create new scene object
+	Scene* lp_NewScene = new Scene(
+		l_SceneConfig["sceneID"],
+		l_SceneConfig["sceneName"],
+		l_SceneConfig["sceneType"]);
 
-		// Create new scene object
-		Scene* lp_NewScene = new Scene(
-			l_SceneConfig["sceneID"],
-			l_SceneConfig["sceneName"],
-			l_SceneConfig["sceneType"]);
+	// TODO: Objects
 
 		// Create game objects and add to scene
 		for (int i = 0; i < sizeof(l_SceneConfig["objects"]); i++) {
@@ -125,14 +93,11 @@ Scene* SceneManager::LoadScene(std::string as_ID)
 	}
 }
 
-/// <summary>
-/// Removes the currently loaded scene
-/// </summary>
+/* Removes the scene from loaded scenes
+*/
 void SceneManager::UnloadScene()
 {
-	if (mp_CurrentScene != nullptr) {
-		delete mp_CurrentScene;
-	}
+	delete mp_CurrentScene;
 }
 
 /// <summary>
