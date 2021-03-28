@@ -65,3 +65,14 @@ void GameObject::Render()
 		m_children[i]->Render();
 	}
 }
+
+void GameObject::ImGUIUpdate()
+{
+	if (ImGui::BeginTable("", 2))
+	{
+		ImGui::TableNextColumn(); ImGui::Checkbox("Active", &m_active);
+		ImGui::TableNextColumn(); ImGui::InputText("Name", (char*)name.c_str(), 50);
+
+		ImGui::EndTable();
+	}
+}

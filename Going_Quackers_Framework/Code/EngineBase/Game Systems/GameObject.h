@@ -20,13 +20,13 @@ public:
 	void Update();
 	void Render();
 
+	//Used to Update the Default ImGUI elements for each GameObject
+	void ImGUIUpdate();
+
 	///<summary>The Transform attached to the GameObject.</summary>
 	Transform* transform;
-	///<summary>The name given to the GameObject</summary>
+	///<summary>The name of the GameObject.</summary>
 	std::string name;
-
-	//Is the GameObject currently updating and rendering?
-	bool m_active;
 
 	///<summary>Adds a Component to the GameObject (Requires that the Component needs no initial parameters other than reference to itself)</summary>
 	template<class T>
@@ -82,6 +82,8 @@ public:
 
 	///<summary>Assigns the GameObject as the parent of the given child.</summary>
 	void AddChild(GameObject* child) { m_children.push_back(child); }
+	///<summary>Returns a list of all Children of this GameObject/Parent</summary>
+	std::vector<GameObject*> GetChildren() { return m_children; }
 
 	///<summary>Activate/Deactivate the GameObject depending on the given true/false value.</summary>
 	void SetActive(bool value) { m_active = value; }
@@ -97,7 +99,8 @@ private:
 	//The parent of the GameObject
 	GameObject* mp_parent;
 
-	
+	//Is the GameObject currently updating and rendering?
+	bool m_active;
 };
 
 #endif // !_GAMEOBJECT_H_
