@@ -153,6 +153,7 @@
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_impl_win32.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_tables.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_widgets.cpp" />
+    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.cpp" />
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp" />
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="GravityEmitter.cpp" />
+    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Trigger.cpp" />
@@ -191,6 +193,10 @@
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_rectpack.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_textedit.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectXClass.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\Shader.h" />
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h" />
