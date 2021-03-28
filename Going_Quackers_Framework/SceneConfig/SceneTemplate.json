@@ -1,5 +1,17 @@
 {
     "sceneName" : "Template Scene",
     "sceneID": "template",
-    "objects": []
+    "sceneType": "menu",
+    "objects": [
+        {
+            "id": "testObj",
+            "position": [0,0],
+            "rotation": 0,
+            "scale": 1,
+            "spriteRenderer": {
+                "colour": [0,1,0,1],
+                "texturePath": ""
+            }
+        }
+    ]
 }
