@@ -23,14 +23,7 @@ void EngineGuiClass::InspectorUpdate()
 {
 	if (selectedGameObject != nullptr)
 	{
-		if (ImGui::BeginTable("", 2))
-		{
-			ImGui::TableNextColumn(); ImGui::Checkbox("Active", &selectedGameObject->m_active);
-
-			ImGui::TableNextColumn(); ImGui::InputText("Name", (char*)selectedGameObject->name.c_str(), 100);
-
-			ImGui::EndTable();
-		}
+		selectedGameObject->ImGUIUpdate();
 		
 		ImGui::Separator();
 
@@ -110,19 +103,40 @@ void EngineGuiClass::EditorUpdate()
 	for (size_t i = 0; i < gameObjects.size(); i++)
 	{
 		if (selectedGameObject == gameObjects[i].gameObject)
-		{
 			gameObjects[i].selected = true;
-		}
 		else
-		{
 			gameObjects[i].selected = false;
-		}
 
-		ImGui::Selectable(gameObjects[i].gameObject->name.c_str(), &gameObjects[i].selected);
-		if (gameObjects[i].selected)
+		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+
+		bool node_open = ImGui::TreeNodeEx(gameObjects[i].gameObject->name.c_str(), node_flags);
+		if (ImGui::IsItemClicked())
 		{
 			selectedGameObject = gameObjects[i].gameObject;
 		}
+
+		if(node_open)
+		{
+			for (size_t j = 0; j < gameObjects[i].gameObject->GetChildren().size(); j++)
+			{
+				GameObject* child = gameObjects[i].gameObject->GetChildren()[j];
+				ImGui::TreeNodeEx(gameObjects[i].gameObject->name.c_str(), node_flags);
+			}
+
+			ImGui::TreePop();
+		}
+
+		/*
+		ImGui::Selectable(gameObjects[i].gameObject->name.c_str(), &gameObjects[i].selected);
+		if (gameObjects[i].selected)
+			selectedGameObject = gameObjects[i].gameObject;
+
+		for (size_t j = 0; j < gameObjects[i].gameObject->GetChildren().size(); j++)
+		{
+			GameObject* child = gameObjects[i].gameObject->GetChildren()[j];
+			ImGui::(child->name.c_str());
+		}
+		*/
 	}
 	ImGui::End();
 

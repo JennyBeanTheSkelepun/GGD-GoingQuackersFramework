@@ -48,6 +48,7 @@ public:
 
 	}
 
+	///<summary>Returns the GameObject owner of the Component</summary>
 	GameObject* GetOwner() { return mp_owner; }
 
 protected:
