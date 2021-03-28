@@ -1,5 +1,6 @@
 {
     "sceneName" : "Template Scene",
     "sceneID": "template",
-    "objects": []
+    "sceneType": "menu",
+    "objects":[]
 }
