@@ -5,6 +5,7 @@
 
 #define FULL_SCREEN false
 
+#include "../../Game Systems/Input.h"
 #include "../../ImGui/ImGui SourceCode/imgui.h"
 #include <Windows.h>
 
@@ -28,6 +29,8 @@ public:
 
 	int mi_width;
 	int mi_height;
+
+	Input* mp_Input;
 };
 
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam);

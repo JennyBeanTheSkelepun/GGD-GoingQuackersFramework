@@ -231,8 +231,8 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object</Filter>
     </ClCompile>
-    <ClCompile Include="KeyboardEvents.cpp">
-      <Filter>Source Files\Engine\Input</Filter>
+    <ClCompile Include="Code\EngineBase\Game Systems\KeyboardEvents.cpp">
+      <Filter>Header Files\Engine\Game Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +293,6 @@
     <ClInclude Include="Code\EngineBase\Data Structures\Vertex.h">
       <Filter>Header Files\Engine\Data Structures</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\EngineMain.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h">
       <Filter>Header Files\Engine\ImGui</Filter>
     </ClInclude>
@@ -338,13 +335,19 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object</Filter>
     </ClInclude>
-    <ClInclude Include="KeyboardEvents.h">
-      <Filter>Source Files\Engine\Input</Filter>
+    <ClInclude Include="Code\EngineBase\EngineMain.h">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\KeyboardEvents.h">
+      <Filter>Source Files\Engine\Game Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Going_Quackers_Framework.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

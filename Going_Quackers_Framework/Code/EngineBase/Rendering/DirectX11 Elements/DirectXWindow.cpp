@@ -4,12 +4,15 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 DirectXWindow::DirectXWindow()
 {
+	mp_Input = 0;
 	mi_width = 0;
 	mi_height = 0;
 }
 
 DirectXWindow::~DirectXWindow()
 {
+	delete mp_Input;
+	mp_Input = nullptr;
 }
 
 bool DirectXWindow::SetupWindow()
@@ -58,12 +61,12 @@ LRESULT CALLBACK DirectXWindow::MessageHandler(HWND hwnd, UINT uint, WPARAM wPar
 
 
 		case WM_KEYDOWN:
-			//mp_Input->KeyDown((unsigned int)wParam);
+			mp_Input->KeyDown((unsigned int)wParam);
 			return 0;
 			break;
 
 		case WM_KEYUP:
-			//mp_Input->KeyUp((unsigned int)wParam);
+			mp_Input->KeyUp((unsigned int)wParam);
 			return 0;
 			break;
 
@@ -84,6 +87,9 @@ void DirectXWindow::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 	m_hInstance = GetModuleHandle(NULL);
 
 	m_applicationName = L"Going Quakers Engine";
+
+	mp_Input = new Input();
+	mp_Input->Initialize();
 
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	wc.lpfnWndProc = WndProc;

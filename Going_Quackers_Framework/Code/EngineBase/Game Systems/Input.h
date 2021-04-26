@@ -1,6 +1,7 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
-//#include "../Input/KeyboardEvents.h"
+#include "KeyboardEvents.h"
+#include "Keyboard.h"
 #include <queue>
 
 class Input
@@ -19,6 +20,8 @@ public:
 	bool isKeyDown(unsigned int ai_key);
 	bool isKeyUp(unsigned int ai_key);
 	bool isKeyHeld(unsigned int ai_key);
+	bool IsKeyQueueEmpty();
+	KeyboardEvents readKeyQueue();
 
 	void movement(unsigned int ai_key);
 
@@ -36,6 +39,8 @@ private:
 	unsigned char DefaultLeft;
 	unsigned char DefaultRight;
 	unsigned char DefaultBack;
+
+	std::queue<KeyboardEvents> KeyQueue;
 };
 
 #endif

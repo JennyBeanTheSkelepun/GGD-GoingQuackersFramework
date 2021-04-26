@@ -3,7 +3,7 @@
 
 EngineMain::EngineMain()
 {
-	mp_Input = 0;
+	
 
 	//- Creates Singleton Instance -//
 	Graphics::getInstance();
@@ -11,8 +11,7 @@ EngineMain::EngineMain()
 
 EngineMain::~EngineMain()
 {
-	delete mp_Input;
-	mp_Input = nullptr;
+	
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	for (size_t i = 0; i < gameObjects.size(); i++)
@@ -28,11 +27,7 @@ bool EngineMain::Initalize()
 	int li_screenWidth = 0, li_screenHeight = 0;
 	bool result;
 
-	mp_Input = new Input();
-
-	if (!mp_Input) 
-		return false;
-	mp_Input->Initialize();
+	
 
 	Graphics::getInstance()->InitaliseAPIs();
 
@@ -100,8 +95,7 @@ void EngineMain::Run()
 bool EngineMain::UpdateRenderLoop()
 {
 	bool lb_result; 
-	if (mp_Input->isKeyDown(VK_ESCAPE))
-		return false;
+	
 
 	//- UPDATE LOOP START-//
 	

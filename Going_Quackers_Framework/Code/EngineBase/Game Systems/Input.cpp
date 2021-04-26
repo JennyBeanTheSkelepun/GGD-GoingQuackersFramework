@@ -1,6 +1,7 @@
 #include "Input.h"
 #include <iostream>
 
+
 Input::Input()
 {
 }
@@ -44,16 +45,19 @@ void Input::Initialize()
 void Input::KeyDown(unsigned int ai_input)
 {
 	mb_keys[ai_input] = true;
+	KeyQueue.push(KeyboardEvents(KeyboardEvents::EventTypes::Press, ai_input));
 }
 
 void Input::KeyUp(unsigned int ai_input)
 {
 	mb_keys[ai_input] = false;
+	KeyQueue.push(KeyboardEvents(KeyboardEvents::EventTypes::Release, ai_input));
 }
 
 bool Input::isKeyDown(unsigned int ai_key)
 {
 	return mb_keys[ai_key];
+
 }
 
 bool Input::isKeyUp(unsigned int ai_key)
@@ -65,6 +69,7 @@ bool Input::isKeyUp(unsigned int ai_key)
 	else if (mb_keys[ai_key] == false)
 	{
 		return true;
+		
 	}
 	else
 	{
@@ -84,6 +89,28 @@ bool Input::isKeyHeld(unsigned int ai_key)
 	}
 }
 
+bool Input::IsKeyQueueEmpty()
+{
+	if (KeyQueue.empty())
+	{
+		return true;
+	}
+}
+
+KeyboardEvents Input::readKeyQueue()
+{
+	if (KeyQueue.empty())
+	{
+		return KeyboardEvents();
+	}
+	else
+	{
+		KeyboardEvents event = KeyQueue.front();
+		KeyQueue.pop();
+		return event;
+	}
+}
+
 //function for changing the movement keys
 //takes the key pressed and the current movement key i.e. the current moveLeft can be taken and it will also take the key being pressed
 void Input::changeKey(unsigned int ai_key, unsigned char changed_key)
@@ -95,8 +122,10 @@ void Input::changeKey(unsigned int ai_key, unsigned char changed_key)
 	}
 }
 
+//todo: make the basic movement controls
 void Input::movement(unsigned int ai_key)
 {
+
 	if (isKeyHeld(ai_key))
 	{
 		
