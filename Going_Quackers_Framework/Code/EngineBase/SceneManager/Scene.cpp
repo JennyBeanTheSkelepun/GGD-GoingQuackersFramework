@@ -31,7 +31,3 @@ void Scene::AddObject(GameObject* ap_newObject)
 void Scene::Update(float af_deltaTime)
 {
 }
-
-void Scene::Draw()
-{
-}

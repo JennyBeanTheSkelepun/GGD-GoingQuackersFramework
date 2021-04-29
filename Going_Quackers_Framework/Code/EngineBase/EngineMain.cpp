@@ -1,4 +1,5 @@
 #include "EngineMain.h"
+#include "SceneManager/SceneManager.h"
 #include "../../Code/EngineBase/Rendering/Graphics.h"
 
 EngineMain::EngineMain()
@@ -35,8 +36,7 @@ bool EngineMain::Initalize()
 	mp_Input->Initialize();
 
 	Graphics::getInstance()->InitaliseAPIs();
-
-
+	SceneManager::GetInstance()->Initialize();
 
 	GameObject* mp_Model = new GameObject();
 	mp_Model->AddComponent<SpriteRenderer>();
@@ -105,6 +105,8 @@ bool EngineMain::UpdateRenderLoop()
 
 	//- UPDATE LOOP START-//
 	
+	SceneManager::GetInstance()->Update(Time::GetDeltaTime());
+
 	for (size_t i = 0; i < gameObjects.size(); i++)
 	{
 		gameObjects[i]->Update();
