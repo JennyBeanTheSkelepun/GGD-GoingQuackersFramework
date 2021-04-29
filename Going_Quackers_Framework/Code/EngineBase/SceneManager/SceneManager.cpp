@@ -172,6 +172,7 @@ ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
 //	}
 //}
 
+	/*
 	// Determine object type and set it up
 	//switch (l_ObjectID) {
 	//// Basic Object
