@@ -1,24 +1,2 @@
-﻿  EngineMain.cpp
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(101,7): warning C4101: 'lb_result': unreferenced local variable
-  SpriteRenderer.cpp
-  Transform.cpp
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(31,22): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(31,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(83,69): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  GameObject.cpp
-  EngineGuiClass.cpp
-  DirectXGraphics.cpp
-  DirectXRenderLoop.cpp
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(142,39): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  Graphics.cpp
-  Main.cpp
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Generating Code...
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(95): warning C4715: 'Graphics::AddObjectToApiRenderILoop': not all control paths return a value
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(115): warning C4715: 'Graphics::LoadTexture': not all control paths return a value
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(125): warning C4715: 'Graphics::LoadTileSheet': not all control paths return a value
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(135): warning C4715: 'Graphics::LoadShader': not all control paths return a value
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(137): warning C4715: 'DirectXRenderLoop::ActiveGameRender': not all control paths return a value
-C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(92): warning C4715: 'DirectXRenderLoop::EditorRender': not all control paths return a value
+﻿  EngineGuiClass.cpp
   Going_Quackers_Framework.vcxproj -> C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

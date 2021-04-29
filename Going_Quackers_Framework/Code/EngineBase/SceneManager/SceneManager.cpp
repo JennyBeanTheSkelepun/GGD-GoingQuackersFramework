@@ -159,6 +159,7 @@ void SceneManager::BuildObjectFromID(objectConfig a_objectConfig)
 	// Convert String ID to Enum ID
 	ObjectIDs l_ObjectID = ObjectIDStringToEnum(a_objectConfig.id);
 
+	/*
 	// Determine object type and set it up
 	switch (l_ObjectID) {
 	// Basic Object
@@ -170,4 +171,5 @@ void SceneManager::BuildObjectFromID(objectConfig a_objectConfig)
 	default:
 		break;
 	}
+	*/
 }

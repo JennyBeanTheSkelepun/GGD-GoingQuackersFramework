@@ -39,6 +39,7 @@ private:
 	~EngineGuiClass();
 
 	void InspectorUpdate();
+	void DisplayChildren(GameObject* gameObject, ImGuiTreeNodeFlags node_flags);
 
 public:
 	std::vector<ImGUIObjectContainer> gameObjects;

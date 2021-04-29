@@ -34,6 +34,18 @@ void EngineGuiClass::InspectorUpdate()
 	}
 }
 
+void EngineGuiClass::DisplayChildren(GameObject* gameObject, ImGuiTreeNodeFlags node_flags)
+{
+	for (GameObject* child : gameObject->GetChildren())
+	{
+		if (ImGui::TreeNodeEx(child->name.c_str(), node_flags))
+		{
+			DisplayChildren(child, node_flags);
+			ImGui::TreePop();
+		}
+	}
+}
+
 void EngineGuiClass::InitializeObjectList(std::vector<GameObject*> gameObjects)
 {
 	selectedGameObject = nullptr;
@@ -100,6 +112,17 @@ void EngineGuiClass::EditorUpdate()
 
 	//- Scene Heiarchy -//
 	ImGui::Begin("Scene Heiarchy");
+	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+	for (ImGUIObjectContainer gameObject : gameObjects)
+	{	
+		if (ImGui::TreeNodeEx(gameObject.gameObject->name.c_str(), node_flags))
+		{
+			DisplayChildren(gameObject.gameObject, node_flags);
+			ImGui::TreePop();
+		}
+	}
+
+	/*
 	for (size_t i = 0; i < gameObjects.size(); i++)
 	{
 		if (selectedGameObject == gameObjects[i].gameObject)
@@ -126,7 +149,6 @@ void EngineGuiClass::EditorUpdate()
 			ImGui::TreePop();
 		}
 
-		/*
 		ImGui::Selectable(gameObjects[i].gameObject->name.c_str(), &gameObjects[i].selected);
 		if (gameObjects[i].selected)
 			selectedGameObject = gameObjects[i].gameObject;
@@ -136,8 +158,8 @@ void EngineGuiClass::EditorUpdate()
 			GameObject* child = gameObjects[i].gameObject->GetChildren()[j];
 			ImGui::(child->name.c_str());
 		}
-		*/
 	}
+	*/
 	ImGui::End();
 
 	//- Inspector -//

@@ -195,11 +195,26 @@
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp">
       <Filter>Source Files\Engine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.cpp">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
+    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
+      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Scene Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.cpp">
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.cpp">
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Camera</Filter>
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX ImGui</Filter>
@@ -207,8 +222,11 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.cpp">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Camera</Filter>
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.cpp">
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.cpp">
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader Manager</Filter>
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTexture2D.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Texture\DirectX Texture 2D</Filter>
@@ -216,32 +234,14 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Texture\DirectX Texture Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.cpp">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.cpp">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.cpp">
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
+    </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
       <Filter>Source Files\Engine\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.cpp">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
-      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,23 +308,17 @@
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h">
       <Filter>Header Files\Engine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h">
-      <Filter>Header Files\Engine\Rendering\Interface</Filter>
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element</Filter>
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Scene Setup</Filter>
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Camera</Filter>
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Texture\DirectX Texture Manager</Filter>
@@ -332,32 +326,35 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTexture2D.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Texture\DirectX Texture 2D</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\Graphics.h">
-      <Filter>Header Files\Engine\Rendering</Filter>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Scene Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Camera</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
+    <ClInclude Include="Code\EngineBase\Rendering\Graphics.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
