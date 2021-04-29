@@ -1,12 +1,11 @@
 #include "SceneManager.h"
 
+#include "../Game Systems/Components/SpriteRenderer.h"
+
 #include <ostream>
 #include <fstream>
 #include <filesystem>
-#include "../JSON/nlohmann/json.hpp" // Adding JSON for modern C++
 
-// For Convienience
-using json = nlohmann::json;
 
 SceneManager* SceneManager::mp_instance = 0;
 
@@ -35,6 +34,11 @@ SceneManager::~SceneManager()
 	delete mp_CurrentScene;
 }
 
+void SceneManager::Initialize()
+{
+	LoadScene("SceneConfig/");
+}
+
 void SceneManager::ChangeScene(std::string as_SceneID)
 {
 	// Unload current Scene
@@ -54,13 +58,6 @@ void SceneManager::Update(float af_deltaTime)
 	mp_CurrentScene->Update(af_deltaTime);
 }
 
-/* Draws currently loaded scene
-*/
-void SceneManager::Draw()
-{
-	mp_CurrentScene->Draw();
-}
-
 /* Loads the scene from JSON config
 * 
 * as_Path - String containing path to JSON file for Scene Config
@@ -78,7 +75,14 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		l_SceneConfig["sceneName"],
 		l_SceneConfig["sceneType"]);
 
-	// TODO: Objects
+	// Add Objects
+	ObjectConfig l_ObjectConfig;
+
+	for (const auto& object : l_SceneConfig["objects"].items()) {
+		l_ObjectConfig.pos = Vector2(object.value()["position"][0], object.value()["position"][1]);
+		l_ObjectConfig.scale = Vector2(object.value()["scale"][0], object.value()["scale"][1]);
+		l_ObjectConfig.rotation = object.value()["rotation"];
+	}
 
 	l_file.close();
 	return lp_NewScene;
@@ -91,6 +95,22 @@ void SceneManager::UnloadScene()
 	delete mp_CurrentScene;
 }
 
+std::vector<ObjectConfig*> SceneManager::JSONtoConfig(json a_SceneConfig)
+{
+	for (const auto& object : a_SceneConfig["objects"].items()) {
+		// TODO: RESTRUCTURE THE JSON YOU IDIOT
+		/*
+		Loading:
+		1. Load total objects
+		2. While/For loop total amount of objects
+		3. Use object IDs to loop each one and make new object, set save pos/scale/rot/shader/etc...
+		4. Push to vector
+		5. Go back and repopulate children.
+		*/
+	}
+	return std::vector<ObjectConfig*>();
+}
+
 /// <summary>
 /// Converts Object ID string to Enum
 /// </summary>
@@ -99,10 +119,10 @@ void SceneManager::UnloadScene()
 ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
 {
 	if (as_id == "debugSquare") {
-		return debugSquare;
+		return ObjectIDs::debugSquare;
 	}
 	else {
-		return invalidOption;
+		return ObjectIDs::invalidOption;
 	}
 }
 
@@ -110,20 +130,98 @@ ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
 /// Builds Game Objects from given Enum ID
 /// </summary>
 /// <param name="a_objectConfig">Enum ID of object</param>
-void SceneManager::BuildObjectFromID(objectConfig a_objectConfig)
+void SceneManager::BuildObjectFromID(ObjectConfig a_objectConfig)
 {
 	// Convert String ID to Enum ID
 	ObjectIDs l_ObjectID = ObjectIDStringToEnum(a_objectConfig.id);
 
-	// Determine object type and set it up
-	//switch (l_ObjectID) {
-	//// Basic Object
-	////case debugSquare:
-	////	GameObject* l_NewDebugSquare = new GameObject();
-	////	
-	////	mp_CurrentScene->AddObject(l_NewDebugSquare);
-	////	break;
-	////default:
-	////	break;
-	//}
+	GameObject* l_newObject = new GameObject();
+	l_newObject->AddComponent<SpriteRenderer>();
+	l_newObject->GetTransform()->SetPosition(Vector2(a_objectConfig.pos.X, a_objectConfig.pos.Y));
+	l_newObject->GetTransform()->SetLocalScale(Vector2(a_objectConfig.scale.X, a_objectConfig.scale.Y));
+	l_newObject->GetTransform()->SetLocalRotation(a_objectConfig.rotation);
+	
+	mp_CurrentScene->AddObject(l_newObject);
+}
+
+void SceneManager::BuildObjectFromID(ObjectConfig a_objectConfig, GameObject* a_parent)
+{
+	// Convert String ID to Enum ID
+	ObjectIDs l_ObjectID = ObjectIDStringToEnum(a_objectConfig.id);
+
+	GameObject* l_newObject = new GameObject();
+	l_newObject->AddComponent<SpriteRenderer>();
+	l_newObject->GetTransform()->SetPosition(Vector2(a_objectConfig.pos.X, a_objectConfig.pos.Y));
+	l_newObject->GetTransform()->SetLocalScale(Vector2(a_objectConfig.scale.X, a_objectConfig.scale.Y));
+	l_newObject->GetTransform()->SetLocalRotation(a_objectConfig.rotation);
+
+	l_newObject->SetParent(a_parent);
+	mp_CurrentScene->AddObject(l_newObject);
+}
+
+void SceneManager::SaveToJSON(Scene* ap_Scene)
+{
+	/*
+		Saving:
+		1. Save total amount of objects
+		2. For loop which iterates through every game object
+		3. In for loop, save pos/scale/rot, shader, shader location, texture location
+		4. Save IDs of children.
+	*/
+
+	json l_outfile; // JSON Object to contain the saved data
+	std::string l_outfilePath = "SceneConfig/" + ap_Scene->GetSceneID() + ".json";
+	int li_totalObjects = ap_Scene->GetSceneObjects().size(); // Number of objects in scene
+
+	l_outfile["sceneName"] = ap_Scene->GetSceneDisplayName();
+	l_outfile["sceneID"] = ap_Scene->GetSceneID();
+	l_outfile["sceneType"] = ap_Scene->GetSceneType();
+	l_outfile["objects"] = {};
+
+	for (int i = 0; i < li_totalObjects; i++) {
+		// Get Object ID
+		std::string ls_id = ap_Scene->GetObjectByIndex(i)->GetID();
+		
+		// Get Object Position
+		float l_pos[2]; 
+		l_pos[0] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalPosition().X;
+		l_pos[1] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalPosition().Y;
+
+		// Get Object Scale
+		float lf_scale[2]; 
+		lf_scale[0] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalScale().X;
+		lf_scale[1] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalScale().Y;
+
+		// Get Object Rotation
+		float l_rot = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalRotation();
+
+		// Get Path To Texture
+		std::string ls_texPath = ""; // TODO: Find a way to get texture paths
+
+		// Get Shader Info
+		std::string ls_shader = ""; // TODO: Talk to David about Shader stuff
+		std::string ls_shaderPath = "";
+
+		// Get Parent ID
+		std::string ls_parentID = "";
+		if (ap_Scene->GetObjectByIndex(i)->GetParent() != nullptr) {
+			ls_parentID = ap_Scene->GetObjectByIndex(i)->GetParent()->GetID();
+		}
+
+		// Add Object Info to config
+		l_outfile["objects"] += {
+				{"id", ls_id},
+				{"position", l_pos},
+				{"rotation", l_rot},
+				{"scale", lf_scale},
+				{"texturePath", ls_texPath},
+				{"shader", ls_shader},
+				{"shaderPath", ls_shaderPath},
+				{"parent", ls_parentID}
+			};
+	}
+
+	std::ofstream file(l_outfilePath);
+	file << l_outfile;
+	file.close();
 }

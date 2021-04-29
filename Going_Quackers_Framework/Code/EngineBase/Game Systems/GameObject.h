@@ -54,6 +54,10 @@ public:
 
 	bool IsActive() { return m_active; }
 	void SetActive(bool value) { m_active = value; }
+
+	std::string GetID() { return m_id; }
+	void SetID(std::string newID) { m_id = newID; }
+
 private:
 	Transform* mp_transform;
 
@@ -67,6 +71,9 @@ private:
 
 	//Is the GameObject currently updating and rendering?
 	bool m_active;
+
+	// ID of object
+	std::string m_id = "";
 };
 
 #endif // !_GAMEOBJECT_H_
