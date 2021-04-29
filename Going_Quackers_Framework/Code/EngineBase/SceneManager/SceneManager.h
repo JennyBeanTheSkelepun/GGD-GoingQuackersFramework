@@ -32,18 +32,25 @@ enum ObjectIDs {
 	debugSquare
 };
 
-struct objectConfig {
+struct ObjectConfig {
 	std::string id;
+	std::string type;
 	Vector2 pos;
 	float rotation;
-	float scale;
+	Vector2 scale;
+	std::vector<ObjectConfig> children;
 	// Vector3 colour;
-	std::string texturePath;
+	//std::string texturePath;
 };
 
 class SceneManager
 {
+/* Singleton Stuff */
 public:
+	static SceneManager* GetInstance();
+	SceneManager(SceneManager const&) = delete;
+	void operator = (SceneManager const&) = delete;
+protected:
 	SceneManager();
 	static SceneManager* mp_instance;
 /* Singleton Stuff End */
