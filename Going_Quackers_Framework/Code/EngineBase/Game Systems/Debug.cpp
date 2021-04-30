@@ -2,7 +2,11 @@
 
 Debug* Debug::SingletonInstance = 0;
 
-Debug::Debug(){}
+Debug::Debug(){
+	// clear log file
+	std::ofstream file("debug_log.txt", std::ofstream::out | std::ofstream::trunc);
+	file.close();
+}
 
 Debug::~Debug() {
 	if (SingletonInstance != nullptr) {
