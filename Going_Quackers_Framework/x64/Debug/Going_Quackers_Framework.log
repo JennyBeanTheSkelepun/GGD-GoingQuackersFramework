@@ -1,4 +1,8 @@
-﻿  SceneManager.cpp
+﻿  EngineMain.cpp
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(102,7): warning C4101: 'lb_result': unreferenced local variable
+  Scene.cpp
+  SceneManager.cpp
   The contents of <filesystem> are available only with C++17 or later.
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(124,31): warning C4101: 'e': unreferenced local variable
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(126): warning C4715: 'SceneManager::LoadScene': not all control paths return a value

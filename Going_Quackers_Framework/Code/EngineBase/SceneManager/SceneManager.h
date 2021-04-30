@@ -22,10 +22,8 @@ struct ObjectConfig {
 	float rotation;
 	Vector2 scale;
 	std::string texturePath;
-	std::string shader;
 	std::string shaderPath;
 	std::string parentID;
-	std::vector<ObjectConfig*> children;
 };
 
 class SceneManager
@@ -51,7 +49,7 @@ public:
 
 private:
 	Scene* LoadScene(std::string as_Path);
-	void UnloadScene();
+	void UnloadScene(bool as_SaveToJSON);
 
 	Scene* mp_CurrentScene;
 
