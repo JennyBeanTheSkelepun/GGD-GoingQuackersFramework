@@ -45,11 +45,11 @@ public:
 	{
 	}
 
-	virtual void SceneSave()
+	virtual void SceneSave(json* componentJSON)
 	{
 	}
 
-	virtual void SceneLoad()
+	virtual void SceneLoad(json* componentJSON)
 	{
 	}
 

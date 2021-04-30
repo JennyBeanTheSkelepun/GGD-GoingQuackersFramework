@@ -47,8 +47,6 @@ private:
 
 	Scene* mp_CurrentScene;
 
-	std::vector<ObjectConfig*> JSONtoConfig(json a_SceneConfig);
-	void BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig);
 	void SaveToJSON(Scene* ap_Scene);
 	std::wstring stringToWString(std::string as_string);
 };

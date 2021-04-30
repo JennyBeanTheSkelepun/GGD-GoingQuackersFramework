@@ -58,6 +58,9 @@ public:
 	std::string GetID() { return m_id; }
 	void SetID(std::string newID) { m_id = newID; }
 
+	std::string GetName() { return m_name; }
+	void SetName(std::string newName) { m_name = newName; }
+
 private:
 	Transform* mp_transform;
 
@@ -74,6 +77,9 @@ private:
 
 	// ID of object
 	std::string m_id = "";
+
+	// Name of object
+	std::string m_name = "";
 };
 
 #endif // !_GAMEOBJECT_H_

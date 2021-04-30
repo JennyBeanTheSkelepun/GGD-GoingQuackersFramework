@@ -87,15 +87,44 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		l_SceneConfig["sceneName"],
 		l_SceneConfig["sceneType"]);
 
-	// Load and build objects
-	std::vector<ObjectConfig*> lp_objectConfig = JSONtoConfig(l_SceneConfig);
-	BuildObjects(lp_objectConfig);
+	// Load objects
+	for (const auto& newObject : l_SceneConfig["objects"].items()) {
+		// Create Object
+		GameObject* lp_newObject = new GameObject();
 
-	// Cleanup config vector
-	for (const auto& lp_object : lp_objectConfig) {
-		delete lp_object;
+		// Assign ID
+		lp_newObject->SetID(newObject.value()["id"]);
+		// Assign Name
+		lp_newObject->SetName(newObject.value()["name"]);
+
+		// If it has a Transform Component, add Transform
+		if (newObject.value().contains("Transform")) {
+			lp_newObject->GetTransform()->SceneLoad(&newObject.value()["Transform"]);
+		}
+
+		// If it has a SpriteRenderer component, add SpriteRenderer
+		if (newObject.value().contains("SpriteRenderer")) {
+			lp_newObject->AddComponent<SpriteRenderer>();
+			lp_newObject->GetComponent<SpriteRenderer>()->SceneLoad(&newObject.value()["SpriteRenderer"]);
+		}
+
+		mp_CurrentScene->AddObject(lp_newObject);
 	}
-	lp_objectConfig.clear();
+
+	// Go back and assign parent/child hierarchy
+	for (const auto& object : l_SceneConfig["objects"].items()) {
+		GameObject* lp_currentObject = mp_CurrentScene->GetObjectByID(object.value()["id"]);
+		if (object.value()["parent"] != "") {
+			GameObject* lp_parentObject = mp_CurrentScene->GetObjectByID(object.value()["parent"]);
+			if (lp_parentObject != nullptr) {
+				lp_parentObject->AddChild(lp_currentObject);
+				lp_currentObject->SetParent(lp_parentObject);
+			}
+			else {
+				// TODO: Log Error
+			}
+		}
+	}
 
 	l_file.close();
 	return lp_NewScene;
@@ -114,69 +143,6 @@ void SceneManager::UnloadScene(bool as_SaveToJSON)
 	delete mp_CurrentScene;
 }
 
-/// <summary>
-/// Creates ObjectConfigs from JSON file
-/// </summary>
-/// <param name="a_SceneConfig"></param>
-/// <returns>Returns vector of object configs</returns>
-std::vector<ObjectConfig*> SceneManager::JSONtoConfig(json a_SceneConfig)
-{
-	std::vector<ObjectConfig*> l_configs;
-	for (const auto& object : a_SceneConfig["objects"].items()) {
-
-		ObjectConfig* lp_newObjectConfig = new ObjectConfig();
-		// Assign values from json
-		lp_newObjectConfig->id = object.value()["id"];
-		lp_newObjectConfig->pos = Vector2(object.value()["position"][0], object.value()["position"][1]);
-		lp_newObjectConfig->rotation = object.value()["rotation"];
-		lp_newObjectConfig->scale = Vector2(object.value()["scale"][0], object.value()["scale"][1]);
-		lp_newObjectConfig->texturePath = object.value()["texturePath"];
-		lp_newObjectConfig->shaderPath = object.value()["shaderPath"];
-		lp_newObjectConfig->parentID = object.value()["parent"];
-		// Add to vector
-		l_configs.push_back(lp_newObjectConfig);
-	}
-	return l_configs;
-}
-
-/// <summary>
-/// Builds objects from ObjectConfig objects
-/// </summary>
-/// <param name="ap_ObjectConfig"></param>
-void SceneManager::BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig)
-{
-	// Build and add objects
-	for (const auto& l_NewObjectConfig : ap_ObjectConfig) {
-		GameObject* lp_newObject = new GameObject();
-		lp_newObject->SetID(l_NewObjectConfig->id);
-		lp_newObject->GetTransform()->SetLocalPosition(l_NewObjectConfig->pos);
-		lp_newObject->GetTransform()->SetLocalRotation(l_NewObjectConfig->rotation);
-		lp_newObject->GetTransform()->SetLocalScale(l_NewObjectConfig->scale);
-		lp_newObject->AddComponent<SpriteRenderer>();
-
-		// string to wstring because pain
-		std::wstring l_shaderPath = stringToWString(l_NewObjectConfig->shaderPath);
-
-		lp_newObject->GetComponent<SpriteRenderer>()->Initialze(l_NewObjectConfig->texturePath, l_shaderPath);
-		mp_CurrentScene->AddObject(lp_newObject);
-	}
-
-	// Loop through again to sort Parent/child hierarchy
-	for (const auto& l_objectConfig : ap_ObjectConfig) {
-		GameObject* lp_currentObject = mp_CurrentScene->GetObjectByID(l_objectConfig->id);
-		if (l_objectConfig->parentID != "") {
-			GameObject* lp_parentObject = mp_CurrentScene->GetObjectByID(l_objectConfig->parentID);
-			if (lp_parentObject != nullptr) {
-				lp_parentObject->AddChild(lp_currentObject);
-				lp_currentObject->SetParent(lp_parentObject);
-			}
-			else {
-				//TODO: Log error
-			}
-		}
-	}
-}
-
 
 /// <summary>
 /// Saves scene information to JSON file
@@ -184,6 +150,7 @@ void SceneManager::BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig)
 /// <param name="ap_Scene">Scene Object</param>
 void SceneManager::SaveToJSON(Scene* ap_Scene)
 {
+	//TODO: REWORK TO NEW DYNAMIC FORMAT
 	json l_outfile; // JSON Object to contain the saved data
 	std::string l_outfilePath = "SceneConfig/" + ap_Scene->GetSceneID() + ".json";
 	int li_totalObjects = ap_Scene->GetSceneObjects().size(); // Number of objects in scene
