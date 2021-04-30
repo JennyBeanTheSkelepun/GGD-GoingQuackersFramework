@@ -1,4 +1,5 @@
 #include "EngineGuiClass.h"
+#include "../Game Systems/Debug.h"
 
 EngineGuiClass* EngineGuiClass::SingletonInstance = 0;
 
@@ -65,13 +66,13 @@ void EngineGuiClass::EditorUpdate()
 			if (ImGui::MenuItem("Play")) { mb_playGame = true; }
 			if (ImGui::MenuItem("Stop")) { mb_playGame = false; }
 			ImGui::Separator();
-			if (ImGui::MenuItem("Maxamise On Play", BoolToString(mb_maxOnPlay))) { mb_maxOnPlay = !mb_maxOnPlay; }
+			if (ImGui::MenuItem("Maximise On Play", BoolToString(mb_maxOnPlay))) { mb_maxOnPlay = !mb_maxOnPlay; }
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
 	}
 	//- Scene Heiarchy -//
-	ImGui::Begin("Scene Heiarchy");
+	ImGui::Begin("Scene Hierarchy");
 	ImGui::End();
 
 	//- Inspector -//
@@ -80,6 +81,25 @@ void EngineGuiClass::EditorUpdate()
 
 	//- Output Log -//
 	ImGui::Begin("OutputLog");
+	std::string l_line;
+	std::stringstream l_log = Debug::getInstance()->ReadLog();
+	// convert data to ImGui::Text parameters
+	while (std::getline(l_log, l_line)) {
+		// new text colour
+		ImColor colour;
+		// turn line into stream
+		std::istringstream in(l_line);
+		std::string l_text;
+		// format: r g b log
+		float r, g, b;
+		in >> r;
+		in >> g;
+		in >> b;
+		colour = ImColor(r, g, b);
+		std::getline(in, l_text);
+		ImGui::TextColored(ImVec4(r, g, b, 1.f), l_text.c_str());
+	}
+
 	ImGui::End();
 }
 
