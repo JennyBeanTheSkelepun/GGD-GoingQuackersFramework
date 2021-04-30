@@ -347,9 +347,6 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.h">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
     </ClInclude>
