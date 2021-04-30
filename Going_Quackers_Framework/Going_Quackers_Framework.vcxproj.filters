@@ -243,6 +243,9 @@
     <ClCompile Include="Code\EngineBase\EngineMain.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXAudio.cpp">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -365,6 +368,12 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXAudio.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Going_Quackers_Framework.rc">
@@ -378,5 +387,8 @@
     <FxCompile Include="Code\EngineBase\Rendering\Shaders\TextureSimple.fx">
       <Filter>Header Files\Engine\Rendering\Shaders</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
