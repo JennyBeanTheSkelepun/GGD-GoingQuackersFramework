@@ -162,18 +162,31 @@ ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
 void SceneManager::BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig)
 {
 	// Build and add objects
-	for (const auto& l_objectConfig : ap_ObjectConfig) {
+	for (const auto& l_NewObjectConfig : ap_ObjectConfig) {
 		GameObject* lp_newObject = new GameObject();
-		lp_newObject->SetID(l_objectConfig->id);
-		lp_newObject->GetTransform()->SetLocalPosition(l_objectConfig->pos);
-		lp_newObject->GetTransform()->SetLocalRotation(l_objectConfig->rotation);
-		lp_newObject->GetTransform()->SetLocalScale(l_objectConfig->scale);
+		lp_newObject->SetID(l_NewObjectConfig->id);
+		lp_newObject->GetTransform()->SetLocalPosition(l_NewObjectConfig->pos);
+		lp_newObject->GetTransform()->SetLocalRotation(l_NewObjectConfig->rotation);
+		lp_newObject->GetTransform()->SetLocalScale(l_NewObjectConfig->scale);
 		lp_newObject->AddComponent<SpriteRenderer>();
-		// TODO Texture Stuff
-		// TODO Shader Stuff
+		lp_newObject->GetComponent<SpriteRenderer>()->Initialze(l_NewObjectConfig->texturePath, l_NewObjectConfig->shaderPath);
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
-	// Sort Parent/child hierarchy
+
+	// Loop through again to sort Parent/child hierarchy
+	for (const auto& l_objectConfig : ap_ObjectConfig) {
+		GameObject* lp_currentObject = mp_CurrentScene->GetObjectByID(l_objectConfig->id);
+		if (l_objectConfig->parentID != "") {
+			GameObject* lp_parentObject = mp_CurrentScene->GetObjectByID(l_objectConfig->parentID);
+			if (lp_parentObject != nullptr) {
+				lp_parentObject->AddChild(lp_currentObject);
+				lp_currentObject->SetParent(lp_parentObject);
+			}
+			else {
+				//TODO: Log error
+			}
+		}
+	}
 
 }
 
