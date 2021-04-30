@@ -1,16 +1,15 @@
-#ifndef GRAVITYEMITTER
-#define GRAVITYEMITTER
+#ifndef _GRAVITYEMITTER_
+#define _GRAVITYEMITTER_
 
 #include "Collision.h"
-#include "Code/EngineBase/Game Systems/Time.h"
-#include "Code/EngineBase/Game Systems/Components/Component.h"
-#include "Rigidbody.h"
 
-class GravityEmitter : Collision
+class Ridigbody;
+
+class GravityEmitter
 {
 //Add collision checking and AddForce to Rigidbody in the area.
 public:
-	void Update() override;
+	void applyGravity(GameObject* callObj, std::vector<GameObject*>* collidedObjects);
 
 	void SetGravityStrength(float strength) { m_gravityStrength = strength; }
 	float GetGravityStrength() { return m_gravityStrength; }
@@ -18,10 +17,8 @@ public:
 	Vector2 GetGravityDirection() { return m_gravityDirection; }
 
 private:
-	std::vector<GameObject*> m_collidiedObjects;
-
 	float m_gravityStrength;
 	Vector2 m_gravityDirection;
 };
 
-#endif GRAVITYEMITTER
+#endif _GRAVITYEMITTER_

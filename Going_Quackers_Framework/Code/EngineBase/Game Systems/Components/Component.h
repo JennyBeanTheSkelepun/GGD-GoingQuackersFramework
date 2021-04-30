@@ -8,6 +8,7 @@ enum ComponentTypes
 	SPRITE = 0,
 	TRANSFORM = 1,
 	SPRITERENDERER = 2,
+	RIGIDBODY = 3,
 
 	//Not_Usefull = 0,
 	//Two_D_Sprite_Renderer = 1,
