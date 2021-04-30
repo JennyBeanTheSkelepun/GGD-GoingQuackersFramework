@@ -18,25 +18,19 @@ private:
 	static Debug* SingletonInstance;
 	Debug();
 	~Debug();
+	std::stringstream queue;
 public:
 	template <typename T>
 	/// <summary>
 	/// put things in the log queue; white text
 	/// </summary>
-	static void Log(T info) {
+	void Log(T info) {
 		Log(info, 1.f, 1.f, 1.f);
 	}
 	// coloured text
 	template <typename T>
-	static void Log(T info, float r, float g, float b) {
-		// straight from first year
-		std::ofstream file("debug_log.txt");
-		if (!file.is_open()) {
-			std::cout << "Debug log file couldn't be opened!";
-			return;
-		}
-		file << r << " " << g << " " << b << " " << info;
-		file.close();
+	void Log(T info, float r, float g, float b) {
+		queue << r << " " << g << " " << b << " " << info << "\n";
 		return;
 	}
 
@@ -49,6 +43,6 @@ public:
 	void LogError(T info) {
 		Log(info, 1.f, 0.15f,0.15f);
 	}
-	static std::stringstream ReadLog();
+	std::stringstream ReadLog();
 };
 #endif DEBUG

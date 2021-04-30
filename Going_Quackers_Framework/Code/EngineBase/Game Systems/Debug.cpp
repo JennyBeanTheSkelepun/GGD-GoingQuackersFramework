@@ -9,6 +9,15 @@ Debug::Debug(){
 }
 
 Debug::~Debug() {
+	// write buffer to file
+	std::ofstream ofile("debug_log.txt");
+	if (!ofile.is_open()) {
+		std::cout << "Debug log file couldn't be opened!";
+		return;
+	}
+	ofile << queue.str();
+	ofile.close();
+
 	if (SingletonInstance != nullptr) {
 		delete SingletonInstance;
 		SingletonInstance = nullptr;
@@ -22,17 +31,7 @@ Debug* Debug::getInstance() {
 }
 
 std::stringstream Debug::ReadLog() {
-	std::string line;
 	std::stringstream buffer;
-	std::ifstream file("debug_log.txt");
-	if (file.is_open()) {
-		while (getline(file, line)) {
-			buffer << line << std::endl;
-		}
-		file.close();
-	}
-	else {
-		std::cout << "Unable to open debug log file!";
-	}
+	buffer << queue.str();
 	return buffer;
 }
