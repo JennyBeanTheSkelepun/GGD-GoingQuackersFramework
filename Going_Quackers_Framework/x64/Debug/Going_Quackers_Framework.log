@@ -1,5 +1,11 @@
-﻿  SceneManager.cpp
+﻿  EngineMain.cpp
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(102,7): warning C4101: 'lb_result': unreferenced local variable
+  Scene.cpp
+  SceneManager.cpp
   The contents of <filesystem> are available only with C++17 or later.
-C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(199,58): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(221,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(197,58): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(219,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(253,52): warning C4834: discarding return value of function with 'nodiscard' attribute
+  Generating Code...
   Going_Quackers_Framework.vcxproj -> C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
