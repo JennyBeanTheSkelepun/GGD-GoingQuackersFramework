@@ -21,10 +21,10 @@ private:
 public:
 	template <typename T>
 	/// <summary>
-	/// put things in the log queue; black text
+	/// put things in the log queue; white text
 	/// </summary>
 	static void Log(T info) {
-		Log(info, 0f, 0f, 0f);
+		Log(info, 1.f, 1.f, 1.f);
 	}
 	// coloured text
 	template <typename T>
