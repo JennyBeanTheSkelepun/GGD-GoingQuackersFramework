@@ -9,8 +9,19 @@
 //- only knows windows Elements of Imgui to prevent anyone from messing up Api template code -//
 #include "ImGui SourceCode/imgui.h"
 #include "ImGui SourceCode/imgui_impl_win32.h"
-
 class GameObject;
+
+struct ImGUIContainer
+{
+	GameObject* gameObject;
+	bool selected;
+
+	ImGUIContainer(GameObject* gameObject)
+	{
+		this->gameObject = gameObject;
+		this->selected = false;
+	}
+};
 
 class EngineGuiClass
 {
@@ -26,7 +37,7 @@ private:
 	EngineGuiClass();
 	~EngineGuiClass();
 
-	void DisplayChildren(GameObject* gameObject, ImGuiTreeNodeFlags node_flags);
+	void DisplayChildren(GameObject* gameObject);
 
 public:
 	void InitializeObjectList(std::vector<GameObject*> gameObjects);
@@ -46,7 +57,7 @@ private:
 	bool mb_playGame = false;
 	bool mb_closeEditor = false;
 
-	std::vector<GameObject*> gameObjects; //List of GameObjects
+	std::vector<ImGUIContainer> gameObjects; //List of GameObjects
 	GameObject* selectedGameObject; //Used to record which gameobject is currently selected within the inspector
 };
 

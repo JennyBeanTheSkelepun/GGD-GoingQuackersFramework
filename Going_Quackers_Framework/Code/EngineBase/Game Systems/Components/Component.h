@@ -29,9 +29,14 @@ public:
 
 	~Component()
 	{
+		Deconstruct();
 	}
 
 	virtual void Initialize()
+	{
+	}
+
+	virtual void Deconstruct()
 	{
 	}
 
