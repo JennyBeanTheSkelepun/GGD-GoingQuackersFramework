@@ -59,6 +59,7 @@ private:
 	ObjectIDs ObjectIDStringToEnum(std::string as_id);
 	void BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig);
 	void SaveToJSON(Scene* ap_Scene);
+	std::wstring stringToWString(std::string as_string);
 };
 
 #endif /*SCENEMANAGER*/
