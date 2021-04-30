@@ -39,6 +39,10 @@ void SceneManager::Initialize()
 
 }
 
+/// <summary>
+/// Changes the scene to one matching the given ID
+/// </summary>
+/// <param name="as_SceneID">String ID of the scene, should match file name (without .json)</param>
 void SceneManager::ChangeScene(std::string as_SceneID)
 {
 	// Unload current Scene
@@ -51,17 +55,20 @@ void SceneManager::ChangeScene(std::string as_SceneID)
 	mp_CurrentScene = LoadScene(ls_SceneConfigPath);
 }
 
-/* Updates currently loaded scene
-*/
+/// <summary>
+/// Updates the current scene
+/// </summary>
+/// <param name="af_deltaTime">Delta time</param>
 void SceneManager::Update(float af_deltaTime)
 {
 	mp_CurrentScene->Update(af_deltaTime);
 }
 
-/* Loads the scene from JSON config
-* 
-* as_Path - String containing path to JSON file for Scene Config
-*/
+/// <summary>
+/// Loads a scene from json file
+/// </summary>
+/// <param name="as_Path">Path to json file</param>
+/// <returns>Returns new scene</returns>
 Scene* SceneManager::LoadScene(std::string as_Path)
 {
 	// Load Config from JSON file
@@ -88,24 +95,21 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 	return lp_NewScene;
 }
 
-/* Removes the scene from loaded scenes
-*/
+/// <summary>
+/// Unloads a scene
+/// </summary>
 void SceneManager::UnloadScene()
 {
 	delete mp_CurrentScene;
 }
 
+/// <summary>
+/// Creates ObjectConfigs from JSON file
+/// </summary>
+/// <param name="a_SceneConfig"></param>
+/// <returns>Returns vector of object configs</returns>
 std::vector<ObjectConfig*> SceneManager::JSONtoConfig(json a_SceneConfig)
 {
-	// TODO: RESTRUCTURE THE JSON YOU IDIOT
-	/*
-	Loading:
-	1. Load total objects
-	2. While/For loop total amount of objects
-	3. Use object IDs to loop each one and make new object, set save pos/scale/rot/shader/etc...
-	4. Push to vector
-	5. Go back and repopulate children.
-	*/
 	std::vector<ObjectConfig*> l_configs;
 	for (const auto& object : a_SceneConfig["objects"].items()) {
 
@@ -152,48 +156,35 @@ ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
 }
 
 /// <summary>
-/// Builds Game Objects from given Enum ID
+/// Builds objects from ObjectConfig objects
 /// </summary>
-/// <param name="a_objectConfig">Enum ID of object</param>
-void SceneManager::BuildObjectFromID(ObjectConfig a_objectConfig)
+/// <param name="ap_ObjectConfig"></param>
+void SceneManager::BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig)
 {
-	// Convert String ID to Enum ID
-	ObjectIDs l_ObjectID = ObjectIDStringToEnum(a_objectConfig.id);
+	// Build and add objects
+	for (const auto& l_objectConfig : ap_ObjectConfig) {
+		GameObject* lp_newObject = new GameObject();
+		lp_newObject->SetID(l_objectConfig->id);
+		lp_newObject->GetTransform()->SetLocalPosition(l_objectConfig->pos);
+		lp_newObject->GetTransform()->SetLocalRotation(l_objectConfig->rotation);
+		lp_newObject->GetTransform()->SetLocalScale(l_objectConfig->scale);
+		lp_newObject->AddComponent<SpriteRenderer>();
+		// TODO Texture Stuff
+		// TODO Shader Stuff
+		mp_CurrentScene->AddObject(lp_newObject);
+	}
+	// Sort Parent/child hierarchy
 
-	GameObject* l_newObject = new GameObject();
-	l_newObject->AddComponent<SpriteRenderer>();
-	l_newObject->GetTransform()->SetPosition(Vector2(a_objectConfig.pos.X, a_objectConfig.pos.Y));
-	l_newObject->GetTransform()->SetLocalScale(Vector2(a_objectConfig.scale.X, a_objectConfig.scale.Y));
-	l_newObject->GetTransform()->SetLocalRotation(a_objectConfig.rotation);
-	
-	mp_CurrentScene->AddObject(l_newObject);
 }
 
-void SceneManager::BuildObjectFromID(ObjectConfig a_objectConfig, GameObject* a_parent)
-{
-	// Convert String ID to Enum ID
-	ObjectIDs l_ObjectID = ObjectIDStringToEnum(a_objectConfig.id);
 
-	GameObject* l_newObject = new GameObject();
-	l_newObject->AddComponent<SpriteRenderer>();
-	l_newObject->GetTransform()->SetPosition(Vector2(a_objectConfig.pos.X, a_objectConfig.pos.Y));
-	l_newObject->GetTransform()->SetLocalScale(Vector2(a_objectConfig.scale.X, a_objectConfig.scale.Y));
-	l_newObject->GetTransform()->SetLocalRotation(a_objectConfig.rotation);
 
-	l_newObject->SetParent(a_parent);
-	mp_CurrentScene->AddObject(l_newObject);
-}
-
+/// <summary>
+/// Saves scene information to JSON file
+/// </summary>
+/// <param name="ap_Scene">Scene Object</param>
 void SceneManager::SaveToJSON(Scene* ap_Scene)
 {
-	/*
-		Saving:
-		1. Save total amount of objects
-		2. For loop which iterates through every game object
-		3. In for loop, save pos/scale/rot, shader, shader location, texture location
-		4. Save IDs of children.
-	*/
-
 	json l_outfile; // JSON Object to contain the saved data
 	std::string l_outfilePath = "SceneConfig/" + ap_Scene->GetSceneID() + ".json";
 	int li_totalObjects = ap_Scene->GetSceneObjects().size(); // Number of objects in scene

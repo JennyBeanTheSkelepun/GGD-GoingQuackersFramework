@@ -1,37 +1,17 @@
 {​​​
-    "sceneName" : "TEST SCENE",
-    "sceneID": "testScene",
-    "sceneType": "debug",
+    "sceneName" : "",
+    "sceneID": "",
+    "sceneType": "",
     "objects": [
         {​​​​​​​​​​
-            "id": "debugSquare",
-            "type": "spriteRenderer",
-            "position": [2.0, 0.0],
+            "id": "",
+            "position": [0,0],
             "rotation": 0,
-            "scale": [1, 1],
-            "spriteRenderer": {​​​​​​​​​​​​​​​​​
-                "colour": [0,1,0,1],
-                "texturePath": ""
-            },
-            "children": [
-                {​​​​​​​​​​
-                    "id": "debugSquare",
-                    "type": "spriteRenderer",
-                    "position": [-2.5, 0.0],
-                    "rotation": 0,
-                    "scale": [0.5, 0.5],
-                    "children": [
-                        {​​​​​​​​​​
-                            "id": "debugSquare",
-                            "type": "spriteRenderer",
-                            "position": [-5.0, 0.0],
-                            "rotation": 0,
-                            "scale": [0.5, 0.5],
-                            "children": []
-                        }
-                    ]
-                }
-            ]​​​​​​​​​​​​​​​​​
+            "scale": [1,1],
+            "texturePath": "",
+            "shader": "",
+            "shaderPath": "",
+            "parent": ""
         }​​​​​​​​​​​​​​​​​
     ]
 }​​​​​​​​​​​​​​​​​

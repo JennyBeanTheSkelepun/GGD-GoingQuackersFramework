@@ -57,8 +57,7 @@ private:
 
 	std::vector<ObjectConfig*> JSONtoConfig(json a_SceneConfig);
 	ObjectIDs ObjectIDStringToEnum(std::string as_id);
-	void BuildObjectFromID(ObjectConfig a_objectConfig);
-	void BuildObjectFromID(ObjectConfig a_objectConfig, GameObject* a_parent);
+	void BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig);
 	void SaveToJSON(Scene* ap_Scene);
 };
 
