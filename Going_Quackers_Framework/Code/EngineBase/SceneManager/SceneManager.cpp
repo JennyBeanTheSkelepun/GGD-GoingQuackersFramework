@@ -113,7 +113,7 @@ Scene* SceneManager::LoadScene(std::string as_ID)
 			//TODO: Colour
 
 			// Build the object
-			BuildObjectFromID(l_objectConfig);
+			//BuildObjectFromID(l_objectConfig);
 		}
 
 		// Close file
@@ -154,10 +154,23 @@ ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
 /// Builds Game Objects from given Enum ID
 /// </summary>
 /// <param name="a_objectConfig">Enum ID of object</param>
-void SceneManager::BuildObjectFromID(objectConfig a_objectConfig)
-{
-	// Convert String ID to Enum ID
-	ObjectIDs l_ObjectID = ObjectIDStringToEnum(a_objectConfig.id);
+//void SceneManager::BuildObjectFromID(objectConfig a_objectConfig)
+//{
+//	// Convert String ID to Enum ID
+//	ObjectIDs l_ObjectID = ObjectIDStringToEnum(a_objectConfig.id);
+//
+//	// Determine object type and set it up
+//	switch (l_ObjectID) {
+//	// Basic Object
+//	case debugSquare:
+//		GameObject* l_NewDebugSquare = new GameObject();
+//		
+//		mp_CurrentScene->AddObject(l_NewDebugSquare);
+//		break;
+//	default:
+//		break;
+//	}
+//}
 
 	// Determine object type and set it up
 	//switch (l_ObjectID) {
