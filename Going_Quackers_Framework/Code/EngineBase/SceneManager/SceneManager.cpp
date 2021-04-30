@@ -48,7 +48,7 @@ void SceneManager::Initialize()
 void SceneManager::ChangeScene(std::string as_SceneID)
 {
 	// Unload current Scene
-	UnloadScene();
+	UnloadScene(false);
 
 	// Get path to JSON scene config
 	std::string ls_SceneConfigPath = "";
@@ -84,14 +84,15 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		l_SceneConfig["sceneName"],
 		l_SceneConfig["sceneType"]);
 
-	// Add Objects
-	ObjectConfig l_ObjectConfig;
+	// Load and build objects
+	std::vector<ObjectConfig*> lp_objectConfig = JSONtoConfig(l_SceneConfig);
+	BuildObjects(lp_objectConfig);
 
-	for (const auto& object : l_SceneConfig["objects"].items()) {
-		l_ObjectConfig.pos = Vector2(object.value()["position"][0], object.value()["position"][1]);
-		l_ObjectConfig.scale = Vector2(object.value()["scale"][0], object.value()["scale"][1]);
-		l_ObjectConfig.rotation = object.value()["rotation"];
+	// Cleanup config vector
+	for (const auto& lp_object : lp_objectConfig) {
+		delete lp_object;
 	}
+	lp_objectConfig.clear();
 
 	l_file.close();
 	return lp_NewScene;
@@ -100,8 +101,13 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 /// <summary>
 /// Unloads a scene
 /// </summary>
-void SceneManager::UnloadScene()
+/// <param name="as_SaveToJSON">Set to true if you want to save the scene</param>
+void SceneManager::UnloadScene(bool as_SaveToJSON)
 {
+	if (as_SaveToJSON) {
+		SaveToJSON(mp_CurrentScene);
+	}
+
 	delete mp_CurrentScene;
 }
 
@@ -122,22 +128,10 @@ std::vector<ObjectConfig*> SceneManager::JSONtoConfig(json a_SceneConfig)
 		lp_newObjectConfig->rotation = object.value()["rotation"];
 		lp_newObjectConfig->scale = Vector2(object.value()["scale"][0], object.value()["scale"][1]);
 		lp_newObjectConfig->texturePath = object.value()["texturePath"];
-		lp_newObjectConfig->shader = object.value()["shader"];
 		lp_newObjectConfig->shaderPath = object.value()["shaderPath"];
 		lp_newObjectConfig->parentID = object.value()["parent"];
 		// Add to vector
 		l_configs.push_back(lp_newObjectConfig);
-	}
-	// Assign children to parents
-	for (const auto& l_config : l_configs) {
-		if (l_config->parentID != "") {
-			for (int i = 0; i < l_configs.size(); i++) {
-				if (l_config->parentID == l_configs[i]->id) {
-					l_configs[i]->children.push_back(l_config);
-					break;
-				}
-			}
-		}
 	}
 	return l_configs;
 }
@@ -193,7 +187,6 @@ void SceneManager::BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig)
 			}
 		}
 	}
-
 }
 
 
@@ -231,10 +224,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 		float l_rot = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalRotation();
 
 		// Get Path To Texture
-		std::string ls_texPath = ""; // TODO: Find a way to get texture paths
+		std::string ls_texPath = "";
 
 		// Get Shader Info
-		std::string ls_shader = ""; // TODO: Talk to David about Shader stuff
 		std::string ls_shaderPath = "";
 
 		// Get Parent ID
@@ -250,7 +242,6 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				{"rotation", l_rot},
 				{"scale", lf_scale},
 				{"texturePath", ls_texPath},
-				{"shader", ls_shader},
 				{"shaderPath", ls_shaderPath},
 				{"parent", ls_parentID}
 			};
