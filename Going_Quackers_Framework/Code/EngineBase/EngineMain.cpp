@@ -36,19 +36,19 @@ bool EngineMain::Initalize()
 
 	Graphics::getInstance()->InitaliseAPIs();
 
-	GameObject* mp_Model = new GameObject("Object 1");
+	GameObject* mp_Model = new GameObject("Block 1");
 	mp_Model->AddComponent<SpriteRenderer>();
 	mp_Model->transform->SetPosition(Vector2(2.0f, 0.0f));
 
 	// Create the model object.
-	GameObject* mp_Model2 = new GameObject("Object 2");
+	GameObject* mp_Model2 = new GameObject("Block 2");
 	result = mp_Model2->AddComponent<SpriteRenderer>();
 	mp_Model2->transform->SetPosition(Vector2(-2.5f, 0.0f));
 	mp_Model2->transform->SetLocalScale(Vector2(0.5f, 0.5f));
 	mp_Model2->SetParent(mp_Model);
 	
 	// Create the model object.
-	GameObject* mp_Model3 = new GameObject("Object 3");
+	GameObject* mp_Model3 = new GameObject("Block 3");
 	mp_Model3->AddComponent<SpriteRenderer>();
 	mp_Model3->transform->SetPosition(Vector2(-5.0f, 0.0f));
 	mp_Model3->transform->SetLocalScale(Vector2(0.5f, 0.5f));
