@@ -17,7 +17,7 @@ class Collision
 public:
 	bool CollisionSpherical(GameObject* checkObjectA, GameObject* checkObjectB);
 	bool CollisionAABB(GameObject* checkObjectA, GameObject* checkObjectB);
-	bool CollisionSphereAABB(GameObject* checkObjectA, GameObject* checkObjectB);
+	bool CollisionSphericalAABB(GameObject* checkObjectA, GameObject* checkObjectB);
 };
 
 #endif _COLLISION_
