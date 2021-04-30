@@ -13,35 +13,33 @@ EngineGuiClass* EngineGuiClass::getInstance()
 
 EngineGuiClass::EngineGuiClass()
 {
+	selectedGameObject = nullptr;
 }
 
 EngineGuiClass::~EngineGuiClass()
 {
 }
 
-void EngineGuiClass::InspectorUpdate()
-{
-	if (selectedGameObject != nullptr)
-	{
-		selectedGameObject->ImGUIUpdate();
-		
-		ImGui::Separator();
-
-		for (size_t i = 0; i < selectedGameObject->GetComponents().size(); i++)
-		{
-			selectedGameObject->GetComponents()[i]->ImGUIUpdate();
-		}
-	}
-}
-
 void EngineGuiClass::DisplayChildren(GameObject* gameObject, ImGuiTreeNodeFlags node_flags)
 {
 	for (GameObject* child : gameObject->GetChildren())
 	{
-		if (ImGui::TreeNodeEx(child->name.c_str(), node_flags))
+		if (gameObject->HasChildren())
 		{
-			DisplayChildren(child, node_flags);
-			ImGui::TreePop();
+			if (ImGui::TreeNodeEx(child->name.c_str(), node_flags))
+			{
+				DisplayChildren(child, node_flags);
+				ImGui::TreePop();
+			}
+		}
+		else
+		{
+			ImGui::Text(child->name.c_str());
+		}
+
+		if (ImGui::IsItemClicked())
+		{
+			selectedGameObject = child;
 		}
 	}
 }
@@ -53,7 +51,7 @@ void EngineGuiClass::InitializeObjectList(std::vector<GameObject*> gameObjects)
 	//Create a list of object containers
 	for(size_t i = 0; i < gameObjects.size(); i++)
 	{
-		this->gameObjects.push_back(ImGUIObjectContainer(gameObjects[i]));
+		this->gameObjects.push_back((gameObjects[i]));
 	}
 }
 
@@ -113,12 +111,24 @@ void EngineGuiClass::EditorUpdate(ID3D11ShaderResourceView* a_RenderTexture, Gam
 	//- Scene Heiarchy -//
 	ImGui::Begin("Scene Heiarchy");
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
-	for (ImGUIObjectContainer gameObject : gameObjects)
+	for (GameObject* gameObject : gameObjects)
 	{	
-		if (ImGui::TreeNodeEx(gameObject.gameObject->name.c_str(), node_flags))
+		if (gameObject->HasChildren())
 		{
-			DisplayChildren(gameObject.gameObject, node_flags);
-			ImGui::TreePop();
+			if (ImGui::TreeNodeEx(gameObject->name.c_str(), node_flags))
+			{
+				DisplayChildren(gameObject, node_flags);
+				ImGui::TreePop();
+			}
+		}
+		else
+		{
+			ImGui::TextColored(ImVec4(255, 0, 0, 255), gameObject->name.c_str());
+		}
+
+		if (ImGui::IsItemClicked())
+		{
+			selectedGameObject = gameObject;
 		}
 	}
 
@@ -164,7 +174,8 @@ void EngineGuiClass::EditorUpdate(ID3D11ShaderResourceView* a_RenderTexture, Gam
 
 	//- Inspector -//
 	ImGui::Begin("Inspector");
-	InspectorUpdate();
+		if(selectedGameObject != nullptr)
+			selectedGameObject->ImGUIUpdate();
 	ImGui::End();
 
 	//- Output Log -//

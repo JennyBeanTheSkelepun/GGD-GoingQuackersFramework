@@ -84,6 +84,8 @@ public:
 	void AddChild(GameObject* child) { m_children.push_back(child); }
 	///<summary>Returns a list of all Children of this GameObject/Parent</summary>
 	std::vector<GameObject*> GetChildren() { return m_children; }
+	///<summary>Check if the GameObject has Children</summary>
+	bool HasChildren() { return m_children.size() != 0; }
 
 	///<summary>Activate/Deactivate the GameObject depending on the given true/false value.</summary>
 	void SetActive(bool value) { m_active = value; }

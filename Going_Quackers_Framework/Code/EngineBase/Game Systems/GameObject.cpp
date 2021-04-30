@@ -75,4 +75,11 @@ void GameObject::ImGUIUpdate()
 
 		ImGui::EndTable();
 	}
+
+	ImGui::Separator();
+
+	for (size_t i = 0; i < m_components.size(); i++)
+	{
+		m_components[i]->ImGUIUpdate();
+	}
 }

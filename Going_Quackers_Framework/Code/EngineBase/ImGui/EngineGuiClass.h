@@ -12,18 +12,6 @@
 
 class GameObject;
 
-struct ImGUIObjectContainer
-{
-	GameObject* gameObject;
-	bool selected;
-
-	ImGUIObjectContainer(GameObject* gameObject)
-	{
-		this->gameObject = gameObject;
-		selected = false;
-	}
-};
-
 class EngineGuiClass
 {
 //- Singleton Decliration -//
@@ -38,13 +26,9 @@ private:
 	EngineGuiClass();
 	~EngineGuiClass();
 
-	void InspectorUpdate();
 	void DisplayChildren(GameObject* gameObject, ImGuiTreeNodeFlags node_flags);
 
 public:
-	std::vector<ImGUIObjectContainer> gameObjects;
-	GameObject* selectedGameObject;
-
 	void InitializeObjectList(std::vector<GameObject*> gameObjects);
 
 	void Update();
@@ -61,6 +45,9 @@ private:
 	bool mb_maxOnPlay = false;
 	bool mb_playGame = false;
 	bool mb_closeEditor = false;
+
+	std::vector<GameObject*> gameObjects; //List of GameObjects
+	GameObject* selectedGameObject; //Used to record which gameobject is currently selected within the inspector
 };
 
 #endif // !_ENGINE_IM_GUI_
