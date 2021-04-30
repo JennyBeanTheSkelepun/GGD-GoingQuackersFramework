@@ -6,6 +6,7 @@
 #include "Trigger.h"
 #include "../Component.h"
 #include "../../Time.h"
+#include "../../../SceneManager/SceneManager.h"
 
 enum class PhysicsTypes
 {
@@ -31,9 +32,18 @@ public:
 	void setType(PhysicsTypes type) { m_physicsType = type; }
 	PhysicsTypes getType() { return m_physicsType; }
 
-	Collision* getCollider() { return m_collider; }
+	Collision* getCollider() { return mp_collider; }
 
 	void RigidbodyCollide(std::vector<GameObject*>* collidingObjects);
+
+	void SetRadius(float radius) { m_radius = radius; }
+	float GetRadius() { return m_radius; }
+
+	void SetAABBRect(float width, float height) { m_AABBRect = Vector2(width, height); }
+	Vector2 GetAABBRect() { return m_AABBRect; } ///returns vec2 with x = width, y = height
+
+	void SetCollisionType(CollisionTypes colType) { m_collisionType = colType; } /// s = Spherical, a = AABB
+	CollisionTypes GetCollisionType() { return m_collisionType; }
 
 private:
 	PhysicsTypes m_physicsType = PhysicsTypes::RB;
@@ -45,9 +55,14 @@ private:
 
 	std::vector<Vector2> m_forces;
 
-	Collision* m_collider;
-	Trigger* m_trigger;
-	GravityEmitter* m_gravEmitter;
+	Collision* mp_collider;
+	Trigger* mp_trigger;
+	GravityEmitter* mp_gravEmitter;
+
+	float m_radius = 0.0f;
+	Vector2 m_AABBRect = Vector2();
+
+	CollisionTypes m_collisionType = CollisionTypes::Sphere;
 
 	void CalculateVelocity();
 };

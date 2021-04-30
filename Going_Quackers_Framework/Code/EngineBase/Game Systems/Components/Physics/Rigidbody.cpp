@@ -2,16 +2,16 @@
 
 Rigidbody::Rigidbody(GameObject* owner) : Component(owner, ComponentTypes::RIGIDBODY)
 {
-	m_collider = new Collision();
-	m_gravEmitter = new GravityEmitter();
-	m_trigger = new Trigger();
+	mp_collider = new Collision();
+	mp_gravEmitter = new GravityEmitter();
+	mp_trigger = new Trigger();
 }
 
 Rigidbody::~Rigidbody()
 {
-	delete m_collider;
-	delete m_gravEmitter;
-	delete m_trigger;
+	delete mp_collider;
+	delete mp_gravEmitter;
+	delete mp_trigger;
 }
 
 void Rigidbody::Update()
@@ -37,28 +37,63 @@ void Rigidbody::CalculateVelocity()
 
 void Rigidbody::PhysicsCollide()
 {
+	std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
+
 	std::vector<GameObject*> collidingObjects;
 
-	switch (m_collider->GetCollisionType())
+	for (GameObject* objB : allObjects)
 	{
-	case CollisionTypes::AABB:
-		collidingObjects = m_collider->CollisionSpherical(GetOwner());
-		break;
-	case CollisionTypes::Sphere:
-		collidingObjects = m_collider->CollisionSpherical(GetOwner());
-		break;
+		switch (GetCollisionType())
+		{
+		case CollisionTypes::AABB:
+			switch (objB->GetComponent<Rigidbody>()->GetCollisionType())
+			{
+			case CollisionTypes::AABB:
+				if (mp_collider->CollisionAABB(GetOwner(), objB))
+				{
+					collidingObjects.push_back(objB);
+				}
+				break;
+			case CollisionTypes::Sphere:
+				if (mp_collider->CollisionSphereAABB(GetOwner(), objB))
+				{
+					collidingObjects.push_back(objB);
+				}
+				break;
+			}
+			break;
+		case CollisionTypes::Sphere:
+			switch (objB->GetComponent<Rigidbody>()->GetCollisionType())
+			{
+			case CollisionTypes::AABB:
+				if (mp_collider->CollisionAABB(GetOwner(), objB))
+				{
+					collidingObjects.push_back(objB);
+				}
+				break;
+			case CollisionTypes::Sphere:
+				if (mp_collider->CollisionSphereAABB(GetOwner(), objB))
+				{
+					collidingObjects.push_back(objB);
+				}
+				break;
+			}
+			break;
+		}
 	}
+
+	//TODO:: Add list of things checked this frame and ignore an object if its on the list so objects don't get checked twice.
 
 	switch (m_physicsType)
 	{
 	case PhysicsTypes::GE:
-		m_gravEmitter->applyGravity(GetOwner(), &collidingObjects);
+		mp_gravEmitter->applyGravity(GetOwner(), &collidingObjects);
 		break;
 	case PhysicsTypes::RB:
 		RigidbodyCollide(&collidingObjects);
 		break;
 	case PhysicsTypes::Trig:
-		m_trigger->CheckColliding(&collidingObjects);
+		mp_trigger->CheckColliding(&collidingObjects);
 		break;
 	}
 	
