@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "../Game Systems/GameObject.h"
 
 Scene::Scene(std::string as_ID, std::string as_DisplayName, std::string as_Type)
 {
@@ -36,7 +37,13 @@ GameObject* Scene::GetObjectByID(std::string as_id)
 {
 	// Search for object with ID
 	for (int i = 0; i < mp_SceneObjects.size(); i++) {
-
+		// Return if ID matches
+		if (mp_SceneObjects[i]->GetID() == as_id) {
+			return mp_SceneObjects[i];
+		}
+		else {
+			continue;
+		}
 	}
 	// If not found, return nullptr
 	return nullptr;
