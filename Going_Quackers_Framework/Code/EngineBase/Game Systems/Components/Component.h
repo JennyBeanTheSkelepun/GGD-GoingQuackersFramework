@@ -53,6 +53,14 @@ public:
 	{
 	}
 
+	virtual void SceneSave()
+	{
+	}
+
+	virtual void SceneLoad()
+	{
+	}
+
 	GameObject* GetOwner() { return mp_owner; }
 	ComponentTypes GetTag() { return m_type; }
 

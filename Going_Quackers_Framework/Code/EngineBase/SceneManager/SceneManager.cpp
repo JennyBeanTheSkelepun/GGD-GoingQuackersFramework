@@ -36,6 +36,9 @@ SceneManager::~SceneManager()
 	delete mp_CurrentScene;
 }
 
+/// <summary>
+/// Initialization function for Scene Manager
+/// </summary>
 void SceneManager::Initialize()
 {
 
@@ -215,7 +218,6 @@ void SceneManager::BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig)
 }
 
 
-
 /// <summary>
 /// Saves scene information to JSON file
 /// </summary>
@@ -277,6 +279,12 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 	file.close();
 }
 
+
+/// <summary>
+/// Changes a string to wide string format.
+/// </summary>
+/// <param name="as_string">String to convert</param>
+/// <returns>Returns wstring</returns>
 std::wstring SceneManager::stringToWString(std::string as_string)
 {
 	std::wstring l_outString;
