@@ -113,18 +113,43 @@ void SceneManager::UnloadScene(bool as_SaveToJSON)
 
 std::vector<ObjectConfig*> SceneManager::JSONtoConfig(json a_SceneConfig)
 {
+	// TODO: RESTRUCTURE THE JSON YOU IDIOT
+	/*
+	Loading:
+	1. Load total objects
+	2. While/For loop total amount of objects
+	3. Use object IDs to loop each one and make new object, set save pos/scale/rot/shader/etc...
+	4. Push to vector
+	5. Go back and repopulate children.
+	*/
+	std::vector<ObjectConfig*> l_configs;
 	for (const auto& object : a_SceneConfig["objects"].items()) {
-		// TODO: RESTRUCTURE THE JSON YOU IDIOT
-		/*
-		Loading:
-		1. Load total objects
-		2. While/For loop total amount of objects
-		3. Use object IDs to loop each one and make new object, set save pos/scale/rot/shader/etc...
-		4. Push to vector
-		5. Go back and repopulate children.
-		*/
+
+		ObjectConfig* lp_newObjectConfig = new ObjectConfig();
+		// Assign values from json
+		lp_newObjectConfig->id = object.value()["id"];
+		lp_newObjectConfig->pos = Vector2(object.value()["position"][0], object.value()["position"][1]);
+		lp_newObjectConfig->rotation = object.value()["rotation"];
+		lp_newObjectConfig->scale = Vector2(object.value()["scale"][0], object.value()["scale"][1]);
+		lp_newObjectConfig->texturePath = object.value()["texturePath"];
+		lp_newObjectConfig->shader = object.value()["shader"];
+		lp_newObjectConfig->shaderPath = object.value()["shaderPath"];
+		lp_newObjectConfig->parentID = object.value()["parent"];
+		// Add to vector
+		l_configs.push_back(lp_newObjectConfig);
 	}
-	return std::vector<ObjectConfig*>();
+	// Assign children to parents
+	for (const auto& l_config : l_configs) {
+		if (l_config->parentID != "") {
+			for (int i = 0; i < l_configs.size(); i++) {
+				if (l_config->parentID == l_configs[i]->id) {
+					l_configs[i]->children.push_back(l_config);
+					break;
+				}
+			}
+		}
+	}
+	return l_configs;
 }
 
 /// <summary>
