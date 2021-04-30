@@ -36,6 +36,9 @@ SceneManager::~SceneManager()
 	delete mp_CurrentScene;
 }
 
+/// <summary>
+/// Initialization function for Scene Manager
+/// </summary>
 void SceneManager::Initialize()
 {
 
@@ -137,21 +140,6 @@ std::vector<ObjectConfig*> SceneManager::JSONtoConfig(json a_SceneConfig)
 }
 
 /// <summary>
-/// Converts Object ID string to Enum
-/// </summary>
-/// <param name="as_id">String containing ID of an object</param>
-/// <returns>Object ID Enum</returns>
-ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
-{
-	if (as_id == "debugSquare") {
-		return ObjectIDs::debugSquare;
-	}
-	else {
-		return ObjectIDs::invalidOption;
-	}
-}
-
-/// <summary>
 /// Builds objects from ObjectConfig objects
 /// </summary>
 /// <param name="ap_ObjectConfig"></param>
@@ -188,7 +176,6 @@ void SceneManager::BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig)
 		}
 	}
 }
-
 
 
 /// <summary>
@@ -252,6 +239,12 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 	file.close();
 }
 
+
+/// <summary>
+/// Changes a string to wide string format.
+/// </summary>
+/// <param name="as_string">String to convert</param>
+/// <returns>Returns wstring</returns>
 std::wstring SceneManager::stringToWString(std::string as_string)
 {
 	std::wstring l_outString;

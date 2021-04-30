@@ -10,12 +10,6 @@
 // For Convienience
 using json = nlohmann::json;
 
-// Object IDs
-enum class ObjectIDs {
-	invalidOption,
-	debugSquare
-};
-
 struct ObjectConfig {
 	std::string id;
 	Vector2 pos;
@@ -54,7 +48,6 @@ private:
 	Scene* mp_CurrentScene;
 
 	std::vector<ObjectConfig*> JSONtoConfig(json a_SceneConfig);
-	ObjectIDs ObjectIDStringToEnum(std::string as_id);
 	void BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig);
 	void SaveToJSON(Scene* ap_Scene);
 	std::wstring stringToWString(std::string as_string);

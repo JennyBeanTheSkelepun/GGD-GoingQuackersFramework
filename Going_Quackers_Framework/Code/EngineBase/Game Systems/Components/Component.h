@@ -45,6 +45,14 @@ public:
 	{
 	}
 
+	virtual void SceneSave()
+	{
+	}
+
+	virtual void SceneLoad()
+	{
+	}
+
 	GameObject* GetOwner() { return mp_owner; }
 
 protected:
