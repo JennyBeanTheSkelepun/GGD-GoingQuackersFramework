@@ -8,11 +8,10 @@
             "position": [0,0],
             "rotation": 0,
             "scale": [1,1],
-            "spriteRenderer": {​​​​​​​​​​​​​​​​​
-                "colour": [0,1,0,1],
-                "texturePath": ""
-            },
-            "children": []​​​​​​​​​​​​​​​​​
+            "texturePath": "",
+            "shader": "",
+            "shaderPath": "",
+            "parent": ""
         }​​​​​​​​​​​​​​​​​
     ]
 }​​​​​​​​​​​​​​​​​

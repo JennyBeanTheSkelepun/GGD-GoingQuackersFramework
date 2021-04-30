@@ -111,17 +111,13 @@ void SceneManager::UnloadScene(bool as_SaveToJSON)
 	delete mp_CurrentScene;
 }
 
+/// <summary>
+/// Creates ObjectConfigs from JSON file
+/// </summary>
+/// <param name="a_SceneConfig"></param>
+/// <returns>Returns vector of object configs</returns>
 std::vector<ObjectConfig*> SceneManager::JSONtoConfig(json a_SceneConfig)
 {
-	// TODO: RESTRUCTURE THE JSON YOU IDIOT
-	/*
-	Loading:
-	1. Load total objects
-	2. While/For loop total amount of objects
-	3. Use object IDs to loop each one and make new object, set save pos/scale/rot/shader/etc...
-	4. Push to vector
-	5. Go back and repopulate children.
-	*/
 	std::vector<ObjectConfig*> l_configs;
 	for (const auto& object : a_SceneConfig["objects"].items()) {
 
