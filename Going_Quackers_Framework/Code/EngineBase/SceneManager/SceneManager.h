@@ -18,13 +18,14 @@ enum class ObjectIDs {
 
 struct ObjectConfig {
 	std::string id;
-	std::string type;
 	Vector2 pos;
 	float rotation;
 	Vector2 scale;
-	std::vector<ObjectConfig> children;
-	// Vector3 colour;
-	//std::string texturePath;
+	std::string texturePath;
+	std::string shader;
+	std::string shaderPath;
+	std::string parentID;
+	std::vector<ObjectConfig*> children;
 };
 
 class SceneManager
