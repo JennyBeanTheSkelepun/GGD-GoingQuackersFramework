@@ -29,7 +29,7 @@ public:
 
 	std::vector<GameObject*> GetSceneObjects() { return mp_SceneObjects; };
 	GameObject* GetObjectByIndex(int ai_index) { return mp_SceneObjects[ai_index]; };
-	//GameObject* GetObjectByID(std::string) {};
+	GameObject* GetObjectByID(std::string as_id);
 
 private:
 	std::string ms_SceneDisplayName;

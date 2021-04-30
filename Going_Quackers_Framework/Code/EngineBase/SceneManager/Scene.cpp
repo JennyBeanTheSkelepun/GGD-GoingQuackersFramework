@@ -31,3 +31,13 @@ void Scene::AddObject(GameObject* ap_newObject)
 void Scene::Update(float af_deltaTime)
 {
 }
+
+GameObject* Scene::GetObjectByID(std::string as_id)
+{
+	// Search for object with ID
+	for (int i = 0; i < mp_SceneObjects.size(); i++) {
+
+	}
+	// If not found, return nullptr
+	return nullptr;
+}
