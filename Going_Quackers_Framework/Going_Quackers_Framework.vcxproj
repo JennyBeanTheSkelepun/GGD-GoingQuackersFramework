@@ -143,6 +143,7 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Debug.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\GameObject.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Input.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Time.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Transform.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Debug.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\GameObject.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Input.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Time.h" />
