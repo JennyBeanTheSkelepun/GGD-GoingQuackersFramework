@@ -5,6 +5,8 @@
 #include <ostream>
 #include <fstream>
 #include <filesystem>
+#include <codecvt>
+#include <locale>
 
 
 SceneManager* SceneManager::mp_instance = 0;
@@ -169,8 +171,10 @@ void SceneManager::BuildObjects(std::vector<ObjectConfig*> ap_ObjectConfig)
 		lp_newObject->GetTransform()->SetLocalRotation(l_NewObjectConfig->rotation);
 		lp_newObject->GetTransform()->SetLocalScale(l_NewObjectConfig->scale);
 		lp_newObject->AddComponent<SpriteRenderer>();
+
 		// string to wstring because pain
 		std::wstring l_shaderPath = stringToWString(l_NewObjectConfig->shaderPath);
+
 		lp_newObject->GetComponent<SpriteRenderer>()->Initialze(l_NewObjectConfig->texturePath, l_shaderPath);
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
@@ -259,5 +263,7 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 
 std::wstring SceneManager::stringToWString(std::string as_string)
 {
-	return std::wstring();
+	std::wstring l_outString;
+	std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(as_string);
+	return l_outString;
 }
