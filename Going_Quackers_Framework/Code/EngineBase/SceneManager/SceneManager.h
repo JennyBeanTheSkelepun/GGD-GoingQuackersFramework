@@ -22,10 +22,8 @@ struct ObjectConfig {
 	float rotation;
 	Vector2 scale;
 	std::string texturePath;
-	std::string shader;
 	std::string shaderPath;
 	std::string parentID;
-	std::vector<ObjectConfig*> children;
 };
 
 class SceneManager
