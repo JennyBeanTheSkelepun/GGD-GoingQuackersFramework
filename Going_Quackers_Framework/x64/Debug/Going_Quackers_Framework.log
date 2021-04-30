@@ -1,8 +1,11 @@
-﻿  SceneManager.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(96,31): warning C4101: 'e': unreferenced local variable
-F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(132,2): error C2361: initialization of 'l_NewDebugSquare' is skipped by 'default' label
-F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(128): message : see declaration of 'l_NewDebugSquare'
-  Main.cpp
-F:\0 - Uni Stuff\Kraken\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+﻿  Collision.cpp
+C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(14,70): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(39,71): warning C4390: ';': empty controlled statement found; is this the intent?
+  GravityEmitter.cpp
+C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Rigidbody.cpp
+C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Trigger.cpp
   Generating Code...
+  Going_Quackers_Framework.vcxproj -> C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

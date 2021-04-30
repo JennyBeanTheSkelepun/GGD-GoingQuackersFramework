@@ -237,18 +237,6 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Rigidbody.cpp">
-      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Trigger.cpp">
-      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="GravityEmitter.cpp">
-      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp">
       <Filter>Source Files\Engine\SceneManager</Filter>
     </ClCompile>
@@ -260,6 +248,18 @@
     </ClCompile>
     <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp">
       <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Collision.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -365,18 +365,6 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object</Filter>
     </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Rigidbody.h">
-      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Trigger.h">
-      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="GravityEmitter.h">
-      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
       <Filter>Source Files\Engine\SceneManager</Filter>
     </ClInclude>
@@ -388,6 +376,24 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
       <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectXClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Collision.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.h">
+      <Filter>Header Files\Engine\Game Systems\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

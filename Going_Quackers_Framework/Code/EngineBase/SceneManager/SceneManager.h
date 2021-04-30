@@ -47,9 +47,9 @@ private:
 	Scene* LoadScene(std::string as_ID);
 	void UnloadScene();
 	ObjectIDs ObjectIDStringToEnum(std::string as_id);
-	void BuildObjectFromID(objectConfig a_objectConfig);
+	//void BuildObjectFromID(objectConfig a_objectConfig);
 
 	Scene* mp_CurrentScene;
 };
 
-#endif // !SCENEMANAGER
+#endif SCENEMANAGER

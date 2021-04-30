@@ -140,6 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\EngineMain.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Collision.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
@@ -166,18 +170,18 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.cpp" />
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.cpp" />
     <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="GravityEmitter.cpp" />
     <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Rigidbody.cpp" />
-    <ClCompile Include="Trigger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\Data Structures\Vectors.h" />
     <ClInclude Include="Code\EngineBase\Data Structures\Vertex.h" />
     <ClInclude Include="Code\EngineBase\EngineMain.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Collision.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Transform.h" />
@@ -210,11 +214,7 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h" />
     <ClInclude Include="Code\EngineBase\Rendering\Graphics.h" />
     <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="GravityEmitter.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Rigidbody.h" />
-    <ClInclude Include="Trigger.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Going_Quackers_Framework.rc" />
