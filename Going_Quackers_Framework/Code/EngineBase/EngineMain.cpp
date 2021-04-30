@@ -1,19 +1,26 @@
 #include "EngineMain.h"
-#include <tchar.h>
-#include "../EngineBase/Game Systems/Debug.h"
-
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+#include "../../Code/EngineBase/Rendering/Graphics.h"
 
 EngineMain::EngineMain()
 {
 	mp_Input = 0;
-	mp_Graphics = 0;
+
+	//- Creates Singleton Instance -//
+	Graphics::getInstance();
 }
 
 EngineMain::~EngineMain()
 {
 	delete mp_Input;
 	mp_Input = nullptr;
+
+	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		delete gameObjects[i];
+		gameObjects[i] = nullptr;
+	}
+
 }
 
 bool EngineMain::Initalize()
@@ -21,26 +28,45 @@ bool EngineMain::Initalize()
 	int li_screenWidth = 0, li_screenHeight = 0;
 	bool result;
 
-	InitalizeWindows(li_screenWidth, li_screenHeight);
-
 	mp_Input = new Input();
+
 	if (!mp_Input) 
 		return false;
 	mp_Input->Initialize();
 
-	mp_Graphics = new Graphics();
-	if (!mp_Graphics) 
-		return false;
+	Graphics::getInstance()->InitaliseAPIs();
+
+
+
+	GameObject* mp_Model = new GameObject();
+	mp_Model->AddComponent<SpriteRenderer>();
+	mp_Model->GetTransform()->SetPosition(Vector2(2.0f, 0.0f));
+
+	// Create the model object.
+	GameObject* mp_Model2 = new GameObject();
+	result = mp_Model2->AddComponent<SpriteRenderer>();
+	mp_Model2->GetTransform()->SetPosition(Vector2(-2.5f, 0.0f));
+	mp_Model2->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
+	mp_Model2->SetParent(mp_Model);
 	
-	result = mp_Graphics->Initialize(li_screenWidth, li_screenHeight, m_hwnd);
-	if (!result) 
-		return false;
+	// Create the model object.
+	GameObject* mp_Model3 = new GameObject();
+	mp_Model3->AddComponent<SpriteRenderer>();
+	mp_Model3->GetTransform()->SetPosition(Vector2(-5.0f, 0.0f));
+	mp_Model3->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
+	mp_Model3->SetParent(mp_Model2);
+
+	gameObjects.push_back(mp_Model);
+	gameObjects.push_back(mp_Model2);
+	gameObjects.push_back(mp_Model3);
+
 
 	return true;
 }
 
 void EngineMain::Run()
 {
+	bool exit = false;
 	MSG l_msg;
 	bool lb_done = false, lb_result;
 
@@ -77,143 +103,23 @@ bool EngineMain::UpdateRenderLoop()
 	if (mp_Input->isKeyDown(VK_ESCAPE))
 		return false;
 
-	mp_Graphics->Update();
-	lb_result = mp_Graphics->Render();
-	if (!lb_result || mp_Graphics->mp_ImGui->mb_closeEditor)
-		return false;
+	//- UPDATE LOOP START-//
+	
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		gameObjects[i]->Update();
+	}
+
+	//gameObjects[0]->GetTransform()->SetPosition(gameObjects[0]->GetTransform()->GetPosition() + Vector2(-0.1f, 0.0f) * Time::GetDeltaTime());
+	//gameObjects[1]->GetTransform()->SetPosition(gameObjects[1]->GetTransform()->GetPosition() + Vector2(0.5f, 0.0f) * Time::GetDeltaTime());
+	gameObjects[0]->GetTransform()->SetLocalRotation(gameObjects[0]->GetTransform()->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
+	//gameObjects[1]->GetTransform()->SetLocalScale(gameObjects[1]->GetTransform()->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
+	gameObjects[2]->GetTransform()->SetLocalRotation(gameObjects[2]->GetTransform()->GetLocalRotation() + 100.0f * Time::GetDeltaTime());
+
+
+	Graphics::getInstance()->StartApiUpdateLoop();
+	//- UPDATE LOOP END -//
+
+	Graphics::getInstance()->StartRenderLoop();
 	return true;
-}
-
-LRESULT CALLBACK EngineMain::MessageHandler(HWND hwnd, UINT uint, WPARAM wParam, LPARAM lParam)
-{
-	switch (uint)
-	{
-	case WM_KEYDOWN:
-		mp_Input->KeyDown((unsigned int) wParam);
-		return 0;
-		break;
-
-	case WM_KEYUP:
-		mp_Input->KeyUp((unsigned int) wParam);
-		return 0;
-		break;
-
-	default:
-		return DefWindowProc(hwnd, uint, wParam, lParam);
-		break;
-	}
-}
-
-void EngineMain::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
-{
-	WNDCLASSEX wc;
-	DEVMODE dmScreenSettings;
-	int li_posX, li_posY;
-
-	ApplicationHandle = this;
-
-	m_hInstance = GetModuleHandle(NULL);
-
-	m_applicationName = L"Going Quakers Engine";
-
-	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-	wc.lpfnWndProc = WndProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = m_hInstance;
-	wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
-	wc.hIconSm = wc.hIcon;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	wc.lpszMenuName = NULL;
-	wc.lpszClassName = m_applicationName;
-	wc.cbSize = sizeof(WNDCLASSEX);
-
-	RegisterClassEx(&wc);
-
-	ai_screenWidth = GetSystemMetrics(SM_CXSCREEN);
-	ai_screenHeight = GetSystemMetrics(SM_CYSCREEN);
-
-	if (FULL_SCREEN)
-	{
-		memset(&dmScreenSettings, 0, sizeof(dmScreenSettings));
-		dmScreenSettings.dmSize = sizeof(dmScreenSettings);
-		dmScreenSettings.dmPelsWidth = (unsigned long)ai_screenWidth;
-		dmScreenSettings.dmPelsHeight = (unsigned long)ai_screenHeight;
-		dmScreenSettings.dmBitsPerPel = 32;
-		dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
-
-		// Change the display settings to full screen.
-		ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN);
-
-		// Set the position of the window to the top left corner.
-		li_posX = li_posY = 0;
-	}
-	else
-	{
-		ai_screenWidth = 1280;
-		ai_screenHeight = 720;
-
-		li_posX = (GetSystemMetrics(SM_CXSCREEN) - ai_screenWidth) / 2;
-		li_posY = (GetSystemMetrics(SM_CYSCREEN) - ai_screenHeight) / 2;
-	}
-
-	m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
-		WS_CAPTION | WS_SYSMENU | WS_VISIBLE,
-		li_posX, li_posY, ai_screenWidth, ai_screenHeight, NULL, NULL, m_hInstance, NULL);
-
-	ShowWindow(m_hwnd, SW_SHOW);
-	SetForegroundWindow(m_hwnd);
-	SetFocus(m_hwnd);
-
-	ShowCursor(true);
-
-	ai_screenHeight -= 49; //<------------------------- IGNORE ITS A DUCTTAPE FIX AT 6PM
-	ai_screenWidth -= 10; //<-------------------------- IGNORE ITS A DUCTTAPE FIX AT 6PM
-
-	return;
-}
-
-void EngineMain::ShutdownWindows()
-{
-	ShowCursor(true);
-
-	if (FULL_SCREEN)
-	{
-		ChangeDisplaySettings(NULL, 0);
-	}
-
-	DestroyWindow(m_hwnd);
-	m_hInstance = NULL;
-	ApplicationHandle = NULL;
-	return;
-}
-
-LRESULT CALLBACK WndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam)
-{
-	if (ImGui_ImplWin32_WndProcHandler(hwnd, uMessage, wParam, lParam))
-	{
-		return true;
-	}
-
-	switch (uMessage)
-	{
-		// Check if the window is being destroyed.
-		case WM_DESTROY:
-		{
-			PostQuitMessage(0);
-			return 0;
-		}
-		// Check if the window is being closed.
-		case WM_CLOSE:
-		{
-			PostQuitMessage(0);
-			return 0;
-		}
-		// All other messages pass to the message handler in the system class.
-		default:
-		{
-			return ApplicationHandle->MessageHandler(hwnd, uMessage, wParam, lParam);
-		}
-	}
 }

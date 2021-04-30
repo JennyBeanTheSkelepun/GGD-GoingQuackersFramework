@@ -139,16 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Code\EngineBase\Data Structures\Texture2D.cpp" />
     <ClCompile Include="Code\EngineBase\EngineMain.cpp" />
-    <ClCompile Include="Code\EngineBase\Game Systems\Camera.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\GameObject.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Input.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Time.cpp" />
-    <ClCompile Include="Code\EngineBase\Graphics.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_draw.cpp" />
@@ -156,16 +153,26 @@
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_impl_win32.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_tables.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui_widgets.cpp" />
-    <ClCompile Include="Code\EngineBase\Rendering\DirectXClass.cpp" />
-    <ClCompile Include="Code\EngineBase\Rendering\Shader.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTexture2D.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.cpp" />
+    <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp" />
+    <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
+    <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Code\EngineBase\Data Structures\Texture2D.h" />
     <ClInclude Include="Code\EngineBase\Data Structures\Vectors.h" />
     <ClInclude Include="Code\EngineBase\Data Structures\Vertex.h" />
     <ClInclude Include="Code\EngineBase\EngineMain.h" />
-    <ClInclude Include="Code\EngineBase\Game Systems\Camera.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h" />
@@ -173,7 +180,6 @@
     <ClInclude Include="Code\EngineBase\Game Systems\GameObject.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Input.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Time.h" />
-    <ClInclude Include="Code\EngineBase\Graphics.h" />
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.h" />
@@ -183,12 +189,35 @@
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_rectpack.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_textedit.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imstb_truetype.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTexture2D.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectXClass.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\Graphics.h" />
+    <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h" />
     <ClInclude Include="Code\EngineBase\Rendering\Shader.h" />
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Going_Quackers_Framework.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Code\EngineBase\Rendering\Shaders\BlockColourShader.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Code\EngineBase\Rendering\Shaders\TextureSimple.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

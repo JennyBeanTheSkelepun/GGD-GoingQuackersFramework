@@ -1,0 +1,50 @@
+Impliment Singleton Graphics (TYPED)
+	|_ Creation Of Interface (TYPED)
+		|_ Impliment Interface To DirectX System ()
+			|_ Split DirectX Class To More Classes
+				|_ Create New DirectX Specific ImGui Class
+				|	|_ Convert Prevoius IMGUI class to Singleton and DirectX Free
+				|		|_ Impliment New ImGui Structure
+				|		
+				|_Creating RenderLoop File need to remeber Gameobjects 
+					|_ Creating Enum in component and type var to allow casting in grahpics api system
+						|_ Creating Function input for components to call from graphics
+							|_ Move Render loop to Render loop
+								|_ Lose insanity due to complex proplem ive put myself if (1 hour)
+									|_ Accept and move on
+										|_ Convert Camera into DirectXCamera
+										|	|_ Rename Class and File
+										|		|_Create Vector3
+										|			|_ Use Newly Created Vector 3 for camera
+										|
+										|_ Convert Shader into DirectXShader
+										|	|_ Rename Class And File
+										|		|_ Rename class and mp all member pointers 
+										|			|_ Fix All errors in RenderLoop
+										|					|_ Create Shader Manager
+										|						|_ Added Shader Pooling
+										|							|_ change initalise function to take location
+										|
+										|_Create DirectX Texture
+										|	|_ Figured Out it was just moved (ffs)
+										|		|_ Rename And Move 2DTexture
+										|			|_ Create Texture Manager
+										|				|_ Add Textue Pooling
+										|
+										|
+										|
+										|_Create DirectXWindow For DirectXShader Manager To Use
+										|	|_ move WIndow elements  to a new file and class
+										|		
+										|_Update Sprite to handel Textures
+											|_ Redo Component Type (add it fully to base)
+												|_ Compleate Sprite Coversion
+													|_ Realise Width And Height is broken <-------------------------------------------------------------------------------------------------------------Feture WORK 
+														|_ Realise sprite is useless and merge into sprite renderer 
+															|_ 
+
+
+
+
+Need To Do:
+Add TexturePoolCheck Function to Interface to manage texture pool;
