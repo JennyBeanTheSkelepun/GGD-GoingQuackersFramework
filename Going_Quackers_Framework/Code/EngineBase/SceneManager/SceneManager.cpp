@@ -48,16 +48,33 @@ void SceneManager::Initialize()
 /// Changes the scene to one matching the given ID
 /// </summary>
 /// <param name="as_SceneID">String ID of the scene, should match file name (without .json)</param>
-void SceneManager::ChangeScene(std::string as_SceneID)
+void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
 {
 	// Unload current Scene
-	UnloadScene(false);
+	UnloadScene(as_SaveToJSON);
 
 	// Get path to JSON scene config
-	std::string ls_SceneConfigPath = "";
+	std::string ls_SceneConfigPath = "SceneConfig/" + as_SceneID + ".json";
 
 	// Load new Scene
 	mp_CurrentScene = LoadScene(ls_SceneConfigPath);
+}
+
+
+/// <summary>
+/// Creates a blank scene
+/// </summary>
+/// <param name="as_SceneID">ID of new scene</param>
+/// <param name="as_SceneName">Display name of new scene</param>
+/// <param name="as_SceneType">Type of new scene</param>
+/// <param name="as_SaveToJSON">Set to true to save the old scene to JSON</param>
+void SceneManager::NewScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType, bool as_SaveToJSON)
+{
+	UnloadScene(as_SaveToJSON);
+
+	// Create new scene object
+	Scene* lp_NewScene = new Scene(as_SceneID, as_SceneName, as_SceneType);
+	mp_CurrentScene = lp_NewScene;
 }
 
 /// <summary>
@@ -86,6 +103,8 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		l_SceneConfig["sceneID"],
 		l_SceneConfig["sceneName"],
 		l_SceneConfig["sceneType"]);
+
+	mp_CurrentScene = lp_NewScene;
 
 	// Load objects
 	for (const auto& newObject : l_SceneConfig["objects"].items()) {
@@ -128,6 +147,11 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 
 	l_file.close();
 	return lp_NewScene;
+}
+
+Scene* SceneManager::LoadScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType)
+{
+	return nullptr;
 }
 
 /// <summary>

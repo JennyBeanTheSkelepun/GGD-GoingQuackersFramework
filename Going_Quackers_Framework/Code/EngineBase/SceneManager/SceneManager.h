@@ -31,11 +31,13 @@ protected:
 	SceneManager();
 	static SceneManager* mp_instance;
 /* Singleton Stuff End */
+
 public:
 	~SceneManager();
 
 	void Initialize();
-	void ChangeScene(std::string as_SceneID);
+	void ChangeScene(std::string as_SceneID, bool as_SaveToJSON);
+	void NewScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType, bool as_SaveToJSON);
 
 	void Update(float af_deltaTime);
 
@@ -43,6 +45,7 @@ public:
 
 private:
 	Scene* LoadScene(std::string as_Path);
+	Scene* LoadScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType);
 	void UnloadScene(bool as_SaveToJSON);
 
 	Scene* mp_CurrentScene;
