@@ -210,10 +210,6 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h" />
-    <ClInclude Include="Code\EngineBase\Rendering\DirectXClass.h" />
-    <ClInclude Include="Code\EngineBase\Rendering\Graphics.h" />
-    <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h" />
-    <ClInclude Include="Code\EngineBase\Rendering\Shader.h" />
     <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
     <ClInclude Include="resource.h" />

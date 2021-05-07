@@ -174,14 +174,15 @@ ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
 
 	/*
 	// Determine object type and set it up
-	//switch (l_ObjectID) {
-	//// Basic Object
-	//case debugSquare:
-	//	GameObject* l_NewDebugSquare = new GameObject();
-	//	
-	//	mp_CurrentScene->AddObject(l_NewDebugSquare);
-	//	break;
-	//default:
-	//	break;
-	//}
-//}
+	switch (l_ObjectID) {
+	// Basic Object
+	case debugSquare:
+		GameObject* l_NewDebugSquare = new GameObject();
+		
+		mp_CurrentScene->AddObject(l_NewDebugSquare);
+		break;
+	default:
+		break;
+	}
+	*/
+}
