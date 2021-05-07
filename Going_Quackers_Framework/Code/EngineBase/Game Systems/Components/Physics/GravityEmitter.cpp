@@ -10,7 +10,7 @@ void GravityEmitter::applyGravity(GameObject* callObj, std::vector<GameObject*>*
 		{
 			Vector2 gravityPosition = callObj->GetTransform()->GetPosition();
 
-			switch (rb->getCollider()->GetCollisionType())
+			switch (callObj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
 				rb->AddForce(m_gravityDirection * m_gravityStrength);

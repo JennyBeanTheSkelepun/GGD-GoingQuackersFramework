@@ -1,9 +1,11 @@
 #include "Collision.h"
 #include "Rigidbody.h"
 
+//TODO:: CONVERT THIS TO TAKE IN CHECK OBJECT AND NOT USE COMPONENT
+
 bool Collision::CollisionSpherical(GameObject* checkObjectA, GameObject* checkObjectB)
 {
-	if (checkObjectA != checkObjectB && checkObjectA->GetComponent<Rigidbody>() != nullptr && checkObjectA->GetComponent<Rigidbody>() != nullptr);
+	if(checkObjectA != checkObjectB && checkObjectA->GetComponent<Rigidbody>() != nullptr && checkObjectB->GetComponent<Rigidbody>() != nullptr);
 	{
 		float radA = checkObjectA->GetComponent<Rigidbody>()->GetRadius();
 		float radB = checkObjectB->GetComponent<Rigidbody>()->GetRadius();
@@ -21,7 +23,7 @@ bool Collision::CollisionSpherical(GameObject* checkObjectA, GameObject* checkOb
 
 bool Collision::CollisionAABB(GameObject* checkObjectA, GameObject* checkObjectB)
 {
-	if (checkObjectA != checkObjectB && checkObjectA->GetComponent<Rigidbody>() != nullptr && checkObjectA->GetComponent<Rigidbody>() != nullptr);
+	if (checkObjectA != checkObjectB && checkObjectA->GetComponent<Rigidbody>() != nullptr && checkObjectB->GetComponent<Rigidbody>() != nullptr);
 	{
 		Vector2 obj1Pos = checkObjectA->GetTransform()->GetPosition();
 
@@ -39,5 +41,11 @@ bool Collision::CollisionAABB(GameObject* checkObjectA, GameObject* checkObjectB
 		}
 	}
 
+	return false;
+}
+
+bool Collision::CollisionSphericalAABB(GameObject* checkObjectA, GameObject* checkObjectB)
+{
+	//Statistically, this is almost always correct.
 	return false;
 }

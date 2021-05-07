@@ -172,8 +172,6 @@
     <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp" />
     <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
     <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="GravityEmitter.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -218,8 +216,6 @@
     <ClInclude Include="Code\EngineBase\Rendering\Shader.h" />
     <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="GravityEmitter.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

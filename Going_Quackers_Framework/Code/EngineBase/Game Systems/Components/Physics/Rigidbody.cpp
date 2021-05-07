@@ -18,7 +18,10 @@ void Rigidbody::Update()
 {
 	PhysicsCollide();
 
-	CalculateVelocity();
+	if (m_physicsType == PhysicsTypes::RB)
+	{
+		CalculateVelocity();
+	}
 }
 
 void Rigidbody::CalculateVelocity()
@@ -38,51 +41,38 @@ void Rigidbody::CalculateVelocity()
 void Rigidbody::PhysicsCollide()
 {
 	std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
-
 	std::vector<GameObject*> collidingObjects;
 
-	for (GameObject* objB : allObjects)
+	for (GameObject* obj : collidingObjects)
 	{
 		switch (GetCollisionType())
 		{
 		case CollisionTypes::AABB:
-			switch (objB->GetComponent<Rigidbody>()->GetCollisionType())
+			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if (mp_collider->CollisionAABB(GetOwner(), objB))
-				{
-					collidingObjects.push_back(objB);
-				}
+				if (m_collider->CollisionAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
 				break;
 			case CollisionTypes::Sphere:
-				if (mp_collider->CollisionSphereAABB(GetOwner(), objB))
-				{
-					collidingObjects.push_back(objB);
-				}
+				if(m_collider->CollisionSphericalAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
 				break;
 			}
 			break;
 		case CollisionTypes::Sphere:
-			switch (objB->GetComponent<Rigidbody>()->GetCollisionType())
+			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if (mp_collider->CollisionAABB(GetOwner(), objB))
-				{
-					collidingObjects.push_back(objB);
-				}
+				if(m_collider->CollisionSphericalAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
 				break;
 			case CollisionTypes::Sphere:
-				if (mp_collider->CollisionSphereAABB(GetOwner(), objB))
-				{
-					collidingObjects.push_back(objB);
-				}
+				if(m_collider->CollisionSpherical(GetOwner(), obj)) { collidingObjects.push_back(obj); };
 				break;
 			}
 			break;
 		}
 	}
 
-	//TODO:: Add list of things checked this frame and ignore an object if its on the list so objects don't get checked twice.
+	//TODO:: Fix double physics
 
 	switch (m_physicsType)
 	{
