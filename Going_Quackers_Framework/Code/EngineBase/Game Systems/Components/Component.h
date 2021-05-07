@@ -29,14 +29,15 @@ public:
 
 	~Component()
 	{
-		Deconstruct();
+		OnDestroy();
 	}
 
 	virtual void Initialize()
 	{
 	}
 
-	virtual void Deconstruct()
+	///<summary>Called on the Components Destruction. Use to remove necessary data</summary>
+	virtual void OnDestroy()
 	{
 	}
 
@@ -48,9 +49,19 @@ public:
 	{
 	}
 
+	///<summary>Called each frame for ImGUI Inputs. Display variables of Components here.</summary>
 	virtual void ImGUIUpdate()
 	{
+	}
 
+	///<summary>Called on Saving the Scene. Use to save information about the Component
+	virtual void OnSave()
+	{
+	}
+
+	///<summary>Called on Loading the Scene. Use to load in saved information about the Component
+	virtual void OnLoad()
+	{
 	}
 
 	///<summary>Returns the GameObject owner of the Component</summary>

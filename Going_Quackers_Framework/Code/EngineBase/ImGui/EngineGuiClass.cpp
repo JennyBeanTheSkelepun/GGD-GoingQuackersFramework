@@ -25,11 +25,13 @@ void EngineGuiClass::DisplayChildren(GameObject* gameObject)
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
 	{
+		/*
 		if (selected)
 		{
 			selectedGameObject = gameObject;
 			node_flags |= ImGuiTreeNodeFlags_Selected;
 		}
+		*/
 
 		GameObject* child = gameObject->GetChildren()[i];
 		if (child->HasChildren())
@@ -43,7 +45,7 @@ void EngineGuiClass::DisplayChildren(GameObject* gameObject)
 
 		if (ImGui::IsItemClicked())
 		{
-			selected = true;
+			//selected = true;
 			std::cout << "Test";
 		}
 	}

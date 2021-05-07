@@ -1,32 +1,7 @@
-﻿  EngineMain.cpp
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(101,7): warning C4101: 'lb_result': unreferenced local variable
-  SpriteRenderer.cpp
-  Transform.cpp
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(31,22): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(31,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(83,69): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  GameObject.cpp
-  EngineGuiClass.cpp
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\ImGui\EngineGuiClass.cpp(28,7): error C2065: 'selected': undeclared identifier
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\ImGui\EngineGuiClass.cpp(46,4): error C2065: 'selected': undeclared identifier
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\ImGui\EngineGuiClass.cpp(247,2): error C2065: 'selected': undeclared identifier
-  DirectXGraphics.cpp
-  DirectXImGui.cpp
-  DirectXRenderLoop.cpp
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(142,39): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  Graphics.cpp
-  Scene.cpp
-  SceneManager.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(124,31): warning C4101: 'e': unreferenced local variable
+﻿  EngineGuiClass.cpp
+  imgui.cpp
+  DirectXShader.cpp
   Main.cpp
 C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(19,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Generating Code...
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(126): warning C4715: 'SceneManager::LoadScene': not all control paths return a value
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(95): warning C4715: 'Graphics::AddObjectToApiRenderILoop': not all control paths return a value
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(115): warning C4715: 'Graphics::LoadTexture': not all control paths return a value
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(125): warning C4715: 'Graphics::LoadTileSheet': not all control paths return a value
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(135): warning C4715: 'Graphics::LoadShader': not all control paths return a value
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(92): warning C4715: 'DirectXRenderLoop::EditorRender': not all control paths return a value
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(137): warning C4715: 'DirectXRenderLoop::ActiveGameRender': not all control paths return a value
+  Going_Quackers_Framework.vcxproj -> C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
