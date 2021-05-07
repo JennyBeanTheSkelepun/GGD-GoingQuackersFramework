@@ -51,10 +51,10 @@ void Rigidbody::PhysicsCollide()
 			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if (m_collider->CollisionAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if (mp_collider->CollisionAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
 				break;
 			case CollisionTypes::Sphere:
-				if(m_collider->CollisionSphericalAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
 				break;
 			}
 			break;
@@ -62,10 +62,10 @@ void Rigidbody::PhysicsCollide()
 			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if(m_collider->CollisionSphericalAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
 				break;
 			case CollisionTypes::Sphere:
-				if(m_collider->CollisionSpherical(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if(mp_collider->CollisionSpherical(GetOwner(), obj)) { collidingObjects.push_back(obj); };
 				break;
 			}
 			break;

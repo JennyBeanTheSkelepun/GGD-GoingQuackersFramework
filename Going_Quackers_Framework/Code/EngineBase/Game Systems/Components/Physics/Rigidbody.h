@@ -64,11 +64,6 @@ private:
 
 	CollisionTypes m_collisionType = CollisionTypes::Sphere;
 
-	float m_radius = 0.0f;
-	Vector2 m_AABBRect = Vector2();
-
-	CollisionTypes m_collisionType = CollisionTypes::Sphere;
-
 	void CalculateVelocity();
 };
 

@@ -1,11 +1,14 @@
 ﻿  Collision.cpp
-C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(14,70): warning C4390: ';': empty controlled statement found; is this the intent?
-C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(39,71): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(8,142): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(26,143): warning C4390: ';': empty controlled statement found; is this the intent?
   GravityEmitter.cpp
-C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Rigidbody.cpp
-C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Trigger.cpp
+  DirectXCamera.cpp
+  Main.cpp
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Generating Code...
-  Going_Quackers_Framework.vcxproj -> C:\Users\b010731i\Documents\Git\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+  Going_Quackers_Framework.vcxproj -> C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
