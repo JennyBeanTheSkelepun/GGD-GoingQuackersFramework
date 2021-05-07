@@ -57,6 +57,9 @@ private:
 	bool mb_playGame = false;
 	bool mb_closeEditor = false;
 
+	std::string outputText;
+	bool selected;
+
 	std::vector<ImGUIContainer> gameObjects; //List of GameObjects
 	GameObject* selectedGameObject; //Used to record which gameobject is currently selected within the inspector
 };

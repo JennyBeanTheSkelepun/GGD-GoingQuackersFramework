@@ -55,16 +55,6 @@ public:
 	{
 	}
 
-	///<summary>Called on Saving the Scene. Use to save information about the Component
-	virtual void OnSave()
-	{
-	}
-
-	///<summary>Called on Loading the Scene. Use to load in saved information about the Component
-	virtual void OnLoad()
-	{
-	}
-
 	///<summary>Returns the GameObject owner of the Component</summary>
 	GameObject* GetOwner() { return mp_owner; }
 	ComponentTypes GetTag() { return m_type; }
