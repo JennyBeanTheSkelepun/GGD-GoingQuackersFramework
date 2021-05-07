@@ -45,14 +45,14 @@ bool EngineMain::Initalize()
 	result = mp_Model2->AddComponent<SpriteRenderer>();
 	mp_Model2->transform->SetPosition(Vector2(-2.5f, 0.0f));
 	mp_Model2->transform->SetLocalScale(Vector2(0.5f, 0.5f));
-	mp_Model2->SetParent(mp_Model);
+	//mp_Model2->SetParent(mp_Model);
 	
 	// Create the model object.
 	GameObject* mp_Model3 = new GameObject("Block 3");
 	mp_Model3->AddComponent<SpriteRenderer>();
 	mp_Model3->transform->SetPosition(Vector2(-5.0f, 0.0f));
 	mp_Model3->transform->SetLocalScale(Vector2(0.5f, 0.5f));
-	mp_Model3->SetParent(mp_Model2);
+	mp_Model3->SetParent(mp_Model);
 
 	gameObjects.push_back(mp_Model);
 	//gameObjects.push_back(mp_Model2);
