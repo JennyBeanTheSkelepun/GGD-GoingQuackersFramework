@@ -36,21 +36,19 @@ bool EngineMain::Initalize()
 
 	Graphics::getInstance()->InitaliseAPIs();
 
-
-
-	GameObject* mp_Model = new GameObject();
+	GameObject* mp_Model = new GameObject("Model 1");
 	mp_Model->AddComponent<SpriteRenderer>();
 	mp_Model->GetTransform()->SetPosition(Vector2(2.0f, 0.0f));
 
 	// Create the model object.
-	GameObject* mp_Model2 = new GameObject();
+	GameObject* mp_Model2 = new GameObject("Model 2");
 	result = mp_Model2->AddComponent<SpriteRenderer>();
 	mp_Model2->GetTransform()->SetPosition(Vector2(-2.5f, 0.0f));
 	mp_Model2->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
 	mp_Model2->SetParent(mp_Model);
 	
 	// Create the model object.
-	GameObject* mp_Model3 = new GameObject();
+	GameObject* mp_Model3 = new GameObject("Model 3");
 	mp_Model3->AddComponent<SpriteRenderer>();
 	mp_Model3->GetTransform()->SetPosition(Vector2(-5.0f, 0.0f));
 	mp_Model3->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
@@ -60,6 +58,8 @@ bool EngineMain::Initalize()
 	gameObjects.push_back(mp_Model2);
 	gameObjects.push_back(mp_Model3);
 
+
+	EngineGuiClass::getInstance()->InitializeObjectList(gameObjects);
 
 	return true;
 }

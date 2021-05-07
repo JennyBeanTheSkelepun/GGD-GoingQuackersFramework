@@ -1,5 +1,6 @@
 #ifndef _COMPONENT_H_
 #define _COMPONENT_H_
+#include "../../ImGui/EngineGuiClass.h"
 
 class GameObject;
 
@@ -28,6 +29,12 @@ public:
 
 	~Component()
 	{
+		OnDestroy();
+	}
+
+	virtual void OnDestroy()
+	{
+
 	}
 
 	virtual void Initialize()

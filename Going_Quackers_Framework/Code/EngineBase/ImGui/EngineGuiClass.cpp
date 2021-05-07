@@ -1,5 +1,5 @@
 #include "EngineGuiClass.h"
-#include "../Game Systems/Debug.h"
+#include "../Game Systems/GameObject.h"
 
 EngineGuiClass* EngineGuiClass::SingletonInstance = 0;
 
@@ -17,6 +17,64 @@ EngineGuiClass::EngineGuiClass()
 
 EngineGuiClass::~EngineGuiClass()
 {
+	selectedGameObject = nullptr;
+}
+
+void EngineGuiClass::DisplayChildren(GameObject* gameObject)
+{
+	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
+	{
+		GameObject* child = gameObject->GetChildren()[i];
+		if (ImGui::TreeNodeEx(child->name.c_str(), node_flags))
+		{
+			DisplayChildren(child);
+			ImGui::TreePop();
+		}
+
+		if (ImGui::IsWindowFocused() && !selected)
+		{
+			outputText = child->name.c_str();
+			selected = true;
+			std::cout << "Test";
+		}
+	}
+
+	/*
+	for (GameObject* child : gameObject->GetChildren())
+	{
+		if (child->HasChildren())
+		{
+			if (ImGui::TreeNodeEx(child->name.c_str(), node_flags))
+			{
+				DisplayChildren(child);
+				ImGui::TreePop();
+			}
+		}
+		else
+		{
+			ImGui::BulletText(child->name.c_str());
+		}
+
+		if (ImGui::IsItemClicked() && !selected)
+		{
+			selectedGameObject = child;
+			selected = true;
+		}
+	}
+	*/
+}
+
+void EngineGuiClass::InitializeObjectList(std::vector<GameObject*> gameObjects)
+{
+	selectedGameObject = nullptr;
+
+	//Create a list of object containers
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		this->gameObjects.push_back(ImGUIContainer(gameObjects[i]));
+		//InitializeObjectList(gameObjects[i]->GetChildren());
+	}
 }
 
 void EngineGuiClass::Update()
@@ -66,48 +124,125 @@ void EngineGuiClass::EditorUpdate()
 			if (ImGui::MenuItem("Play")) { mb_playGame = true; }
 			if (ImGui::MenuItem("Stop")) { mb_playGame = false; }
 			ImGui::Separator();
-			if (ImGui::MenuItem("Maximise On Play", BoolToString(mb_maxOnPlay))) { mb_maxOnPlay = !mb_maxOnPlay; }
+			if (ImGui::MenuItem("Maxamise On Play", BoolToString(mb_maxOnPlay))) { mb_maxOnPlay = !mb_maxOnPlay; }
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
 	}
+
 	//- Scene Heiarchy -//
-	ImGui::Begin("Scene Hierarchy");
+	ImGui::Begin("Scene Heiarchy");
+	selected = false;
+	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "Selectable Node %d", i);
+
+		/*
+		GameObject* gameObject = gameObjects[i].gameObject;
+		//bool& selected = gameObjects[i].selected;
+
+		if (ImGui::TreeNodeEx(gameObject->name.c_str(), node_flags))
+		{
+			if (gameObject->HasChildren())
+			{
+				DisplayChildren(gameObject);
+			}
+			ImGui::TreePop();
+		}
+
+		if (ImGui::IsItemToggledOpen() && !selected)
+		{
+			outputText = gameObject->name.c_str();
+			selected = true;
+			std::cout << "Test";
+		}
+		*/
+	}
+
+	/*
+	for (GameObject* gameObject : gameObjects)
+	{
+		if (gameObject->HasChildren())
+		{
+			if (ImGui::TreeNodeEx(gameObject->name.c_str(), node_flags))
+			{
+				if(gameObject->HasChildren())
+					DisplayChildren(gameObject, node_flags);
+
+				ImGui::TreePop();
+			}
+		}
+		else
+		{
+			ImGui::BulletText(gameObject->name.c_str());
+		}
+
+		if (ImGui::IsItemClicked() && !selected)
+		{
+			selectedGameObject = gameObject;
+			selected = true;
+		}
+	}
+	*/
+
+	/*
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		if (selectedGameObject == gameObjects[i].gameObject)
+			gameObjects[i].selected = true;
+		else
+			gameObjects[i].selected = false;
+
+		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+
+		bool node_open = ImGui::TreeNodeEx(gameObjects[i].gameObject->name.c_str(), node_flags);
+		if (ImGui::IsItemClicked())
+		{
+			selectedGameObject = gameObjects[i].gameObject;
+		}
+
+		if(node_open)
+		{
+			for (size_t j = 0; j < gameObjects[i].gameObject->GetChildren().size(); j++)
+			{
+				GameObject* child = gameObjects[i].gameObject->GetChildren()[j];
+				ImGui::TreeNodeEx(gameObjects[i].gameObject->name.c_str(), node_flags);
+			}
+
+			ImGui::TreePop();
+		}
+
+		ImGui::Selectable(gameObjects[i].gameObject->name.c_str(), &gameObjects[i].selected);
+		if (gameObjects[i].selected)
+			selectedGameObject = gameObjects[i].gameObject;
+
+		for (size_t j = 0; j < gameObjects[i].gameObject->GetChildren().size(); j++)
+		{
+			GameObject* child = gameObjects[i].gameObject->GetChildren()[j];
+			ImGui::(child->name.c_str());
+		}
+	}
+	*/
 	ImGui::End();
 
 	//- Inspector -//
 	ImGui::Begin("Inspector");
+	if (selectedGameObject != nullptr)
+		selectedGameObject->ImGUIUpdate();
 	ImGui::End();
 
 	//- Output Log -//
 	ImGui::Begin("OutputLog");
-	std::string l_line;
-	std::stringstream l_log = Debug::getInstance()->ReadLog();
-	// convert data to ImGui::Text parameters
-	while (std::getline(l_log, l_line)) {
-		// new text colour
-		ImColor colour;
-		// turn line into stream
-		std::istringstream in(l_line);
-		std::string l_text;
-		// format: r g b log
-		float r, g, b;
-		in >> r;
-		in >> g;
-		in >> b;
-		colour = ImColor(r, g, b);
-		std::getline(in, l_text);
-		ImGui::TextColored(ImVec4(r, g, b, 1.f), l_text.c_str());
-	}
-
+	ImGui::Text(outputText.c_str());
 	ImGui::End();
 }
 
 void EngineGuiClass::SetImGuiStyle()
 {
 	//- Im GUI STYLE GOTTEN FROM ONLINE HERE https://github.com/ocornut/imgui/issues/438 -//
-	 
-	
+
+
 	//- SET UP ALL IMGUI STYLES HERE -//
 
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -158,7 +293,6 @@ void EngineGuiClass::SetImGuiStyle()
 	style.Colors[ImGuiCol_PlotHistogram] = ImVec4(col_text.x, col_text.y, col_text.z, 0.63f);
 	style.Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(col_main.x, col_main.y, col_main.z, 1.00f);
 	style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(col_main.x, col_main.y, col_main.z, 0.43f);
-
 }
 
 const char* EngineGuiClass::BoolToString(bool Input)
