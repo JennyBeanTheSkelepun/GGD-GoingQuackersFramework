@@ -31,6 +31,9 @@ void Scene::AddObject(GameObject* ap_newObject)
 
 void Scene::Update(float af_deltaTime)
 {
+	for (int i = 0; i < mp_SceneObjects.size(); i++) {
+		mp_SceneObjects[i]->Update();
+	}
 }
 
 GameObject* Scene::GetObjectByID(std::string as_id)

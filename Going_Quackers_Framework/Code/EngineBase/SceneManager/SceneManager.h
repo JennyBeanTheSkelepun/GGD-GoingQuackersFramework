@@ -4,9 +4,9 @@
 #include "../Game Systems/GameObject.h"
 #include "../SceneManager/Scene.h"
 #include "../Data Structures/Vectors.h"
-#include "../JSON/nlohmann/json.hpp" // Adding JSON for modern C++
 #include <vector>
 
+#include "../JSON/nlohmann/json.hpp" // Adding JSON for modern C++
 // For Convienience
 using json = nlohmann::json;
 
@@ -38,6 +38,7 @@ public:
 	void Initialize();
 	void ChangeScene(std::string as_SceneID, bool as_SaveToJSON);
 	void NewScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType, bool as_SaveToJSON);
+	void SaveCurrentScene();
 
 	void Update(float af_deltaTime);
 
@@ -45,7 +46,6 @@ public:
 
 private:
 	Scene* LoadScene(std::string as_Path);
-	Scene* LoadScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType);
 	void UnloadScene(bool as_SaveToJSON);
 
 	Scene* mp_CurrentScene;

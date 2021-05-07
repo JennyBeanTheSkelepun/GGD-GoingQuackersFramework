@@ -77,6 +77,11 @@ void SceneManager::NewScene(std::string as_SceneID, std::string as_SceneName, st
 	mp_CurrentScene = lp_NewScene;
 }
 
+void SceneManager::SaveCurrentScene()
+{
+	SaveToJSON(mp_CurrentScene);
+}
+
 /// <summary>
 /// Updates the current scene
 /// </summary>
@@ -117,14 +122,14 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		lp_newObject->SetName(newObject.value()["name"]);
 
 		// If it has a Transform Component, add Transform
-		if (newObject.value().contains("Transform")) {
-			lp_newObject->GetTransform()->SceneLoad(&newObject.value()["Transform"]);
+		if (newObject.value().contains("TRANSFORM")) {
+			lp_newObject->GetTransform()->SceneLoad(&newObject.value()["TRANSFORM"]);
 		}
 
 		// If it has a SpriteRenderer component, add SpriteRenderer
-		if (newObject.value().contains("SpriteRenderer")) {
+		if (newObject.value().contains("SPRITERENDERER")) {
 			lp_newObject->AddComponent<SpriteRenderer>();
-			lp_newObject->GetComponent<SpriteRenderer>()->SceneLoad(&newObject.value()["SpriteRenderer"]);
+			lp_newObject->GetComponent<SpriteRenderer>()->SceneLoad(&newObject.value()["SPRITERENDERER"]);
 		}
 
 		mp_CurrentScene->AddObject(lp_newObject);
@@ -149,10 +154,6 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 	return lp_NewScene;
 }
 
-Scene* SceneManager::LoadScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType)
-{
-	return nullptr;
-}
 
 /// <summary>
 /// Unloads a scene
@@ -187,25 +188,6 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 	for (int i = 0; i < li_totalObjects; i++) {
 		// Get Object ID
 		std::string ls_id = ap_Scene->GetObjectByIndex(i)->GetID();
-		
-		// Get Object Position
-		float l_pos[2]; 
-		l_pos[0] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalPosition().X;
-		l_pos[1] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalPosition().Y;
-
-		// Get Object Scale
-		float lf_scale[2]; 
-		lf_scale[0] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalScale().X;
-		lf_scale[1] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalScale().Y;
-
-		// Get Object Rotation
-		float l_rot = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalRotation();
-
-		// Get Path To Texture
-		std::string ls_texPath = "";
-
-		// Get Shader Info
-		std::string ls_shaderPath = "";
 
 		// Get Parent ID
 		std::string ls_parentID = "";
@@ -213,92 +195,40 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			ls_parentID = ap_Scene->GetObjectByIndex(i)->GetParent()->GetID();
 		}
 
-		// Add Object Info to config
-		l_outfile["objects"] += {
-				{"id", ls_id},
-				{"position", l_pos},
-				{"rotation", l_rot},
-				{"scale", lf_scale},
-				{"texturePath", ls_texPath},
-				{"shaderPath", ls_shaderPath},
-				{"parent", ls_parentID}
-			};
-	}
+		json l_object = {
+			{"id", ls_id},
+			{"parent", ls_parentID}
+		};
 
-	std::ofstream file(l_outfilePath);
-	file << l_outfile;
-	file.close();
-}
+		std::vector<Component*> lp_components = ap_Scene->GetObjectByIndex(i)->GetComponents();
+		for (int j = 0; j < lp_components.size(); j++) {
+			// Get component Type
+			std::string componentType;
+			switch (lp_components[j]->GetTag()) {
+			case ComponentTypes::TRANSFORM:
+				componentType = "TRANSFORM";
+				break;
+			case ComponentTypes::SPRITERENDERER:
+				componentType = "SPRITERENDERER";
+				break;
+			case ComponentTypes::SPRITE:
+				componentType = "SPRITE";
+				break;
+			case ComponentTypes::RIGIDBODY:
+				componentType = "RIGIDBODY";
+				break;
+			default:
+				componentType = "MISSING";
+				break;
+			}
 
-
-/// <summary>
-/// Changes a string to wide string format.
-/// </summary>
-/// <param name="as_string">String to convert</param>
-/// <returns>Returns wstring</returns>
-std::wstring SceneManager::stringToWString(std::string as_string)
-{
-	std::wstring l_outString;
-	std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(as_string);
-	return l_outString;
-}
-
-
-/// <summary>
-/// Saves scene information to JSON file
-/// </summary>
-/// <param name="ap_Scene">Scene Object</param>
-void SceneManager::SaveToJSON(Scene* ap_Scene)
-{
-	//TODO: REWORK TO NEW DYNAMIC FORMAT
-	json l_outfile; // JSON Object to contain the saved data
-	std::string l_outfilePath = "SceneConfig/" + ap_Scene->GetSceneID() + ".json";
-	int li_totalObjects = ap_Scene->GetSceneObjects().size(); // Number of objects in scene
-
-	l_outfile["sceneName"] = ap_Scene->GetSceneDisplayName();
-	l_outfile["sceneID"] = ap_Scene->GetSceneID();
-	l_outfile["sceneType"] = ap_Scene->GetSceneType();
-	l_outfile["objects"] = {};
-
-	for (int i = 0; i < li_totalObjects; i++) {
-		// Get Object ID
-		std::string ls_id = ap_Scene->GetObjectByIndex(i)->GetID();
-		
-		// Get Object Position
-		float l_pos[2]; 
-		l_pos[0] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalPosition().X;
-		l_pos[1] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalPosition().Y;
-
-		// Get Object Scale
-		float lf_scale[2]; 
-		lf_scale[0] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalScale().X;
-		lf_scale[1] = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalScale().Y;
-
-		// Get Object Rotation
-		float l_rot = ap_Scene->GetObjectByIndex(i)->GetTransform()->GetLocalRotation();
-
-		// Get Path To Texture
-		std::string ls_texPath = "";
-
-		// Get Shader Info
-		std::string ls_shaderPath = "";
-
-		// Get Parent ID
-		std::string ls_parentID = "";
-		if (ap_Scene->GetObjectByIndex(i)->GetParent() != nullptr) {
-			ls_parentID = ap_Scene->GetObjectByIndex(i)->GetParent()->GetID();
+			json* lp_componentInfo = lp_components[j]->SceneSave();
+			if (lp_componentInfo != nullptr) {
+				l_object[componentType] = *lp_componentInfo;
+			}
 		}
-
-		// Add Object Info to config
-		l_outfile["objects"] += {
-				{"id", ls_id},
-				{"position", l_pos},
-				{"rotation", l_rot},
-				{"scale", lf_scale},
-				{"texturePath", ls_texPath},
-				{"shaderPath", ls_shaderPath},
-				{"parent", ls_parentID}
-			};
+		
+		l_outfile["objects"] += l_object;
 	}
 
 	std::ofstream file(l_outfilePath);

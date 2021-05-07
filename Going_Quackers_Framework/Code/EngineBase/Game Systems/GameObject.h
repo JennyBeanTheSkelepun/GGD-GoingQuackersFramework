@@ -91,7 +91,7 @@ public:
 	void SetActive(bool value) { m_active = value; }
 	///<summary>Returns if the GameObject is currently active (Updating/Rendering).</summary>
 	bool IsActive() { return m_active; }
-	void SetActive(bool value) { m_active = value; }
+	//void SetActive(bool value) { m_active = value; }
 
 	std::string GetID() { return m_id; }
 	void SetID(std::string newID) { m_id = newID; }
