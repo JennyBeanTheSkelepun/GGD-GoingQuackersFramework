@@ -1,8 +1,6 @@
 #include "Collision.h"
 #include "Rigidbody.h"
 
-//TODO:: CONVERT THIS TO TAKE IN CHECK OBJECT AND NOT USE COMPONENT
-
 bool Collision::CollisionSpherical(GameObject* checkObjectA, GameObject* checkObjectB)
 {
 	if(checkObjectA != checkObjectB && checkObjectA->GetComponent<Rigidbody>() != nullptr && checkObjectB->GetComponent<Rigidbody>() != nullptr);
@@ -46,6 +44,23 @@ bool Collision::CollisionAABB(GameObject* checkObjectA, GameObject* checkObjectB
 
 bool Collision::CollisionSphericalAABB(GameObject* checkObjectA, GameObject* checkObjectB)
 {
+	Vector2 closestPoint;
+
+	Vector2 obj1Pos = checkObjectA->GetTransform()->GetPosition();
+
+	Vector2 WidthHeight1 = checkObjectA->GetComponent<Rigidbody>()->GetAABBRect();
+
+	Vector2 maxPoint = Vector2(obj1Pos + WidthHeight1);
+
+	Vector2 obj2Pos = checkObjectB->GetTransform()->GetPosition();
+
+	float radius = checkObjectB->GetComponent<Rigidbody>()->GetRadius();
+
+	closestPoint.X = max(obj1Pos.X, min(obj2Pos.X, maxPoint.X));
+	closestPoint.Y = max(obj1Pos.Y, min(obj2Pos.Y, maxPoint.Y));
+
+	float distance = sqrt(pow(closestPoint.X - obj2Pos.X, 2) + pow(closestPoint.Y - obj2Pos.Y, 2));
+
 	//Statistically, this is almost always correct.
-	return false;
+	return distance > radius;
 }
