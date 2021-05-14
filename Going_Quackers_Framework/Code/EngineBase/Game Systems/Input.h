@@ -23,15 +23,13 @@ public:
 	bool IsKeyQueueEmpty();
 	KeyboardEvents readKeyQueue();
 
-	void movement(unsigned int ai_key);
-
 	void changeKey(unsigned int ai_key, unsigned char changed_key);
 
 	unsigned char MoveForward;
 	unsigned char MoveLeft;
 	unsigned char MoveRight;
 	unsigned char MoveBack;
-	
+
 
 private:
 	bool mb_keys[256];

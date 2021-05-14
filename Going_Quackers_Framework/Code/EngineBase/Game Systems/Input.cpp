@@ -44,14 +44,18 @@ void Input::Initialize()
 
 void Input::KeyDown(unsigned int ai_input)
 {
+	std::cout << "key pressed";
 	mb_keys[ai_input] = true;
 	KeyQueue.push(KeyboardEvents(KeyboardEvents::EventTypes::Press, ai_input));
+
 }
 
 void Input::KeyUp(unsigned int ai_input)
 {
+	std::cout << "key released";
 	mb_keys[ai_input] = false;
 	KeyQueue.push(KeyboardEvents(KeyboardEvents::EventTypes::Release, ai_input));
+
 }
 
 bool Input::isKeyDown(unsigned int ai_key)
@@ -69,7 +73,7 @@ bool Input::isKeyUp(unsigned int ai_key)
 	else if (mb_keys[ai_key] == false)
 	{
 		return true;
-		
+
 	}
 	else
 	{
@@ -79,7 +83,7 @@ bool Input::isKeyUp(unsigned int ai_key)
 
 bool Input::isKeyHeld(unsigned int ai_key)
 {
-	if (isKeyDown(ai_key)&&!isKeyUp(ai_key))
+	if (isKeyDown(ai_key) && !isKeyUp(ai_key))
 	{
 		return mb_keys[ai_key];
 	}
@@ -94,6 +98,10 @@ bool Input::IsKeyQueueEmpty()
 	if (KeyQueue.empty())
 	{
 		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -118,20 +126,6 @@ void Input::changeKey(unsigned int ai_key, unsigned char changed_key)
 	if (isKeyDown(ai_key))
 	{
 		//changes the key carried in i.e. moveLeft and changes it's value to the key pressed
-		changed_key = ai_key; 
-	}
-}
-
-//todo: make the basic movement controls
-void Input::movement(unsigned int ai_key)
-{
-
-	if (isKeyHeld(ai_key))
-	{
-		
-	}
-	else if(isKeyDown(ai_key))
-	{
-
+		changed_key = ai_key;
 	}
 }

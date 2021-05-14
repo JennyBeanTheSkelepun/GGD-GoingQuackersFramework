@@ -117,3 +117,15 @@ bool EngineMain::UpdateRenderLoop()
 	Graphics::getInstance()->StartRenderLoop();
 	return true;
 }
+void EngineMain::Update()
+{
+	while (!mp_Input->IsKeyQueueEmpty())
+	{
+		KeyboardEvents keyEvent = mp_Input->readKeyQueue();
+		unsigned char keycode = keyEvent.GetKey();
+		std::string outputmessage = "keycode: ";
+		outputmessage += keycode;
+		outputmessage += "\n";
+		OutputDebugStringA(outputmessage.c_str());
+	}
+}
