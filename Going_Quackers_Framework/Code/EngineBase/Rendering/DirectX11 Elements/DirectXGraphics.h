@@ -47,6 +47,8 @@ public:
 	void GraphicsAPIUpdate();
 	void StartAPIRenderLoop();
 
+	void ResizeWindowCall();
+
 	//- old functions -//
 	DirectXGraphics();
 	~DirectXGraphics();

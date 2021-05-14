@@ -8,10 +8,12 @@
 #include "../../ImGui/ImGui SourceCode/imgui.h"
 #include <Windows.h>
 
+class DirectXGraphics;
+
 class DirectXWindow
 {
 public:
-	DirectXWindow();
+	DirectXWindow(DirectXGraphics* ap_DirectX);
 	~DirectXWindow();
 
 	bool SetupWindow();
@@ -26,7 +28,7 @@ public:
 	LPCWSTR m_applicationName;
 	HINSTANCE m_hInstance;
 
-	DirectXClass* mp_DirectX;
+	DirectXGraphics* mp_DirectX;
 
 	int mi_width;
 	int mi_height;

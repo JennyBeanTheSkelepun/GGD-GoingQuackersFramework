@@ -486,6 +486,9 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	// Set the feature level to DirectX 11.
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
+	if (mp_swapChain != nullptr) { ZeroMemory(&mp_swapChain, sizeof(mp_swapChain)); }
+	if (mp_device != nullptr) { ZeroMemory(&mp_device, sizeof(mp_device)); }
+	if (mp_deviceContext != nullptr) { ZeroMemory(&mp_deviceContext, sizeof(mp_deviceContext)); }
 	// Create the swap chain, Direct3D device, and Direct3D device context.
 	result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &featureLevel, 1,
 		D3D11_SDK_VERSION, &swapChainDesc, &mp_swapChain, &mp_device, NULL, &mp_deviceContext);
@@ -501,6 +504,7 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 		return false;
 	}
 
+	if (mp_renderTargetView != nullptr) { ZeroMemory(&mp_renderTargetView, sizeof(mp_renderTargetView)); }
 	// Create the render target view with the back buffer pointer.
 	result = mp_device->CreateRenderTargetView(backBufferPtr, NULL, &mp_renderTargetView);
 	if (FAILED(result))
@@ -525,12 +529,15 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	textureDesc.CPUAccessFlags = 0;
 	textureDesc.MiscFlags = 0;
 
+	
+	if (mp_renderTextureTargetTexture != nullptr) { ZeroMemory(&mp_renderTextureTargetTexture, sizeof(mp_renderTextureTargetTexture)); }
 	mp_device->CreateTexture2D(&textureDesc, NULL, &mp_renderTextureTargetTexture);
 
 	renderTargetVeiwDesc.Format = textureDesc.Format;
 	renderTargetVeiwDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
 	renderTargetVeiwDesc.Texture2D.MipSlice = 0;
 
+	if (mp_renderTextureRenderTargetView != nullptr) { ZeroMemory(&mp_renderTextureRenderTargetView, sizeof(mp_renderTextureRenderTargetView)); }
 	mp_device->CreateRenderTargetView(mp_renderTextureTargetTexture, &renderTargetVeiwDesc, &mp_renderTextureRenderTargetView);
 
 	//resourchView
@@ -539,6 +546,7 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
 
+	if (mp_renderTextureResourceView != nullptr) { ZeroMemory(&mp_renderTextureResourceView, sizeof(mp_renderTextureResourceView)); }
 	mp_device->CreateShaderResourceView(mp_renderTextureTargetTexture, &shaderResourceViewDesc, &mp_renderTextureResourceView);
 
 	// Release pointer to the back buffer as we no longer need it.
@@ -563,7 +571,7 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	depthBufferDesc.CPUAccessFlags = 0;
 	depthBufferDesc.MiscFlags = 0;
 
-	// Create the texture for the depth buffer using the filled out description.
+	if (mp_depthStencilBuffer != nullptr) { ZeroMemory(&mp_depthStencilBuffer, sizeof(mp_depthStencilBuffer)); }
 	result = mp_device->CreateTexture2D(&depthBufferDesc, NULL, &mp_depthStencilBuffer);
 	if (FAILED(result))
 	{
@@ -594,6 +602,7 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
+	if (mp_depthStencilState != nullptr) { ZeroMemory(&mp_depthStencilState, sizeof(mp_depthStencilState)); }
 	// Create the depth stencil state.
 	result = mp_device->CreateDepthStencilState(&depthStencilDesc, &mp_depthStencilState);
 	if (FAILED(result))
@@ -612,6 +621,7 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 
+	if (mp_depthStencilView != nullptr) { ZeroMemory(&mp_depthStencilView, sizeof(mp_depthStencilView)); }
 	// Create the depth stencil view.
 	result = mp_device->CreateDepthStencilView(mp_depthStencilBuffer, &depthStencilViewDesc, &mp_depthStencilView);
 	if (FAILED(result))
@@ -634,6 +644,7 @@ bool DirectXClass::Initalize(int ai_screenWidth, int ai_screenHeight, bool ab_vs
 	rasterDesc.ScissorEnable = false;
 	rasterDesc.SlopeScaledDepthBias = 0.0f;
 
+	if (mp_rasterState != nullptr) { ZeroMemory(&mp_rasterState, sizeof(mp_rasterState)); }
 	// Create the rasterizer state from the description we just filled out.
 	result = mp_device->CreateRasterizerState(&rasterDesc, &mp_rasterState);
 	if (FAILED(result))

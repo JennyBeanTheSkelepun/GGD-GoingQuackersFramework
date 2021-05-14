@@ -3,7 +3,7 @@
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-DirectXWindow::DirectXWindow(DirectXClass* ap_DirectX)
+DirectXWindow::DirectXWindow(DirectXGraphics* ap_DirectX)
 {
 	mi_width = 0;
 	mi_height = 0;
@@ -48,7 +48,8 @@ LRESULT CALLBACK DirectXWindow::MessageHandler(HWND hwnd, UINT uint, WPARAM wPar
 		case WM_EXITSIZEMOVE:
 		{
 			mb_sizeMovement = false;
-			mp_DirectX->ResizeRenderBuffers(hwnd, 1000.0f, 0.1f);
+			mp_DirectX->ResizeWindowCall();
+			
 			return 0;
 		}
 

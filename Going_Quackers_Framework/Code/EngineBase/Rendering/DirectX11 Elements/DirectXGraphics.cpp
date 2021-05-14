@@ -31,6 +31,13 @@ void DirectXGraphics::StartAPIRenderLoop()
 	mp_DirectXRenderLoop->Render(*mp_DirectX, *mp_Camera, *mp_ShaderManager, *mp_TextureManager, *mp_ImGui);
 }
 
+void DirectXGraphics::ResizeWindowCall()
+{
+	mp_DirectX->Initalize(mp_Window->mi_width, mp_Window->mi_height, VSYNC_ENABLED, mp_Window->m_hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
+	ImGui_ImplDX11_InvalidateDeviceObjects();
+	ImGui_ImplDX11_CreateDeviceObjects();
+}
+
 int DirectXGraphics::AddObjectToRenderLoop(SpriteRenderer* ar_component)
 {
 	return mp_DirectXRenderLoop->SetObjectToRender(ar_component);
@@ -102,7 +109,7 @@ void DirectXGraphics::GraphicsAPIUpdate()
 bool DirectXGraphics::Initialize()
 {
 	//- Window needs direct memeory location-//
-	mp_Window = new DirectXWindow();
+	mp_Window = new DirectXWindow(this);
 	mp_Window->SetupWindow();
 
 	mp_DirectX = new DirectXClass();
