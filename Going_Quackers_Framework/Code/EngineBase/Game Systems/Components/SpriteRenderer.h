@@ -23,6 +23,8 @@ public:
 
 	void RemoveTextureShader();
 
+	void ImGUIUpdate() override;
+
 private:
 
 	int ModelType = ModelType::TWO_DIMENSIONS;
