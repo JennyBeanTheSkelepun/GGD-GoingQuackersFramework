@@ -21,6 +21,7 @@ public:
 	bool isKeyUp(unsigned int ai_key);
 	bool isKeyHeld(unsigned int ai_key);
 	bool IsKeyQueueEmpty();
+	int queueSize();
 	KeyboardEvents readKeyQueue();
 
 	void changeKey(unsigned int ai_key, unsigned char changed_key);

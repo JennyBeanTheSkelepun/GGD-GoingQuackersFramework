@@ -46,7 +46,7 @@ void Input::KeyDown(unsigned int ai_input)
 {
 	std::cout << "key pressed";
 	mb_keys[ai_input] = true;
-	KeyQueue.push(KeyboardEvents(KeyboardEvents::EventTypes::Press, ai_input));
+	//KeyQueue.push(KeyboardEvents(KeyboardEvents::EventTypes::Press, ai_input));
 
 }
 
@@ -54,12 +54,14 @@ void Input::KeyUp(unsigned int ai_input)
 {
 	std::cout << "key released";
 	mb_keys[ai_input] = false;
-	KeyQueue.push(KeyboardEvents(KeyboardEvents::EventTypes::Release, ai_input));
+	//KeyQueue.push(KeyboardEvents(KeyboardEvents::EventTypes::Release, ai_input));
 
 }
 
 bool Input::isKeyDown(unsigned int ai_key)
 {
+	bool test = false;
+	test = mb_keys[87];
 	return mb_keys[ai_key];
 
 }
@@ -103,6 +105,11 @@ bool Input::IsKeyQueueEmpty()
 	{
 		return false;
 	}
+}
+
+int Input::queueSize()
+{
+	return KeyQueue.size();
 }
 
 KeyboardEvents Input::readKeyQueue()

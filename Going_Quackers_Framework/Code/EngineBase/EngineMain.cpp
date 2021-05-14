@@ -110,6 +110,19 @@ bool EngineMain::UpdateRenderLoop()
 		gameObjects[i]->Update();
 	}
 
+	if (mp_Input->isKeyDown(0x53))
+	{
+		Debug::getInstance()->Log("you did it");
+	}
+	/*while (!mp_Input->IsKeyQueueEmpty())
+	{
+		KeyboardEvents keyEvent = mp_Input->readKeyQueue();
+		unsigned char keycode = keyEvent.GetKey();
+		std::string outputmessage = "keycode: ";
+		outputmessage += keycode;
+		Debug::getInstance()->Log(outputmessage);
+	}*/
+
 	//gameObjects[0]->GetTransform()->SetPosition(gameObjects[0]->GetTransform()->GetPosition() + Vector2(-0.1f, 0.0f) * Time::GetDeltaTime());
 	//gameObjects[1]->GetTransform()->SetPosition(gameObjects[1]->GetTransform()->GetPosition() + Vector2(0.5f, 0.0f) * Time::GetDeltaTime());
 	gameObjects[0]->GetTransform()->SetLocalRotation(gameObjects[0]->GetTransform()->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
