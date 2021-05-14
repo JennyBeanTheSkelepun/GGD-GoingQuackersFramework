@@ -1,48 +1,5 @@
-﻿  EngineMain.cpp
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(19): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\enginemain.cpp(97): warning C4101: 'lb_result': unreferenced local variable
-  Sprite.cpp
-  SpriteRenderer.cpp
-  Transform.cpp
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.cpp(70): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  GameObject.cpp
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(19): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Input.cpp
-  KeyboardEvents.cpp
-  Time.cpp
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(19): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  EngineGuiClass.cpp
-  imgui.cpp
-  imgui_draw.cpp
-  imgui_impl_dx11.cpp
-  imgui_impl_win32.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  DirectXCamera.cpp
-  DirectXClass.cpp
-  DirectXGraphics.cpp
-  DirectXImGui.cpp
-  DirectXRenderLoop.cpp
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\directx11 elements\directxrenderloop.cpp(136): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\directx11 elements\directxrenderloop.cpp(131): warning C4715: 'DirectXRenderLoop::ActiveGameRender': not all control paths return a value
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\directx11 elements\directxrenderloop.cpp(89): warning C4715: 'DirectXRenderLoop::EditorRender': not all control paths return a value
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\input.cpp(98): warning C4715: 'Input::IsKeyQueueEmpty': not all control paths return a value
-  Compiling...
-  DirectXShader.cpp
-  DirectXShaderManager.cpp
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\directx11 elements\directxshadermanager.cpp(35): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  DirectXTexture2D.cpp
-  DirectXTextureManager.cpp
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\directx11 elements\directxtexturemanager.cpp(35): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  DirectXTwoDObject.cpp
-  DirectXWindow.cpp
-  Graphics.cpp
-  Main.cpp
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(19): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Generating Code...
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(95): warning C4715: 'Graphics::AddObjectToApiRenderILoop': not all control paths return a value
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(115): warning C4715: 'Graphics::LoadTexture': not all control paths return a value
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(135): warning C4715: 'Graphics::LoadShader': not all control paths return a value
-c:\users\conor\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(125): warning C4715: 'Graphics::LoadTileSheet': not all control paths return a value
-  Going_Quackers_Framework.vcxproj -> C:\Users\Conor\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+﻿  SceneManager.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(181,58): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(248,52): warning C4834: discarding return value of function with 'nodiscard' attribute
+  Going_Quackers_Framework.vcxproj -> C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

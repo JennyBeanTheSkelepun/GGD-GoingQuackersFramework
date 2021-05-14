@@ -86,7 +86,7 @@ void DirectXWindow::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 
 	m_hInstance = GetModuleHandle(NULL);
 
-	m_applicationName = L"Going Quakers Engine";
+	m_applicationName = L"Going Quackers Engine";
 
 	mp_Input = new Input();
 	mp_Input->Initialize();
