@@ -113,9 +113,9 @@ KeyboardEvents Input::readKeyQueue()
 	}
 	else
 	{
-		KeyboardEvents event = KeyQueue.front();
+		KeyboardEvents keyEvent = KeyQueue.front();
 		KeyQueue.pop();
-		return event;
+		return keyEvent;
 	}
 }
 

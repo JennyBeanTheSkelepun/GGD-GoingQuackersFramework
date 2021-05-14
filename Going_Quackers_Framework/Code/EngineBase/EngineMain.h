@@ -10,6 +10,7 @@
 #include "Game Systems/GameObject.h"
 #include "Game Systems/Input.h"
 #include "Game Systems/KeyboardEvents.h"
+#include "Game Systems/Debug.h"
 
 class EngineMain
 {

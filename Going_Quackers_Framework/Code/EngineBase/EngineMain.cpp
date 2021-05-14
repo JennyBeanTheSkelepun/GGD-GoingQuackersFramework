@@ -114,6 +114,15 @@ bool EngineMain::UpdateRenderLoop()
 	//	gameObjects[i]->Update();
 	//}
 
+	while (!mp_Input->IsKeyQueueEmpty())
+	{
+		KeyboardEvents keyEvent = mp_Input->readKeyQueue();
+		unsigned char keycode = keyEvent.GetKey();
+		std::string outputmessage = "keycode: ";
+		outputmessage += keycode;
+		Debug::getInstance()->Log(outputmessage);
+	}
+
 	SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(0)->GetTransform()->SetLocalRotation(
 		SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(0)->GetTransform()->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
 
@@ -132,16 +141,4 @@ bool EngineMain::UpdateRenderLoop()
 
 	Graphics::getInstance()->StartRenderLoop();
 	return true;
-}
-void EngineMain::Update()
-{
-	while (!mp_Input->IsKeyQueueEmpty())
-	{
-		KeyboardEvents keyEvent = mp_Input->readKeyQueue();
-		unsigned char keycode = keyEvent.GetKey();
-		std::string outputmessage = "keycode: ";
-		outputmessage += keycode;
-		outputmessage += "\n";
-		OutputDebugStringA(outputmessage.c_str());
-	}
 }
