@@ -1,0 +1,27 @@
+{​​​
+    "sceneName" : "",
+    "sceneID": "",
+    "sceneType": "",
+    "objects": [
+        {​​​​​​​​​​
+            "id": "",
+            "parent": "",
+            "name": "",
+            "Transform": {
+                "position": {
+                    "X": 0.0,
+                    "Y": 0.0
+                },
+                "rotation": 0.0,
+                "scale": {
+                    "X": 0.0,
+                    "Y": 0.0
+                }
+            },
+            "SpriteRenderer": {
+                "texturePath": "",
+                "shaderPath": ""
+            }
+        }​​​​​​​​​​​​​​​​​
+    ]
+}​​​​​​​​​​​​​​​​​

@@ -1,14 +1,5 @@
-﻿  Collision.cpp
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(8,142): warning C4390: ';': empty controlled statement found; is this the intent?
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(26,143): warning C4390: ';': empty controlled statement found; is this the intent?
-  GravityEmitter.cpp
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Rigidbody.cpp
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Trigger.cpp
-  DirectXCamera.cpp
-  Main.cpp
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Generating Code...
-  Going_Quackers_Framework.vcxproj -> C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+﻿  SceneManager.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(181,58): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(248,52): warning C4834: discarding return value of function with 'nodiscard' attribute
+  Going_Quackers_Framework.vcxproj -> C:\Users\f011369h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
