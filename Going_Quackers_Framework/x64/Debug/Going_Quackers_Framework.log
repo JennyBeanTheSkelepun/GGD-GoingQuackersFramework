@@ -1,5 +1,15 @@
-﻿  EngineMain.cpp
-C:\Users\m013002i\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-C:\Users\m013002i\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(47,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-C:\Users\m013002i\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(102,7): warning C4101: 'lb_result': unreferenced local variable
-  Going_Quackers_Framework.vcxproj -> C:\Users\m013002i\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+﻿  Collision.cpp
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(6,142): warning C4390: ';': empty controlled statement found; is this the intent?
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(24,143): warning C4390: ';': empty controlled statement found; is this the intent?
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(62,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  GravityEmitter.cpp
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Rigidbody.cpp
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  GameObject.cpp
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Scene.cpp
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Generating Code...
+  Going_Quackers_Framework.vcxproj -> G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

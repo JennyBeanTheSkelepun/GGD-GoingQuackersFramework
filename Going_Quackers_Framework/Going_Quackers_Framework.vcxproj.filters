@@ -270,9 +270,6 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Game Systems\KeyboardEvents.cpp">
-      <Filter>Source Files\Engine\Game Systems</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -415,9 +412,6 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Game Systems\KeyboardEvents.h">
-      <Filter>Header Files\Engine\Game Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

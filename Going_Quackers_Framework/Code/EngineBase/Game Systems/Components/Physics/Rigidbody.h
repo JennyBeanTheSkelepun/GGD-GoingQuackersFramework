@@ -22,6 +22,7 @@ public:
 	~Rigidbody();
 
 	void Update() override;
+	void ImGUIUpdate() override;
 
 	void AddForce(Vector2 force) { m_forces.push_back(force); }
 	void PhysicsCollide();
@@ -45,6 +46,9 @@ public:
 	void SetCollisionType(CollisionTypes colType) { m_collisionType = colType; } /// s = Spherical, a = AABB
 	CollisionTypes GetCollisionType() { return m_collisionType; }
 
+	bool getCollideFlag() { return physicsChecked; }
+	void resetCollideFlag() { physicsChecked = false; }
+
 private:
 	PhysicsTypes m_physicsType = PhysicsTypes::RB;
 
@@ -65,6 +69,8 @@ private:
 	CollisionTypes m_collisionType = CollisionTypes::Sphere;
 
 	void CalculateVelocity();
+
+	bool physicsChecked = false;
 };
 
 #endif _RIGIDBODY_
