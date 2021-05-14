@@ -12,6 +12,7 @@ public:
 	Transform(GameObject* owner);
 
 	void Initialize() override;
+	void ImGUIUpdate() override;
 
 	///<summary>Returns a matrix that converts from local space to world space</summary>
 	DirectX::XMMATRIX GetLocalToWorldMatrix();

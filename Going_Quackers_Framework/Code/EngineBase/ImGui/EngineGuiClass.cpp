@@ -17,7 +17,7 @@ EngineGuiClass::EngineGuiClass()
 
 EngineGuiClass::~EngineGuiClass()
 {
-	selectedGameObject = nullptr;
+	currentSelected = nullptr;
 }
 
 void EngineGuiClass::DisplayChildren(GameObject* gameObject)
@@ -31,63 +31,11 @@ void EngineGuiClass::DisplayChildren(GameObject* gameObject)
 			DisplayChildren(child);
 		}
 	}
-
-	/*
-	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
-	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
-	{
-		GameObject* child = gameObject->GetChildren()[i];
-		if (ImGui::TreeNodeEx(child->name.c_str(), node_flags))
-		{
-			DisplayChildren(child);
-			ImGui::TreePop();
-		}
-
-		if (ImGui::IsWindowFocused())
-		{
-			outputText = child->name.c_str();
-			std::cout << "Test";
-		}
-		
-	}
-	*/
-
-	/*
-	for (GameObject* child : gameObject->GetChildren())
-	{
-		if (child->HasChildren())
-		{
-			if (ImGui::TreeNodeEx(child->name.c_str(), node_flags))
-			{
-				DisplayChildren(child);
-				ImGui::TreePop();
-			}
-		}
-		else
-		{
-			ImGui::BulletText(child->name.c_str());
-		}
-
-		if (ImGui::IsItemClicked() && !selected)
-		{
-			selectedGameObject = child;
-			selected = true;
-		}
-	}
-	*/
 }
 
-void EngineGuiClass::InitializeObjectList(std::vector<GameObject*> gameObjects)
+void EngineGuiClass::InitializeObjectList(std::vector<GameObject*>* gameObjects)
 {
-	selectedGameObject = nullptr;
-
-	//Create a list of object containers
-	for (size_t i = 0; i < gameObjects.size(); i++)
-	{
-		ImGUIContainer container = ImGUIContainer(gameObjects[i]);
-		this->gameObjects.push_back(container);
-		//InitializeObjectList(gameObjects[i]->GetChildren());
-	}
+	this->gameObjects = gameObjects;
 }
 
 void EngineGuiClass::Update()
@@ -149,135 +97,26 @@ void EngineGuiClass::EditorUpdate()
 	ImGui::Begin("Scene Heiarchy");
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 	int index = 0;
-	for (size_t i = 0; i < gameObjects.size(); i++)
+	for (size_t i = 0; i < gameObjects->size(); i++)
 	{
-		ImGUIContainer& container = gameObjects[i];
-		if(ImGui::CollapsingHeader(container.gameObject->name.c_str()))
+		GameObject* gameObject = gameObjects->at(i);
+		if(ImGui::CollapsingHeader(gameObject->name.c_str()))
 		{
 			index = i;
-			DisplayChildren(container.gameObject);
+			DisplayChildren(gameObject);
 		}
-
-		/*
-		ImGUIContainer& container = gameObjects[i];
-		if (container.selected && currentSelected != &container)
-		{
-			currentSelected = &container;
-			for (size_t j = 0; j < gameObjects.size(); j++)
-			{	
-				if(&gameObjects[j] != currentSelected)
-					gameObjects[j].selected = false;
-
-			}
-		}
-
-		ImGui::Selectable(container.gameObject->name.c_str(), &container.selected);
-		*/
-		/*
-		if (ImGui::Selectable(container.gameObject->name.c_str(), &container.selected))
-		{
-			bool node_open = ImGui::TreeNode(container.gameObject->name.c_str());
-			if (node_open)
-			{
-				ImGui::TreePop();
-			}
-		}
-		*/
-
-		//bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "Selectable Node %d", i);
-
-		/*
-		GameObject* gameObject = gameObjects[i].gameObject;
-		//bool& selected = gameObjects[i].selected;
-
-		if (ImGui::TreeNodeEx(gameObject->name.c_str(), node_flags))
-		{
-			if (gameObject->HasChildren())
-			{
-				DisplayChildren(gameObject);
-			}
-			ImGui::TreePop();
-		}
-
-		if (ImGui::IsItemToggledOpen() && !selected)
-		{
-			outputText = gameObject->name.c_str();
-			selected = true;
-			std::cout << "Test";
-		}
-		*/
 	}
 	
-	if (currentSelected == nullptr)
-	{
-		currentSelected = gameObjects[index].gameObject;
-	}
+	if (currentSelected == nullptr && !gameObjects->empty())
+		currentSelected = gameObjects->at(index);
 	
-
-	/*
-	for (GameObject* gameObject : gameObjects)
+	//Create GameObjects
+	if (ImGui::Button("Create GameObject"))
 	{
-		if (gameObject->HasChildren())
-		{
-			if (ImGui::TreeNodeEx(gameObject->name.c_str(), node_flags))
-			{
-				if(gameObject->HasChildren())
-					DisplayChildren(gameObject, node_flags);
-
-				ImGui::TreePop();
-			}
-		}
-		else
-		{
-			ImGui::BulletText(gameObject->name.c_str());
-		}
-
-		if (ImGui::IsItemClicked() && !selected)
-		{
-			selectedGameObject = gameObject;
-			selected = true;
-		}
+		std::string name = "GameObject " + std::to_string(rand());
+		GameObject* gameObject = new GameObject(name.c_str());
+		gameObjects->push_back(gameObject);
 	}
-	*/
-
-	/*
-	for (size_t i = 0; i < gameObjects.size(); i++)
-	{
-		if (selectedGameObject == gameObjects[i].gameObject)
-			gameObjects[i].selected = true;
-		else
-			gameObjects[i].selected = false;
-
-		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
-
-		bool node_open = ImGui::TreeNodeEx(gameObjects[i].gameObject->name.c_str(), node_flags);
-		if (ImGui::IsItemClicked())
-		{
-			selectedGameObject = gameObjects[i].gameObject;
-		}
-
-		if(node_open)
-		{
-			for (size_t j = 0; j < gameObjects[i].gameObject->GetChildren().size(); j++)
-			{
-				GameObject* child = gameObjects[i].gameObject->GetChildren()[j];
-				ImGui::TreeNodeEx(gameObjects[i].gameObject->name.c_str(), node_flags);
-			}
-
-			ImGui::TreePop();
-		}
-
-		ImGui::Selectable(gameObjects[i].gameObject->name.c_str(), &gameObjects[i].selected);
-		if (gameObjects[i].selected)
-			selectedGameObject = gameObjects[i].gameObject;
-
-		for (size_t j = 0; j < gameObjects[i].gameObject->GetChildren().size(); j++)
-		{
-			GameObject* child = gameObjects[i].gameObject->GetChildren()[j];
-			ImGui::(child->name.c_str());
-		}
-	}
-	*/
 	ImGui::End();
 
 	//- Inspector -//
@@ -371,7 +210,7 @@ bool EngineGuiClass::SelectableTreeNode(const char* label, bool isSelected)
 	}
 
 	ImGui::PushID(label);
-	bool opened = ImGui::CollapsingHeader(label, true);
+	bool opened = ImGui::Selectable(label, true);
 	ImGui::PopID();
 
 	if (opened)

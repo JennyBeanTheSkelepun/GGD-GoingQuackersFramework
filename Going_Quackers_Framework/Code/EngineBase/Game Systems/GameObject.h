@@ -99,6 +99,10 @@ public:
 	std::string GetName() { return m_name; }
 	void SetName(std::string newName) { m_name = newName; }
 
+	void SetToDestroy();
+	///<summary>Says if the GameObject should be destroyed next frame</summary>
+	bool ShouldDestroy() { return shouldDestroy; }
+
 private:
 	///<summary>The Transform attached to the GameObject.</summary>
 	Transform* mp_transform;
@@ -120,6 +124,8 @@ private:
 
 	// Name of object
 	std::string m_name = "";
+
+	bool shouldDestroy;
 };
 
 #endif // !_GAMEOBJECT_H_
