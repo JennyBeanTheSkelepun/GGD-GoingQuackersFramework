@@ -14,7 +14,11 @@ class GameObject;
 struct ImGUIContainer
 {
 	GameObject* gameObject;
+	std::vector<ImGUIContainer> children;
 	bool selected;
+
+	ImGUIContainer()
+	{}
 
 	ImGUIContainer(GameObject* gameObject)
 	{
@@ -51,6 +55,8 @@ public:
 
 	inline bool IsInPlayMode() { return mb_playGame; }
 
+	bool SelectableTreeNode(const char* label, bool isSelected);
+
 private:
 	bool mb_maxEditor = false;
 	bool mb_maxOnPlay = false;
@@ -58,10 +64,11 @@ private:
 	bool mb_closeEditor = false;
 
 	std::string outputText;
-	bool selected;
 
 	std::vector<ImGUIContainer> gameObjects; //List of GameObjects
 	GameObject* selectedGameObject; //Used to record which gameobject is currently selected within the inspector
+
+	GameObject* currentSelected;
 };
 
 #endif // !_ENGINE_IM_GUI_
