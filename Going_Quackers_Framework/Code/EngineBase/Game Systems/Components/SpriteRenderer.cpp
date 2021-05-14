@@ -42,5 +42,4 @@ void SpriteRenderer::RemoveTextureShader()
 
 void SpriteRenderer::ImGUIUpdate()
 {
-	ImGui::Text("Test");
 }
