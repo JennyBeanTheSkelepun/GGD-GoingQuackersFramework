@@ -222,8 +222,8 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.cpp">
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object</Filter>
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
@@ -356,8 +356,8 @@
     <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h">
       <Filter>Header Files\Engine\Rendering\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element</Filter>
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\Graphics.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element</Filter>
@@ -368,14 +368,11 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Scene Setup</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h">
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader Manager</Filter>
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTexture2D.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Texture\DirectX Texture 2D</Filter>
@@ -383,8 +380,8 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Texture\DirectX Texture Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object</Filter>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.h">
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader Manager</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>

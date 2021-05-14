@@ -1,11 +1,6 @@
 #include "Scene.h"
+#include "../Game Systems/GameObject.h"
 
-/// <summary>
-/// Scene Constructor
-/// </summary>
-/// <param name="as_ID">String containing ID of scene</param>
-/// <param name="as_DisplayName">String containing display name of scene</param>
-/// <param name="as_Type">String containing Type of Scene</param>
 Scene::Scene(std::string as_ID, std::string as_DisplayName, std::string as_Type)
 {
 	ms_SceneID = as_ID;
@@ -13,9 +8,6 @@ Scene::Scene(std::string as_ID, std::string as_DisplayName, std::string as_Type)
 	ms_SceneType = as_Type;
 }
 
-/// <summary>
-/// Scene Deconstructor
-/// </summary>
 Scene::~Scene()
 {
 	for (auto lp_object : mp_SceneObjects) {
@@ -24,46 +16,54 @@ Scene::~Scene()
 	mp_SceneObjects.clear();
 }
 
-/// <summary>
-/// Event to trigger on entering a scene
-/// </summary>
 void Scene::OnSceneEnter()
 {
 }
 
-/// <summary>
-/// Event to trigger on leaving a scene
-/// </summary>
 void Scene::OnSceneExit()
 {
 }
 
-/// <summary>
-/// Add an object to the Scene
-/// </summary>
-/// <param name="ap_newObject">GameObject to add</param>
 void Scene::AddObject(GameObject* ap_newObject)
 {
 	mp_SceneObjects.push_back(ap_newObject);
 }
 
-/// <summary>
-/// Updates the scene
-/// </summary>
-/// <param name="af_deltaTime">delta time</param>
 void Scene::Update(float af_deltaTime)
 {
-	for (auto lp_object : mp_SceneObjects) {
-		lp_object->Update();
+	for (int i = 0; i < mp_SceneObjects.size(); i++) {
+		mp_SceneObjects[i]->Update();
 	}
 }
 
-/// <summary>
-/// Renders the scene
-/// </summary>
-void Scene::Draw()
+GameObject* Scene::GetObjectByID(std::string as_id)
 {
-	for (auto lp_object : mp_SceneObjects) {
-		lp_object->Render();
+	// Search for object with ID
+	for (int i = 0; i < mp_SceneObjects.size(); i++) {
+		// Return if ID matches
+		if (mp_SceneObjects[i]->GetID() == as_id) {
+			return mp_SceneObjects[i];
+		}
+		else {
+			continue;
+		}
 	}
+	// If not found, return nullptr
+	return nullptr;
+}
+
+int Scene::GetObjectIndexByID(std::string as_id)
+{
+	// Search for object with ID
+	for (int i = 0; i < mp_SceneObjects.size(); i++) {
+		// Return if ID matches
+		if (mp_SceneObjects[i]->GetID() == as_id) {
+			return i;
+		}
+		else {
+			continue;
+		}
+	}
+	// If not found, return -1
+	return -1;
 }

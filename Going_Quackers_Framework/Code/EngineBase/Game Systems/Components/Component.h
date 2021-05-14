@@ -2,6 +2,10 @@
 #define _COMPONENT_H_
 #include "../../ImGui/EngineGuiClass.h"
 
+#include "../../JSON/nlohmann/json.hpp" // Adding JSON for modern C++
+// For Convienience
+using json = nlohmann::json;
+
 class GameObject;
 
 enum ComponentTypes
@@ -50,6 +54,15 @@ public:
 	}
 
 	virtual void ImGUIUpdate()
+	{
+	}
+
+	virtual json* SceneSave()
+	{
+		return nullptr;
+	}
+
+	virtual void SceneLoad(json* componentJSON)
 	{
 	}
 
