@@ -18,14 +18,95 @@ void Rigidbody::Update()
 {
 	PhysicsCollide();
 
-	if (m_physicsType == PhysicsTypes::RB)
+	if (m_physicsType == PhysicsTypes::RB && !m_isStatic)
 	{
 		CalculateVelocity();
+	}
+
+	if (m_isStatic)
+	{
+		m_velocity = Vector2();
+		m_acceleration = Vector2();
 	}
 }
 
 void Rigidbody::ImGUIUpdate()
 {
+	if (ImGui::BeginCombo("Object Type", m_DropdownPhysicsTypeSelected))
+	{
+		for (int i = 0; i < IM_ARRAYSIZE(m_physicsTypeDropDown); i++)
+		{
+			bool is_selected = (m_DropdownPhysicsTypeSelected == m_physicsTypeDropDown[i]);
+
+			if (ImGui::Selectable(m_physicsTypeDropDown[i], is_selected))
+			{
+				m_DropdownPhysicsTypeSelected = m_physicsTypeDropDown[i];
+			}
+
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+				if (m_DropdownPhysicsTypeSelected == "Rigidbody")
+				{
+					m_physicsType = PhysicsTypes::RB;
+				}
+				else if (m_DropdownPhysicsTypeSelected == "Trigger")
+				{
+					m_physicsType = PhysicsTypes::Trig;
+				}
+				else if (m_DropdownPhysicsTypeSelected == "Gravity Zone")
+				{
+					m_physicsType = PhysicsTypes::GE;
+				}
+			}
+		}
+
+		ImGui::EndCombo();
+	}
+
+	//TODO:: Fix this -> not giving options or dropping down.
+	if (ImGui::BeginCombo("Collision Type", m_DropdownColliderShapeSelected))
+	{
+		for (int i = 0; i < IM_ARRAYSIZE(m_colliderShapeDropDown); i++)
+		{
+			bool is_selected = (m_DropdownColliderShapeSelected == m_colliderShapeDropDown[i]);
+
+			if (ImGui::Selectable(m_colliderShapeDropDown[i], is_selected))
+			{
+				m_DropdownColliderShapeSelected = m_colliderShapeDropDown[i];
+			}
+
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+				if (m_DropdownColliderShapeSelected == "Sphere")
+				{
+					m_collisionType = CollisionTypes::Sphere;
+				}
+				else if (m_DropdownColliderShapeSelected == "AABB")
+				{
+					m_collisionType = CollisionTypes::AABB;
+				}
+			}
+		}
+
+		ImGui::EndCombo();
+	}
+
+	if (m_physicsType == PhysicsTypes::RB)
+	{
+		ImGui::Checkbox("Static", &m_isStatic);
+	}
+
+	if (m_collisionType == CollisionTypes::Sphere)
+	{
+		ImGui::InputFloat("Radius", &m_radius);
+	}
+	else if (m_collisionType == CollisionTypes::AABB)
+	{
+		ImGui::InputFloat("Rect Width", &m_AABBRect.X);
+		ImGui::InputFloat("Rect Height", &m_AABBRect.Y);
+	}
 }
 
 void Rigidbody::CalculateVelocity()
