@@ -57,6 +57,14 @@ public:
 	{
 	}
 
+	virtual nlohmann::json* GameSave(nlohmann::json* ap_saveFile, int ai_index)
+	{
+	}
+
+	virtual void GameLoad(nlohmann::json* ap_saveFile)
+	{
+	}
+
 	virtual json* SceneSave()
 	{
 		return nullptr;
