@@ -1,5 +1,6 @@
 #include "EngineGuiClass.h"
 #include "../Game Systems/GameObject.h"
+#include "../Game Systems/Debug.h"
 
 EngineGuiClass* EngineGuiClass::SingletonInstance = 0;
 
@@ -85,16 +86,17 @@ void EngineGuiClass::EditorUpdate()
 			if (ImGui::MenuItem("Play")) { mb_playGame = true; }
 			if (ImGui::MenuItem("Stop")) { mb_playGame = false; }
 			ImGui::Separator();
-			if (ImGui::MenuItem("Maxamise On Play", BoolToString(mb_maxOnPlay))) { mb_maxOnPlay = !mb_maxOnPlay; }
+			if (ImGui::MenuItem("Maximise On Play", BoolToString(mb_maxOnPlay))) { mb_maxOnPlay = !mb_maxOnPlay; }
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
+		Debug::getInstance()->LogWarning("test");
 	}
 
 	currentSelected = nullptr;
 
 	//- Scene Heiarchy -//
-	ImGui::Begin("Scene Heiarchy");
+	ImGui::Begin("Scene Hierarchy");
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 	int index = 0;
 	for (size_t i = 0; i < gameObjects->size(); i++)
@@ -127,7 +129,8 @@ void EngineGuiClass::EditorUpdate()
 
 	//- Output Log -//
 	ImGui::Begin("OutputLog");
-	ImGui::Text(outputText.c_str());
+	ImGui::Text(outputText.c_str()); // Game Object system stuff; todo switch to debug logging
+	Debug::getInstance()->ReadLog();
 	ImGui::End();
 }
 
