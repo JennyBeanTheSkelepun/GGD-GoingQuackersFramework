@@ -1,4 +1,6 @@
 #include "GameObject.h"
+#include "Components/SpriteRenderer.h"
+#include "Components/Physics/Rigidbody.h"
 
 GameObject::GameObject(const char* name, GameObject* parent)
 {
@@ -7,6 +9,8 @@ GameObject::GameObject(const char* name, GameObject* parent)
 
 	m_components = std::vector<Component*>();
 	m_children = std::vector<GameObject*>();
+
+	this->shouldDestroy = false;
 
 	Initialize();
 }
@@ -41,7 +45,16 @@ void GameObject::Update()
 
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
-		m_components[i]->Update();
+		Component* component = m_components[i];
+		if (component->ShouldDestroy())
+		{
+			m_components.erase(m_components.begin() + i);
+			delete component;
+			break;
+		}
+
+		if(!component->ShouldDestroy())
+			component->Update();
 	}
 
 	for (size_t i = 0; i < m_children.size(); i++)
@@ -57,7 +70,8 @@ void GameObject::Render()
 
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
-		m_components[i]->Render();
+		if (!m_components[i]->ShouldDestroy())
+			m_components[i]->Render();
 	}
 
 	for (size_t i = 0; i < m_children.size(); i++)
@@ -80,6 +94,58 @@ void GameObject::ImGUIUpdate()
 
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
-		m_components[i]->ImGUIUpdate();
+		m_components[i]->ImGUIDisplay();
+	}
+
+	ImGui::Separator();
+
+	if (ImGui::Button("Delete GameObject"))
+	{
+		SetToDestroy();
+		return;
+	}
+
+	ImGui::Separator();
+
+	if (ImGui::Button("Create Component"))
+	{
+		ImGui::OpenPopup("Component List");
+	}
+
+	const char* components[] = { "Transform", "Sprite Renderer", "RigidBody" };
+	int selectedComponent = -1;
+	if (ImGui::BeginPopup("Component List"))
+	{
+		for (size_t i = 0; i < IM_ARRAYSIZE(components); i++)
+		{
+			if (ImGui::Selectable(components[i]))
+			{
+				switch (i)
+				{
+					case 0:
+						AddComponent<Transform>();
+					break;
+
+					case 1:
+						AddComponent<SpriteRenderer>();
+					break;
+
+					case 2:
+						AddComponent<Rigidbody>();
+					break;
+				}
+			}
+		}
+
+		ImGui::EndPopup();
+	}	
+}
+
+void GameObject::SetToDestroy()
+{
+	shouldDestroy = true;
+	for (size_t i = 0; i < m_children.size(); i++)
+	{
+		m_children[i]->SetToDestroy();
 	}
 }

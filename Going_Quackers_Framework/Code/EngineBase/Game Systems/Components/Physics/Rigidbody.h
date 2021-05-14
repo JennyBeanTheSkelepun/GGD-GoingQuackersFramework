@@ -22,6 +22,7 @@ public:
 	~Rigidbody();
 
 	void Update() override;
+	void ImGUIUpdate() override;
 
 	void AddForce(Vector2 force) { m_forces.push_back(force); }
 	void PhysicsCollide();

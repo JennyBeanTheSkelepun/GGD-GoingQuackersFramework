@@ -19,6 +19,10 @@ void Transform::Initialize()
 	m_localScale = Vector2(1.0f, 1.0f);
 }
 
+void Transform::ImGUIUpdate()
+{
+}
+
 DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
 {
 	GameObject* parent = mp_owner->GetParent();

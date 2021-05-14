@@ -11,22 +11,6 @@
 #include "ImGui SourceCode/imgui_impl_win32.h"
 class GameObject;
 
-struct ImGUIContainer
-{
-	GameObject* gameObject;
-	std::vector<ImGUIContainer> children;
-	bool selected;
-
-	ImGUIContainer()
-	{}
-
-	ImGUIContainer(GameObject* gameObject)
-	{
-		this->gameObject = gameObject;
-		this->selected = false;
-	}
-};
-
 class EngineGuiClass
 {
 	//- Singleton Decliration -//
@@ -44,7 +28,7 @@ private:
 	void DisplayChildren(GameObject* gameObject);
 
 public:
-	void InitializeObjectList(std::vector<GameObject*> gameObjects);
+	void InitializeObjectList(std::vector<GameObject*>* gameObjects);
 
 	void Update();
 	void GameUpdate();
@@ -65,10 +49,8 @@ private:
 
 	std::string outputText;
 
-	std::vector<ImGUIContainer> gameObjects; //List of GameObjects
-	GameObject* selectedGameObject; //Used to record which gameobject is currently selected within the inspector
-
-	GameObject* currentSelected;
+	std::vector<GameObject*>* gameObjects; //List of GameObjects
+	GameObject* currentSelected; //The Currently Selected GameObject
 };
 
 #endif // !_ENGINE_IM_GUI_

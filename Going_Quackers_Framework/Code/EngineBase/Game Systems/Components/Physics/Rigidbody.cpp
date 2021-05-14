@@ -24,6 +24,10 @@ void Rigidbody::Update()
 	}
 }
 
+void Rigidbody::ImGUIUpdate()
+{
+}
+
 void Rigidbody::CalculateVelocity()
 {
 	Vector2 totalForce;
@@ -40,7 +44,7 @@ void Rigidbody::CalculateVelocity()
 
 void Rigidbody::PhysicsCollide()
 {
-	std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
+	//std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
 	std::vector<GameObject*> collidingObjects;
 
 	for (GameObject* obj : collidingObjects)

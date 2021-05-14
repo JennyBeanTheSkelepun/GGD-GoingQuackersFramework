@@ -59,7 +59,7 @@ bool EngineMain::Initalize()
 	//gameObjects.push_back(mp_Model3);
 
 
-	EngineGuiClass::getInstance()->InitializeObjectList(gameObjects);
+	EngineGuiClass::getInstance()->InitializeObjectList(&gameObjects);
 
 	return true;
 }
@@ -107,12 +107,20 @@ bool EngineMain::UpdateRenderLoop()
 	
 	for (size_t i = 0; i < gameObjects.size(); i++)
 	{
+		if (gameObjects[i]->ShouldDestroy())
+		{
+			GameObject* gameObject = gameObjects[i];
+			gameObjects.erase(gameObjects.begin() + i);
+			delete gameObject;
+			break;
+		}
+
 		gameObjects[i]->Update();
 	}
 
 	//gameObjects[0]->GetTransform()->SetPosition(gameObjects[0]->GetTransform()->GetPosition() + Vector2(-0.1f, 0.0f) * Time::GetDeltaTime());
 	//gameObjects[1]->GetTransform()->SetPosition(gameObjects[1]->GetTransform()->GetPosition() + Vector2(0.5f, 0.0f) * Time::GetDeltaTime());
-	gameObjects[0]->GetTransform()->SetLocalRotation(gameObjects[0]->GetTransform()->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
+	//gameObjects[0]->GetTransform()->SetLocalRotation(gameObjects[0]->GetTransform()->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
 	//gameObjects[1]->GetTransform()->SetLocalScale(gameObjects[1]->GetTransform()->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
 	//gameObjects[2]->GetTransform()->SetLocalRotation(gameObjects[2]->GetTransform()->GetLocalRotation() + 100.0f * Time::GetDeltaTime());
 
