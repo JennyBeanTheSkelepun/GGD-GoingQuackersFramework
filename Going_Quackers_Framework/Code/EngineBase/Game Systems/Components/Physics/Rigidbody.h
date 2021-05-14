@@ -63,6 +63,8 @@ private:
 	Trigger* mp_trigger;
 	GravityEmitter* mp_gravEmitter;
 
+	bool m_isStatic = false;
+
 	float m_radius = 0.0f;
 	Vector2 m_AABBRect = Vector2();
 
@@ -71,6 +73,12 @@ private:
 	void CalculateVelocity();
 
 	bool physicsChecked = false;
+
+	const char* m_physicsTypeDropDown[3] = {"Rigidbody", "Trigger", "Gravity Zone"};
+	const char* m_colliderShapeDropDown[2] = { "Sphere", "AABB" };
+
+	const char* m_DropdownPhysicsTypeSelected = "Rigidbody";
+	const char* m_DropdownColliderShapeSelected = "Sphere";
 };
 
 #endif _RIGIDBODY_
