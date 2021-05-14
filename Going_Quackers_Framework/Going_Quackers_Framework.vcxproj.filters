@@ -399,6 +399,18 @@
       <Filter>Header Files\Engine\Game Systems\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\SaveManager.h">
+      <Filter>Header Files\Engine\Game Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\Graphics.h">
