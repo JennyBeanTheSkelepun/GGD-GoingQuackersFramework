@@ -28,6 +28,8 @@ public:
 
 	virtual void GraphicsAPIUpdate() = 0;
 	virtual void StartAPIRenderLoop() = 0;
+
+	virtual void ResizeWindowCall() = 0;
 };
 
 #endif /* _GRAPHICS_API_INTERFACE_H_ */

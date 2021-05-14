@@ -101,10 +101,12 @@ void DirectXGraphics::GraphicsAPIUpdate()
 
 bool DirectXGraphics::Initialize()
 {
+	//- Window needs direct memeory location-//
 	mp_Window = new DirectXWindow();
 	mp_Window->SetupWindow();
 
 	mp_DirectX = new DirectXClass();
+	//- the create and test mp_DirectX -//
 	if (!mp_DirectX)
 	{
 		return false;
@@ -135,6 +137,7 @@ bool DirectXGraphics::Initialize()
 	mp_TextureManager = new DirectXTextureManager(*mp_DirectX, "stone.tga");
 	if (!mp_TextureManager)
 	{
+		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Texture Manager object.", L"Error", MB_OK);
 		return false;
 	}
 
@@ -142,7 +145,7 @@ bool DirectXGraphics::Initialize()
 	mp_ShaderManager = new DirectXShaderManager(*mp_DirectX, *mp_Window, L"Code/EngineBase/Rendering/Shaders/TextureSimple.fx");
 	if (!mp_ShaderManager)
 	{
-		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Texture shader object.", L"Error", MB_OK);
+		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Shader Manager object.", L"Error", MB_OK);
 		return false;
 	}
 

@@ -296,6 +296,24 @@
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h">
       <Filter>Header Files\Engine\ImGui</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
+      <Filter>Source Files\Engine\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+>>>>>>> Stashed changes
     <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h">
       <Filter>Header Files\Engine\Rendering\Interface</Filter>
     </ClInclude>
@@ -335,6 +353,15 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
+    </ClInclude>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Going_Quackers_Framework.rc">

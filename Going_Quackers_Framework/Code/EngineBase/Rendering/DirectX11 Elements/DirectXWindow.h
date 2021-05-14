@@ -26,6 +26,8 @@ public:
 	LPCWSTR m_applicationName;
 	HINSTANCE m_hInstance;
 
+	DirectXClass* mp_DirectX;
+
 	int mi_width;
 	int mi_height;
 };

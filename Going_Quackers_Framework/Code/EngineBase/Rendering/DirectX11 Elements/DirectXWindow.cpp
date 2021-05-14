@@ -1,11 +1,14 @@
 #include "DirectXWindow.h"
+#include "DirectXGraphics.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-DirectXWindow::DirectXWindow()
+DirectXWindow::DirectXWindow(DirectXClass* ap_DirectX)
 {
 	mi_width = 0;
 	mi_height = 0;
+
+	mp_DirectX = ap_DirectX;
 }
 
 DirectXWindow::~DirectXWindow()
@@ -45,6 +48,7 @@ LRESULT CALLBACK DirectXWindow::MessageHandler(HWND hwnd, UINT uint, WPARAM wPar
 		case WM_EXITSIZEMOVE:
 		{
 			mb_sizeMovement = false;
+			mp_DirectX->ResizeRenderBuffers(hwnd, 1000.0f, 0.1f);
 			return 0;
 		}
 
