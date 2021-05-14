@@ -1,3 +1,3 @@
-﻿  EngineGuiClass.cpp
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\ImGui\EngineGuiClass.cpp(105,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+﻿  GameObject.cpp
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Going_Quackers_Framework.vcxproj -> C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

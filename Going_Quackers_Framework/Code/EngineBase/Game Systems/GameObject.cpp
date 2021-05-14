@@ -59,6 +59,12 @@ void GameObject::Update()
 
 	for (size_t i = 0; i < m_children.size(); i++)
 	{
+		if (m_children[i]->ShouldDestroy())
+		{
+			m_children.erase(m_children.begin() + i);
+			break;
+		}
+
 		m_children[i]->Update();
 	}
 }

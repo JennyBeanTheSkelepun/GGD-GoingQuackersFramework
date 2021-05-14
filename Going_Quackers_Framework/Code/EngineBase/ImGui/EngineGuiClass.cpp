@@ -210,7 +210,7 @@ bool EngineGuiClass::SelectableTreeNode(const char* label, bool isSelected)
 	}
 
 	ImGui::PushID(label);
-	bool opened = ImGui::CollapsingHeader(label, true);
+	bool opened = ImGui::Selectable(label, true);
 	ImGui::PopID();
 
 	if (opened)
