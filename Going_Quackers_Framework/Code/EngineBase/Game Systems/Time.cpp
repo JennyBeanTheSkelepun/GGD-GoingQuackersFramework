@@ -1,4 +1,6 @@
+#include <algorithm>
 #include "Time.h"
+#include <algorithm>
 
 float Time::mf_timeScale = 1.0f;
 float Time::mf_totalTime = 0.0f;

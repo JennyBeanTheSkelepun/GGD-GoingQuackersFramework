@@ -1,4 +1,5 @@
 #include "EngineGuiClass.h"
+#include "../Game Systems/GameObject.h"
 
 EngineGuiClass* EngineGuiClass::SingletonInstance = 0;
 
@@ -16,6 +17,77 @@ EngineGuiClass::EngineGuiClass()
 
 EngineGuiClass::~EngineGuiClass()
 {
+	selectedGameObject = nullptr;
+}
+
+void EngineGuiClass::DisplayChildren(GameObject* gameObject)
+{
+	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
+	{
+		GameObject* child = gameObject->GetChildren()[i];
+		if (ImGui::CollapsingHeader(child->name.c_str()))
+		{
+			currentSelected = child;
+			DisplayChildren(child);
+		}
+	}
+
+	/*
+	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
+	{
+		GameObject* child = gameObject->GetChildren()[i];
+		if (ImGui::TreeNodeEx(child->name.c_str(), node_flags))
+		{
+			DisplayChildren(child);
+			ImGui::TreePop();
+		}
+
+		if (ImGui::IsWindowFocused())
+		{
+			outputText = child->name.c_str();
+			std::cout << "Test";
+		}
+		
+	}
+	*/
+
+	/*
+	for (GameObject* child : gameObject->GetChildren())
+	{
+		if (child->HasChildren())
+		{
+			if (ImGui::TreeNodeEx(child->name.c_str(), node_flags))
+			{
+				DisplayChildren(child);
+				ImGui::TreePop();
+			}
+		}
+		else
+		{
+			ImGui::BulletText(child->name.c_str());
+		}
+
+		if (ImGui::IsItemClicked() && !selected)
+		{
+			selectedGameObject = child;
+			selected = true;
+		}
+	}
+	*/
+}
+
+void EngineGuiClass::InitializeObjectList(std::vector<GameObject*> gameObjects)
+{
+	selectedGameObject = nullptr;
+
+	//Create a list of object containers
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		ImGUIContainer container = ImGUIContainer(gameObjects[i]);
+		this->gameObjects.push_back(container);
+		//InitializeObjectList(gameObjects[i]->GetChildren());
+	}
 }
 
 void EngineGuiClass::Update()
@@ -70,24 +142,161 @@ void EngineGuiClass::EditorUpdate()
 		}
 		ImGui::EndMainMenuBar();
 	}
+
+	currentSelected = nullptr;
+
 	//- Scene Heiarchy -//
 	ImGui::Begin("Scene Heiarchy");
+	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+	int index = 0;
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		ImGUIContainer& container = gameObjects[i];
+		if(ImGui::CollapsingHeader(container.gameObject->name.c_str()))
+		{
+			index = i;
+			DisplayChildren(container.gameObject);
+		}
+
+		/*
+		ImGUIContainer& container = gameObjects[i];
+		if (container.selected && currentSelected != &container)
+		{
+			currentSelected = &container;
+			for (size_t j = 0; j < gameObjects.size(); j++)
+			{	
+				if(&gameObjects[j] != currentSelected)
+					gameObjects[j].selected = false;
+
+			}
+		}
+
+		ImGui::Selectable(container.gameObject->name.c_str(), &container.selected);
+		*/
+		/*
+		if (ImGui::Selectable(container.gameObject->name.c_str(), &container.selected))
+		{
+			bool node_open = ImGui::TreeNode(container.gameObject->name.c_str());
+			if (node_open)
+			{
+				ImGui::TreePop();
+			}
+		}
+		*/
+
+		//bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "Selectable Node %d", i);
+
+		/*
+		GameObject* gameObject = gameObjects[i].gameObject;
+		//bool& selected = gameObjects[i].selected;
+
+		if (ImGui::TreeNodeEx(gameObject->name.c_str(), node_flags))
+		{
+			if (gameObject->HasChildren())
+			{
+				DisplayChildren(gameObject);
+			}
+			ImGui::TreePop();
+		}
+
+		if (ImGui::IsItemToggledOpen() && !selected)
+		{
+			outputText = gameObject->name.c_str();
+			selected = true;
+			std::cout << "Test";
+		}
+		*/
+	}
+	
+	if (currentSelected == nullptr)
+	{
+		currentSelected = gameObjects[index].gameObject;
+	}
+	
+
+	/*
+	for (GameObject* gameObject : gameObjects)
+	{
+		if (gameObject->HasChildren())
+		{
+			if (ImGui::TreeNodeEx(gameObject->name.c_str(), node_flags))
+			{
+				if(gameObject->HasChildren())
+					DisplayChildren(gameObject, node_flags);
+
+				ImGui::TreePop();
+			}
+		}
+		else
+		{
+			ImGui::BulletText(gameObject->name.c_str());
+		}
+
+		if (ImGui::IsItemClicked() && !selected)
+		{
+			selectedGameObject = gameObject;
+			selected = true;
+		}
+	}
+	*/
+
+	/*
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		if (selectedGameObject == gameObjects[i].gameObject)
+			gameObjects[i].selected = true;
+		else
+			gameObjects[i].selected = false;
+
+		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+
+		bool node_open = ImGui::TreeNodeEx(gameObjects[i].gameObject->name.c_str(), node_flags);
+		if (ImGui::IsItemClicked())
+		{
+			selectedGameObject = gameObjects[i].gameObject;
+		}
+
+		if(node_open)
+		{
+			for (size_t j = 0; j < gameObjects[i].gameObject->GetChildren().size(); j++)
+			{
+				GameObject* child = gameObjects[i].gameObject->GetChildren()[j];
+				ImGui::TreeNodeEx(gameObjects[i].gameObject->name.c_str(), node_flags);
+			}
+
+			ImGui::TreePop();
+		}
+
+		ImGui::Selectable(gameObjects[i].gameObject->name.c_str(), &gameObjects[i].selected);
+		if (gameObjects[i].selected)
+			selectedGameObject = gameObjects[i].gameObject;
+
+		for (size_t j = 0; j < gameObjects[i].gameObject->GetChildren().size(); j++)
+		{
+			GameObject* child = gameObjects[i].gameObject->GetChildren()[j];
+			ImGui::(child->name.c_str());
+		}
+	}
+	*/
 	ImGui::End();
 
 	//- Inspector -//
 	ImGui::Begin("Inspector");
+	if (currentSelected != nullptr)
+		currentSelected->ImGUIUpdate();
 	ImGui::End();
 
 	//- Output Log -//
 	ImGui::Begin("OutputLog");
+	ImGui::Text(outputText.c_str());
 	ImGui::End();
 }
 
 void EngineGuiClass::SetImGuiStyle()
 {
 	//- Im GUI STYLE GOTTEN FROM ONLINE HERE https://github.com/ocornut/imgui/issues/438 -//
-	 
-	
+
+
 	//- SET UP ALL IMGUI STYLES HERE -//
 
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -138,7 +347,6 @@ void EngineGuiClass::SetImGuiStyle()
 	style.Colors[ImGuiCol_PlotHistogram] = ImVec4(col_text.x, col_text.y, col_text.z, 0.63f);
 	style.Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(col_main.x, col_main.y, col_main.z, 1.00f);
 	style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(col_main.x, col_main.y, col_main.z, 0.43f);
-
 }
 
 const char* EngineGuiClass::BoolToString(bool Input)
@@ -147,4 +355,27 @@ const char* EngineGuiClass::BoolToString(bool Input)
 		return "True";
 	else
 		return "False";
+}
+
+bool EngineGuiClass::SelectableTreeNode(const char* label, bool isSelected)
+{
+	// Selection
+	if (isSelected)
+	{
+		ImU32 col = ImColor(ImGui::GetStyle().Colors[ImGuiCol_HeaderHovered]);
+		/*x += os.x;
+		y += os.y;
+		ImGui::RenderFrame(ImVec2(x, y), ImVec2(x + itemFullWidth, y + itemFullHeight), col, true, 3.f);
+		x -= os.x;
+		y -= os.y;*/
+	}
+
+	ImGui::PushID(label);
+	bool opened = ImGui::CollapsingHeader(label, true);
+	ImGui::PopID();
+
+	if (opened)
+		ImGui::TreePush(label);
+
+	return opened;
 }

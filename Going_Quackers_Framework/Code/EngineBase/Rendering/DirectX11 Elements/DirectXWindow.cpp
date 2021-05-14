@@ -87,7 +87,7 @@ void DirectXWindow::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 
 	m_hInstance = GetModuleHandle(NULL);
 
-	m_applicationName = L"Going Quakers Engine";
+	m_applicationName = L"Going Quackers Engine";
 
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	wc.lpfnWndProc = WndProc;
