@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "../Game Systems/Components/Physics/Rigidbody.h"
 
 /// <summary>
 /// Scene Constructor
@@ -55,6 +56,10 @@ void Scene::Update(float af_deltaTime)
 {
 	for (auto lp_object : mp_SceneObjects) {
 		lp_object->Update();
+	}
+
+	for (auto lp_object : mp_SceneObjects) {
+		lp_object->GetComponent<Rigidbody>()->resetCollideFlag();
 	}
 }
 

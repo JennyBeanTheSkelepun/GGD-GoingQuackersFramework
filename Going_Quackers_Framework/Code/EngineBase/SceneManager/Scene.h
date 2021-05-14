@@ -3,6 +3,7 @@
 #include <string>
 
 #include "../Game Systems/GameObject.h"
+class Rigidbody;
 
 class Scene
 {
