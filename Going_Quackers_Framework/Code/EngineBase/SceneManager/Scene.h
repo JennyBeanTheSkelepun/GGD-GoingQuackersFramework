@@ -6,8 +6,6 @@
 
 #include "../Game Systems/GameObject.h"
 class Rigidbody;
-class GameObject;
-class Rigidbody;
 
 class Scene
 {

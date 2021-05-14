@@ -39,6 +39,10 @@ void Scene::Update(float af_deltaTime)
 	for (auto lp_object : mp_SceneObjects) {
 		lp_object->GetComponent<Rigidbody>()->resetCollideFlag();
 	}
+
+	for (auto lp_object : mp_SceneObjects) {
+		lp_object->GetComponent<Rigidbody>()->resetCollideFlag();
+	}
 }
 
 GameObject* Scene::GetObjectByID(std::string as_id)
