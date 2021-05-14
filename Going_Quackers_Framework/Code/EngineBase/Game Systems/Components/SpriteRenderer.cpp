@@ -39,3 +39,8 @@ void SpriteRenderer::RemoveTextureShader()
 	//if (mi_Shader != -1) { mi_Shader = temp->RemoveShader(mi_Shader); }
 	//if (mi_ID != -1) { mi_ID = temp->RemoveObjectFromRenderLoop(mi_ID); }
 }
+
+void SpriteRenderer::ImGUIUpdate()
+{
+	ImGui::Text("Test");
+}

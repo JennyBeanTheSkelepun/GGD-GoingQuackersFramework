@@ -52,11 +52,11 @@ bool EngineMain::Initalize()
 	mp_Model3->AddComponent<SpriteRenderer>();
 	mp_Model3->GetTransform()->SetPosition(Vector2(-5.0f, 0.0f));
 	mp_Model3->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
-	mp_Model3->SetParent(mp_Model2);
+	//mp_Model3->SetParent(mp_Model2);
 
 	gameObjects.push_back(mp_Model);
-	gameObjects.push_back(mp_Model2);
-	gameObjects.push_back(mp_Model3);
+	//gameObjects.push_back(mp_Model2);
+	//gameObjects.push_back(mp_Model3);
 
 
 	EngineGuiClass::getInstance()->InitializeObjectList(gameObjects);
@@ -114,7 +114,7 @@ bool EngineMain::UpdateRenderLoop()
 	//gameObjects[1]->GetTransform()->SetPosition(gameObjects[1]->GetTransform()->GetPosition() + Vector2(0.5f, 0.0f) * Time::GetDeltaTime());
 	gameObjects[0]->GetTransform()->SetLocalRotation(gameObjects[0]->GetTransform()->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
 	//gameObjects[1]->GetTransform()->SetLocalScale(gameObjects[1]->GetTransform()->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
-	gameObjects[2]->GetTransform()->SetLocalRotation(gameObjects[2]->GetTransform()->GetLocalRotation() + 100.0f * Time::GetDeltaTime());
+	//gameObjects[2]->GetTransform()->SetLocalRotation(gameObjects[2]->GetTransform()->GetLocalRotation() + 100.0f * Time::GetDeltaTime());
 
 
 	Graphics::getInstance()->StartApiUpdateLoop();

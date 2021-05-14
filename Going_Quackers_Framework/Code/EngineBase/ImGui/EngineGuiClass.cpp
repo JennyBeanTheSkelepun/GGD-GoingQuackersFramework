@@ -22,6 +22,17 @@ EngineGuiClass::~EngineGuiClass()
 
 void EngineGuiClass::DisplayChildren(GameObject* gameObject)
 {
+	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
+	{
+		GameObject* child = gameObject->GetChildren()[i];
+		if (ImGui::CollapsingHeader(child->name.c_str()))
+		{
+			currentSelected = child;
+			DisplayChildren(child);
+		}
+	}
+
+	/*
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
 	{
@@ -32,13 +43,14 @@ void EngineGuiClass::DisplayChildren(GameObject* gameObject)
 			ImGui::TreePop();
 		}
 
-		if (ImGui::IsWindowFocused() && !selected)
+		if (ImGui::IsWindowFocused())
 		{
 			outputText = child->name.c_str();
-			selected = true;
 			std::cout << "Test";
 		}
+		
 	}
+	*/
 
 	/*
 	for (GameObject* child : gameObject->GetChildren())
@@ -72,7 +84,8 @@ void EngineGuiClass::InitializeObjectList(std::vector<GameObject*> gameObjects)
 	//Create a list of object containers
 	for (size_t i = 0; i < gameObjects.size(); i++)
 	{
-		this->gameObjects.push_back(ImGUIContainer(gameObjects[i]));
+		ImGUIContainer container = ImGUIContainer(gameObjects[i]);
+		this->gameObjects.push_back(container);
 		//InitializeObjectList(gameObjects[i]->GetChildren());
 	}
 }
@@ -130,13 +143,48 @@ void EngineGuiClass::EditorUpdate()
 		ImGui::EndMainMenuBar();
 	}
 
+	currentSelected = nullptr;
+
 	//- Scene Heiarchy -//
 	ImGui::Begin("Scene Heiarchy");
-	selected = false;
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+	int index = 0;
 	for (size_t i = 0; i < gameObjects.size(); i++)
 	{
-		bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "Selectable Node %d", i);
+		ImGUIContainer& container = gameObjects[i];
+		if(ImGui::CollapsingHeader(container.gameObject->name.c_str()))
+		{
+			index = i;
+			DisplayChildren(container.gameObject);
+		}
+
+		/*
+		ImGUIContainer& container = gameObjects[i];
+		if (container.selected && currentSelected != &container)
+		{
+			currentSelected = &container;
+			for (size_t j = 0; j < gameObjects.size(); j++)
+			{	
+				if(&gameObjects[j] != currentSelected)
+					gameObjects[j].selected = false;
+
+			}
+		}
+
+		ImGui::Selectable(container.gameObject->name.c_str(), &container.selected);
+		*/
+		/*
+		if (ImGui::Selectable(container.gameObject->name.c_str(), &container.selected))
+		{
+			bool node_open = ImGui::TreeNode(container.gameObject->name.c_str());
+			if (node_open)
+			{
+				ImGui::TreePop();
+			}
+		}
+		*/
+
+		//bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "Selectable Node %d", i);
 
 		/*
 		GameObject* gameObject = gameObjects[i].gameObject;
@@ -159,6 +207,12 @@ void EngineGuiClass::EditorUpdate()
 		}
 		*/
 	}
+	
+	if (currentSelected == nullptr)
+	{
+		currentSelected = gameObjects[index].gameObject;
+	}
+	
 
 	/*
 	for (GameObject* gameObject : gameObjects)
@@ -228,8 +282,8 @@ void EngineGuiClass::EditorUpdate()
 
 	//- Inspector -//
 	ImGui::Begin("Inspector");
-	if (selectedGameObject != nullptr)
-		selectedGameObject->ImGUIUpdate();
+	if (currentSelected != nullptr)
+		currentSelected->ImGUIUpdate();
 	ImGui::End();
 
 	//- Output Log -//
@@ -301,4 +355,27 @@ const char* EngineGuiClass::BoolToString(bool Input)
 		return "True";
 	else
 		return "False";
+}
+
+bool EngineGuiClass::SelectableTreeNode(const char* label, bool isSelected)
+{
+	// Selection
+	if (isSelected)
+	{
+		ImU32 col = ImColor(ImGui::GetStyle().Colors[ImGuiCol_HeaderHovered]);
+		/*x += os.x;
+		y += os.y;
+		ImGui::RenderFrame(ImVec2(x, y), ImVec2(x + itemFullWidth, y + itemFullHeight), col, true, 3.f);
+		x -= os.x;
+		y -= os.y;*/
+	}
+
+	ImGui::PushID(label);
+	bool opened = ImGui::CollapsingHeader(label, true);
+	ImGui::PopID();
+
+	if (opened)
+		ImGui::TreePush(label);
+
+	return opened;
 }
