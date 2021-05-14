@@ -124,14 +124,14 @@ void EngineGuiClass::EditorUpdate()
 			if (ImGui::MenuItem("Play")) { mb_playGame = true; }
 			if (ImGui::MenuItem("Stop")) { mb_playGame = false; }
 			ImGui::Separator();
-			if (ImGui::MenuItem("Maxamise On Play", BoolToString(mb_maxOnPlay))) { mb_maxOnPlay = !mb_maxOnPlay; }
+			if (ImGui::MenuItem("Maximise On Play", BoolToString(mb_maxOnPlay))) { mb_maxOnPlay = !mb_maxOnPlay; }
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
 	}
 
 	//- Scene Heiarchy -//
-	ImGui::Begin("Scene Heiarchy");
+	ImGui::Begin("Scene Hierarchy");
 	selected = false;
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 	for (size_t i = 0; i < gameObjects.size(); i++)
