@@ -5,6 +5,7 @@
 #include <string>
 
 class GameObject;
+class Rigidbody;
 
 class Scene
 {

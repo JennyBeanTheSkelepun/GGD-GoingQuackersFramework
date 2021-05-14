@@ -49,6 +49,11 @@ void Rigidbody::PhysicsCollide()
 
 	for (GameObject* obj : collidingObjects)
 	{
+		if (obj->GetComponent<Rigidbody>()->getCollideFlag())
+		{
+			break;
+		}
+
 		switch (GetCollisionType())
 		{
 		case CollisionTypes::AABB:
@@ -76,8 +81,6 @@ void Rigidbody::PhysicsCollide()
 		}
 	}
 
-	//TODO:: Fix double physics
-
 	switch (m_physicsType)
 	{
 	case PhysicsTypes::GE:
@@ -91,6 +94,7 @@ void Rigidbody::PhysicsCollide()
 		break;
 	}
 	
+	physicsChecked = true;
 }
 
 void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
