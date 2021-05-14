@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "../Game Systems/Components/Physics/Rigidbody.h"
 #include "../Game Systems/GameObject.h"
 
 Scene::Scene(std::string as_ID, std::string as_DisplayName, std::string as_Type)
@@ -33,6 +34,10 @@ void Scene::Update(float af_deltaTime)
 {
 	for (int i = 0; i < mp_SceneObjects.size(); i++) {
 		mp_SceneObjects[i]->Update();
+	}
+
+	for (auto lp_object : mp_SceneObjects) {
+		lp_object->GetComponent<Rigidbody>()->resetCollideFlag();
 	}
 }
 
