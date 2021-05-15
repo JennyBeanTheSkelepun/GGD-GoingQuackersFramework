@@ -60,6 +60,12 @@ void GameObject::Update()
 			case ComponentTypes::SPRITERENDERER:
 				delete static_cast<SpriteRenderer*>(component);
 				break;
+			case ComponentTypes::RIGIDBODY:
+				delete static_cast<Rigidbody*>(component);
+				break;
+			case ComponentTypes::TRANSFORM:
+				delete static_cast<Transform*>(component);
+				break;
 			default:
 				delete component;
 				break;
