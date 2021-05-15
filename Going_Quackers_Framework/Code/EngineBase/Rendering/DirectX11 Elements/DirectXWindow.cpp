@@ -5,8 +5,16 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 DirectXWindow::DirectXWindow(DirectXGraphics* ap_DirectX)
 {
-	mi_width = 0;
-	mi_height = 0;
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+	// The top left corner will have coordinates (0,0)
+	// and the bottom right corner will have coordinates
+	// (horizontal, vertical)
+	mi_width = desktop.right;
+	mi_height = desktop.bottom;
 
 	mp_DirectX = ap_DirectX;
 }
@@ -48,7 +56,7 @@ LRESULT CALLBACK DirectXWindow::MessageHandler(HWND hwnd, UINT uint, WPARAM wPar
 		case WM_EXITSIZEMOVE:
 		{
 			mb_sizeMovement = false;
-			mp_DirectX->ResizeWindowCall();
+			//mp_DirectX->ResizeWindowCall();
 			
 			return 0;
 		}
@@ -105,8 +113,8 @@ void DirectXWindow::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 
 	RegisterClassEx(&wc);
 
-	ai_screenWidth = GetSystemMetrics(SM_CXSCREEN);
-	ai_screenHeight = GetSystemMetrics(SM_CYSCREEN);
+	ai_screenWidth = mi_width;
+	ai_screenHeight = mi_height;
 
 	if (FULL_SCREEN)
 	{
@@ -125,16 +133,13 @@ void DirectXWindow::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 	}
 	else
 	{
-		ai_screenWidth = 1280;
-		ai_screenHeight = 720;
-
-		li_posX = (GetSystemMetrics(SM_CXSCREEN) - ai_screenWidth) / 2;
-		li_posY = (GetSystemMetrics(SM_CYSCREEN) - ai_screenHeight) / 2;
+		li_posX = (GetSystemMetrics(SM_CXSCREEN) - mi_width) / 2;
+		li_posY = (GetSystemMetrics(SM_CYSCREEN) - mi_height) / 2;
 	}
 
 	m_hwnd = CreateWindowEx(0, m_applicationName, m_applicationName,
 		WS_OVERLAPPEDWINDOW,
-		li_posX, li_posY, ai_screenWidth, ai_screenHeight, NULL, NULL, m_hInstance, NULL);
+		li_posX, li_posY, mi_width, mi_height, NULL, NULL, m_hInstance, NULL);
 
 	ShowWindow(m_hwnd, SW_SHOW);
 	SetForegroundWindow(m_hwnd);

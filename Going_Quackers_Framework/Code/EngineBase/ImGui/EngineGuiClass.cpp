@@ -96,6 +96,7 @@ void EngineGuiClass::EditorUpdate()
 	currentSelected = nullptr;
 
 	//- Scene Heiarchy -//
+	ImGui::SetNextWindowPos(ImVec2(0, 20));
 	ImGui::Begin("Scene Hierarchy");
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 	int index = 0;
@@ -122,12 +123,14 @@ void EngineGuiClass::EditorUpdate()
 	ImGui::End();
 
 	//- Inspector -//
+	ImGui::SetNextWindowPos(ImVec2(2150,20));
 	ImGui::Begin("Inspector");
 	if (currentSelected != nullptr)
 		currentSelected->ImGUIUpdate();
 	ImGui::End();
 
 	//- Output Log -//
+	ImGui::SetNextWindowPos(ImVec2(350,800));
 	ImGui::Begin("OutputLog");
 	ImGui::Text(outputText.c_str()); // Game Object system stuff; todo switch to debug logging
 	Debug::getInstance()->ReadLog();

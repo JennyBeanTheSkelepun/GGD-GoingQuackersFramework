@@ -45,7 +45,7 @@ int DirectXGraphics::AddObjectToRenderLoop(SpriteRenderer* ar_component)
 
 int DirectXGraphics::RemoveObjectFromRenderLoop(int index) //<---------------------------------------- TODO ACTUALY REMOVE OBJECTS
 {
-	return -1;
+	return mp_DirectXRenderLoop->RemoveObjectToRenderLoop(index);
 }
 
 bool DirectXGraphics::InitalizeGraphicalApi()
