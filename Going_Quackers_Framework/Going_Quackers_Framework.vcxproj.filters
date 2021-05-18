@@ -154,6 +154,12 @@
     <Filter Include="Source Files\Engine\Game Systems\Physics">
       <UniqueIdentifier>{9549ebba-ad42-4cf2-b0ff-caa04eea1462}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Game Systems\Physics\Joints">
+      <UniqueIdentifier>{79273ae4-14f9-41b8-bba3-b5cc14cc54f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Game Systems\Physics\Joints">
+      <UniqueIdentifier>{1036fbfe-f209-448f-a653-4e9a0599fa5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp">
@@ -269,6 +275,9 @@
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpringJoint.cpp">
+      <Filter>Source Files\Engine\Game Systems\Physics\Joints</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -412,6 +421,9 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringJoint.h">
+      <Filter>Header Files\Engine\Game Systems\Physics\Joints</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
