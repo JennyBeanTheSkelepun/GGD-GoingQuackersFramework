@@ -1,3 +1,5 @@
+#include <iostream>
+#include <string.h>
 #include "EngineGuiClass.h"
 #include "../Game Systems/GameObject.h"
 #include "../Game Systems/Debug.h"
@@ -14,6 +16,9 @@ EngineGuiClass* EngineGuiClass::getInstance()
 
 EngineGuiClass::EngineGuiClass()
 {
+	RecordingLayout = false;
+	LayoutName = new char[100]();
+	LoadWindowPositions();
 }
 
 EngineGuiClass::~EngineGuiClass()
@@ -89,6 +94,33 @@ void EngineGuiClass::EditorUpdate()
 			if (ImGui::MenuItem("Maximise On Play", BoolToString(mb_maxOnPlay))) { mb_maxOnPlay = !mb_maxOnPlay; }
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Editor Format"))
+		{
+			if (ImGui::MenuItem("Start Layout Recording"))
+			{
+				RecordingLayout = true;
+			}
+			if (ImGui::MenuItem("End Layout Recording"))
+			{
+				CurrentWindowPosition.name = std::string(LayoutName);
+				WindowPositions.push_back(CurrentWindowPosition);
+				RecordingLayout = false;
+				SaveWindowPositionsToFile();
+				LoadWindowPositions();
+			}
+			ImGui::InputText(":Layout Name", LayoutName, 100);
+			ImGui::Separator();
+			for (int i = 0; i < AmountOfSaves; i++)
+			{
+				if (ImGui::MenuItem(WindowPositions[i].name.c_str()) && RecordingLayout == false)
+				{
+					CurrentWindowPosition.name = WindowPositions[i].name;
+					CurrentWindowPosition.dimentions = WindowPositions[i].dimentions;
+					CurrentWindowPosition.positions = WindowPositions[i].positions;
+				}
+			}
+			ImGui::EndMenu();
+		}
 		ImGui::EndMainMenuBar();
 		Debug::getInstance()->LogWarning("test");
 	}
@@ -96,6 +128,11 @@ void EngineGuiClass::EditorUpdate()
 	currentSelected = nullptr;
 
 	//- Scene Heiarchy -//
+	if (isRecording())
+	{
+		ImGui::SetNextWindowPos(CurrentWindowPosition.positions[0]);
+		ImGui::SetNextWindowSize(CurrentWindowPosition.dimentions[0]);
+	}
 	ImGui::Begin("Scene Hierarchy");
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 	int index = 0;
@@ -119,18 +156,46 @@ void EngineGuiClass::EditorUpdate()
 		GameObject* gameObject = new GameObject(name.c_str());
 		gameObjects->push_back(gameObject);
 	}
+
+	CurrentWindowPosition.positions[0].x = ImGui::GetWindowPos().x;
+	CurrentWindowPosition.positions[0].y = ImGui::GetWindowPos().y;
+	CurrentWindowPosition.dimentions[0].x = ImGui::GetWindowWidth();
+	CurrentWindowPosition.dimentions[0].y = ImGui::GetWindowHeight();
+
 	ImGui::End();
 
-	//- Inspector -//
+	if (isRecording())
+	{
+		//- Inspector -//
+		ImGui::SetNextWindowPos(CurrentWindowPosition.positions[1]);
+		ImGui::SetNextWindowSize(CurrentWindowPosition.dimentions[1]);
+	}
 	ImGui::Begin("Inspector");
 	if (currentSelected != nullptr)
 		currentSelected->ImGUIUpdate();
+
+	CurrentWindowPosition.positions[1].x = ImGui::GetWindowPos().x;
+	CurrentWindowPosition.positions[1].y = ImGui::GetWindowPos().y;
+	CurrentWindowPosition.dimentions[1].x = ImGui::GetWindowWidth();
+	CurrentWindowPosition.dimentions[1].y = ImGui::GetWindowHeight();
+
 	ImGui::End();
 
-	//- Output Log -//
+	if (isRecording())
+	{
+		//- Output Log -//
+		ImGui::SetNextWindowPos(CurrentWindowPosition.positions[3]);
+		ImGui::SetNextWindowSize(CurrentWindowPosition.dimentions[3]);
+	}
 	ImGui::Begin("OutputLog");
 	ImGui::Text(outputText.c_str()); // Game Object system stuff; todo switch to debug logging
 	Debug::getInstance()->ReadLog();
+
+	CurrentWindowPosition.positions[3].x = ImGui::GetWindowPos().x;
+	CurrentWindowPosition.positions[3].y = ImGui::GetWindowPos().y;
+	CurrentWindowPosition.dimentions[3].x = ImGui::GetWindowWidth();
+	CurrentWindowPosition.dimentions[3].y = ImGui::GetWindowHeight();
+
 	ImGui::End();
 }
 
@@ -220,4 +285,52 @@ bool EngineGuiClass::SelectableTreeNode(const char* label, bool isSelected)
 		ImGui::TreePush(label);
 
 	return opened;
+}
+
+void EngineGuiClass::LoadWindowPositions()
+{
+	json fileIn;
+	std::ifstream file("GUILayouts.json");
+	LayoutSettings temp;
+
+	file >> fileIn;
+
+	AmountOfSaves = fileIn[0]["AmmountOfFormats"];
+
+	for (int i = 1; i <= AmountOfSaves; i++)
+	{
+		temp.name = fileIn[i - 1]["Name"];
+		for (int j = 0; j < 4; j++)
+			temp.positions.push_back(ImVec2(fileIn[i - 1]["Positions"][j]["X"], fileIn[i - 1]["Positions"][j]["Y"]));
+		
+		for (int k = 0; k < 4; k++)
+			temp.dimentions.push_back(ImVec2(fileIn[i - 1]["Dimentions"][k]["X"], fileIn[i - 1]["Dimentions"][k]["Y"]));
+		
+		WindowPositions.push_back(temp);
+	}
+	CurrentWindowPosition = WindowPositions[0];
+}
+
+void EngineGuiClass::SaveWindowPositionsToFile()
+{
+	json outFile;
+	std::ofstream file("GUILayouts.json");
+
+	outFile[0]["AmmountOfFormats"] = WindowPositions.size();
+	for (int i = 1; i <= WindowPositions.size(); i++)
+	{
+		outFile[i - 1]["Name"] = WindowPositions[i-1].name;
+		for (int j = 0; j < 4; j++)
+		{
+			outFile[i - 1]["Positions"][j]["X"] = WindowPositions[i - 1].positions[j].x;
+			outFile[i - 1]["Positions"][j]["Y"] = WindowPositions[i - 1].positions[j].y;
+		}
+
+		for (int k = 0; k < 4; k++)
+		{
+			outFile[i - 1]["Dimentions"][k]["X"] = WindowPositions[i - 1].dimentions[k].x;
+			outFile[i - 1]["Dimentions"][k]["Y"] = WindowPositions[i - 1].dimentions[k].y;
+		}
+	}
+	file << outFile;
 }

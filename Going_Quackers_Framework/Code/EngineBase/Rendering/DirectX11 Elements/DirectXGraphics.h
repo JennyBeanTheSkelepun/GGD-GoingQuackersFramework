@@ -29,23 +29,25 @@ public:
 	bool InitalizeGraphicalApi();
 	//void SetNewActiveCamera(VirtualCamera& vCam) override;
 
-	int AddObjectToRenderLoop(SpriteRenderer* ar_component) ;
-	int RemoveObjectFromRenderLoop(int index) ;
+	int AddObjectToRenderLoop(SpriteRenderer* ar_component);
+	int RemoveObjectFromRenderLoop(int index);
 	
-	int LoadTexture(std::string TextureLocation) ;
-	int RemoveTexture(int index) ;
-	void CleanUpTexturePool() ;
+	int LoadTexture(std::string TextureLocation);
+	int RemoveTexture(int index);
+	void CleanUpTexturePool();
 
-	int LoadShader(std::wstring ShaderLocation) ;
-	int RemoveShader(int index) ;
-	void CleanUpShaderPool() ;
+	int LoadShader(std::wstring ShaderLocation);
+	int RemoveShader(int index);
+	void CleanUpShaderPool();
 
-	int LoadSpriteSheet(std::string SpriteSheetLocation) ;
-	int RemoveSpriteSheet(int index) ;
-	void CleanUpSpriteSheetPool() ;
+	int LoadSpriteSheet(std::string SpriteSheetLocation);
+	int RemoveSpriteSheet(int index);
+	void CleanUpSpriteSheetPool();
 	
-	void GraphicsAPIUpdate() ;
-	void StartAPIRenderLoop() ;
+	void GraphicsAPIUpdate();
+	void StartAPIRenderLoop();
+
+	void ResizeWindowCall();
 
 	//- old functions -//
 	DirectXGraphics();

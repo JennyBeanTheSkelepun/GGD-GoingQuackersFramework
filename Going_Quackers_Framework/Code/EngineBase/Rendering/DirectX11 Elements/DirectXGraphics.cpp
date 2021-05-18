@@ -31,6 +31,13 @@ void DirectXGraphics::StartAPIRenderLoop()
 	mp_DirectXRenderLoop->Render(*mp_DirectX, *mp_Camera, *mp_ShaderManager, *mp_TextureManager, *mp_ImGui);
 }
 
+void DirectXGraphics::ResizeWindowCall()
+{
+	mp_DirectX->Initalize(mp_Window->mi_width, mp_Window->mi_height, VSYNC_ENABLED, mp_Window->m_hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
+	ImGui_ImplDX11_InvalidateDeviceObjects();
+	ImGui_ImplDX11_CreateDeviceObjects();
+}
+
 int DirectXGraphics::AddObjectToRenderLoop(SpriteRenderer* ar_component)
 {
 	return mp_DirectXRenderLoop->SetObjectToRender(ar_component);
@@ -38,7 +45,7 @@ int DirectXGraphics::AddObjectToRenderLoop(SpriteRenderer* ar_component)
 
 int DirectXGraphics::RemoveObjectFromRenderLoop(int index) //<---------------------------------------- TODO ACTUALY REMOVE OBJECTS
 {
-	return -1;
+	return mp_DirectXRenderLoop->RemoveObjectToRenderLoop(index);
 }
 
 bool DirectXGraphics::InitalizeGraphicalApi()
@@ -101,10 +108,12 @@ void DirectXGraphics::GraphicsAPIUpdate()
 
 bool DirectXGraphics::Initialize()
 {
-	mp_Window = new DirectXWindow();
+	//- Window needs direct memeory location-//
+	mp_Window = new DirectXWindow(this);
 	mp_Window->SetupWindow();
 
 	mp_DirectX = new DirectXClass();
+	//- the create and test mp_DirectX -//
 	if (!mp_DirectX)
 	{
 		return false;
@@ -135,6 +144,7 @@ bool DirectXGraphics::Initialize()
 	mp_TextureManager = new DirectXTextureManager(*mp_DirectX, "stone.tga");
 	if (!mp_TextureManager)
 	{
+		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Texture Manager object.", L"Error", MB_OK);
 		return false;
 	}
 
@@ -142,7 +152,7 @@ bool DirectXGraphics::Initialize()
 	mp_ShaderManager = new DirectXShaderManager(*mp_DirectX, *mp_Window, L"Code/EngineBase/Rendering/Shaders/TextureSimple.fx");
 	if (!mp_ShaderManager)
 	{
-		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Texture shader object.", L"Error", MB_OK);
+		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Shader Manager object.", L"Error", MB_OK);
 		return false;
 	}
 

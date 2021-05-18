@@ -1,4 +1,5 @@
 #include "GameObject.h"
+
 #include "Components/SpriteRenderer.h"
 #include "Components/Physics/Rigidbody.h"
 
@@ -46,15 +47,32 @@ void GameObject::Update()
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		Component* component = m_components[i];
+		
+		if (!component->ShouldDestroy())
+			component->Update();
+
 		if (component->ShouldDestroy())
 		{
 			m_components.erase(m_components.begin() + i);
-			delete component;
+			
+			switch (component->GetTag())
+			{
+			case ComponentTypes::SPRITERENDERER:
+				delete static_cast<SpriteRenderer*>(component);
+				break;
+			case ComponentTypes::RIGIDBODY:
+				delete static_cast<Rigidbody*>(component);
+				break;
+			case ComponentTypes::TRANSFORM:
+				delete static_cast<Transform*>(component);
+				break;
+			default:
+				delete component;
+				break;
+			}
+			
 			break;
 		}
-
-		if(!component->ShouldDestroy())
-			component->Update();
 	}
 
 	for (size_t i = 0; i < m_children.size(); i++)

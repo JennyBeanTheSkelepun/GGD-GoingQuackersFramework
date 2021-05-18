@@ -4,6 +4,8 @@
 #include "Component.h"
 #include <string>
 
+class Graphics;
+
 enum ModelType
 {
 	TWO_DIMENSIONS = 0,
@@ -24,6 +26,7 @@ public:
 	void RemoveTextureShader();
 
 	void ImGUIUpdate() override;
+	void OnDestroy() override;
 
 private:
 
