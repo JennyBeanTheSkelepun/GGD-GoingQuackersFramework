@@ -48,7 +48,7 @@ public:
 	inline bool IsInPlayMode() { return mb_playGame; }
 
 	bool SelectableTreeNode(const char* label, bool isSelected);
-	LayoutSettings GetWindowInfo() { return CurrentWindowPosition; };
+	LayoutSettings* GetWindowInfo() { return &CurrentWindowPosition; };
 
 	bool isRecording() { return !RecordingLayout; }
 

@@ -100,7 +100,7 @@ void EngineGuiClass::EditorUpdate()
 			{
 				RecordingLayout = true;
 			}
-			if (ImGui::MenuItem("End Layout Recording"))
+			if (ImGui::MenuItem("End Layout Recording") && RecordingLayout == true)
 			{
 				CurrentWindowPosition.name = std::string(LayoutName);
 				WindowPositions.push_back(CurrentWindowPosition);
@@ -289,6 +289,11 @@ bool EngineGuiClass::SelectableTreeNode(const char* label, bool isSelected)
 
 void EngineGuiClass::LoadWindowPositions()
 {
+	WindowPositions.clear();
+	CurrentWindowPosition.positions.clear();
+	CurrentWindowPosition.dimentions.clear();
+	CurrentWindowPosition.name = "";
+
 	json fileIn;
 	std::ifstream file("GUILayouts.json");
 	LayoutSettings temp;
@@ -307,6 +312,10 @@ void EngineGuiClass::LoadWindowPositions()
 			temp.dimentions.push_back(ImVec2(fileIn[i - 1]["Dimentions"][k]["X"], fileIn[i - 1]["Dimentions"][k]["Y"]));
 		
 		WindowPositions.push_back(temp);
+		
+		temp.dimentions.clear();
+		temp.positions.clear();
+		temp.name = "";
 	}
 	CurrentWindowPosition = WindowPositions[0];
 }
@@ -314,7 +323,8 @@ void EngineGuiClass::LoadWindowPositions()
 void EngineGuiClass::SaveWindowPositionsToFile()
 {
 	json outFile;
-	std::ofstream file("GUILayouts.json");
+	std::ofstream file;
+	file.open("GUILayouts.json", std::ofstream::out | std::ofstream::trunc);
 
 	outFile[0]["AmmountOfFormats"] = WindowPositions.size();
 	for (int i = 1; i <= WindowPositions.size(); i++)

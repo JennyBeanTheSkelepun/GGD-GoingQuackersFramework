@@ -32,16 +32,16 @@ bool DirectXImGui::Update(ID3D11ShaderResourceView* ap_renderTexture)
 
 		if (EngineGuiClass::getInstance()->isRecording())
 		{
-			ImGui::SetNextWindowPos(EngineGuiClass::getInstance()->GetWindowInfo().positions[2]);
-			ImGui::SetNextWindowSize(EngineGuiClass::getInstance()->GetWindowInfo().dimentions[2]);
+			ImGui::SetNextWindowPos(EngineGuiClass::getInstance()->GetWindowInfo()->positions[2]);
+			ImGui::SetNextWindowSize(EngineGuiClass::getInstance()->GetWindowInfo()->dimentions[2]);
 		}
 		ImGui::Begin("Game/Scene View");
 		ImGui::Image(RenderTexture, ImVec2((ImGui::GetWindowWidth() - 15), (ImGui::GetWindowHeight() - 35)));
 		
-		EngineGuiClass::getInstance()->GetWindowInfo().positions[2].x = ImGui::GetWindowPos().x;
-		EngineGuiClass::getInstance()->GetWindowInfo().positions[2].y = ImGui::GetWindowPos().y;
-		EngineGuiClass::getInstance()->GetWindowInfo().dimentions[2].x = ImGui::GetWindowWidth();
-		EngineGuiClass::getInstance()->GetWindowInfo().dimentions[2].y = ImGui::GetWindowHeight();
+		EngineGuiClass::getInstance()->GetWindowInfo()->positions[2].x = ImGui::GetWindowPos().x;
+		EngineGuiClass::getInstance()->GetWindowInfo()->positions[2].y = ImGui::GetWindowPos().y;
+		EngineGuiClass::getInstance()->GetWindowInfo()->dimentions[2].x = ImGui::GetWindowWidth();
+		EngineGuiClass::getInstance()->GetWindowInfo()->dimentions[2].y = ImGui::GetWindowHeight();
 
 		ImGui::End();
 	}
