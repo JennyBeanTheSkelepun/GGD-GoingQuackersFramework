@@ -30,6 +30,13 @@ void Scene::AddObject(GameObject* ap_newObject)
 	mp_SceneObjects.push_back(ap_newObject);
 }
 
+void Scene::DeleteObjectAtIndex(int ai_index)
+{
+	GameObject* gameObject = mp_SceneObjects[ai_index];
+	mp_SceneObjects.erase(mp_SceneObjects.begin() + ai_index);
+	delete gameObject;
+}
+
 void Scene::Update(float af_deltaTime)
 {
 	for (int i = 0; i < mp_SceneObjects.size(); i++) {

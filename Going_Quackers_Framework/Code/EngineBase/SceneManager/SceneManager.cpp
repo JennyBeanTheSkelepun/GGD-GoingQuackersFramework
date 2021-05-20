@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 #include "../Game Systems/Components/SpriteRenderer.h"
+#include "../Game Systems/Debug.h"
 
 #include <ostream>
 #include <fstream>
@@ -58,6 +59,8 @@ void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
 
 	// Load new Scene
 	mp_CurrentScene = LoadScene(ls_SceneConfigPath);
+
+	EngineGuiClass::getInstance()->InitializeObjectList(mp_CurrentScene->GetSceneObjectsList());
 }
 
 
@@ -75,6 +78,8 @@ void SceneManager::NewScene(std::string as_SceneID, std::string as_SceneName, st
 	// Create new scene object
 	Scene* lp_NewScene = new Scene(as_SceneID, as_SceneName, as_SceneType);
 	mp_CurrentScene = lp_NewScene;
+
+	EngineGuiClass::getInstance()->InitializeObjectList(mp_CurrentScene->GetSceneObjectsList());
 }
 
 void SceneManager::SaveCurrentScene()
@@ -120,6 +125,7 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		lp_newObject->SetID(newObject.value()["id"]);
 		// Assign Name
 		lp_newObject->SetName(newObject.value()["name"]);
+		Debug::getInstance()->LogWarning("Loading Name: " + lp_newObject->GetName());
 
 		// If it has a Transform Component, add Transform
 		if (newObject.value().contains("TRANSFORM")) {
@@ -175,7 +181,6 @@ void SceneManager::UnloadScene(bool as_SaveToJSON)
 /// <param name="ap_Scene">Scene Object</param>
 void SceneManager::SaveToJSON(Scene* ap_Scene)
 {
-	//TODO: REWORK TO NEW DYNAMIC FORMAT
 	json l_outfile; // JSON Object to contain the saved data
 	std::string l_outfilePath = "SceneConfig/" + ap_Scene->GetSceneID() + ".json";
 	int li_totalObjects = ap_Scene->GetSceneObjects().size(); // Number of objects in scene
@@ -195,9 +200,14 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			ls_parentID = ap_Scene->GetObjectByIndex(i)->GetParent()->GetID();
 		}
 
+		// Get Object name
+		std::string ls_name = ap_Scene->GetObjectByIndex(i)->GetName();
+		Debug::getInstance()->LogWarning("Saving Name: " + ls_name);
+
 		json l_object = {
 			{"id", ls_id},
-			{"parent", ls_parentID}
+			{"parent", ls_parentID},
+			{"name", ls_name}
 		};
 
 		std::vector<Component*> lp_components = ap_Scene->GetObjectByIndex(i)->GetComponents();

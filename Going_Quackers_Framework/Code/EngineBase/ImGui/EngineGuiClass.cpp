@@ -3,6 +3,7 @@
 #include "EngineGuiClass.h"
 #include "../Game Systems/GameObject.h"
 #include "../Game Systems/Debug.h"
+#include "../SceneManager/SceneManager.h"
 
 EngineGuiClass* EngineGuiClass::SingletonInstance = 0;
 
@@ -18,6 +19,10 @@ EngineGuiClass::EngineGuiClass()
 {
 	RecordingLayout = false;
 	LayoutName = new char[100]();
+	SceneToLoad = new char[100]();
+	NewSceneID = new char[100]();
+	NewSceneType = new char[100]();
+	NewSceneName = new char[100]();
 	LoadWindowPositions();
 }
 
@@ -70,7 +75,29 @@ void EngineGuiClass::EditorUpdate()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Save")) {}
+			if (ImGui::MenuItem("Save Scene")) { SceneManager::GetInstance()->SaveCurrentScene(); }
+			ImGui::Separator();
+			ImGui::InputText(":Scene To Load", SceneToLoad, 100);
+			if (ImGui::MenuItem("Load Scene")) {
+				if (SceneToLoad != "") {
+					SceneManager::GetInstance()->ChangeScene(SceneToLoad, false);
+				}
+				else {
+					Debug::getInstance()->LogWarning("Please Enter Scene ID (Filename)");
+				}
+			}
+			ImGui::Separator();
+			ImGui::InputText(":New Scene ID", NewSceneID, 100);
+			ImGui::InputText(":New Display Name", NewSceneName, 100);
+			ImGui::InputText(":New Scene Type", NewSceneType, 100);
+			if (ImGui::MenuItem("New Scene")) {
+				if (NewSceneID != "" && NewSceneName != "" && NewSceneType != "") {
+					SceneManager::GetInstance()->NewScene(NewSceneID, NewSceneName, NewSceneType, false);
+				}
+				else {
+					Debug::getInstance()->LogWarning("Please fill in the three boxes");
+				}
+			}
 			ImGui::Separator();
 			if (ImGui::MenuItem("Close")) { mb_closeEditor = true; }
 
