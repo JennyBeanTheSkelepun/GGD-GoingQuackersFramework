@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "Components/SpriteRenderer.h"
 #include "Components/Physics/Rigidbody.h"
+#include "Debug.h"
 
 GameObject::GameObject(const char* name, GameObject* parent)
 {
@@ -19,7 +20,7 @@ GameObject::~GameObject()
 {
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
-		delete m_components[i];
+		DeleteComponent(m_components[i]);
 	}
 
 	mp_transform = nullptr;
@@ -46,15 +47,16 @@ void GameObject::Update()
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		Component* component = m_components[i];
+		
+		if (!component->ShouldDestroy())
+			component->Update();
+
 		if (component->ShouldDestroy())
 		{
 			m_components.erase(m_components.begin() + i);
-			delete component;
+			DeleteComponent(component);
 			break;
 		}
-
-		if(!component->ShouldDestroy())
-			component->Update();
 	}
 
 	for (size_t i = 0; i < m_children.size(); i++)
@@ -153,5 +155,24 @@ void GameObject::SetToDestroy()
 	for (size_t i = 0; i < m_children.size(); i++)
 	{
 		m_children[i]->SetToDestroy();
+	}
+}
+
+void GameObject::DeleteComponent(Component* component)
+{
+	switch (component->GetTag())
+	{
+	case ComponentTypes::SPRITERENDERER:
+		delete static_cast<SpriteRenderer*>(component);
+		break;
+	case ComponentTypes::RIGIDBODY:
+		delete static_cast<Rigidbody*>(component);
+		break;
+	case ComponentTypes::TRANSFORM:
+		delete static_cast<Transform*>(component);
+		break;
+	default:
+		Debug::getInstance()->LogWarning("ERROR TRYING TO DELETE A UNSUPORTED COMPONENT");
+		break;
 	}
 }

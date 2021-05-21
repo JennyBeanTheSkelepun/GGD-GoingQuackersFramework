@@ -1,4 +1,5 @@
 #include "DirectXTexture2D.h"
+#include "../../Game Systems/Debug.h"
 
 Texture2D::Texture2D()
 {
@@ -122,6 +123,7 @@ bool Texture2D::LoadTarga(const char* filename, int& height, int& width)
 	error = fopen_s(&filePtr, filename, "rb");
 	if (error != 0)
 	{
+		Debug::getInstance()->LogError("ERROR Cant Find Texture File");
 		return false;
 	}
 
@@ -129,6 +131,7 @@ bool Texture2D::LoadTarga(const char* filename, int& height, int& width)
 	count = (unsigned int)fread(&targaFileHeader, sizeof(TargaHeader), 1, filePtr);
 	if (count != 1)
 	{
+		Debug::getInstance()->LogError("ERROR Reading in Texture Header File");
 		return false;
 	}
 
@@ -140,6 +143,7 @@ bool Texture2D::LoadTarga(const char* filename, int& height, int& width)
 	// Check that it is 32 bit and not 24 bit.
 	if (bpp != 32)
 	{
+		Debug::getInstance()->LogError("The texture you want to load is a 24Bit Tga it needs to be a 32Bit Tga");
 		return false;
 	}
 
@@ -150,6 +154,7 @@ bool Texture2D::LoadTarga(const char* filename, int& height, int& width)
 	targaImage = new unsigned char[imageSize];
 	if (!targaImage)
 	{
+		Debug::getInstance()->LogError("ERROR Allocating temp memory space for texture");
 		return false;
 	}
 
@@ -157,6 +162,7 @@ bool Texture2D::LoadTarga(const char* filename, int& height, int& width)
 	count = (unsigned int)fread(targaImage, 1, imageSize, filePtr);
 	if (count != imageSize)
 	{
+		Debug::getInstance()->LogError("ERROR Reading in Texture File");
 		return false;
 	}
 
@@ -164,6 +170,7 @@ bool Texture2D::LoadTarga(const char* filename, int& height, int& width)
 	error = fclose(filePtr);
 	if (error != 0)
 	{
+		Debug::getInstance()->LogError("ERROR Cant Close Texture File");
 		return false;
 	}
 
@@ -171,6 +178,7 @@ bool Texture2D::LoadTarga(const char* filename, int& height, int& width)
 	m_targaData = new unsigned char[imageSize];
 	if (!m_targaData)
 	{
+		Debug::getInstance()->LogError("ERROR Allocating Heap memory space for texture");
 		return false;
 	}
 

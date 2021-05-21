@@ -96,14 +96,18 @@ public:
 	std::string GetID() { return m_id; }
 	void SetID(std::string newID) { m_id = newID; }
 
-	std::string GetName() { return m_name; }
-	void SetName(std::string newName) { m_name = newName; }
+	std::string GetName() { return name; }
+	void SetName(std::string newName) { m_name = newName; name = newName; }
 
 	void SetToDestroy();
 	///<summary>Says if the GameObject should be destroyed next frame</summary>
 	bool ShouldDestroy() { return shouldDestroy; }
 
+	/// <summary> Function to cast and then delete the gameobjects </summary>
+	void DeleteComponent(Component* component);
+
 private:
+
 	///<summary>The Transform attached to the GameObject.</summary>
 	Transform* mp_transform;
 

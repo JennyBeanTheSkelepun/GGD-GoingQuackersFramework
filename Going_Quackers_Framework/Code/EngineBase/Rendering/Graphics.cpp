@@ -134,7 +134,7 @@ int Graphics::LoadShader(std::wstring ShaderLocation)
 	}
 }
 
-inline int Graphics::RemoveObjectFromRenderLoop(int ai_ID)
+int Graphics::RemoveObjectFromRenderLoop(int ai_ID)
 {
 	switch (CurrentApi) {
 	case API_TYPE::DIRECT_X_11:
@@ -143,7 +143,7 @@ inline int Graphics::RemoveObjectFromRenderLoop(int ai_ID)
 	}
 }
 
-inline int Graphics::RemoveTexture(int index)
+int Graphics::RemoveTexture(int index)
 {
 	switch (CurrentApi) {
 	case API_TYPE::DIRECT_X_11:
@@ -152,7 +152,7 @@ inline int Graphics::RemoveTexture(int index)
 	}
 }
 
-inline int Graphics::RemoveTileSheet(int index)
+int Graphics::RemoveTileSheet(int index)
 {
 	switch (CurrentApi) {
 	case API_TYPE::DIRECT_X_11:
@@ -161,7 +161,7 @@ inline int Graphics::RemoveTileSheet(int index)
 	}
 }
 
-inline int Graphics::RemoveShader(int index)
+int Graphics::RemoveShader(int index)
 {
 	switch (CurrentApi) {
 	case API_TYPE::DIRECT_X_11:
