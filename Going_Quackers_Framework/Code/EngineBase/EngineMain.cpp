@@ -1,6 +1,7 @@
 #include "EngineMain.h"
 #include "../../Code/EngineBase/Rendering/Graphics.h"
 #include "SceneManager/SceneManager.h"
+#include "Game Systems/Components/Physics/Rigidbody.h"
 
 EngineMain::EngineMain()
 {
@@ -123,6 +124,11 @@ bool EngineMain::UpdateRenderLoop()
 		}
 
 		SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->Update();
+
+		if (SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>() != nullptr)
+		{
+			SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>()->resetCollideFlag();
+		}
 	}
 
 	//gameObjects[0]->GetTransform()->SetPosition(gameObjects[0]->GetTransform()->GetPosition() + Vector2(-0.1f, 0.0f) * Time::GetDeltaTime());

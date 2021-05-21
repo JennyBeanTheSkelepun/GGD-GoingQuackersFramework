@@ -24,10 +24,10 @@ public:
 	void ImGuiSetup();
 
 private:
-	float m_gravityStrength = 1.0f;
-	Vector2 m_gravityDirection = Vector2();
+	float m_gravityStrength = 0.1f;
+	Vector2 m_gravityDirection = Vector2(0.0f, 1.0f);
 
-	GravityTypes m_gravType = GravityTypes::CENTRE;
+	GravityTypes m_gravType = GravityTypes::DIRECTION;
 
 	const char* m_GravTypeDropdown[2] = { "Direction", "Centre" };
 

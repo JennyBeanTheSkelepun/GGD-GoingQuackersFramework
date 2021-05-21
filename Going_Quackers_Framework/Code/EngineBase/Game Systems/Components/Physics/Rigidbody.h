@@ -7,6 +7,7 @@
 #include "../Component.h"
 #include "../../Time.h"
 #include "../../../SceneManager/SceneManager.h"
+#include "../../Debug.h"
 
 enum class PhysicsTypes
 {
@@ -23,6 +24,10 @@ public:
 
 	void Update() override;
 	void ImGUIUpdate() override;
+
+	//json* SceneSave() override;
+
+	//void SceneLoad(json* componentJSON) override;
 
 	void AddForce(Vector2 force) { m_forces.push_back(force); }
 	void PhysicsCollide();
@@ -63,7 +68,7 @@ private:
 	Trigger* mp_trigger;
 	GravityEmitter* mp_gravEmitter;
 
-	bool m_isStatic = false;
+	bool m_isStatic = true;
 
 	float m_radius = 0.0f;
 	Vector2 m_AABBRect = Vector2();

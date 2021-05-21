@@ -9,6 +9,8 @@
 #include "Game Systems/Time.h"
 #include "Game Systems/GameObject.h"
 
+class Rigidbody;
+
 class EngineMain
 {
 public:

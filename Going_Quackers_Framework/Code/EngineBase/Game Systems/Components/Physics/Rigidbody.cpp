@@ -18,6 +18,7 @@ void Rigidbody::Update()
 {
 	PhysicsCollide();
 
+	//TODO:: Make this not magic up infinity forces!?!?!?!?!?
 	if (m_physicsType == PhysicsTypes::RB && !m_isStatic)
 	{
 		CalculateVelocity();
@@ -28,6 +29,8 @@ void Rigidbody::Update()
 		m_velocity = Vector2();
 		m_acceleration = Vector2();
 	}
+
+	m_forces.clear();
 }
 
 void Rigidbody::ImGUIUpdate()
@@ -131,17 +134,30 @@ void Rigidbody::CalculateVelocity()
 
 	m_acceleration = totalForce / m_mass;
 
-	m_velocity = m_acceleration / Time::GetDeltaTime();
+	m_velocity += m_acceleration * Time::GetDeltaTime();
+
+	Vector2 pos = GetOwner()->GetTransform()->GetPosition();
+	pos += m_velocity;
+	GetOwner()->GetTransform()->SetPosition(pos);
+
+	Debug::getInstance()->Log(std::to_string(pos.X) + " , " + std::to_string(pos.Y));
 }
 
 void Rigidbody::PhysicsCollide()
 {
-	//std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
+	std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
 	std::vector<GameObject*> collidingObjects;
 
-	for (GameObject* obj : collidingObjects)
+	for (GameObject* obj : allObjects)
 	{
-		if (obj->GetComponent<Rigidbody>()->getCollideFlag())
+		if (obj->GetComponent<Rigidbody>() == nullptr || obj == GetOwner())
+		{
+			continue;
+		}
+
+		Rigidbody* OtherRB = obj->GetComponent<Rigidbody>();
+
+		if (OtherRB->getCollideFlag() && OtherRB->getType() == PhysicsTypes::RB && getType() == PhysicsTypes::RB)
 		{
 			break;
 		}
@@ -152,10 +168,18 @@ void Rigidbody::PhysicsCollide()
 			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if (mp_collider->CollisionAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if (mp_collider->CollisionAABB(GetOwner(), obj)) 
+				{ 
+					collidingObjects.push_back(obj); 
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID()); 
+				}
 				break;
 			case CollisionTypes::Sphere:
-				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj))
+				{
+					collidingObjects.push_back(obj); 
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
+				}
 				break;
 			}
 			break;
@@ -163,10 +187,18 @@ void Rigidbody::PhysicsCollide()
 			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj)) 
+				{
+					collidingObjects.push_back(obj);
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
+				}
 				break;
 			case CollisionTypes::Sphere:
-				if(mp_collider->CollisionSpherical(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if(mp_collider->CollisionSpherical(GetOwner(), obj)) 
+				{
+					collidingObjects.push_back(obj);
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
+				}
 				break;
 			}
 			break;
@@ -193,10 +225,22 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 {
 	for (GameObject* obj : *collidingObjects)
 	{
+		Rigidbody* rb = obj->GetComponent<Rigidbody>();
+		if (rb->getType() != PhysicsTypes::RB || rb->m_isStatic)
+		{
+			continue;
+		}
+
 		Vector2 forceDirection = obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
+		float distance = forceDirection.Length();
+		
 		forceDirection.Normalize();
 
-		float distance = (obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition()).Length();
+
+		if(distance == 0.0f)
+		{
+			obj->GetTransform()->SetLocalPosition(Vector2(0.0f, 0.1f));
+		}
 
 		Vector2 appliedForce = forceDirection * (distance / 2.0f);
 

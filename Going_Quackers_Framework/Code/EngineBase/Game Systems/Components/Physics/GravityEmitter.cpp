@@ -3,12 +3,13 @@
 
 void GravityEmitter::applyGravity(GameObject* callObj, std::vector<GameObject*>* CollidedObjects)
 {
+	Vector2 gravityPosition = callObj->GetTransform()->GetPosition();
+	
 	for (GameObject* obj : *CollidedObjects)
 	{
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();
 		if (rb != nullptr)
 		{
-			Vector2 gravityPosition = callObj->GetTransform()->GetPosition();
 
 			switch (m_gravType)
 			{
