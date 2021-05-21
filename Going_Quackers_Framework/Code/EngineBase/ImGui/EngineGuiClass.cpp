@@ -149,7 +149,6 @@ void EngineGuiClass::EditorUpdate()
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
-		Debug::getInstance()->LogWarning("test");
 	}
 
 	currentSelected = nullptr;

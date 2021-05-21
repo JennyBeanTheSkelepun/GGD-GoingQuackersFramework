@@ -15,6 +15,8 @@ enum ComponentTypes
 	SPRITERENDERER = 2,
 	RIGIDBODY = 3,
 
+	PLAYER = 5,
+
 	//Not_Usefull = 0,
 	//Two_D_Sprite_Renderer = 1,
 	//Three_D_Object_Renderer = 2,
