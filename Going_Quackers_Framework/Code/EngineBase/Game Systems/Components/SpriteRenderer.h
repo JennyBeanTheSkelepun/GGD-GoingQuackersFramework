@@ -28,6 +28,7 @@ public:
 	void ImGUIUpdate() override;
 	void OnDestroy() override;
 	void SceneLoad(json* componentJSON) override;
+	json* SceneSave() override;
 
 private:
 
@@ -35,6 +36,9 @@ private:
 	int mi_Texture, mi_Shader, mi_ID;
 
 	std::string m_TextureLocation, m_ShaderLocation;
+
+	char* t2;
+	char* t4;
 };
 
 #endif

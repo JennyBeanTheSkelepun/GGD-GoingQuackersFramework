@@ -12,6 +12,9 @@ SpriteRenderer::SpriteRenderer(GameObject* owner) : Component(owner, ComponentTy
 	mi_Shader = 0;
 	//- Add To Rendering Loop -//
 	mi_ID = Graphics::getInstance()->AddObjectToApiRenderILoop(this);
+
+	t2 = new char[100]();
+	t4 = new char[100]();
 }
 
 SpriteRenderer::~SpriteRenderer()
@@ -42,10 +45,8 @@ void SpriteRenderer::RemoveTextureShader()
 void SpriteRenderer::ImGUIUpdate()
 {
 	std::string t1 = "Enter Texture Location";
-	char* t2 = new char[100]();
 
 	std::string t3 = "Enter Shader Location";
-	char* t4 = new char[100]();
 
 	ImGui::InputText(t1.c_str(), t2, 128);
 	ImGui::InputText(t3.c_str(), t4, 128);
@@ -71,6 +72,16 @@ void SpriteRenderer::OnDestroy()
 
 void SpriteRenderer::SceneLoad(json* componentJSON)
 {
-	(*componentJSON)["TextureLocation"] = m_TextureLocation;
-	(*componentJSON)["ShaderLocation"] = m_ShaderLocation;
+	m_TextureLocation = (*componentJSON)["TextureLocation"];
+	m_ShaderLocation = (*componentJSON)["ShaderLocation"];
+}
+
+json* SpriteRenderer::SceneSave()
+{
+	json* returnObj = new json({
+		{"TextureLocation", m_TextureLocation},
+		{"ShaderLocation", m_ShaderLocation}
+	});
+
+	return returnObj;
 }
