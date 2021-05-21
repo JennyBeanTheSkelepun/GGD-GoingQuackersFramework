@@ -16,17 +16,54 @@ C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framew
   Rigidbody.cpp
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Trigger.cpp
+  Sprite.cpp
   SpriteRenderer.cpp
   Transform.cpp
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(74,69): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Debug.cpp
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(98,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
   GameObject.cpp
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Input.cpp
+  Time.cpp
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   EngineGuiClass.cpp
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(98,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\ImGui\EngineGuiClass.cpp(171,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  imgui.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  DirectXCamera.cpp
+  Generating Code...
+  Compiling...
+  DirectXClass.cpp
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(107,15): warning C4101: 'numModes': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(111,6): warning C4101: 'error': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(109,18): warning C4101: 'displayModeList': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(106,15): warning C4101: 'adapterOutput': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(107,39): warning C4101: 'denominator': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(105,16): warning C4101: 'adapter': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(107,28): warning C4101: 'numerator': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(107,25): warning C4101: 'i': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(110,20): warning C4101: 'adapterDesc': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(113,20): warning C4101: 'featureLevel': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(112,23): warning C4101: 'swapChainDesc': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(108,21): warning C4101: 'stringLength': unreferenced local variable
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(104,16): warning C4101: 'factory': unreferenced local variable
   DirectXGraphics.cpp
+  DirectXImGui.cpp
   DirectXRenderLoop.cpp
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(136,39): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  DirectXShader.cpp
+  DirectXShaderManager.cpp
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.cpp(35,30): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  DirectXTexture2D.cpp
+  DirectXTextureManager.cpp
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.cpp(35,31): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  DirectXTwoDObject.cpp
   DirectXWindow.cpp
   Graphics.cpp
   Scene.cpp
@@ -41,10 +78,10 @@ C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framew
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Generating Code...
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(95): warning C4715: 'Graphics::AddObjectToApiRenderILoop': not all control paths return a value
-C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(115): warning C4715: 'Graphics::LoadTexture': not all control paths return a value
-C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(125): warning C4715: 'Graphics::LoadTileSheet': not all control paths return a value
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(135): warning C4715: 'Graphics::LoadShader': not all control paths return a value
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(144): warning C4715: 'Graphics::RemoveObjectFromRenderLoop': not all control paths return a value
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(115): warning C4715: 'Graphics::LoadTexture': not all control paths return a value
+C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(125): warning C4715: 'Graphics::LoadTileSheet': not all control paths return a value
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(153): warning C4715: 'Graphics::RemoveTexture': not all control paths return a value
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(162): warning C4715: 'Graphics::RemoveTileSheet': not all control paths return a value
 C:\Users\f011369h\Documents\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\Graphics.cpp(171): warning C4715: 'Graphics::RemoveShader': not all control paths return a value
