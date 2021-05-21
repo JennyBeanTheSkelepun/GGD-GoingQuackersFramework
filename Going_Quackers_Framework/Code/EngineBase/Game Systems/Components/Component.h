@@ -14,7 +14,8 @@ enum ComponentTypes
 	TRANSFORM = 1,
 	SPRITERENDERER = 2,
 	RIGIDBODY = 3,
-	PLAYER = 5,
+	SPRINGJOINT = 4,
+	PLAYER = 5
 };
 
 class Component
