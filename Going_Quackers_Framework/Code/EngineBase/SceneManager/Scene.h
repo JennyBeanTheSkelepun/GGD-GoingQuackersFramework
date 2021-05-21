@@ -17,6 +17,7 @@ public:
 	void OnSceneExit();
 
 	void AddObject(GameObject* ap_newObject);
+	void DeleteObjectAtIndex(int ai_index);
 
 	void Update(float af_deltaTime);
 
@@ -29,6 +30,7 @@ public:
 	void SetSceneType(std::string as_SceneType) { ms_SceneType = as_SceneType; };
 
 	std::vector<GameObject*> GetSceneObjects() { return mp_SceneObjects; };
+	std::vector<GameObject*>* GetSceneObjectsList() { return &mp_SceneObjects; };
 	GameObject* GetObjectByIndex(int ai_index) { return mp_SceneObjects[ai_index]; };
 	GameObject* GetObjectByID(std::string as_id);
 	int GetObjectIndexByID(std::string as_id);

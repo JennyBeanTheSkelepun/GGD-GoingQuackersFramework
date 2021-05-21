@@ -1,1 +1,1 @@
-{"objects":[{"id":"test01","parent":""},{"id":"test02","parent":"test01"},{"id":"test03","parent":"test02"}],"sceneID":"test","sceneName":"Test Scene","sceneType":"DEBUG"}
+{"objects":[{"id":"","name":"GameObject 26500","parent":""},{"id":"","name":"GameObject 15724","parent":""}],"sceneID":"Test","sceneName":"Test","sceneType":"TEST"}
