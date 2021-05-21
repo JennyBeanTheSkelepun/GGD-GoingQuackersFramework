@@ -268,7 +268,7 @@
       <Filter>Source Files\Engine\Game Systems\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

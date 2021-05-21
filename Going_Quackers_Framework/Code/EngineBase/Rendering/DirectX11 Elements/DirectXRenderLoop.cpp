@@ -56,7 +56,7 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 		//- universal Plane for 2d elements -//
 		mp_2DModel->Render();
 		DirectXShader* tempShader = ar_Shader.GetShader(GameObjectsToRender[i]->GetShader());
-		Texture2D* tempTexture = ar_texture.GetTexture(GameObjectsToRender[i]->GetShader());
+		Texture2D* tempTexture = ar_texture.GetTexture(GameObjectsToRender[i]->GetTexture());
 
 		GameObject* tempGameObject = GameObjectsToRender[i]->GetOwner();
 

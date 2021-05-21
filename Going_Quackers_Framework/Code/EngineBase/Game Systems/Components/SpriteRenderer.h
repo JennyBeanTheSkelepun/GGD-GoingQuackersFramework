@@ -37,8 +37,8 @@ private:
 
 	std::string m_TextureLocation, m_ShaderLocation;
 
-	char* t2;
-	char* t4;
+	char* TextureSelectionInput;
+	char* ShaderSelectionInput;
 };
 
 #endif

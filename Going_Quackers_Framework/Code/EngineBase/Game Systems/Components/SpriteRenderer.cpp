@@ -13,8 +13,8 @@ SpriteRenderer::SpriteRenderer(GameObject* owner) : Component(owner, ComponentTy
 	//- Add To Rendering Loop -//
 	mi_ID = Graphics::getInstance()->AddObjectToApiRenderILoop(this);
 
-	t2 = new char[100]();
-	t4 = new char[100]();
+	TextureSelectionInput = new char[100] { "stone.tga" };
+	ShaderSelectionInput = new char[100] { "Code/EngineBase/Rendering/Shaders/TextureSimple.fx" };
 }
 
 SpriteRenderer::~SpriteRenderer()
@@ -29,39 +29,60 @@ void SpriteRenderer::Initialze(std::string TextureLocation, std::wstring ShaderL
 	Graphics* temp = Graphics::getInstance();
 
 	//- If Texture/Shader/Object is instantiated then dont try and remake it  -//
-	if (mi_Texture == -1) { mi_Texture = Graphics::getInstance()->LoadTexture(TextureLocation); }
-	if (mi_Shader == -1) { mi_Shader = Graphics::getInstance()->LoadShader(ShaderLocation); }
-	if (mi_ID == -1) { mi_ID = Graphics::getInstance()->AddObjectToApiRenderILoop(this); }
+	if (mi_Texture == -1) 
+	{ 
+		mi_Texture = Graphics::getInstance()->LoadTexture(TextureLocation);
+	}
+
+	if (mi_Shader == -1) 
+	{ 
+		mi_Shader = Graphics::getInstance()->LoadShader(ShaderLocation); 
+	}
+
+	if (mi_ID == -1) 
+	{ 
+		mi_ID = Graphics::getInstance()->AddObjectToApiRenderILoop(this); 
+	}
 }
 
 void SpriteRenderer::RemoveTextureShader()
 {
 	//- If Texture/Shader/Object isnt instantiated then dont try and remove it -//
-	if (mi_Texture != -1) { mi_Texture = Graphics::getInstance()->RemoveTexture(mi_Texture); }
-	if (mi_Shader != -1) { mi_Shader = Graphics::getInstance()->RemoveShader(mi_Shader); }
-	if (mi_ID != -1) { mi_ID = Graphics::getInstance()->RemoveObjectFromRenderLoop(mi_ID); }
+	if (mi_Texture != -1) 
+	{
+		mi_Texture = Graphics::getInstance()->RemoveTexture(mi_Texture); 
+	}
+
+	if (mi_Shader != -1) 
+	{
+		mi_Shader = Graphics::getInstance()->RemoveShader(mi_Shader); 
+	}
+
+	if (mi_ID != -1) 
+	{
+		mi_ID = Graphics::getInstance()->RemoveObjectFromRenderLoop(mi_ID); 
+	}
 }
 
 void SpriteRenderer::ImGUIUpdate()
 {
 	std::string t1 = "Enter Texture Location";
-
 	std::string t3 = "Enter Shader Location";
 
-	ImGui::InputText(t1.c_str(), t2, 128);
-	ImGui::InputText(t3.c_str(), t4, 128);
+	ImGui::InputText(t1.c_str(), TextureSelectionInput, 128);
+	ImGui::InputText(t3.c_str(), ShaderSelectionInput, 128);
 
 	if (ImGui::Button("Update Texture Shader"))
 	{
-		std::string s(t4);
+		std::string s(ShaderSelectionInput);
 		std::wstring ws;
 		ws.assign(s.begin(), s.end());
 
 		RemoveTextureShader();
-		Initialze(std::string(t2), ws);
+		Initialze(std::string(TextureSelectionInput), ws);
 
-		m_TextureLocation = std::string(t2);
-		m_ShaderLocation = std::string(t4);
+		m_TextureLocation = std::string(TextureSelectionInput);
+		m_ShaderLocation = std::string(ShaderSelectionInput);
 	}
 }
 
