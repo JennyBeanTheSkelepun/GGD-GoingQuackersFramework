@@ -136,11 +136,11 @@ void Rigidbody::CalculateVelocity()
 
 	m_velocity += m_acceleration * Time::GetDeltaTime();
 
+	Debug::getInstance()->Log(m_velocity);
+
 	Vector2 pos = GetOwner()->GetTransform()->GetPosition();
 	pos += m_velocity;
 	GetOwner()->GetTransform()->SetPosition(pos);
-
-	Debug::getInstance()->Log(std::to_string(pos.X) + " , " + std::to_string(pos.Y));
 }
 
 void Rigidbody::PhysicsCollide()
@@ -223,6 +223,8 @@ void Rigidbody::PhysicsCollide()
 
 void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 {
+	//TODO:: Make this not do infinity acceleration!?
+
 	for (GameObject* obj : *collidingObjects)
 	{
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();
@@ -231,20 +233,19 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 			continue;
 		}
 
-		Vector2 forceDirection = obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
-		float distance = forceDirection.Length();
-		
-		forceDirection.Normalize();
+		Vector2 vectorBetweenObjs = obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
+		float distance = vectorBetweenObjs.Length();
 
+		Vector2 forceDirection = vectorBetweenObjs.Normalize();
 
-		if(distance == 0.0f)
+		if (distance == 0)
 		{
-			obj->GetTransform()->SetLocalPosition(Vector2(0.0f, 0.1f));
+			continue;
 		}
 
-		Vector2 appliedForce = forceDirection * (distance / 2.0f);
+		Vector2 force = forceDirection * (distance / 2.0f);
 
-		AddForce(appliedForce);
-		obj->GetComponent<Rigidbody>()->AddForce(-appliedForce);
+		rb->AddForce(force);
+		AddForce(-force);
 	}
 }
