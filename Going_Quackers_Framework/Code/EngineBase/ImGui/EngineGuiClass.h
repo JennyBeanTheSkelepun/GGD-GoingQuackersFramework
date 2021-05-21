@@ -63,6 +63,10 @@ private:
 	int AmountOfSaves;
 	bool RecordingLayout;
 	char* LayoutName;
+	char* SceneToLoad;
+	char* NewSceneID;
+	char* NewSceneName;
+	char* NewSceneType;
 	std::vector<LayoutSettings> WindowPositions;
 	LayoutSettings CurrentWindowPosition;
 

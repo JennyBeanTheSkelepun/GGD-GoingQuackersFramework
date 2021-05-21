@@ -1,5 +1,6 @@
 #include "EngineMain.h"
 #include "../../Code/EngineBase/Rendering/Graphics.h"
+#include "SceneManager/SceneManager.h"
 
 EngineMain::EngineMain()
 {
@@ -14,11 +15,17 @@ EngineMain::~EngineMain()
 	delete mp_Input;
 	mp_Input = nullptr;
 
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	for (size_t i = 0; i < gameObjects.size(); i++)
+	//// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	//for (size_t i = 0; i < gameObjects.size(); i++)
+	//{
+	//	delete gameObjects[i];
+	//	gameObjects[i] = nullptr;
+	//}
+
+	// Delete objects
+	for (size_t i = 0; i < SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects().size(); i++)
 	{
-		delete gameObjects[i];
-		gameObjects[i] = nullptr;
+		SceneManager::GetInstance()->GetCurrentScene()->DeleteObjectAtIndex(i);
 	}
 
 }
@@ -35,6 +42,8 @@ bool EngineMain::Initalize()
 	mp_Input->Initialize();
 
 	Graphics::getInstance()->InitaliseAPIs();
+	SceneManager::GetInstance()->Initialize();
+	SceneManager::GetInstance()->ChangeScene("default", false);
 
 	//GameObject* mp_Model = new GameObject("Model 1");
 	//mp_Model->AddComponent<SpriteRenderer>();
@@ -59,7 +68,7 @@ bool EngineMain::Initalize()
 	////gameObjects.push_back(mp_Model3);
 
 
-	EngineGuiClass::getInstance()->InitializeObjectList(&gameObjects);
+	EngineGuiClass::getInstance()->InitializeObjectList(SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjectsList());
 
 	return true;
 }
@@ -105,17 +114,15 @@ bool EngineMain::UpdateRenderLoop()
 
 	//- UPDATE LOOP START-//
 	
-	for (size_t i = 0; i < gameObjects.size(); i++)
+	for (size_t i = 0; i < SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects().size(); i++)
 	{
-		if (gameObjects[i]->ShouldDestroy())
+		if (SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->ShouldDestroy())
 		{
-			GameObject* gameObject = gameObjects[i];
-			gameObjects.erase(gameObjects.begin() + i);
-			delete gameObject;
+			SceneManager::GetInstance()->GetCurrentScene()->DeleteObjectAtIndex(i);
 			break;
 		}
 
-		gameObjects[i]->Update();
+		SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->Update();
 	}
 
 	//gameObjects[0]->GetTransform()->SetPosition(gameObjects[0]->GetTransform()->GetPosition() + Vector2(-0.1f, 0.0f) * Time::GetDeltaTime());

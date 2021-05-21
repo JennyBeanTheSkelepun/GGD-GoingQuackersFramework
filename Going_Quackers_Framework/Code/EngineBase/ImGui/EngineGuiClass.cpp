@@ -19,6 +19,10 @@ EngineGuiClass::EngineGuiClass()
 {
 	RecordingLayout = false;
 	LayoutName = new char[100]();
+	SceneToLoad = new char[100]();
+	NewSceneID = new char[100]();
+	NewSceneType = new char[100]();
+	NewSceneName = new char[100]();
 	LoadWindowPositions();
 }
 
@@ -32,7 +36,7 @@ void EngineGuiClass::DisplayChildren(GameObject* gameObject)
 	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
 	{
 		GameObject* child = gameObject->GetChildren()[i];
-		if (ImGui::CollapsingHeader(child->GetName().c_str()))
+		if (ImGui::CollapsingHeader(child->name.c_str()))
 		{
 			currentSelected = child;
 			DisplayChildren(child);
@@ -71,7 +75,29 @@ void EngineGuiClass::EditorUpdate()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Save ")) { }
+			if (ImGui::MenuItem("Save Scene")) { SceneManager::GetInstance()->SaveCurrentScene(); }
+			ImGui::Separator();
+			ImGui::InputText(":Scene To Load", SceneToLoad, 100);
+			if (ImGui::MenuItem("Load Scene")) {
+				if (std::string(SceneToLoad) != "") {
+					SceneManager::GetInstance()->ChangeScene(SceneToLoad, false);
+				}
+				else {
+					Debug::getInstance()->LogWarning("Please Enter Scene ID (Filename)");
+				}
+			}
+			ImGui::Separator();
+			ImGui::InputText(":New Scene ID", NewSceneID, 100);
+			ImGui::InputText(":New Display Name", NewSceneName, 100);
+			ImGui::InputText(":New Scene Type", NewSceneType, 100);
+			if (ImGui::MenuItem("New Scene")) {
+				if (std::string(NewSceneID) != "" && std::string(NewSceneName) != "" && std::string(NewSceneType) != "") {
+					SceneManager::GetInstance()->NewScene(NewSceneID, NewSceneName, NewSceneType, false);
+				}
+				else {
+					Debug::getInstance()->LogWarning("Please fill in the three boxes");
+				}
+			}
 			ImGui::Separator();
 			if (ImGui::MenuItem("Close")) { mb_closeEditor = true; }
 
@@ -140,7 +166,7 @@ void EngineGuiClass::EditorUpdate()
 	for (size_t i = 0; i < gameObjects->size(); i++)
 	{
 		GameObject* gameObject = gameObjects->at(i);
-		if(ImGui::CollapsingHeader(gameObject->GetName().c_str()))
+		if(ImGui::CollapsingHeader(gameObject->name.c_str()))
 		{
 			index = i;
 			DisplayChildren(gameObject);
@@ -153,8 +179,8 @@ void EngineGuiClass::EditorUpdate()
 	//Create GameObjects
 	if (ImGui::Button("Create GameObject"))
 	{
-		std::string randName = "GameObject " + std::to_string(rand());
-		GameObject* gameObject = new GameObject(randName.c_str());
+		std::string name = "GameObject " + std::to_string(rand());
+		GameObject* gameObject = new GameObject(name.c_str());
 		gameObjects->push_back(gameObject);
 	}
 
