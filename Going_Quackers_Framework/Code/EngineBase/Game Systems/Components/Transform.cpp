@@ -23,6 +23,32 @@ void Transform::ImGUIUpdate()
 {
 }
 
+json* Transform::SceneSave()
+{
+	json returnObj =
+	{
+		{"ComponentName", "Transform"},
+		{"PositionX", GetPosition().X},
+		{"PositionY", GetPosition().Y},
+		{"Rotation", GetRotation()},
+		{"ScaleX", GetScale().X},
+		{"ScaleY", GetScale().Y},
+
+		{"LocalPositionX", GetLocalPosition().X},
+		{"LocaPositionY", GetLocalPosition().Y},
+		{"LocalRotation", GetLocalRotation()},
+		{"LocalScaleX", GetLocalScale().X},
+		{"LocalScaleY", GetLocalScale().Y},
+	};
+
+	return &returnObj;
+}
+
+void Transform::SceneLoad(json* componentJSON)
+{
+	std::cout << std::endl;
+}
+
 DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
 {
 	GameObject* parent = mp_owner->GetParent();

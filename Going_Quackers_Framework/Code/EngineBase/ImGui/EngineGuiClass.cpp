@@ -139,7 +139,7 @@ void EngineGuiClass::EditorUpdate()
 	for (size_t i = 0; i < gameObjects->size(); i++)
 	{
 		GameObject* gameObject = gameObjects->at(i);
-		if(ImGui::CollapsingHeader(gameObject->name.c_str()))
+		if(ImGui::CollapsingHeader(gameObject->GetName().c_str()))
 		{
 			index = i;
 			DisplayChildren(gameObject);
@@ -152,8 +152,8 @@ void EngineGuiClass::EditorUpdate()
 	//Create GameObjects
 	if (ImGui::Button("Create GameObject"))
 	{
-		std::string name = "GameObject " + std::to_string(rand());
-		GameObject* gameObject = new GameObject(name.c_str());
+		std::string randName = "GameObject " + std::to_string(rand());
+		GameObject* gameObject = new GameObject(randName.c_str());
 		gameObjects->push_back(gameObject);
 	}
 

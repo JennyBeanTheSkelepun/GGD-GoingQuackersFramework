@@ -14,6 +14,9 @@ public:
 	void Initialize() override;
 	void ImGUIUpdate() override;
 
+	virtual json* SceneSave() override;
+	virtual void SceneLoad(json* componentJSON) override;
+
 	///<summary>Returns a matrix that converts from local space to world space</summary>
 	DirectX::XMMATRIX GetLocalToWorldMatrix();
 	///<summary>Returns a matrix that converts from world space to local space</summary>

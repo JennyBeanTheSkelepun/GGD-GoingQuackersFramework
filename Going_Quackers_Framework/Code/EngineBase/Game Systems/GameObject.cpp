@@ -5,7 +5,7 @@
 
 GameObject::GameObject(const char* name, GameObject* parent)
 {
-	this->name = name;
+	this->m_name = name;
 	this->mp_parent = parent;
 
 	m_components = std::vector<Component*>();
@@ -106,13 +106,8 @@ void GameObject::Render()
 
 void GameObject::ImGUIUpdate()
 {
-	if (ImGui::BeginTable("", 2))
-	{
-		ImGui::TableNextColumn(); ImGui::Checkbox("Active", &m_active);
-		ImGui::TableNextColumn(); ImGui::InputText("Name", (char*)name.c_str(), 50);
-
-		ImGui::EndTable();
-	}
+	ImGui::InputText("", (char*)m_name.c_str(), 50);
+	ImGui::Checkbox("", &m_active);
 
 	ImGui::Separator();
 
