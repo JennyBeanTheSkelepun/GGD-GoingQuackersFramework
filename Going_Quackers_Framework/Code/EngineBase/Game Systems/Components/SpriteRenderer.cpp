@@ -42,10 +42,10 @@ void SpriteRenderer::RemoveTextureShader()
 void SpriteRenderer::ImGUIUpdate()
 {
 	std::string t1 = "Enter Texture Location";
-	std::string t2;
+	char* t2 = new char[100]();
 
 	std::string t3 = "Enter Shader Location";
-	std::string t4;
+	char* t4 = new char[100]();
 
 	ImGui::InputText(t1.c_str(), t2, 128);
 	ImGui::InputText(t3.c_str(), t4, 128);
