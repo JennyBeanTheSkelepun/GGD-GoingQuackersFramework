@@ -96,8 +96,8 @@ public:
 	std::string GetID() { return m_id; }
 	void SetID(std::string newID) { m_id = newID; }
 
-	std::string GetName() { return m_name; }
-	void SetName(std::string newName) { m_name = newName; }
+	std::string GetName() { return name; }
+	void SetName(std::string newName) { m_name = newName; name = newName; }
 
 	void SetToDestroy();
 	///<summary>Says if the GameObject should be destroyed next frame</summary>

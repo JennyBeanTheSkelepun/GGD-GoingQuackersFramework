@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 #include "../Game Systems/Components/SpriteRenderer.h"
+#include "../Game Systems/Components/Physics/Rigidbody.h"
 #include "../Game Systems/Debug.h"
 
 #include <ostream>
@@ -138,6 +139,12 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			lp_newObject->GetComponent<SpriteRenderer>()->SceneLoad(&newObject.value()["SPRITERENDERER"]);
 		}
 
+		// If it has a Rigidbody component, add Rigidbody
+		if (newObject.value().contains("RIGIDBODY")) {
+			lp_newObject->AddComponent<Rigidbody>();
+			lp_newObject->GetComponent<Rigidbody>()->SceneLoad(&newObject.value()["RIGIDBODY"]);
+		}
+
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
 
@@ -151,7 +158,7 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 				lp_currentObject->SetParent(lp_parentObject);
 			}
 			else {
-				// TODO: Log Error
+				Debug::getInstance()->LogError("Error: Could not find object parent for: " + lp_currentObject->GetID());
 			}
 		}
 	}
@@ -220,9 +227,6 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				break;
 			case ComponentTypes::SPRITERENDERER:
 				componentType = "SPRITERENDERER";
-				break;
-			case ComponentTypes::SPRITE:
-				componentType = "SPRITE";
 				break;
 			case ComponentTypes::RIGIDBODY:
 				componentType = "RIGIDBODY";
