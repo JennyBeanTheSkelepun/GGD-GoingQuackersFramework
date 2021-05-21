@@ -3,6 +3,7 @@
 #include "EngineGuiClass.h"
 #include "../Game Systems/GameObject.h"
 #include "../Game Systems/Debug.h"
+#include "../SceneManager/SceneManager.h"
 
 EngineGuiClass* EngineGuiClass::SingletonInstance = 0;
 
@@ -31,7 +32,7 @@ void EngineGuiClass::DisplayChildren(GameObject* gameObject)
 	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
 	{
 		GameObject* child = gameObject->GetChildren()[i];
-		if (ImGui::CollapsingHeader(child->name.c_str()))
+		if (ImGui::CollapsingHeader(child->GetName().c_str()))
 		{
 			currentSelected = child;
 			DisplayChildren(child);
@@ -70,7 +71,7 @@ void EngineGuiClass::EditorUpdate()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Save")) {}
+			if (ImGui::MenuItem("Save ")) { }
 			ImGui::Separator();
 			if (ImGui::MenuItem("Close")) { mb_closeEditor = true; }
 

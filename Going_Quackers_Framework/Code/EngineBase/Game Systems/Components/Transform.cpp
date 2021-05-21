@@ -59,7 +59,6 @@ json* Transform::SceneSave()
 
 void Transform::SceneLoad(json* componentJSON)
 {
-	std::cout << std::endl;
 }
 
 DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()

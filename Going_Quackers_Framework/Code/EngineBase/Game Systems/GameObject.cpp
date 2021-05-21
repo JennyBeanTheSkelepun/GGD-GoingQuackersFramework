@@ -7,11 +7,12 @@ GameObject::GameObject(const char* name, GameObject* parent)
 {
 	this->m_name = name;
 	this->mp_parent = parent;
+	this->m_id = rand();
 
 	m_components = std::vector<Component*>();
 	m_children = std::vector<GameObject*>();
 
-	this->shouldDestroy = false;
+	this->m_shouldDestroy = false;
 
 	Initialize();
 }
@@ -165,7 +166,7 @@ void GameObject::ImGUIUpdate()
 
 void GameObject::SetToDestroy()
 {
-	shouldDestroy = true;
+	m_shouldDestroy = true;
 	for (size_t i = 0; i < m_children.size(); i++)
 	{
 		m_children[i]->SetToDestroy();
