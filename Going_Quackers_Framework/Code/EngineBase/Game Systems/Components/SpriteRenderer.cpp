@@ -21,6 +21,8 @@ SpriteRenderer::~SpriteRenderer()
 
 void SpriteRenderer::Initialze(std::string TextureLocation, std::wstring ShaderLocation)
 {
+	m_TextureLocation = TextureLocation;
+	m_ShaderLocation.assign(ShaderLocation.begin(), ShaderLocation.end());
 	Graphics* temp = Graphics::getInstance();
 
 	//- If Texture/Shader/Object is instantiated then dont try and remake it  -//
@@ -39,9 +41,36 @@ void SpriteRenderer::RemoveTextureShader()
 
 void SpriteRenderer::ImGUIUpdate()
 {
+	std::string t1 = "Enter Texture Location";
+	std::string t2;
+
+	std::string t3 = "Enter Shader Location";
+	std::string t4;
+
+	ImGui::InputText(t1.c_str(), t2, 128);
+	ImGui::InputText(t3.c_str(), t4, 128);
+
+	if (ImGui::Button("Update Texture Shader"))
+	{
+		std::string s(t4);
+		std::wstring ws;
+		ws.assign(s.begin(), s.end());
+
+		RemoveTextureShader();
+		Initialze(std::string(t2), ws);
+
+		m_TextureLocation = std::string(t2);
+		m_ShaderLocation = std::string(t4);
+	}
 }
 
 void SpriteRenderer::OnDestroy()
 {
 	RemoveTextureShader();
+}
+
+void SpriteRenderer::SceneLoad(json* componentJSON)
+{
+	(*componentJSON)["TextureLocation"] = m_TextureLocation;
+	(*componentJSON)["ShaderLocation"] = m_ShaderLocation;
 }
