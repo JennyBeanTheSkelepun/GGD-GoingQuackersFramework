@@ -4,6 +4,8 @@
 #include "Components/SpriteRenderer.h"
 #include "Components/Physics/Rigidbody.h"
 #include "Components/VirtualCamera.h"
+#include "Components/Player.h"
+#include "Debug.h"
 
 GameObject::GameObject(const char* name, GameObject* parent)
 {
