@@ -89,11 +89,11 @@ public:
 	///<summary>Returns if the GameObject is currently active (Updating/Rendering).</summary>
 	bool IsActive() { return m_active; }
 
-	int GetID() { return m_id; }
-	void SetID(int newID) { m_id = newID; }
+	std::string GetID() { return m_id; }
+	void SetID(std::string newID) { m_id = newID; }
 
-	std::string GetName() { return name; }
-	void SetName(std::string newName) { m_name = newName; name = newName; }
+	std::string GetName() { return m_name; }
+	void SetName(std::string newName) { m_name = newName; }
 
 	void SetToDestroy();
 	///<summary>Says if the GameObject should be destroyed next frame</summary>
@@ -116,7 +116,7 @@ private:
 	bool m_active;
 
 	// ID of object
-	int m_id;
+	std::string m_id;
 
 	// Name of object
 	std::string m_name = "";

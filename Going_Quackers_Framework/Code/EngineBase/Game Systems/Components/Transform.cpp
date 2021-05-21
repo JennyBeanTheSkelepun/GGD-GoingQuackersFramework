@@ -38,9 +38,8 @@ void Transform::ImGUIUpdate()
 
 json* Transform::SceneSave()
 {
-	json returnObj =
+	json* returnObj = new json(
 	{
-		{"ComponentName", "Transform"},
 		{"PositionX", GetPosition().X},
 		{"PositionY", GetPosition().Y},
 		{"Rotation", GetRotation()},
@@ -48,17 +47,24 @@ json* Transform::SceneSave()
 		{"ScaleY", GetScale().Y},
 
 		{"LocalPositionX", GetLocalPosition().X},
-		{"LocaPositionY", GetLocalPosition().Y},
+		{"LocalPositionY", GetLocalPosition().Y},
 		{"LocalRotation", GetLocalRotation()},
 		{"LocalScaleX", GetLocalScale().X},
 		{"LocalScaleY", GetLocalScale().Y},
-	};
+	});
 
-	return &returnObj;
+	return returnObj;
 }
 
 void Transform::SceneLoad(json* componentJSON)
 {
+	SetPosition(Vector2((*componentJSON)["PositionX"], (*componentJSON)["PositionY"]));
+	SetRotation((*componentJSON)["Rotation"]);
+	SetScale(Vector2((*componentJSON)["ScaleX"], (*componentJSON)["ScaleY"]));
+
+	SetLocalPosition(Vector2((*componentJSON)["LocalPositionX"], (*componentJSON)["LocalPositionY"]));
+	SetLocalRotation((*componentJSON)["LocalRotation"]);
+	SetLocalScale(Vector2((*componentJSON)["LocalScaleX"], (*componentJSON)["LocalScaleY"]));
 }
 
 DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()

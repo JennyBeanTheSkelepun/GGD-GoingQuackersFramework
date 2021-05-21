@@ -53,9 +53,6 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	for (size_t i = 0; i < GameObjectsToRender.size(); i++)
 	{
-		if (!GameObjectsToRender[i]->GetOwner()->IsActive()) //Please Don't kill me, David. 
-			continue;
-
 		//- universal Plane for 2d elements -//
 		mp_2DModel->Render();
 		DirectXShader* tempShader = ar_Shader.GetShader(GameObjectsToRender[i]->GetShader());

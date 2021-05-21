@@ -7,7 +7,7 @@ GameObject::GameObject(const char* name, GameObject* parent)
 {
 	this->m_name = name;
 	this->mp_parent = parent;
-	this->m_id = rand();
+	this->m_id = std::to_string(rand());
 
 	m_components = std::vector<Component*>();
 	m_children = std::vector<GameObject*>();
