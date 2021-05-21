@@ -1,8 +1,6 @@
 #include "GameObject.h"
-
 #include "Components/SpriteRenderer.h"
 #include "Components/Physics/Rigidbody.h"
-
 #include "Debug.h"
 
 GameObject::GameObject(const char* name, GameObject* parent)
