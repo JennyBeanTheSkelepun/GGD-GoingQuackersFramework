@@ -34,9 +34,6 @@
     <Filter Include="Source Files\Engine\Game Systems\Components">
       <UniqueIdentifier>{d11fafcb-cd3a-42f9-991f-6dcbb7667839}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Data Structures">
-      <UniqueIdentifier>{285238bf-bc14-4c71-b5e4-b56872b674fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Rendering">
       <UniqueIdentifier>{f6a7f3c5-4c66-4ce2-81c4-079310c97669}</UniqueIdentifier>
     </Filter>
@@ -54,9 +51,6 @@
     </Filter>
     <Filter Include="Header Files\Engine\Rendering">
       <UniqueIdentifier>{d4f12cdc-c3e5-41e0-b1fe-e4967852ffb7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Engine\Rendering\Shaders">
-      <UniqueIdentifier>{9e1f3112-0c5d-487b-9241-85923d843b65}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Engine\ImGui">
       <UniqueIdentifier>{2570fa7b-0295-44d8-bb45-ff453ba8e2eb}</UniqueIdentifier>
@@ -154,6 +148,9 @@
     <Filter Include="Source Files\Engine\Game Systems\Physics">
       <UniqueIdentifier>{9549ebba-ad42-4cf2-b0ff-caa04eea1462}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Rendering\DirectX11 Element\Shaders">
+      <UniqueIdentifier>{9e1f3112-0c5d-487b-9241-85923d843b65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp">
@@ -213,9 +210,6 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Camera</Filter>
     </ClCompile>
@@ -270,6 +264,12 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\KeyboardEvents.cpp">
+      <Filter>Header Files\Engine\Data Structures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -299,9 +299,6 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
@@ -326,9 +323,6 @@
     <ClInclude Include="Code\EngineBase\Data Structures\Vectors.h">
       <Filter>Header Files\Engine\Data Structures</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Data Structures\Vertex.h">
-      <Filter>Header Files\Engine\Data Structures</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\EngineMain.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
@@ -347,23 +341,11 @@
     <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
       <Filter>Source Files\Engine\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectXClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h">
       <Filter>Header Files\Engine\Rendering\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\Graphics.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Camera</Filter>
@@ -374,17 +356,11 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.h">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTexture2D.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Texture\DirectX Texture 2D</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Texture\DirectX Texture Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.h">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader Manager</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
@@ -405,13 +381,34 @@
       <Filter>Header Files\Engine\Game Systems\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\Graphics.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Data Structures\Vertex.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX 2D Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShaderManager.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXShader.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Shader\DirectX Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\KeyboardEvents.h">
+      <Filter>Header Files\Engine\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -421,10 +418,10 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Code\EngineBase\Rendering\Shaders\BlockColourShader.fx">
-      <Filter>Header Files\Engine\Rendering\Shaders</Filter>
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Code\EngineBase\Rendering\Shaders\TextureSimple.fx">
-      <Filter>Header Files\Engine\Rendering\Shaders</Filter>
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\Shaders</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

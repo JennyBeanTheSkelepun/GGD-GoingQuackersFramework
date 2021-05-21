@@ -42,8 +42,6 @@ struct Vector2
 	bool operator==(const Vector2& rhs) const { return (X == rhs.X) && (Y == rhs.Y); }
 	bool operator!=(const Vector2& rhs) const { return (X != rhs.X) && (Y != rhs.Y); }
 
-	//DirectX::XMFLOAT2 ConvertToXMFLOAT2() { return DirectX::XMFLOAT2(X, Y); }
-	//ImVec2 ConvertToImGuiVector2() { return ImVec2(X, Y); }
 
 	friend std::ostream& operator<<(std::ostream& os, const Vector2& vec) { os << "(" << vec.X << ", " << vec.Y << ")"; return os; }
 };
@@ -88,7 +86,6 @@ struct Vector3
 	bool operator!=(const Vector3& rhs) const { return (X != rhs.X) && (Y != rhs.Y) && (Z == rhs.Z); }
 
 	DirectX::XMFLOAT3 ConvertToXMFLOAT3() { return DirectX::XMFLOAT3(X, Y, Z); }
-	//ImVec2 ConvertToImGuiVector2() { return ImVec2(X, Y); }
 
 	friend std::ostream& operator<<(std::ostream& os, const Vector3& vec) { os << "(" << vec.X << ", " << vec.Y << ", " << vec.Z << ")"; return os; }
 };

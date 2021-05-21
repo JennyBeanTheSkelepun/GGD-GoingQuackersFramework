@@ -1,5 +1,6 @@
 #include "DirectXWindow.h"
 #include "DirectXGraphics.h"
+#include "../../Game Systems/Input.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -21,8 +22,6 @@ DirectXWindow::DirectXWindow(DirectXGraphics* ap_DirectX)
 
 DirectXWindow::~DirectXWindow()
 {
-	delete mp_Input;
-	mp_Input = nullptr;
 }
 
 bool DirectXWindow::SetupWindow()
@@ -58,8 +57,6 @@ LRESULT CALLBACK DirectXWindow::MessageHandler(HWND hwnd, UINT uint, WPARAM wPar
 		case WM_EXITSIZEMOVE:
 		{
 			mb_sizeMovement = false;
-			//mp_DirectX->ResizeWindowCall();
-
 			return 0;
 		}
 
@@ -73,12 +70,12 @@ LRESULT CALLBACK DirectXWindow::MessageHandler(HWND hwnd, UINT uint, WPARAM wPar
 
 
 		case WM_KEYDOWN:
-			mp_Input->KeyDown((unsigned int)wParam);
+			Input::getInstance()->KeyDown((unsigned int)wParam);
 			return 0;
 			break;
 
 		case WM_KEYUP:
-			mp_Input->KeyUp((unsigned int)wParam);
+			Input::getInstance()->KeyUp((unsigned int)wParam);
 			return 0;
 			break;
 
@@ -99,9 +96,6 @@ void DirectXWindow::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 	m_hInstance = GetModuleHandle(NULL);
 
 	m_applicationName = L"Going Quackers Engine";
-
-	mp_Input = new Input();
-	mp_Input->Initialize();
 
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	wc.lpfnWndProc = WndProc;

@@ -25,8 +25,6 @@ private:
 	bool UpdateRenderLoop();
 
 	std::vector<GameObject*> gameObjects;
-	
-	Input* mp_Input;
 };
 
 #endif // !ENGINE_MAIN_H
