@@ -3,11 +3,16 @@
 
 #include "Collision.h"
 
+enum class GravityTypes
+{
+	DIRECTION = 0,
+	CENTRE = 1
+};
+
 class Ridigbody;
 
 class GravityEmitter
 {
-//Add collision checking and AddForce to Rigidbody in the area.
 public:
 	void applyGravity(GameObject* callObj, std::vector<GameObject*>* collidedObjects);
 
@@ -16,9 +21,17 @@ public:
 	void SetGravityDirection(Vector2 direction) { m_gravityDirection = direction.Normalize(); }
 	Vector2 GetGravityDirection() { return m_gravityDirection; }
 
+	void ImGuiSetup();
+
 private:
-	float m_gravityStrength;
-	Vector2 m_gravityDirection;
+	float m_gravityStrength = 1.0f;
+	Vector2 m_gravityDirection = Vector2();
+
+	GravityTypes m_gravType = GravityTypes::CENTRE;
+
+	const char* m_GravTypeDropdown[2] = { "Direction", "Centre" };
+
+	const char* m_GravTypeDropdownSelected = "Direction";
 };
 
 #endif _GRAVITYEMITTER_

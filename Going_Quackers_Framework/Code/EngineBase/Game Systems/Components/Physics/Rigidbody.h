@@ -10,9 +10,9 @@
 
 enum class PhysicsTypes
 {
-	Trig, //Trigger
-	RB, //Rigidbody
-	GE //Gravity Emitter
+	Trig = 0, //Trigger
+	RB = 1, //Rigidbody
+	GE = 2 //Gravity Emitter
 };
 
 class Rigidbody : public Component

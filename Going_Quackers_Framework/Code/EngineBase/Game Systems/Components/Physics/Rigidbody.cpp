@@ -41,11 +41,7 @@ void Rigidbody::ImGUIUpdate()
 			if (ImGui::Selectable(m_physicsTypeDropDown[i], is_selected))
 			{
 				m_DropdownPhysicsTypeSelected = m_physicsTypeDropDown[i];
-			}
-
-			if (is_selected)
-			{
-				ImGui::SetItemDefaultFocus();
+				
 				if (m_DropdownPhysicsTypeSelected == "Rigidbody")
 				{
 					m_physicsType = PhysicsTypes::RB;
@@ -59,12 +55,18 @@ void Rigidbody::ImGUIUpdate()
 					m_physicsType = PhysicsTypes::GE;
 				}
 			}
+
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+			}
 		}
 
 		ImGui::EndCombo();
 	}
 
-	//TODO:: Fix this -> not giving options or dropping down.
+	ImGui::Spacing();
+
 	if (ImGui::BeginCombo("Collision Type", m_DropdownColliderShapeSelected))
 	{
 		for (int i = 0; i < IM_ARRAYSIZE(m_colliderShapeDropDown); i++)
@@ -74,11 +76,7 @@ void Rigidbody::ImGUIUpdate()
 			if (ImGui::Selectable(m_colliderShapeDropDown[i], is_selected))
 			{
 				m_DropdownColliderShapeSelected = m_colliderShapeDropDown[i];
-			}
-
-			if (is_selected)
-			{
-				ImGui::SetItemDefaultFocus();
+				
 				if (m_DropdownColliderShapeSelected == "Sphere")
 				{
 					m_collisionType = CollisionTypes::Sphere;
@@ -88,15 +86,17 @@ void Rigidbody::ImGUIUpdate()
 					m_collisionType = CollisionTypes::AABB;
 				}
 			}
+
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+			}
 		}
 
 		ImGui::EndCombo();
 	}
 
-	if (m_physicsType == PhysicsTypes::RB)
-	{
-		ImGui::Checkbox("Static", &m_isStatic);
-	}
+	ImGui::Dummy(ImVec2(0.0f, 20.0f));
 
 	if (m_collisionType == CollisionTypes::Sphere)
 	{
@@ -106,6 +106,17 @@ void Rigidbody::ImGUIUpdate()
 	{
 		ImGui::InputFloat("Rect Width", &m_AABBRect.X);
 		ImGui::InputFloat("Rect Height", &m_AABBRect.Y);
+	}
+
+	ImGui::Dummy(ImVec2(0.0f, 20.0f));
+
+	if (m_physicsType == PhysicsTypes::RB)
+	{
+		ImGui::Checkbox("Static", &m_isStatic);
+	}
+	else if (m_physicsType == PhysicsTypes::GE)
+	{
+		mp_gravEmitter->ImGuiSetup();
 	}
 }
 
