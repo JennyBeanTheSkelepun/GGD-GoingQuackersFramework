@@ -21,6 +21,19 @@ void Transform::Initialize()
 
 void Transform::ImGUIUpdate()
 {
+	//Position Set
+	float position[2] = { m_localPosition.X, m_localPosition.Y};
+	ImGui::InputFloat2("Position", position);
+	SetLocalPosition(Vector2(position[0], position[1]));
+
+	//Rotation Set
+	float rotation = m_localRotation;
+	ImGui::InputFloat("Rotation", &m_localRotation);
+
+	//Scale Set
+	float scale[2] = { m_localScale.X, m_localScale.Y };
+	ImGui::InputFloat2("Scale", scale);
+	SetLocalScale(Vector2(scale[0], scale[1]));
 }
 
 json* Transform::SceneSave()

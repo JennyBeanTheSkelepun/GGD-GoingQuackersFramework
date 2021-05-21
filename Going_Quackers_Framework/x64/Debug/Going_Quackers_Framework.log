@@ -1,4 +1,6 @@
-﻿  Transform.cpp
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(100,69): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(44): warning C4172: returning address of local variable or temporary: returnObj
+﻿  DirectXRenderLoop.cpp
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(38,67): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(139,39): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(92): warning C4715: 'DirectXRenderLoop::EditorRender': not all control paths return a value
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(134): warning C4715: 'DirectXRenderLoop::ActiveGameRender': not all control paths return a value
   Going_Quackers_Framework.vcxproj -> C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

@@ -107,7 +107,10 @@ void GameObject::Render()
 void GameObject::ImGUIUpdate()
 {
 	ImGui::InputText("", (char*)m_name.c_str(), 50);
-	ImGui::Checkbox("", &m_active);
+	
+	bool active = m_active;
+	ImGui::Checkbox("Active", &active);
+	SetActive(active);
 
 	ImGui::Separator();
 

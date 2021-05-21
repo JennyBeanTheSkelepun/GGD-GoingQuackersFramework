@@ -51,7 +51,7 @@ private:
 
 	//Local Positions
 	Vector2 m_localPosition;
-	double m_localRotation;
+	float m_localRotation;
 	Vector2 m_localScale;
 
 	//Transform that converts from local space to world space
