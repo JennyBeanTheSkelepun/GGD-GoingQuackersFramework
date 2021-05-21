@@ -36,7 +36,7 @@ void EngineGuiClass::DisplayChildren(GameObject* gameObject)
 	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
 	{
 		GameObject* child = gameObject->GetChildren()[i];
-		if (ImGui::CollapsingHeader(child->name.c_str()))
+		if (ImGui::CollapsingHeader(child->GetName().c_str()))
 		{
 			currentSelected = child;
 			DisplayChildren(child);
@@ -166,7 +166,7 @@ void EngineGuiClass::EditorUpdate()
 	for (size_t i = 0; i < gameObjects->size(); i++)
 	{
 		GameObject* gameObject = gameObjects->at(i);
-		if(ImGui::CollapsingHeader(gameObject->name.c_str()))
+		if(ImGui::CollapsingHeader(gameObject->GetName().c_str()))
 		{
 			index = i;
 			DisplayChildren(gameObject);

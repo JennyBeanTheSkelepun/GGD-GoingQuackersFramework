@@ -219,24 +219,29 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 
 		std::vector<Component*> lp_components = ap_Scene->GetObjectByIndex(i)->GetComponents();
 		for (int j = 0; j < lp_components.size(); j++) {
+
+			Component* component = lp_components[j];
 			// Get component Type
 			std::string componentType;
 			switch (lp_components[j]->GetTag()) {
 			case ComponentTypes::TRANSFORM:
 				componentType = "TRANSFORM";
+				component = static_cast<Transform*>(component);
 				break;
 			case ComponentTypes::SPRITERENDERER:
 				componentType = "SPRITERENDERER";
+				component = static_cast<SpriteRenderer*>(component);
 				break;
 			case ComponentTypes::RIGIDBODY:
 				componentType = "RIGIDBODY";
+				component = static_cast<Rigidbody*>(component);
 				break;
 			default:
 				componentType = "MISSING";
 				break;
 			}
 
-			json* lp_componentInfo = lp_components[j]->SceneSave();
+			json* lp_componentInfo = component->SceneSave();
 			if (lp_componentInfo != nullptr) {
 				l_object[componentType] = *lp_componentInfo;
 			}
