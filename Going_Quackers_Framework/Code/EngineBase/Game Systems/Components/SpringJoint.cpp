@@ -32,6 +32,8 @@ void SpringJoint::SetConnectedObject(GameObject* ap_connectedObject) {
 
 	//mp_connectedObject->SetParent(nullptr);
 	GetOwner()->AddChild(mp_connectedObject);
+
+	//TODO - check the child has a valid rigidbody before adding it
 }
 
 void SpringJoint::SetStrength(float af_strength) {
