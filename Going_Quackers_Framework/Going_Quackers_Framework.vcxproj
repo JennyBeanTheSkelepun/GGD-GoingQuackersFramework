@@ -144,6 +144,7 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\SpringJoint.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\SpringJoint.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Transform.h" />
