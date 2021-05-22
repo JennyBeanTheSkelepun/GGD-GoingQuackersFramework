@@ -145,6 +145,7 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\SpringJoint.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
