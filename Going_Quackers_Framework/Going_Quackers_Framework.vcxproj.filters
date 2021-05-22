@@ -267,6 +267,9 @@
     <ClCompile Include="Code\EngineBase\Game Systems\KeyboardEvents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\SpringJoint.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
@@ -409,6 +412,9 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\SpringJoint.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>

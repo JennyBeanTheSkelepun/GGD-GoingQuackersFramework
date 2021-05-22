@@ -36,7 +36,12 @@ public:
 	inline SpringMode GetSpringMode() { return m_mode; }
 	void SetSpringMode(SpringMode a_mode);
 
+	void Update() override;
+
 private:
+	void ApplyFixedHeadSpringForce(float af_currentStretch);
+	void ApplyNonFixedHeadSpringForce(float af_currentStretch);
+
 	GameObject* mp_connectedObject;
 
 	float mf_strength;
