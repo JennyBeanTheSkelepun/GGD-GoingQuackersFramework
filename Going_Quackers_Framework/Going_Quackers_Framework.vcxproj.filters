@@ -288,6 +288,9 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpringJoint.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\SpringJoint.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
