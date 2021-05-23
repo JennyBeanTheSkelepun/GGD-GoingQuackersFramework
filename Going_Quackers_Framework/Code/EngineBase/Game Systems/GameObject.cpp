@@ -5,13 +5,14 @@
 
 GameObject::GameObject(const char* name, GameObject* parent)
 {
-	this->name = name;
+	this->m_name = name;
 	this->mp_parent = parent;
+	this->m_id = std::to_string(rand());
 
 	m_components = std::vector<Component*>();
 	m_children = std::vector<GameObject*>();
 
-	this->shouldDestroy = false;
+	this->m_shouldDestroy = false;
 
 	Initialize();
 }
@@ -90,13 +91,11 @@ void GameObject::Render()
 
 void GameObject::ImGUIUpdate()
 {
-	if (ImGui::BeginTable("", 2))
-	{
-		ImGui::TableNextColumn(); ImGui::Checkbox("Active", &m_active);
-		ImGui::TableNextColumn(); ImGui::InputText("Name", (char*)name.c_str(), 50);
-
-		ImGui::EndTable();
-	}
+	ImGui::InputText("", (char*)m_name.c_str(), 50);
+	
+	bool active = m_active;
+	ImGui::Checkbox("Active", &active);
+	SetActive(active);
 
 	ImGui::Separator();
 
@@ -151,7 +150,7 @@ void GameObject::ImGUIUpdate()
 
 void GameObject::SetToDestroy()
 {
-	shouldDestroy = true;
+	m_shouldDestroy = true;
 	for (size_t i = 0; i < m_children.size(); i++)
 	{
 		m_children[i]->SetToDestroy();

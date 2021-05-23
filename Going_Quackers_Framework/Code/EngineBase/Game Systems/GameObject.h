@@ -23,9 +23,6 @@ public:
 	//Used to Update the Default ImGUI elements for each GameObject
 	void ImGUIUpdate();
 
-	///<summary>The name of the GameObject.</summary>
-	std::string name;
-
 	Transform* GetTransform() { return mp_transform; }
 
 	///<summary>Adds a Component to the GameObject (Requires that the Component needs no initial parameters other than reference to itself)</summary>
@@ -91,17 +88,16 @@ public:
 	void SetActive(bool value) { m_active = value; }
 	///<summary>Returns if the GameObject is currently active (Updating/Rendering).</summary>
 	bool IsActive() { return m_active; }
-	//void SetActive(bool value) { m_active = value; }
 
 	std::string GetID() { return m_id; }
 	void SetID(std::string newID) { m_id = newID; }
 
-	std::string GetName() { return name; }
-	void SetName(std::string newName) { m_name = newName; name = newName; }
+	std::string GetName() { return m_name; }
+	void SetName(std::string newName) { m_name = newName; }
 
 	void SetToDestroy();
 	///<summary>Says if the GameObject should be destroyed next frame</summary>
-	bool ShouldDestroy() { return shouldDestroy; }
+	bool ShouldDestroy() { return m_shouldDestroy; }
 
 	/// <summary> Function to cast and then delete the gameobjects </summary>
 	void DeleteComponent(Component* component);
@@ -124,12 +120,12 @@ private:
 	bool m_active;
 
 	// ID of object
-	std::string m_id = "";
+	std::string m_id;
 
 	// Name of object
 	std::string m_name = "";
 
-	bool shouldDestroy;
+	bool m_shouldDestroy;
 };
 
 #endif // !_GAMEOBJECT_H_
