@@ -1,5 +1,6 @@
 #include "Input.h"
 #include <iostream>
+#include "../ImGui/ImGui SourceCode/imgui.h"
 
 Input* Input::SingletonInstance = nullptr;
 
@@ -32,6 +33,19 @@ void Input::Update()
 	//- resetting both arrays to false via low level memory manipulation -//
 	memset(&mb_pressedDownKeys[0], false, sizeof(bool) * 256);
 	memset(&mb_pressedUpKeys[0], false, sizeof(bool) * 256);
+
+	//- ImGui Mouse Pos Get -//
+	mousePos = ImGui::GetMousePos();
+}
+
+Vector2 Input::GetScreenSpaceMousePos()
+{
+	return mousePos;
+}
+
+Vector3 Input::GetWorldSpaceMousePos()
+{
+	return Vector3();
 }
 
 void Input::KeyDown(unsigned int ai_input)

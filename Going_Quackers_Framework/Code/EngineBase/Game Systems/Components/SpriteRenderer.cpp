@@ -12,8 +12,8 @@ SpriteRenderer::SpriteRenderer(GameObject* owner) : Component(owner, ComponentTy
 	//- Add To Rendering Loop -//
 	mi_ID = Graphics::getInstance()->AddObjectToApiRenderILoop(this);
 
-	TextureSelectionInput = new char[100] { "stone.tga" };
-	ShaderSelectionInput = new char[100] { "Code/EngineBase/Rendering/Shaders/TextureSimple.fx" };
+	TextureSelectionInput = new char[100] { "Assets/stone.tga" };
+	ShaderSelectionInput = new char[100] { "Assets/Shaders/TextureSimple.fx" };
 }
 
 //- Deconstructors -//

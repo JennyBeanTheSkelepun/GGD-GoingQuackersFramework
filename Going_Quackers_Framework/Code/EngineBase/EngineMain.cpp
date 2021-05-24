@@ -85,11 +85,11 @@ bool EngineMain::UpdateRenderLoop()
 		SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->Update();
 	}
 
-	if (Input::getInstance()->isKeyPressedDown(KeyCode::A))
+	if (Input::getInstance()->isKeyHeldDown(KeyCode::A))
 	{
 		Debug::getInstance()->Log("you did it2");
 	}
-	if (Input::getInstance()->isKeyPressedDown(KeyCode::S))
+	if (Input::getInstance()->isKeyHeldDown(KeyCode::D))
 	{
 		Debug::getInstance()->Log("you did it1");
 	}

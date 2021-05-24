@@ -1,7 +1,8 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
-#include "KeyboardEvents.h"
-#include <queue>
+//#include "KeyboardEvents.h"
+
+#include "../Data Structures/Vectors.h"
 
 enum class KeyCode
 {
@@ -88,10 +89,15 @@ public:
 
 	void Update();
 
+	Vector2 GetScreenSpaceMousePos();
+	Vector3 GetWorldSpaceMousePos();
+
 private:
 	bool* mb_heldKeys;
 	bool* mb_pressedDownKeys;
 	bool* mb_pressedUpKeys;
+
+	Vector2 mousePos;
 };
 
 #endif

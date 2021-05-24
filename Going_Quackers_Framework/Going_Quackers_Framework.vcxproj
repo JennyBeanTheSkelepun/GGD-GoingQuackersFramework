@@ -223,10 +223,10 @@
     <ResourceCompile Include="Going_Quackers_Framework.rc" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Code\EngineBase\Rendering\Shaders\BlockColourShader.fx">
+    <FxCompile Include="Assets\Shaders\BlockColourShader.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Code\EngineBase\Rendering\Shaders\TextureSimple.fx">
+    <FxCompile Include="Assets\Shaders\TextureSimple.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include <DirectXMath.h>
+#include "../ImGui/ImGui SourceCode/imgui.h"
 
 struct Vector2
 {
@@ -29,6 +30,7 @@ struct Vector2
 	float Dot(const Vector2& vec) const { return (X * vec.X + Y * vec.Y); }
 
 	Vector2 operator-() const { return Vector2(-X, -Y); }
+	Vector2 operator=(const ImVec2& rhs) const { return Vector2(rhs.x, rhs.y); }
 	Vector2 operator+(const Vector2& rhs) const { return Vector2(X + rhs.X, Y + rhs.Y); }
 	Vector2 operator-(const Vector2& rhs) const { return Vector2(X - rhs.X, Y - rhs.Y); }
 	Vector2& operator+=(const Vector2& rhs) { X += rhs.X; Y += rhs.Y; return *this; }
