@@ -99,7 +99,11 @@ public:
 	///<summary>Says if the GameObject should be destroyed next frame</summary>
 	bool ShouldDestroy() { return m_shouldDestroy; }
 
+	/// <summary> Function to cast and then delete the gameobjects </summary>
+	void DeleteComponent(Component* component);
+
 private:
+
 	///<summary>The Transform attached to the GameObject.</summary>
 	Transform* mp_transform;
 

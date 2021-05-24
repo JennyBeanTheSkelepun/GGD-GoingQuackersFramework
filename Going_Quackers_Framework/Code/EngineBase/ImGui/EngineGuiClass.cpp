@@ -180,6 +180,7 @@ void EngineGuiClass::EditorUpdate()
 	{
 		std::string name = "GameObject " + std::to_string(rand());
 		GameObject* gameObject = new GameObject(name.c_str());
+		gameObject->SetID(name);
 		gameObjects->push_back(gameObject);
 	}
 
