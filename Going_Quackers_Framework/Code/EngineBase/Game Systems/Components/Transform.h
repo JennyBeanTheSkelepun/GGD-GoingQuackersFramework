@@ -10,9 +10,18 @@ class Transform : public Component
 {
 public:
 	Transform(GameObject* owner);
+	~Transform();
 
-	void Initialize() override;
+	//- Basic Loops -//
+	void OnDestroy() override;
+	void Update() override;
+
+	//- ImGui UpdateLoop -//
 	void ImGUIUpdate() override;
+
+	//- Scene Save and Load -//
+	json* SceneSave() override;
+	void SceneLoad(json* componentJSON) override;
 
 	///<summary>Returns a matrix that converts from local space to world space</summary>
 	DirectX::XMMATRIX GetLocalToWorldMatrix();
@@ -48,7 +57,7 @@ private:
 
 	//Local Positions
 	Vector2 m_localPosition;
-	double m_localRotation;
+	float m_localRotation;
 	Vector2 m_localScale;
 
 	//Transform that converts from local space to world space
