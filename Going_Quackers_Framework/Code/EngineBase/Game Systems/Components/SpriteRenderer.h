@@ -27,11 +27,18 @@ public:
 
 	void ImGUIUpdate() override;
 	void OnDestroy() override;
+	void SceneLoad(json* componentJSON) override;
+	json* SceneSave() override;
 
 private:
 
 	int ModelType = ModelType::TWO_DIMENSIONS;
 	int mi_Texture, mi_Shader, mi_ID;
+
+	std::string m_TextureLocation, m_ShaderLocation;
+
+	char* TextureSelectionInput;
+	char* ShaderSelectionInput;
 };
 
 #endif
