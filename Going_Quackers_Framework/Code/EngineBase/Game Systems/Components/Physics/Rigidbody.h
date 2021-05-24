@@ -1,5 +1,5 @@
-#ifndef _RIGIDBODY_
-#define _RIGIDBODY_
+#ifndef _RIGIDBODY_H_
+#define _RIGIDBODY_H_
 
 #include "Collision.h"
 #include "GravityEmitter.h"
@@ -21,8 +21,16 @@ public:
 	Rigidbody(GameObject* owner);
 	~Rigidbody();
 
+	//- Basic Loops -//
+	void OnDestroy() override;
 	void Update() override;
+
+	//- ImGui UpdateLoop -//
 	void ImGUIUpdate() override;
+
+	//- Scene Save and Load -//
+	json* SceneSave() override;
+	void SceneLoad(json* componentJSON) override;
 
 	void AddForce(Vector2 force) { m_forces.push_back(force); }
 	void PhysicsCollide();
@@ -73,4 +81,4 @@ private:
 	bool physicsChecked = false;
 };
 
-#endif _RIGIDBODY_
+#endif _RIGIDBODY_H_

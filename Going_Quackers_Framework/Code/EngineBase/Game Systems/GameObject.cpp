@@ -14,30 +14,20 @@ GameObject::GameObject(const char* name, GameObject* parent)
 
 	this->m_shouldDestroy = false;
 
-	Initialize();
+	mp_transform = AddComponent<Transform>();
+	m_active = true;
 }
 
 GameObject::~GameObject()
 {
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
-		DeleteComponent(m_components[i]);
+		m_components[i]->OnDestroy();
+		delete m_components[i];
 	}
 
 	mp_transform = nullptr;
 	mp_parent = nullptr;
-}
-
-void GameObject::Initialize()
-{
-	mp_transform = AddComponent<Transform>();
-
-	for (size_t i = 0; i < m_components.size(); i++)
-	{
-		m_components[i]->Initialize();
-	}
-
-	m_active = true;
 }
 
 void GameObject::Update()
@@ -55,7 +45,8 @@ void GameObject::Update()
 		if (component->ShouldDestroy())
 		{
 			m_components.erase(m_components.begin() + i);
-			DeleteComponent(component);
+			component->OnDestroy();
+			delete component;
 			break;
 		}
 	}
@@ -69,23 +60,6 @@ void GameObject::Update()
 		}
 
 		m_children[i]->Update();
-	}
-}
-
-void GameObject::Render()
-{
-	if (!m_active)
-		return;
-
-	for (size_t i = 0; i < m_components.size(); i++)
-	{
-		if (!m_components[i]->ShouldDestroy())
-			m_components[i]->Render();
-	}
-
-	for (size_t i = 0; i < m_children.size(); i++)
-	{
-		m_children[i]->Render();
 	}
 }
 
@@ -127,6 +101,8 @@ void GameObject::ImGUIUpdate()
 		{
 			if (ImGui::Selectable(components[i]))
 			{
+
+				//- This should be the only hardcoded connection stating type of component -//
 				switch (i)
 				{
 					case 0:
@@ -154,24 +130,5 @@ void GameObject::SetToDestroy()
 	for (size_t i = 0; i < m_children.size(); i++)
 	{
 		m_children[i]->SetToDestroy();
-	}
-}
-
-void GameObject::DeleteComponent(Component* component)
-{
-	switch (component->GetTag())
-	{
-	case ComponentTypes::SPRITERENDERER:
-		delete static_cast<SpriteRenderer*>(component);
-		break;
-	case ComponentTypes::RIGIDBODY:
-		delete static_cast<Rigidbody*>(component);
-		break;
-	case ComponentTypes::TRANSFORM:
-		delete static_cast<Transform*>(component);
-		break;
-	default:
-		Debug::getInstance()->LogWarning("ERROR TRYING TO DELETE A UNSUPORTED COMPONENT");
-		break;
 	}
 }
