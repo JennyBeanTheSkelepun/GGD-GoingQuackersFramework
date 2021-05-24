@@ -223,7 +223,7 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			Component* component = lp_components[j];
 			// Get component Type
 			std::string componentType;
-			switch (lp_components[j]->GetTag()) {
+			switch (lp_components[j]->GetType()) {
 			case ComponentTypes::TRANSFORM:
 				componentType = "TRANSFORM";
 				component = static_cast<Transform*>(component);

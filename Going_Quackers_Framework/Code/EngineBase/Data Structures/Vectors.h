@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include <DirectXMath.h>
+#include "../ImGui/ImGui SourceCode/imgui.h"
 
 struct Vector2
 {
@@ -29,6 +30,7 @@ struct Vector2
 	float Dot(const Vector2& vec) const { return (X * vec.X + Y * vec.Y); }
 
 	Vector2 operator-() const { return Vector2(-X, -Y); }
+	Vector2 operator=(const ImVec2& rhs) const { return Vector2(rhs.x, rhs.y); }
 	Vector2 operator+(const Vector2& rhs) const { return Vector2(X + rhs.X, Y + rhs.Y); }
 	Vector2 operator-(const Vector2& rhs) const { return Vector2(X - rhs.X, Y - rhs.Y); }
 	Vector2& operator+=(const Vector2& rhs) { X += rhs.X; Y += rhs.Y; return *this; }
@@ -42,8 +44,6 @@ struct Vector2
 	bool operator==(const Vector2& rhs) const { return (X == rhs.X) && (Y == rhs.Y); }
 	bool operator!=(const Vector2& rhs) const { return (X != rhs.X) && (Y != rhs.Y); }
 
-	//DirectX::XMFLOAT2 ConvertToXMFLOAT2() { return DirectX::XMFLOAT2(X, Y); }
-	//ImVec2 ConvertToImGuiVector2() { return ImVec2(X, Y); }
 
 	friend std::ostream& operator<<(std::ostream& os, const Vector2& vec) { os << "(" << vec.X << ", " << vec.Y << ")"; return os; }
 };
@@ -88,7 +88,6 @@ struct Vector3
 	bool operator!=(const Vector3& rhs) const { return (X != rhs.X) && (Y != rhs.Y) && (Z == rhs.Z); }
 
 	DirectX::XMFLOAT3 ConvertToXMFLOAT3() { return DirectX::XMFLOAT3(X, Y, Z); }
-	//ImVec2 ConvertToImGuiVector2() { return ImVec2(X, Y); }
 
 	friend std::ostream& operator<<(std::ostream& os, const Vector3& vec) { os << "(" << vec.X << ", " << vec.Y << ", " << vec.Z << ")"; return os; }
 };

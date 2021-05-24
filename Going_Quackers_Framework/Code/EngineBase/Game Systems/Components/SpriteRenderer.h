@@ -18,17 +18,23 @@ public:
 	SpriteRenderer(GameObject* owner);
 	~SpriteRenderer();
 
-	void Initialze(std::string TextureLocation, std::wstring ShaderLocation);
+	void InitialzeTextureShader(std::string TextureLocation, std::wstring ShaderLocation);
 
 	inline int GetTexture() { return mi_Texture; };
 	inline int GetShader() { return mi_Shader; };
 
 	void RemoveTextureShader();
 
-	void ImGUIUpdate() override;
+	//- Basic Loops -//
 	void OnDestroy() override;
-	void SceneLoad(json* componentJSON) override;
+	void Update() override;
+
+	//- ImGui UpdateLoop -//
+	void ImGUIUpdate() override;
+	
+	//- Scene Save and Load -//
 	json* SceneSave() override;
+	void SceneLoad(json* componentJSON) override;
 
 private:
 
@@ -40,5 +46,4 @@ private:
 	char* TextureSelectionInput;
 	char* ShaderSelectionInput;
 };
-
-#endif
+#endif //- _SPRITERENDERER_H_ -//

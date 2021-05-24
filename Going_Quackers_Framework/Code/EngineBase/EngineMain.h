@@ -5,9 +5,12 @@
 
 #include <windows.h>
 
-#include "Game Systems/Input.h"
+
 #include "Game Systems/Time.h"
 #include "Game Systems/GameObject.h"
+#include "Game Systems/Input.h"
+#include "Game Systems/KeyboardEvents.h"
+#include "Game Systems/Debug.h"
 
 class EngineMain
 {
@@ -22,8 +25,6 @@ private:
 	bool UpdateRenderLoop();
 
 	std::vector<GameObject*> gameObjects;
-	
-	Input* mp_Input;
 };
 
 #endif // !ENGINE_MAIN_H

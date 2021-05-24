@@ -16,9 +16,7 @@ public:
 
 	~GameObject();
 
-	void Initialize();
 	void Update();
-	void Render();
 
 	//Used to Update the Default ImGUI elements for each GameObject
 	void ImGUIUpdate();
@@ -98,9 +96,6 @@ public:
 	void SetToDestroy();
 	///<summary>Says if the GameObject should be destroyed next frame</summary>
 	bool ShouldDestroy() { return m_shouldDestroy; }
-
-	/// <summary> Function to cast and then delete the gameobjects </summary>
-	void DeleteComponent(Component* component);
 
 private:
 

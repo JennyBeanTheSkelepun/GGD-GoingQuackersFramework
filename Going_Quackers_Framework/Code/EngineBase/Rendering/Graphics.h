@@ -8,7 +8,6 @@
 class SpriteRenderer;
 
 #include "DirectX11 Elements/DirectXGraphics.h"
-// TODO CHANGE FROM TEMPLATE INTO WHAT I HAVE FOR COMPONENET SYSTEM
 
 enum API_TYPE {
 	DIRECT_X_11 = 0
