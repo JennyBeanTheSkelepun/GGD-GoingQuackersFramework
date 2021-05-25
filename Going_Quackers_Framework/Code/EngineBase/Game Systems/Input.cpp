@@ -50,11 +50,44 @@ void Input::Update()
 		camPos = temp->GetPosition();
 	}
 
-	worldMousePos.X = (2 * screenMousePos.X - 2 * camPos.X - winDim.X) / winDim.X;
-	worldMousePos.Y = (-2 * screenMousePos.Y + 2 * camPos.Y + winDim.Y) / winDim.Y;
+	worldMousePos.X = camPos.X + ((winDim.X / 2) * (2 * screenMousePos.X - 2 * camPos.X - winDim.X) / winDim.X);
+	worldMousePos.Y = camPos.Y + ((winDim.Y / 2) * (-2 * screenMousePos.Y + 2 * camPos.Y + winDim.Y) / winDim.Y);
 	worldMousePos.Z = -5;
 
-	Debug::getInstance()->Log(worldMousePos);
+	//Debug::getInstance()->Log(worldMousePos);
+
+	for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++)
+	{
+		if (ImGui::IsMouseClicked(i))
+		{
+			switch (i)
+			{
+			case 0:
+				mb_heldKeys[(int)KeyCode::LeftMouse] = true;
+				mb_pressedDownKeys[(int)KeyCode::LeftMouse] = true;
+				break;
+			case 1:
+				mb_heldKeys[(int)KeyCode::RightMouse] = true;
+				mb_pressedDownKeys[(int)KeyCode::RightMouse] = true;
+				break;
+			}
+		}
+
+		if (ImGui::IsMouseReleased(i))
+		{
+			switch (i)
+			{
+			case 0:
+				mb_heldKeys[(int)KeyCode::LeftMouse] = false;
+				mb_pressedUpKeys[(int)KeyCode::LeftMouse] = true;
+				break;
+			case 1:
+				mb_heldKeys[(int)KeyCode::RightMouse] = false;
+				mb_pressedUpKeys[(int)KeyCode::RightMouse] = true;
+				break;
+			}
+		}
+	}
 }
 
 Vector2 Input::GetScreenSpaceMousePos()
