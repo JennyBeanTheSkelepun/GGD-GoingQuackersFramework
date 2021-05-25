@@ -24,18 +24,20 @@ void Rigidbody::OnDestroy()
 //- Update Render Functions -//
 void Rigidbody::Update()
 {
-	PhysicsCollide();
-
-	//TODO:: Make this not magic up infinity forces!?!?!?!?!?
-	if (m_physicsType == PhysicsTypes::RB && !m_isStatic)
+	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
-		CalculateVelocity();
-	}
+		PhysicsCollide();
 
-	if (m_isStatic)
-	{
-		m_velocity = Vector2();
-		m_acceleration = Vector2();
+		if (m_physicsType == PhysicsTypes::RB && !m_isStatic)
+		{
+			CalculateVelocity();
+		}
+
+		if (m_isStatic)
+		{
+			m_velocity = Vector2();
+			m_acceleration = Vector2();
+		}
 	}
 
 	m_forces.clear();
@@ -44,13 +46,13 @@ void Rigidbody::Update()
 //- ImGui -//
 void Rigidbody::ImGUIUpdate()
 {
-	if (ImGui::BeginCombo("Object Type", m_DropdownPhysicsTypeSelected))
+	if (ImGui::BeginCombo("Object Type", m_DropdownPhysicsTypeSelected.c_str()))
 	{
 		for (int i = 0; i < IM_ARRAYSIZE(m_physicsTypeDropDown); i++)
 		{
 			bool is_selected = (m_DropdownPhysicsTypeSelected == m_physicsTypeDropDown[i]);
 
-			if (ImGui::Selectable(m_physicsTypeDropDown[i], is_selected))
+			if (ImGui::Selectable(m_physicsTypeDropDown[i].c_str(), is_selected))
 			{
 				m_DropdownPhysicsTypeSelected = m_physicsTypeDropDown[i];
 				
@@ -79,13 +81,13 @@ void Rigidbody::ImGUIUpdate()
 
 	ImGui::Spacing();
 
-	if (ImGui::BeginCombo("Collision Type", m_DropdownColliderShapeSelected))
+	if (ImGui::BeginCombo("Collision Type", m_DropdownColliderShapeSelected.c_str()))
 	{
 		for (int i = 0; i < IM_ARRAYSIZE(m_colliderShapeDropDown); i++)
 		{
 			bool is_selected = (m_DropdownColliderShapeSelected == m_colliderShapeDropDown[i]);
 
-			if (ImGui::Selectable(m_colliderShapeDropDown[i], is_selected))
+			if (ImGui::Selectable(m_colliderShapeDropDown[i].c_str(), is_selected))
 			{
 				m_DropdownColliderShapeSelected = m_colliderShapeDropDown[i];
 				
@@ -135,10 +137,26 @@ void Rigidbody::ImGUIUpdate()
 //- Scene Save / Load -//
 void Rigidbody::SceneLoad(json* componentJSON)
 {
+	//TODO:: ADD Sceneload for RB
 }
 
 json* Rigidbody::SceneSave()
 {
+	//TODO:: Create scene save for RB
+	
+	/*json* returnObj = new json({
+		{"Velocity", {m_velocity.X, m_velocity.Y}},
+		{"Acceleration", {m_acceleration.X, m_acceleration.Y}},
+		{"Mass", m_mass},
+		{"Static", m_isStatic},
+		{"ObjectType", m_DropdownPhysicsTypeSelected},
+		{"ColliderShape", m_DropdownColliderShapeSelected},
+		{"Radius", m_radius},
+		{"AABBRect", {m_AABBRect.X, m_AABBRect.Y}}
+		});*/
+
+	//TODO:: Add data from Grav and Trigger to the JSON
+
 	return nullptr;
 }
 
@@ -155,8 +173,6 @@ void Rigidbody::CalculateVelocity()
 	m_acceleration = totalForce / m_mass;
 
 	m_velocity += m_acceleration * Time::GetDeltaTime();
-
-	Debug::getInstance()->Log(m_velocity);
 
 	Vector2 pos = GetOwner()->GetTransform()->GetPosition();
 	pos += m_velocity;
@@ -243,8 +259,6 @@ void Rigidbody::PhysicsCollide()
 
 void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 {
-	//TODO:: Make this not do infinity acceleration!?
-
 	for (GameObject* obj : *collidingObjects)
 	{
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();

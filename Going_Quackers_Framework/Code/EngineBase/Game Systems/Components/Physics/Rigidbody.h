@@ -68,6 +68,7 @@ private:
 
 	std::vector<Vector2> m_forces;
 
+	//TODO:: Remove when Collsion is singleton
 	Collision* mp_collider;
 	Trigger* mp_trigger;
 	GravityEmitter* mp_gravEmitter;
@@ -83,11 +84,11 @@ private:
 
 	bool physicsChecked = false;
 
-	const char* m_physicsTypeDropDown[3] = {"Rigidbody", "Trigger", "Gravity Zone"};
-	const char* m_colliderShapeDropDown[2] = { "Sphere", "AABB" };
+	std::string m_physicsTypeDropDown[3] = {"Rigidbody", "Trigger", "Gravity Zone"};
+	std::string  m_colliderShapeDropDown[2] = { "Sphere", "AABB" };
 
-	const char* m_DropdownPhysicsTypeSelected = "Rigidbody";
-	const char* m_DropdownColliderShapeSelected = "Sphere";
+	std::string  m_DropdownPhysicsTypeSelected = "Rigidbody";
+	std::string  m_DropdownColliderShapeSelected = "Sphere";
 };
 
 #endif _RIGIDBODY_H_
