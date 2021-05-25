@@ -1,19 +1,28 @@
 #include "Player.h"
 
-Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER) {
-	grabbed = false;
-	//Component rigidbody = owner->GetComponent(RIGIDBODY);
+Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER,"Player") {
+	m_grappleState = GRAPPLE_STATE::INACTIVE;
+	wallGrabbed = false;
+	playerObj = GetOwner();
 }
+
+
 
 void Player::GrabWall()
 {
-	//todo make an if statement that checks if the player is both colliding with something and that the grappling hook rope is very small/the hook is a certain distance to the player and sets grabbed to true
-
-
-	if (grabbed)
+	//todo add rope length to the if statement
+	if (GetGrappleState() == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerObj->GetComponent<Rigidbody>()->getCollideFlag() == true)
 	{
+		//set wallGrabbed to be true
+		wallGrabbed = true;
+		//note: wallGrabbed can be used by whoever is making the jump system to set it to false and release the grapple
+
 		//todo get the object the player is colliding with
+	}
+
+	if (wallGrabbed)
+	{
+
 		//todo set the player to face the wall they are colliding with
-		//todo set the players to be constantly moving towards the wall it's attached to
 	}
 }
