@@ -67,6 +67,10 @@ public:
 		case ComponentTypes::RIGIDBODY:
 			name = "RigidBody";
 			break;
+
+		case ComponentTypes::SPRINGJOINT:
+			name = "SpringJoint";
+			break;
 		}
 
 		if (ImGui::CollapsingHeader(name))

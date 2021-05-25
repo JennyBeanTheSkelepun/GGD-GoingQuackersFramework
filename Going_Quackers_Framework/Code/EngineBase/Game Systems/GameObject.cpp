@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Components/SpriteRenderer.h"
+#include "Components/SpringJoint.h"
 #include "Components/Physics/Rigidbody.h"
 #include "Debug.h"
 
@@ -119,7 +120,7 @@ void GameObject::ImGUIUpdate()
 		ImGui::OpenPopup("Component List");
 	}
 
-	const char* components[] = { "Transform", "Sprite Renderer", "RigidBody" };
+	const char* components[] = { "Transform", "Sprite Renderer", "RigidBody", "Spring Joint" };
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{
@@ -140,6 +141,10 @@ void GameObject::ImGUIUpdate()
 					case 2:
 						AddComponent<Rigidbody>();
 					break;
+
+					case 3:
+						AddComponent<SpringJoint>();
+						break;
 				}
 			}
 		}
@@ -169,6 +174,9 @@ void GameObject::DeleteComponent(Component* component)
 		break;
 	case ComponentTypes::TRANSFORM:
 		delete static_cast<Transform*>(component);
+		break;
+	case ComponentTypes::SPRINGJOINT:
+		delete static_cast<SpringJoint*>(component);
 		break;
 	default:
 		Debug::getInstance()->LogWarning("ERROR TRYING TO DELETE A UNSUPORTED COMPONENT");
