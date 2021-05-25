@@ -16,6 +16,7 @@ enum ComponentTypes
 	RIGIDBODY = 3,
 	SPRINGJOINT = 4,
 	PLAYER = 5
+
 };
 
 class Component
