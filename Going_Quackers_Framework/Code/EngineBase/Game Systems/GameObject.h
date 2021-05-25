@@ -7,6 +7,8 @@
 #include "Components/Component.h"
 #include "Components/Transform.h"
 
+#include "Debug.h"
+
 class GameObject
 {
 public:
@@ -27,10 +29,14 @@ public:
 	template<class T>
 	T* AddComponent()
 	{
-		if (std::is_base_of<Component, T>::value)
+		if (std::is_base_of<Component, T>::value && GetComponent<T>() == nullptr )
 		{
 			m_components.push_back(static_cast<Component*>(new T(this)));
 			return static_cast<T*>(m_components[m_components.size() - 1]);
+		}
+		else
+		{
+			Debug::getInstance()->LogError("Gameobject cant contain duplicate components");
 		}
 	}
 

@@ -1,11 +1,12 @@
 #include "Component.h"
+#include "../Debug.h"
 
 Component::Component(GameObject* owner, ComponentTypes a_type, std::string typeName)
 {
 	this->mp_owner = owner;
 	this->m_type = a_type;
 	this->ID = rand();
-	this->shouldDestroy = false;
+	this->mb_stayAlive = true;
 	this->name = typeName;
 }
 
@@ -15,14 +16,19 @@ Component::~Component()
 
 void Component::ImGUIDisplay()
 {
-	if (ImGui::CollapsingHeader(name.c_str()))
+	//- If not transform allow component deletion -//
+	if (m_type != ComponentTypes::TRANSFORM)
 	{
-		if (ImGui::Button("Delete"))
-		{
-			shouldDestroy = true;
-		}
-		ImGUIUpdate();
+		if (ImGui::CollapsingHeader(name.c_str(), &mb_stayAlive))
+			ImGUIUpdate();
 	}
+	else
+	{
+		if (ImGui::CollapsingHeader(name.c_str()))
+			ImGUIUpdate();
+	}
+
+	ImGui::Spacing();
 }
 
 GameObject* Component::GetOwner() 
@@ -42,5 +48,5 @@ int Component::GetID()
 
 bool Component::ShouldDestroy() 
 {
-	return shouldDestroy; 
+	return !mb_stayAlive; 
 }
