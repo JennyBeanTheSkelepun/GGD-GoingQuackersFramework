@@ -24,26 +24,139 @@ void Rigidbody::OnDestroy()
 //- Update Render Functions -//
 void Rigidbody::Update()
 {
-	PhysicsCollide();
-
-	if (m_physicsType == PhysicsTypes::RB)
+	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
-		CalculateVelocity();
+		PhysicsCollide();
+
+		if (m_physicsType == PhysicsTypes::RB && !m_isStatic)
+		{
+			CalculateVelocity();
+		}
+
+		if (m_isStatic)
+		{
+			m_velocity = Vector2();
+			m_acceleration = Vector2();
+		}
 	}
+
+	m_forces.clear();
 }
 
 //- ImGui -//
 void Rigidbody::ImGUIUpdate()
 {
+	if (ImGui::BeginCombo("Object Type", m_DropdownPhysicsTypeSelected.c_str()))
+	{
+		for (int i = 0; i < IM_ARRAYSIZE(m_physicsTypeDropDown); i++)
+		{
+			bool is_selected = (m_DropdownPhysicsTypeSelected == m_physicsTypeDropDown[i]);
+
+			if (ImGui::Selectable(m_physicsTypeDropDown[i].c_str(), is_selected))
+			{
+				m_DropdownPhysicsTypeSelected = m_physicsTypeDropDown[i];
+				
+				if (m_DropdownPhysicsTypeSelected == "Rigidbody")
+				{
+					m_physicsType = PhysicsTypes::RB;
+				}
+				else if (m_DropdownPhysicsTypeSelected == "Trigger")
+				{
+					m_physicsType = PhysicsTypes::Trig;
+				}
+				else if (m_DropdownPhysicsTypeSelected == "Gravity Zone")
+				{
+					m_physicsType = PhysicsTypes::GE;
+				}
+			}
+
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+
+		ImGui::EndCombo();
+	}
+
+	ImGui::Spacing();
+
+	if (ImGui::BeginCombo("Collision Type", m_DropdownColliderShapeSelected.c_str()))
+	{
+		for (int i = 0; i < IM_ARRAYSIZE(m_colliderShapeDropDown); i++)
+		{
+			bool is_selected = (m_DropdownColliderShapeSelected == m_colliderShapeDropDown[i]);
+
+			if (ImGui::Selectable(m_colliderShapeDropDown[i].c_str(), is_selected))
+			{
+				m_DropdownColliderShapeSelected = m_colliderShapeDropDown[i];
+				
+				if (m_DropdownColliderShapeSelected == "Sphere")
+				{
+					m_collisionType = CollisionTypes::Sphere;
+				}
+				else if (m_DropdownColliderShapeSelected == "AABB")
+				{
+					m_collisionType = CollisionTypes::AABB;
+				}
+			}
+
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+
+		ImGui::EndCombo();
+	}
+
+	ImGui::Dummy(ImVec2(0.0f, 20.0f));
+
+	if (m_collisionType == CollisionTypes::Sphere)
+	{
+		ImGui::InputFloat("Radius", &m_radius);
+	}
+	else if (m_collisionType == CollisionTypes::AABB)
+	{
+		ImGui::InputFloat("Rect Width", &m_AABBRect.X);
+		ImGui::InputFloat("Rect Height", &m_AABBRect.Y);
+	}
+
+	ImGui::Dummy(ImVec2(0.0f, 20.0f));
+
+	if (m_physicsType == PhysicsTypes::RB)
+	{
+		ImGui::Checkbox("Static", &m_isStatic);
+	}
+	else if (m_physicsType == PhysicsTypes::GE)
+	{
+		mp_gravEmitter->ImGuiSetup();
+	}
 }
 
 //- Scene Save / Load -//
 void Rigidbody::SceneLoad(json* componentJSON)
 {
+	//TODO:: ADD Sceneload for RB
 }
 
 json* Rigidbody::SceneSave()
 {
+	//TODO:: Create scene save for RB
+	
+	/*json* returnObj = new json({
+		{"Velocity", {m_velocity.X, m_velocity.Y}},
+		{"Acceleration", {m_acceleration.X, m_acceleration.Y}},
+		{"Mass", m_mass},
+		{"Static", m_isStatic},
+		{"ObjectType", m_DropdownPhysicsTypeSelected},
+		{"ColliderShape", m_DropdownColliderShapeSelected},
+		{"Radius", m_radius},
+		{"AABBRect", {m_AABBRect.X, m_AABBRect.Y}}
+		});*/
+
+	//TODO:: Add data from Grav and Trigger to the JSON
+
 	return nullptr;
 }
 
@@ -59,17 +172,28 @@ void Rigidbody::CalculateVelocity()
 
 	m_acceleration = totalForce / m_mass;
 
-	m_velocity = m_acceleration / Time::GetDeltaTime();
+	m_velocity += m_acceleration * Time::GetDeltaTime();
+
+	Vector2 pos = GetOwner()->GetTransform()->GetPosition();
+	pos += m_velocity;
+	GetOwner()->GetTransform()->SetPosition(pos);
 }
 
 void Rigidbody::PhysicsCollide()
 {
-	//std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
+	std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
 	std::vector<GameObject*> collidingObjects;
 
-	for (GameObject* obj : collidingObjects)
+	for (GameObject* obj : allObjects)
 	{
-		if (obj->GetComponent<Rigidbody>()->getCollideFlag())
+		if (obj->GetComponent<Rigidbody>() == nullptr || obj == GetOwner())
+		{
+			continue;
+		}
+
+		Rigidbody* OtherRB = obj->GetComponent<Rigidbody>();
+
+		if (OtherRB->getCollideFlag() && OtherRB->getType() == PhysicsTypes::RB && getType() == PhysicsTypes::RB)
 		{
 			break;
 		}
@@ -80,10 +204,18 @@ void Rigidbody::PhysicsCollide()
 			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if (mp_collider->CollisionAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if (mp_collider->CollisionAABB(GetOwner(), obj)) 
+				{ 
+					collidingObjects.push_back(obj); 
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID()); 
+				}
 				break;
 			case CollisionTypes::Sphere:
-				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj))
+				{
+					collidingObjects.push_back(obj); 
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
+				}
 				break;
 			}
 			break;
@@ -91,10 +223,18 @@ void Rigidbody::PhysicsCollide()
 			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj)) 
+				{
+					collidingObjects.push_back(obj);
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
+				}
 				break;
 			case CollisionTypes::Sphere:
-				if(mp_collider->CollisionSpherical(GetOwner(), obj)) { collidingObjects.push_back(obj); };
+				if(mp_collider->CollisionSpherical(GetOwner(), obj)) 
+				{
+					collidingObjects.push_back(obj);
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
+				}
 				break;
 			}
 			break;
@@ -121,14 +261,25 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 {
 	for (GameObject* obj : *collidingObjects)
 	{
-		Vector2 forceDirection = obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
-		forceDirection.Normalize();
+		Rigidbody* rb = obj->GetComponent<Rigidbody>();
+		if (rb->getType() != PhysicsTypes::RB || rb->m_isStatic)
+		{
+			continue;
+		}
 
-		float distance = (obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition()).Length();
+		Vector2 vectorBetweenObjs = obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
+		float distance = vectorBetweenObjs.Length();
 
-		Vector2 appliedForce = forceDirection * (distance / 2.0f);
+		Vector2 forceDirection = vectorBetweenObjs.Normalize();
 
-		AddForce(appliedForce);
-		obj->GetComponent<Rigidbody>()->AddForce(-appliedForce);
+		if (distance == 0)
+		{
+			continue;
+		}
+
+		Vector2 force = forceDirection * (distance / 2.0f);
+
+		rb->AddForce(force);
+		AddForce(-force);
 	}
 }
