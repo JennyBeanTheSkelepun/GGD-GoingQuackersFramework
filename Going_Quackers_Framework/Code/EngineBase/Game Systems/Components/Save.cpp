@@ -1,9 +1,9 @@
 #include "Save.h"
 
-void Save::Initialize() {
+Save::Save(GameObject* owner) : Component(owner, ComponentTypes::SAVE, "Save") {
 	SaveManager::getInstance()->AddToSaving(mp_owner);
 }
 
-void Save::Deconstruct() {
+Save::~Save() {
 	SaveManager::getInstance()->RemoveFromSaving(mp_owner);
 }

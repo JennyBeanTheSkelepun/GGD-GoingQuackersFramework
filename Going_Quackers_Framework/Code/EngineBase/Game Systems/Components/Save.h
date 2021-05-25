@@ -6,8 +6,8 @@
 
 class Save : Component {
 public:
-	void Initialize() override;
-	void Deconstruct() override;
+	Save(GameObject* owner);
+	~Save();
 };
 
 #endif
