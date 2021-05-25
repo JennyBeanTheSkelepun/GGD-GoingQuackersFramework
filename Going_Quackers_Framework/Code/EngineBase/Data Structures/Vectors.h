@@ -72,6 +72,11 @@ struct Vector3
 		return *this;
 	}
 	float Dot(const Vector3& vec) const { return (X * vec.X + Y * vec.Y + Z * vec.Z ); }
+	float* ToFloatArray() 
+	{
+		float* arr[3] = { &(this->X), &(this->Y), &(this->Z) };
+		return arr[0]; 
+	}
 
 	Vector3 operator-() const { return Vector3(-X, -Y, -Z); }
 	Vector3 operator+(const Vector3& rhs) const { return Vector3(X + rhs.X, Y + rhs.Y, Z + rhs.Z); }

@@ -1,6 +1,5 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
-//#include "KeyboardEvents.h"
 
 #include "../Data Structures/Vectors.h"
 
@@ -97,7 +96,8 @@ private:
 	bool* mb_pressedDownKeys;
 	bool* mb_pressedUpKeys;
 
-	Vector2 mousePos;
+	Vector2 screenMousePos;
+	Vector3 worldMousePos;
 };
 
 #endif
