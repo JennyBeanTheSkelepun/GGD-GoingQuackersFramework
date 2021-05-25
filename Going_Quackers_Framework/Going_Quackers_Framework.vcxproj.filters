@@ -279,6 +279,9 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\VirtualCamera.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\SaveManager.cpp">
+      <Filter>Source Files\Engine\Game Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -430,6 +433,18 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\VirtualCamera.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\SaveManager.h">
+      <Filter>Header Files\Engine\Game Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
