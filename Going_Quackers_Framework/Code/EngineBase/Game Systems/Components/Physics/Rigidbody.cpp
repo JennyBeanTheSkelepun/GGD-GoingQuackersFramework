@@ -1,12 +1,14 @@
 #include "Rigidbody.h"
 
-Rigidbody::Rigidbody(GameObject* owner) : Component(owner, ComponentTypes::RIGIDBODY)
+//- Constructor -//
+Rigidbody::Rigidbody(GameObject* owner) : Component(owner, ComponentTypes::RIGIDBODY, "RigidBody")
 {
 	mp_collider = new Collision();
 	mp_gravEmitter = new GravityEmitter();
 	mp_trigger = new Trigger();
 }
 
+//- Descructor -//
 Rigidbody::~Rigidbody()
 {
 	delete mp_collider;
@@ -14,6 +16,12 @@ Rigidbody::~Rigidbody()
 	delete mp_trigger;
 }
 
+void Rigidbody::OnDestroy()
+{
+	this->~Rigidbody();
+}
+
+//- Update Render Functions -//
 void Rigidbody::Update()
 {
 	PhysicsCollide();
@@ -24,10 +32,22 @@ void Rigidbody::Update()
 	}
 }
 
+//- ImGui -//
 void Rigidbody::ImGUIUpdate()
 {
 }
 
+//- Scene Save / Load -//
+void Rigidbody::SceneLoad(json* componentJSON)
+{
+}
+
+json* Rigidbody::SceneSave()
+{
+	return nullptr;
+}
+
+//- Custom Functions -//
 void Rigidbody::CalculateVelocity()
 {
 	Vector2 totalForce;

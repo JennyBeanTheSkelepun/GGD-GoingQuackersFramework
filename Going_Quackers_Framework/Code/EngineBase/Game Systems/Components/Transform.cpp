@@ -3,20 +3,31 @@
 #include "../GameObject.h"
 #include <math.h>
 
-Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANSFORM)
+Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANSFORM, "Transform")
 {
 	localToWorldMatrix = DirectX::XMMatrixIdentity();
 	worldToLocalMatrix = DirectX::XMMatrixIdentity();
-}
 
-void Transform::Initialize()
-{
 	m_position = Vector2(0.0f, 0.0f);
 	m_rotation = 0.0f;
 	m_scale = Vector2(1.0f, 1.0f);
 	m_localPosition = Vector2(0.0f, 0.0f);
 	m_localRotation = 0.0f;
 	m_localScale = Vector2(1.0f, 1.0f);
+}
+
+Transform::~Transform()
+{
+
+}
+
+void Transform::OnDestroy()
+{
+	this->~Transform();
+}
+
+void Transform::Update()
+{
 }
 
 void Transform::ImGUIUpdate()

@@ -1,5 +1,6 @@
 #include "DirectXWindow.h"
 #include "DirectXGraphics.h"
+#include "../../Game Systems/Input.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -56,8 +57,6 @@ LRESULT CALLBACK DirectXWindow::MessageHandler(HWND hwnd, UINT uint, WPARAM wPar
 		case WM_EXITSIZEMOVE:
 		{
 			mb_sizeMovement = false;
-			//mp_DirectX->ResizeWindowCall();
-			
 			return 0;
 		}
 
@@ -71,12 +70,12 @@ LRESULT CALLBACK DirectXWindow::MessageHandler(HWND hwnd, UINT uint, WPARAM wPar
 
 
 		case WM_KEYDOWN:
-			//mp_Input->KeyDown((unsigned int)wParam);
+			Input::getInstance()->KeyDown((unsigned int)wParam);
 			return 0;
 			break;
 
 		case WM_KEYUP:
-			//mp_Input->KeyUp((unsigned int)wParam);
+			Input::getInstance()->KeyUp((unsigned int)wParam);
 			return 0;
 			break;
 

@@ -5,6 +5,7 @@
 
 #define FULL_SCREEN false
 
+#include "../../Game Systems/Input.h"
 #include "../../ImGui/ImGui SourceCode/imgui.h"
 #include <Windows.h>
 
@@ -19,6 +20,7 @@ public:
 	bool SetupWindow();
 	LRESULT MessageHandler(HWND hwnd, UINT uint, WPARAM wParam, LPARAM lParam);
 	void InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight);
+
 	void ShutdownWindows();
 
 	bool mb_minamised;

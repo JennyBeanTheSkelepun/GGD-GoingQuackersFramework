@@ -4,7 +4,7 @@
 
 EngineMain::EngineMain()
 {
-	mp_Input = 0;
+	Input::getInstance();
 
 	//- Creates Singleton Instance -//
 	Graphics::getInstance();
@@ -12,22 +12,11 @@ EngineMain::EngineMain()
 
 EngineMain::~EngineMain()
 {
-	delete mp_Input;
-	mp_Input = nullptr;
-
-	//// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//for (size_t i = 0; i < gameObjects.size(); i++)
-	//{
-	//	delete gameObjects[i];
-	//	gameObjects[i] = nullptr;
-	//}
-
 	// Delete objects
 	for (size_t i = 0; i < SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects().size(); i++)
 	{
 		SceneManager::GetInstance()->GetCurrentScene()->DeleteObjectAtIndex(i);
 	}
-
 }
 
 bool EngineMain::Initalize()
@@ -35,38 +24,9 @@ bool EngineMain::Initalize()
 	int li_screenWidth = 0, li_screenHeight = 0;
 	bool result;
 
-	mp_Input = new Input();
-
-	if (!mp_Input) 
-		return false;
-	mp_Input->Initialize();
-
 	Graphics::getInstance()->InitaliseAPIs();
 	SceneManager::GetInstance()->Initialize();
 	SceneManager::GetInstance()->ChangeScene("default", false);
-
-	//GameObject* mp_Model = new GameObject("Model 1");
-	//mp_Model->AddComponent<SpriteRenderer>();
-	//mp_Model->GetTransform()->SetPosition(Vector2(2.0f, 0.0f));
-
-	//// Create the model object.
-	//GameObject* mp_Model2 = new GameObject("Model 2");
-	//result = mp_Model2->AddComponent<SpriteRenderer>();
-	//mp_Model2->GetTransform()->SetPosition(Vector2(-2.5f, 0.0f));
-	//mp_Model2->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
-	//mp_Model2->SetParent(mp_Model);
-	//
-	//// Create the model object.
-	//GameObject* mp_Model3 = new GameObject("Model 3");
-	//mp_Model3->AddComponent<SpriteRenderer>();
-	//mp_Model3->GetTransform()->SetPosition(Vector2(-5.0f, 0.0f));
-	////mp_Model3->GetTransform()->SetLocalScale(Vector2(0.5f, 0.5f));
-	////mp_Model3->SetParent(mp_Model2);
-
-	//gameObjects.push_back(mp_Model);
-	////gameObjects.push_back(mp_Model2);
-	////gameObjects.push_back(mp_Model3);
-
 
 	EngineGuiClass::getInstance()->InitializeObjectList(SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjectsList());
 
@@ -108,12 +68,12 @@ void EngineMain::Run()
 
 bool EngineMain::UpdateRenderLoop()
 {
-	bool lb_result; 
-	if (mp_Input->isKeyDown(VK_ESCAPE))
+	bool lb_result;
+	if (Input::getInstance()->isKeyHeldDown(KeyCode::ESCAPE))
 		return false;
 
 	//- UPDATE LOOP START-//
-	
+
 	for (size_t i = 0; i < SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects().size(); i++)
 	{
 		if (SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->ShouldDestroy())
@@ -125,13 +85,16 @@ bool EngineMain::UpdateRenderLoop()
 		SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->Update();
 	}
 
-	//gameObjects[0]->GetTransform()->SetPosition(gameObjects[0]->GetTransform()->GetPosition() + Vector2(-0.1f, 0.0f) * Time::GetDeltaTime());
-	//gameObjects[1]->GetTransform()->SetPosition(gameObjects[1]->GetTransform()->GetPosition() + Vector2(0.5f, 0.0f) * Time::GetDeltaTime());
-	//gameObjects[0]->GetTransform()->SetLocalRotation(gameObjects[0]->GetTransform()->GetLocalRotation() + 20.0f * Time::GetDeltaTime());
-	//gameObjects[1]->GetTransform()->SetLocalScale(gameObjects[1]->GetTransform()->GetLocalScale() - Vector2(0.1f, 0.1f) * Time::GetDeltaTime());
-	//gameObjects[2]->GetTransform()->SetLocalRotation(gameObjects[2]->GetTransform()->GetLocalRotation() + 100.0f * Time::GetDeltaTime());
+	if (Input::getInstance()->isKeyHeldDown(KeyCode::A))
+	{
+		Debug::getInstance()->Log("you did it2");
+	}
+	if (Input::getInstance()->isKeyHeldDown(KeyCode::D))
+	{
+		Debug::getInstance()->Log("you did it1");
+	}
 
-
+	Input::getInstance()->Update();
 	Graphics::getInstance()->StartApiUpdateLoop();
 	//- UPDATE LOOP END -//
 

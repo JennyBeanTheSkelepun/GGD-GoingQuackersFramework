@@ -1,0 +1,77 @@
+------------------------------------------Header-----------------------------------------------------------------------------------------------------------------
+#ifndef _T_H_
+#define _T_H_
+
+#include "Component.h"
+
+class T: public Component
+{
+public:
+	T(GameObject* owner);
+	~T();
+
+	//- Basic Loops -//
+	void OnDestroy() override;
+	void Update() override;
+
+	//- ImGui UpdateLoop -//
+	void ImGUIUpdate() override;
+	
+	//- Scene Save and Load -//
+	json* SceneSave() override;
+	void SceneLoad(json* componentJSON) override;
+
+private:
+
+};
+
+#endif
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------CPP File----------------------------------------------------------------------------------------------------------------
+#include "T.h"
+
+//- Constructors -//
+T::T(GameObject* owner) : Component(owner, ComponentTypes::T, "T")
+{
+}
+
+//- Deconstructors -//
+T::~T()
+{
+	
+}
+
+void T::OnDestroy()
+{
+	this->~T();
+}
+
+//- Update Function -//
+void T::Update()
+{
+}
+
+//- ImGui -//
+void T::ImGUIUpdate()
+{
+
+}
+
+//- Scene Save / Load -//
+void T::SceneLoad(json* componentJSON)
+{
+	ElementVar1 = (*componentJSON)["ElementName1"];
+	ElementVar2 = (*componentJSON)["ElementName2"];
+}
+
+json* T::SceneSave()
+{
+	json* returnObj = new json({
+		{"ElementName1", ElementVar1},
+		{"ElementName2", ElementVar2}
+		});
+
+	return returnObj;
+}
+
+//- Custom Functions -//
