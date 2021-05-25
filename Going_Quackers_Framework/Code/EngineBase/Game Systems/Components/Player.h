@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Component.h"
+#include "../../Data Structures/Vectors.h"
 
 class Player : public Component
 {
@@ -27,8 +28,12 @@ public:
 	
 	GRAPPLE_STATE GetGrappleState() { return m_grappleState; };
 	void SetGrappleState(GRAPPLE_STATE state);
+
+	bool grabbed;
 private:
 	GRAPPLE_STATE m_grappleState;
+	void GrabWall();
+	void GrappleFire(Vector2 targetPos);
 };
 
 #endif // !PLAYER_H

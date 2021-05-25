@@ -1,10 +1,14 @@
 #include "Player.h"
 #include "../Input.h"
+#include "../GameObject.h"
+#include "Transform.h"
 #include "../Debug.h"
+
 
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
 {
 	m_grappleState = GRAPPLE_STATE::INACTIVE;
+	grabbed = false;
 }
 
 Player::~Player()
@@ -23,15 +27,24 @@ void Player::Update()
 
 	// if the player is at the grapple's position, stop it from retracting more
 
-	// aim; get cursor position
+	// aim at cursor position; rotate to face it
+	Transform* playerTransform = this->GetOwner()->GetComponent<Transform>();
+	Vector3 mousePos = Input::getInstance()->GetWorldSpaceMousePos();
+	/*Vector2 playerPos = playerTransform->GetPosition();
+	double angle = std::acos(playerPos.Normalize().Dot(Vector2(mousePos.X, mousePos.Y).Normalize()));
+	// radians to degrees
+	angle *= 180;
+	angle /= (2.f * std::acos(0.f));
+	// account for existing rotation
+	angle -= playerTransform->GetRotation();
+	// flip sign if cursor is on the right
+	if (mousePos.X > playerPos.X) angle *= -1;
+	this->GetOwner()->GetComponent<Transform>()->SetLocalRotation(angle);*/
 
 	// fire grapple on left click down
 	if (GetGrappleState() == GRAPPLE_STATE::INACTIVE && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
 	{
-		// calculate direction to cursor position
-		// create grapple at player position??
-		SetGrappleState(GRAPPLE_STATE::EXTENDING);
-		// note: moving from the extending state to the attached state is handled by the grapple
+		GrappleFire(Vector2(mousePos.X,mousePos.Y));
 	}
 
 	// release grapple on left click up
@@ -67,7 +80,11 @@ void Player::Update()
 #pragma endregion
 
 	// if colliding with a wall, press space and move player away from it
-
+	if (grabbed && Input::getInstance()->isKeyPressedDown(KeyCode::Space))
+	{
+		// move player away
+		grabbed = false;
+	}
 }
 
 void Player::ImGUIUpdate()
@@ -130,5 +147,30 @@ void Player::SetGrappleState(Player::GRAPPLE_STATE state)
 	case GRAPPLE_STATE::RETURNING:
 		Debug::getInstance()->Log("Player: release grapple");
 		break;
+	}
+	m_grappleState = state;
+}
+
+void Player::GrappleFire(Vector2 targetPos)
+{
+	// calculate direction to cursor position
+	Vector2 playerPos = this->GetOwner()->GetComponent<Transform>()->GetPosition();
+
+	// create grapple at player position?? pass the direction to the grapple??
+
+	SetGrappleState(GRAPPLE_STATE::EXTENDING);
+	// note: moving from the extending state to the attached state is handled by the grapple
+}
+
+void Player::GrabWall()
+{
+	//todo make an if statement that checks if the player is both colliding with something and that the grappling hook rope is very small/the hook is a certain distance to the player and sets grabbed to true 
+
+
+	if (grabbed)
+	{
+		//todo get the object the player is colliding with 
+		//todo set the player to face the wall they are colliding with 
+		//todo set the players to be constantly moving towards the wall it's attached to 
 	}
 }
