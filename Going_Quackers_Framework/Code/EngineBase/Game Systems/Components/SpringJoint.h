@@ -18,7 +18,7 @@ enum SpringMode
 
 class SpringJoint : public Component {
 public:
-	SpringJoint(GameObject* ap_owner, GameObject* ap_connectedObject);
+	SpringJoint(GameObject* ap_owner);
 	~SpringJoint();
 
 	inline GameObject* GetConnectedObject() { return mp_connectedObject; }
@@ -37,6 +37,7 @@ public:
 	void SetSpringMode(SpringMode a_mode);
 
 	void Update() override;
+	void ImGUIUpdate() override;
 
 private:
 	void ApplyFixedHeadSpringForce(float af_currentStretch);
@@ -49,6 +50,10 @@ private:
 
 	SpringType m_type;
 	SpringMode m_mode;
+
+	char* mp_jointObjectNameField;
+	char* mp_desiredLengthField;
+	char* mp_strengthField;
 };
 
 #endif

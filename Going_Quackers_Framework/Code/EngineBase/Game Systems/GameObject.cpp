@@ -2,6 +2,7 @@
 #include "Debug.h"
 
 #include "Components/SpriteRenderer.h"
+#include "Components/SpringJoint.h"
 #include "Components/Physics/Rigidbody.h"
 #include "Components/VirtualCamera.h"
 
