@@ -90,7 +90,7 @@ void GameObject::ImGUIUpdate()
 					AddComponent<VirtualCamera>();
 					break;
 				default:
-					Debug::getInstance()->LogError("Component Type Not Recgonized");
+						Debug::getInstance()->LogError("Component Type Not Recognized");
 					break;
 				}
 			}

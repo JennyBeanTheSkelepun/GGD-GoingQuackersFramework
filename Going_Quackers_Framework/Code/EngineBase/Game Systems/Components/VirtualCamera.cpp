@@ -5,7 +5,7 @@
 VirtualCamera::VirtualCamera(GameObject* owner) : Component(owner, ComponentTypes::VIRTUALCAMERA, "Virtual Camera")
 {
 	Position = Vector3(0, 0, -5);
-	Roatation = Vector3(0, 0, 0);
+	Rotation = Vector3(0, 0, 0);
 }
 
 //- Deconstructors -//
@@ -28,7 +28,7 @@ void VirtualCamera::Update()
 void VirtualCamera::ImGUIUpdate()
 {
 	ImGui::InputFloat3("Position", Position.ToFloatArray());
-	ImGui::InputFloat3("Roation", Roatation.ToFloatArray());
+	ImGui::InputFloat3("Rotation", Rotation.ToFloatArray());
 
 	if (ImGui::Button("Make Active Camera"))
 	{
@@ -46,9 +46,9 @@ void VirtualCamera::SceneLoad(json* componentJSON)
 	Position.Y = (*componentJSON)["Position"]["Y"];
 	Position.Z = (*componentJSON)["Position"]["Z"];
 
-	Roatation.X = (*componentJSON)["Rotation"]["X"];
-	Roatation.Y = (*componentJSON)["Rotation"]["Y"];
-	Roatation.Z = (*componentJSON)["Rotation"]["Z"];
+	Rotation.X = (*componentJSON)["Rotation"]["X"];
+	Rotation.Y = (*componentJSON)["Rotation"]["Y"];
+	Rotation.Z = (*componentJSON)["Rotation"]["Z"];
 }
 
 void VirtualCamera::CamDeselected()
@@ -73,19 +73,19 @@ void VirtualCamera::SetPosition( Vector3 a_pos)
 
 Vector3 VirtualCamera::GetRotation()
 {
-	return Roatation;
+	return Rotation;
 }
 
 void VirtualCamera::SetRotation(Vector3 a_rotation)
 {
-	Roatation = a_rotation;
+	Rotation = a_rotation;
 }
 
 json* VirtualCamera::SceneSave()
 {
 	json* returnObj = new json({
 		{"Position", {{"X", Position.X },{"Y", Position.Y },{"Z", Position.Z}}},
-		{"Rotation", {{"X", Roatation.X },{"Y", Roatation.Y },{"Z", Roatation.Z}}}
+		{"Rotation", {{"X", Rotation.X },{"Y", Rotation.Y },{"Z", Rotation.Z}}}
 		});
 
 	return returnObj;

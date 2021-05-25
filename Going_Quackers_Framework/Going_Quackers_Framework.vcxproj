@@ -189,7 +189,6 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Player.h" />
-    <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Transform.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\VirtualCamera.h" />
