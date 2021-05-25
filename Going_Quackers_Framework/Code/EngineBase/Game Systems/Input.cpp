@@ -40,7 +40,7 @@ void Input::Update()
 	//worldMousePos.X = (2 * screenMousePos.X - 2 * X - Width) / Width;
 	//worldMousePos.Y = (-2 * screenMousePos.Y + 2 * Y + Height) / Height;
 	worldMousePos.Z = 1;
-		
+
 	//worldMousePos = (1 / MPx) * (2 * sx - 2 * X - Width) / Width
 	//py = (1 / MPy) * (-2 * sy + 2 * Y + Height) / Height
 	//pz = depth buffer
@@ -67,7 +67,7 @@ void Input::KeyUp(unsigned int ai_input)
 {
 	//- Use same function to set both arrays -//
 	mb_heldKeys[ai_input] = false;
-	mb_pressedUpKeys[ai_input] = true; 
+	mb_pressedUpKeys[ai_input] = true;
 	//- above array is set to true to return true if the keys just been releced this frame-//
 }
 

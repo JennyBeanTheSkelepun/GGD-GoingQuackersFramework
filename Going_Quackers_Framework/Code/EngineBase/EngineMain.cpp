@@ -68,12 +68,12 @@ void EngineMain::Run()
 
 bool EngineMain::UpdateRenderLoop()
 {
-	bool lb_result; 
+	bool lb_result;
 	if (Input::getInstance()->isKeyHeldDown(KeyCode::ESCAPE))
 		return false;
 
 	//- UPDATE LOOP START-//
-	
+
 	for (size_t i = 0; i < SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects().size(); i++)
 	{
 		if (SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->ShouldDestroy())
