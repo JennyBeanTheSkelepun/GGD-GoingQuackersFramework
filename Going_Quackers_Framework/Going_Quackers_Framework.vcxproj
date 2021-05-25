@@ -176,6 +176,7 @@
     <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
     <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SpringJoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\Data Structures\Vectors.h" />
@@ -219,6 +220,7 @@
     <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SpringJoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Going_Quackers_Framework.rc" />

@@ -12,6 +12,7 @@ enum class CollisionTypes
 	AABB = 1
 };
 
+//TODO:: Make this a singleton
 class Collision
 {
 public:
