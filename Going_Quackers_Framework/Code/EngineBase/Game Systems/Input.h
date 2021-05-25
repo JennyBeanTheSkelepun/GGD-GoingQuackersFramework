@@ -97,7 +97,8 @@ private:
 	bool* mb_pressedDownKeys;
 	bool* mb_pressedUpKeys;
 
-	Vector2 mousePos;
+	Vector2 screenMousePos;
+	Vector3 worldMousePos;
 };
 
 #endif

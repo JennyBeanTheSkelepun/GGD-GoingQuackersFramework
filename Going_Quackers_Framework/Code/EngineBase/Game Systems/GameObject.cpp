@@ -1,7 +1,9 @@
 #include "GameObject.h"
+#include "Debug.h"
+
 #include "Components/SpriteRenderer.h"
 #include "Components/Physics/Rigidbody.h"
-#include "Debug.h"
+#include "Components/VirtualCamera.h"
 
 GameObject::GameObject(const char* name, GameObject* parent)
 {
@@ -93,7 +95,7 @@ void GameObject::ImGUIUpdate()
 		ImGui::OpenPopup("Component List");
 	}
 
-	const char* components[] = { "Transform", "Sprite Renderer", "RigidBody" };
+	const char* components[] = { "Transform", "Sprite Renderer", "RigidBody", "Virtual Camera" };
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{
@@ -107,15 +109,19 @@ void GameObject::ImGUIUpdate()
 				{
 					case 0:
 						AddComponent<Transform>();
-					break;
-
+						break;
 					case 1:
 						AddComponent<SpriteRenderer>();
-					break;
-
+						break;
 					case 2:
 						AddComponent<Rigidbody>();
-					break;
+						break;
+					case 3:
+						AddComponent<VirtualCamera>();
+						break;
+					default:
+						Debug::getInstance()->LogError("Component Type Not Recgonized");
+						break;
 				}
 			}
 		}

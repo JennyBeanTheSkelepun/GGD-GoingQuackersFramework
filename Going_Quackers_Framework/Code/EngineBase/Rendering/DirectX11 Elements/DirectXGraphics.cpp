@@ -53,9 +53,15 @@ bool DirectXGraphics::InitalizeGraphicalApi()
 	return Initialize();
 }
 
-//void DirectXGraphics::SetNewActiveCamera(VirtualCamera& NextActiveCamera)
-//{
-//}
+void DirectXGraphics::SetNewActiveCamera(VirtualCamera* NextActiveCamera)
+{
+	mp_Camera->SetNewVirtualCamera(NextActiveCamera);
+}
+
+VirtualCamera* DirectXGraphics::GetActiveCamera()
+{
+	return mp_Camera->GetVirtualCamera();
+}
 
 int DirectXGraphics::LoadTexture(std::string TextureLocation)
 {

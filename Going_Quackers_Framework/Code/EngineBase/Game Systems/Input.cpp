@@ -35,17 +35,25 @@ void Input::Update()
 	memset(&mb_pressedUpKeys[0], false, sizeof(bool) * 256);
 
 	//- ImGui Mouse Pos Get -//
-	mousePos = ImGui::GetMousePos();
+	screenMousePos = ImGui::GetMousePos();
+
+	//worldMousePos.X = (2 * screenMousePos.X - 2 * X - Width) / Width;
+	//worldMousePos.Y = (-2 * screenMousePos.Y + 2 * Y + Height) / Height;
+	worldMousePos.Z = 1;
+		
+	//worldMousePos = (1 / MPx) * (2 * sx - 2 * X - Width) / Width
+	//py = (1 / MPy) * (-2 * sy + 2 * Y + Height) / Height
+	//pz = depth buffer
 }
 
 Vector2 Input::GetScreenSpaceMousePos()
 {
-	return mousePos;
+	return screenMousePos;
 }
 
 Vector3 Input::GetWorldSpaceMousePos()
 {
-	return Vector3();
+	return worldMousePos;
 }
 
 void Input::KeyDown(unsigned int ai_input)
@@ -83,46 +91,3 @@ bool Input::isKeyPressedUp(KeyCode ai_key)
 {
 	return mb_pressedUpKeys[static_cast<unsigned int>(ai_key)];
 }
-
-//
-//bool Input::IsKeyQueueEmpty()
-//{
-//	if (KeyQueue.empty())
-//	{
-//		return true;
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//}
-//
-//int Input::queueSize()
-//{
-//	return KeyQueue.size();
-//}
-//
-//KeyboardEvents Input::readKeyQueue()
-//{
-//	if (KeyQueue.empty())
-//	{
-//		return KeyboardEvents();
-//	}
-//	else
-//	{
-//		KeyboardEvents keyEvent = KeyQueue.front();
-//		KeyQueue.pop();
-//		return keyEvent;
-//	}
-//}
-//
-////function for changing the movement keys
-////takes the key pressed and the current movement key i.e. the current moveLeft can be taken and it will also take the key being pressed
-//void Input::changeKey(unsigned int ai_key, unsigned char changed_key)
-//{
-//	if (isKeyHeldDown(ai_key))
-//	{
-//		//changes the key carried in i.e. moveLeft and changes it's value to the key pressed
-//		changed_key = ai_key;
-//	}
-//}
