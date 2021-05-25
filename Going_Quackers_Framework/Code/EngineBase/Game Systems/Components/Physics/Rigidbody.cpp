@@ -138,13 +138,46 @@ void Rigidbody::ImGUIUpdate()
 void Rigidbody::SceneLoad(json* componentJSON)
 {
 	//TODO:: ADD Sceneload for RB
+
+	m_velocity = Vector2((*componentJSON)["Velocity"][0], (*componentJSON)["Velocity"][1]);
+	m_acceleration = Vector2((*componentJSON)["Acceleration"][0], (*componentJSON)["Acceleration"][1]);
+	m_mass = (*componentJSON)["Mass"];
+	m_isStatic = (*componentJSON)["Static"];
+	m_DropdownPhysicsTypeSelected = (*componentJSON)["ObjectType"];
+	m_DropdownColliderShapeSelected = (*componentJSON)["ColliderShape"];
+
+	if (m_DropdownPhysicsTypeSelected == "Rigidbody")
+	{
+		m_physicsType = PhysicsTypes::RB;
+	}
+	else if (m_DropdownPhysicsTypeSelected == "Trigger")
+	{
+		m_physicsType = PhysicsTypes::Trig;
+	}
+	else if (m_DropdownPhysicsTypeSelected == "Gravity Zone")
+	{
+		m_physicsType = PhysicsTypes::GE;
+	}
+
+	if (m_DropdownColliderShapeSelected == "Sphere")
+	{
+		m_collisionType = CollisionTypes::Sphere;
+	}
+	else if (m_DropdownColliderShapeSelected == "AABB")
+	{
+		m_collisionType = CollisionTypes::AABB;
+	}
+
+	m_radius = (*componentJSON)["Radius"];
+	m_AABBRect = Vector2((*componentJSON)["AABBRect"][0], (*componentJSON)["AABBRect"][1]);
+	mp_gravEmitter->LoadGravType((*componentJSON)["GravityType"]);
+	mp_gravEmitter->SetGravityStrength((*componentJSON)["GravityStrength"]);
+	mp_gravEmitter->SetGravityDirection(Vector2((*componentJSON)["GravityDirection"][0], (*componentJSON)["GravityDirection"][1]));
 }
 
 json* Rigidbody::SceneSave()
 {
-	//TODO:: Create scene save for RB
-	
-	/*json* returnObj = new json({
+	json* returnObj = new json({
 		{"Velocity", {m_velocity.X, m_velocity.Y}},
 		{"Acceleration", {m_acceleration.X, m_acceleration.Y}},
 		{"Mass", m_mass},
@@ -152,10 +185,11 @@ json* Rigidbody::SceneSave()
 		{"ObjectType", m_DropdownPhysicsTypeSelected},
 		{"ColliderShape", m_DropdownColliderShapeSelected},
 		{"Radius", m_radius},
-		{"AABBRect", {m_AABBRect.X, m_AABBRect.Y}}
-		});*/
-
-	//TODO:: Add data from Grav and Trigger to the JSON
+		{"AABBRect", {m_AABBRect.X, m_AABBRect.Y}},
+		{"GravityType", mp_gravEmitter->SaveGravType()},
+		{"GravityStrength", mp_gravEmitter->GetGravityStrength()},
+		{"GravityDirection", {mp_gravEmitter->GetGravityDirection().X, mp_gravEmitter->GetGravityDirection().Y} }
+		});
 
 	return nullptr;
 }
