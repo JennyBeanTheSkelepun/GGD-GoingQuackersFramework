@@ -10,12 +10,18 @@ class Transform : public Component
 {
 public:
 	Transform(GameObject* owner);
+	~Transform();
 
-	void Initialize() override;
+	//- Basic Loops -//
+	void OnDestroy() override;
+	void Update() override;
+
+	//- ImGui UpdateLoop -//
 	void ImGUIUpdate() override;
 
-	virtual json* SceneSave() override;
-	virtual void SceneLoad(json* componentJSON) override;
+	//- Scene Save and Load -//
+	json* SceneSave() override;
+	void SceneLoad(json* componentJSON) override;
 
 	///<summary>Returns a matrix that converts from local space to world space</summary>
 	DirectX::XMMATRIX GetLocalToWorldMatrix();

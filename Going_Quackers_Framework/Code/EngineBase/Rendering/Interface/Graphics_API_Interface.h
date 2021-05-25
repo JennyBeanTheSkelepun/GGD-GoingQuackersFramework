@@ -4,12 +4,13 @@
 #include <string>
 //- Needed to forward declare Sprite renderer to prevent issues -//
 #include "../../Game Systems/Components/SpriteRenderer.h"
+#include "../../Game Systems/Components/VirtualCamera.h"
+#include "../../Data Structures/Vectors.h"
 
 class GraphicsInterface
 {
 public:
 	virtual bool InitalizeGraphicalApi() = 0;
-	//virtual void SetNewActiveCamera(VirtualCamera& vCam) = 0;
 	
 	virtual int AddObjectToRenderLoop(SpriteRenderer* ar_component) = 0;
 	virtual int RemoveObjectFromRenderLoop(int index) = 0;
@@ -30,6 +31,10 @@ public:
 	virtual void StartAPIRenderLoop() = 0;
 
 	virtual void ResizeWindowCall() = 0;
+	virtual Vector2 GetWindowDimentions() = 0;
+
+	virtual void SetNewActiveCamera(VirtualCamera* vCam) = 0;
+	virtual VirtualCamera* GetActiveCamera() = 0;
 };
 
 #endif /* _GRAPHICS_API_INTERFACE_H_ */

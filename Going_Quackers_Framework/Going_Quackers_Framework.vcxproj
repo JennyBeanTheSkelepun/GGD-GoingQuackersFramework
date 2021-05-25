@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\EngineMain.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Collision.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp" />
@@ -147,9 +148,11 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\VirtualCamera.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Debug.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\GameObject.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Input.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\KeyboardEvents.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Time.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp" />
@@ -184,12 +187,13 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.h" />
-    <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Transform.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\VirtualCamera.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Debug.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\GameObject.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Input.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\KeyboardEvents.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Time.h" />
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h" />
@@ -211,10 +215,8 @@
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTextureManager.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h" />
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h" />
-    <ClInclude Include="Code\EngineBase\Rendering\DirectXClass.h" />
     <ClInclude Include="Code\EngineBase\Rendering\Graphics.h" />
     <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h" />
-    <ClInclude Include="Code\EngineBase\Rendering\Shader.h" />
     <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
     <ClInclude Include="resource.h" />
@@ -224,10 +226,10 @@
     <ResourceCompile Include="Going_Quackers_Framework.rc" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Code\EngineBase\Rendering\Shaders\BlockColourShader.fx">
+    <FxCompile Include="Assets\Shaders\BlockColourShader.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Code\EngineBase\Rendering\Shaders\TextureSimple.fx">
+    <FxCompile Include="Assets\Shaders\TextureSimple.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
