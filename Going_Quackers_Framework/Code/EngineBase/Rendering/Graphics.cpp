@@ -179,3 +179,12 @@ int Graphics::RemoveShader(int index)
 		break;
 	}
 }
+
+Vector2 Graphics::GetWindowDimentions()
+{
+	switch (CurrentApi) {
+	case API_TYPE::DIRECT_X_11:
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->GetWindowDimentions();
+		break;
+	}
+}

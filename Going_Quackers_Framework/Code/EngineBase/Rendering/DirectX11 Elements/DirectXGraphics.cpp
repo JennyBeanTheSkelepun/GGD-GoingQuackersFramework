@@ -38,6 +38,11 @@ void DirectXGraphics::ResizeWindowCall()
 	ImGui_ImplDX11_CreateDeviceObjects();
 }
 
+Vector2 DirectXGraphics::GetWindowDimentions()
+{
+	return Vector2(mp_Window->mi_width, mp_Window->mi_height);
+}
+
 int DirectXGraphics::AddObjectToRenderLoop(SpriteRenderer* ar_component)
 {
 	return mp_DirectXRenderLoop->SetObjectToRender(ar_component);
@@ -163,6 +168,7 @@ bool DirectXGraphics::Initialize()
 	}
 
 	mp_DirectXRenderLoop = new DirectXRenderLoop(mp_DirectX);
+
 	return true;
 }
 

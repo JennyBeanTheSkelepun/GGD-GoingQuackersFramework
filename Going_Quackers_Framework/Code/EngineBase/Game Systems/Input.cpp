@@ -1,6 +1,9 @@
 #include "Input.h"
 #include <iostream>
 #include "../ImGui/ImGui SourceCode/imgui.h"
+#include "../Rendering/Graphics.h"
+
+#include "Debug.h"
 
 Input* Input::SingletonInstance = nullptr;
 
@@ -35,15 +38,23 @@ void Input::Update()
 	memset(&mb_pressedUpKeys[0], false, sizeof(bool) * 256);
 
 	//- ImGui Mouse Pos Get -//
-	screenMousePos = ImGui::GetMousePos();
+	ImGuiIO& io = ImGui::GetIO();
+	screenMousePos = Vector2(io.MousePos.x, io.MousePos.y);
 
-	//worldMousePos.X = (2 * screenMousePos.X - 2 * X - Width) / Width;
-	//worldMousePos.Y = (-2 * screenMousePos.Y + 2 * Y + Height) / Height;
-	worldMousePos.Z = 1;
+	VirtualCamera* temp = Graphics::getInstance()->GetActiveCamera();
+	Vector3 camPos = Vector3(0,0,-5);
+	Vector2 winDim = Graphics::getInstance()->GetWindowDimentions();
 
-	//worldMousePos = (1 / MPx) * (2 * sx - 2 * X - Width) / Width
-	//py = (1 / MPy) * (-2 * sy + 2 * Y + Height) / Height
-	//pz = depth buffer
+	if (temp != nullptr)
+	{
+		camPos = temp->GetPosition();
+	}
+
+	worldMousePos.X = (2 * screenMousePos.X - 2 * camPos.X - winDim.X) / winDim.X;
+	worldMousePos.Y = (-2 * screenMousePos.Y + 2 * camPos.Y + winDim.Y) / winDim.Y;
+	worldMousePos.Z = -5;
+
+	Debug::getInstance()->Log(worldMousePos);
 }
 
 Vector2 Input::GetScreenSpaceMousePos()

@@ -50,6 +50,8 @@ public:
 	int LoadShader(std::wstring ShaderLocation);
 	int RemoveShader(int index);
 
+	Vector2 GetWindowDimentions();
+
 	API_TYPE CurrentApi = API_TYPE::DIRECT_X_11;
 
 	//- The current Graphics Api that is being used -//

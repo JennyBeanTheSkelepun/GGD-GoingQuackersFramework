@@ -5,6 +5,7 @@
 //- Needed to forward declare Sprite renderer to prevent issues -//
 #include "../../Game Systems/Components/SpriteRenderer.h"
 #include "../../Game Systems/Components/VirtualCamera.h"
+#include "../../Data Structures/Vectors.h"
 
 class GraphicsInterface
 {
@@ -30,6 +31,7 @@ public:
 	virtual void StartAPIRenderLoop() = 0;
 
 	virtual void ResizeWindowCall() = 0;
+	virtual Vector2 GetWindowDimentions() = 0;
 
 	virtual void SetNewActiveCamera(VirtualCamera* vCam) = 0;
 	virtual VirtualCamera* GetActiveCamera() = 0;

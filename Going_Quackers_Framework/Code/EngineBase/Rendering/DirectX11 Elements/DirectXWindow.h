@@ -20,6 +20,7 @@ public:
 	bool SetupWindow();
 	LRESULT MessageHandler(HWND hwnd, UINT uint, WPARAM wParam, LPARAM lParam);
 	void InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight);
+
 	void ShutdownWindows();
 
 	bool mb_minamised;

@@ -48,6 +48,7 @@ public:
 	void StartAPIRenderLoop();
 
 	void ResizeWindowCall();
+	Vector2 GetWindowDimentions();
 
 	//- old functions -//
 	DirectXGraphics();

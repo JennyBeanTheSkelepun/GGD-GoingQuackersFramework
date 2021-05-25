@@ -4,6 +4,8 @@
 //- Constructors -//
 VirtualCamera::VirtualCamera(GameObject* owner) : Component(owner, ComponentTypes::VIRTUALCAMERA, "Virtual Camera")
 {
+	Position = Vector3(0, 0, -5);
+	Roatation = Vector3(0, 0, 0);
 }
 
 //- Deconstructors -//
