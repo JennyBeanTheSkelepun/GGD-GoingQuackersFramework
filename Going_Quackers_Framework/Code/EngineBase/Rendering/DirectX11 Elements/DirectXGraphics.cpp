@@ -175,6 +175,5 @@ bool DirectXGraphics::Initialize()
 void DirectXGraphics::Update()
 {
 	mp_Camera->Update();
-
-	mp_ImGui->Update(mp_DirectX->mp_renderTextureResourceView);
+	mp_ImGui->Update(mp_DirectX->mp_renderTextureResourceView, mp_Window->mi_width, mp_Window->mi_height);
 }
