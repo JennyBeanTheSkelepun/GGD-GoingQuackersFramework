@@ -36,7 +36,7 @@ public:
 	//Setters and Getters
 	void SetPosition(Vector2 position) { this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
 	Vector2 GetPosition() { return m_position; }
-	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; this->m_position - TransformPoint(position); }
+	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; this->m_position = TransformPoint(position); }
 	Vector2 GetLocalPosition() { return this->m_localPosition; }
 
 	void SetRotation(double rotation) { this->m_rotation = rotation; }

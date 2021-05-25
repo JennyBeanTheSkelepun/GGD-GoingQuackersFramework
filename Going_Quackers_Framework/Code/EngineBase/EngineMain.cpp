@@ -91,14 +91,14 @@ bool EngineMain::UpdateRenderLoop()
 		}
 	}
 
-	if (Input::getInstance()->isKeyHeldDown(KeyCode::A))
-	{
-		Debug::getInstance()->Log("you did it2");
-	}
-	if (Input::getInstance()->isKeyHeldDown(KeyCode::D))
-	{
-		Debug::getInstance()->Log("you did it1");
-	}
+	//if (Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
+	//{
+	//	Debug::getInstance()->Log("you did it2");
+	//}
+	//if (Input::getInstance()->isKeyPressedUp(KeyCode::RightMouse))
+	//{
+	//	Debug::getInstance()->Log("you did it1");
+	//}
 
 	Input::getInstance()->Update();
 	Graphics::getInstance()->StartApiUpdateLoop();
