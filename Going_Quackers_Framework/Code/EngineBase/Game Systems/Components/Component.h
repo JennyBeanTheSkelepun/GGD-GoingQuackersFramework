@@ -14,6 +14,7 @@ enum class ComponentTypes
 	TRANSFORM = 1,
 	SPRITERENDERER = 2,
 	RIGIDBODY = 3,
+	VIRTUALCAMERA = 4,
 	PLAYER = 5,
 };
 

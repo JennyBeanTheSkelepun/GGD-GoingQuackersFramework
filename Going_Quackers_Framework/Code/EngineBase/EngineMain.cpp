@@ -1,6 +1,7 @@
 #include "EngineMain.h"
 #include "../../Code/EngineBase/Rendering/Graphics.h"
 #include "SceneManager/SceneManager.h"
+#include "Game Systems/Components/Physics/Rigidbody.h"
 
 EngineMain::EngineMain()
 {
@@ -68,12 +69,12 @@ void EngineMain::Run()
 
 bool EngineMain::UpdateRenderLoop()
 {
-	bool lb_result; 
+	bool lb_result;
 	if (Input::getInstance()->isKeyHeldDown(KeyCode::ESCAPE))
 		return false;
 
 	//- UPDATE LOOP START-//
-	
+
 	for (size_t i = 0; i < SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects().size(); i++)
 	{
 		if (SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->ShouldDestroy())
@@ -83,16 +84,21 @@ bool EngineMain::UpdateRenderLoop()
 		}
 
 		SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->Update();
+
+		if (SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>() != nullptr)
+		{
+			SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>()->resetCollideFlag();
+		}
 	}
 
-	if (Input::getInstance()->isKeyHeldDown(KeyCode::A))
-	{
-		Debug::getInstance()->Log("you did it2");
-	}
-	if (Input::getInstance()->isKeyHeldDown(KeyCode::D))
-	{
-		Debug::getInstance()->Log("you did it1");
-	}
+	//if (Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
+	//{
+	//	Debug::getInstance()->Log("you did it2");
+	//}
+	//if (Input::getInstance()->isKeyPressedUp(KeyCode::RightMouse))
+	//{
+	//	Debug::getInstance()->Log("you did it1");
+	//}
 
 	Input::getInstance()->Update();
 	Graphics::getInstance()->StartApiUpdateLoop();

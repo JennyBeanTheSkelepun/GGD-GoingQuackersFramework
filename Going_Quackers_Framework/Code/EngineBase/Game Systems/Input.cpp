@@ -1,6 +1,9 @@
 #include "Input.h"
 #include <iostream>
 #include "../ImGui/ImGui SourceCode/imgui.h"
+#include "../Rendering/Graphics.h"
+
+#include "Debug.h"
 
 Input* Input::SingletonInstance = nullptr;
 
@@ -35,17 +38,66 @@ void Input::Update()
 	memset(&mb_pressedUpKeys[0], false, sizeof(bool) * 256);
 
 	//- ImGui Mouse Pos Get -//
-	mousePos = ImGui::GetMousePos();
+	ImGuiIO& io = ImGui::GetIO();
+	screenMousePos = Vector2(io.MousePos.x, io.MousePos.y);
+
+	VirtualCamera* temp = Graphics::getInstance()->GetActiveCamera();
+	Vector3 camPos = Vector3(0,0,-5);
+	Vector2 winDim = Graphics::getInstance()->GetWindowDimentions();
+
+	if (temp != nullptr)
+	{
+		camPos = temp->GetPosition();
+	}
+
+	worldMousePos.X = camPos.X + ((winDim.X / 2) * (2 * screenMousePos.X - 2 * camPos.X - winDim.X) / winDim.X);
+	worldMousePos.Y = camPos.Y + ((winDim.Y / 2) * (-2 * screenMousePos.Y + 2 * camPos.Y + winDim.Y) / winDim.Y);
+	worldMousePos.Z = -5;
+
+	//Debug::getInstance()->Log(worldMousePos);
+
+	for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++)
+	{
+		if (ImGui::IsMouseClicked(i))
+		{
+			switch (i)
+			{
+			case 0:
+				mb_heldKeys[(int)KeyCode::LeftMouse] = true;
+				mb_pressedDownKeys[(int)KeyCode::LeftMouse] = true;
+				break;
+			case 1:
+				mb_heldKeys[(int)KeyCode::RightMouse] = true;
+				mb_pressedDownKeys[(int)KeyCode::RightMouse] = true;
+				break;
+			}
+		}
+
+		if (ImGui::IsMouseReleased(i))
+		{
+			switch (i)
+			{
+			case 0:
+				mb_heldKeys[(int)KeyCode::LeftMouse] = false;
+				mb_pressedUpKeys[(int)KeyCode::LeftMouse] = true;
+				break;
+			case 1:
+				mb_heldKeys[(int)KeyCode::RightMouse] = false;
+				mb_pressedUpKeys[(int)KeyCode::RightMouse] = true;
+				break;
+			}
+		}
+	}
 }
 
 Vector2 Input::GetScreenSpaceMousePos()
 {
-	return mousePos;
+	return screenMousePos;
 }
 
 Vector3 Input::GetWorldSpaceMousePos()
 {
-	return Vector3();
+	return worldMousePos;
 }
 
 void Input::KeyDown(unsigned int ai_input)
@@ -59,7 +111,7 @@ void Input::KeyUp(unsigned int ai_input)
 {
 	//- Use same function to set both arrays -//
 	mb_heldKeys[ai_input] = false;
-	mb_pressedUpKeys[ai_input] = true; 
+	mb_pressedUpKeys[ai_input] = true;
 	//- above array is set to true to return true if the keys just been releced this frame-//
 }
 
@@ -83,46 +135,3 @@ bool Input::isKeyPressedUp(KeyCode ai_key)
 {
 	return mb_pressedUpKeys[static_cast<unsigned int>(ai_key)];
 }
-
-//
-//bool Input::IsKeyQueueEmpty()
-//{
-//	if (KeyQueue.empty())
-//	{
-//		return true;
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//}
-//
-//int Input::queueSize()
-//{
-//	return KeyQueue.size();
-//}
-//
-//KeyboardEvents Input::readKeyQueue()
-//{
-//	if (KeyQueue.empty())
-//	{
-//		return KeyboardEvents();
-//	}
-//	else
-//	{
-//		KeyboardEvents keyEvent = KeyQueue.front();
-//		KeyQueue.pop();
-//		return keyEvent;
-//	}
-//}
-//
-////function for changing the movement keys
-////takes the key pressed and the current movement key i.e. the current moveLeft can be taken and it will also take the key being pressed
-//void Input::changeKey(unsigned int ai_key, unsigned char changed_key)
-//{
-//	if (isKeyHeldDown(ai_key))
-//	{
-//		//changes the key carried in i.e. moveLeft and changes it's value to the key pressed
-//		changed_key = ai_key;
-//	}
-//}

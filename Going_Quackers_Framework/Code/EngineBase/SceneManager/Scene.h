@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 
-class Rigidbody;
 class GameObject;
 
 class Scene

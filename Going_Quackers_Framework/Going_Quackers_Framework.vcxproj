@@ -148,6 +148,7 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\VirtualCamera.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Debug.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\GameObject.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Input.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
     <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SpringJoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\Data Structures\Vectors.h" />
@@ -185,9 +187,9 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.h" />
-    <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Transform.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\VirtualCamera.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Debug.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\GameObject.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Input.h" />
@@ -218,6 +220,7 @@
     <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SpringJoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Going_Quackers_Framework.rc" />

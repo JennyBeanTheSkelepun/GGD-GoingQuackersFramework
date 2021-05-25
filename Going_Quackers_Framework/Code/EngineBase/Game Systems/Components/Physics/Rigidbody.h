@@ -7,12 +7,13 @@
 #include "../Component.h"
 #include "../../Time.h"
 #include "../../../SceneManager/SceneManager.h"
+#include "../../Debug.h"
 
 enum class PhysicsTypes
 {
-	Trig, //Trigger
-	RB, //Rigidbody
-	GE //Gravity Emitter
+	Trig = 0, //Trigger
+	RB = 1, //Rigidbody
+	GE = 2 //Gravity Emitter
 };
 
 class Rigidbody : public Component
@@ -67,9 +68,12 @@ private:
 
 	std::vector<Vector2> m_forces;
 
+	//TODO:: Remove when Collsion is singleton
 	Collision* mp_collider;
 	Trigger* mp_trigger;
 	GravityEmitter* mp_gravEmitter;
+
+	bool m_isStatic = true;
 
 	float m_radius = 0.0f;
 	Vector2 m_AABBRect = Vector2();
@@ -79,6 +83,12 @@ private:
 	void CalculateVelocity();
 
 	bool physicsChecked = false;
+
+	std::string m_physicsTypeDropDown[3] = {"Rigidbody", "Trigger", "Gravity Zone"};
+	std::string  m_colliderShapeDropDown[2] = { "Sphere", "AABB" };
+
+	std::string  m_DropdownPhysicsTypeSelected = "Rigidbody";
+	std::string  m_DropdownColliderShapeSelected = "Sphere";
 };
 
 #endif _RIGIDBODY_H_

@@ -1,13 +1,13 @@
 #ifndef _GRAHPICS_H_
 #define _GRAHPICS_H_
 
+#include "DirectX11 Elements/DirectXGraphics.h"
 #include <vector>
 #include <string>
 
 //- Need to forward declare Interface as its included in DirectXGraphics -//
 class SpriteRenderer;
-
-#include "DirectX11 Elements/DirectXGraphics.h"
+class VirtualCamera;
 
 enum API_TYPE {
 	DIRECT_X_11 = 0
@@ -38,7 +38,8 @@ public:
 	int AddObjectToApiRenderILoop(SpriteRenderer* component);
 	int RemoveObjectFromRenderLoop(int ai_ID);
 	  
-	//void SetNewActiveCamera(VirtualCamera& NextActiveCamera);
+	void SetNewActiveCamera(VirtualCamera* NextActiveCamera);
+	VirtualCamera* GetActiveCamera();
 	  
 	int LoadTexture(std::string TextureLocation);  
 	int RemoveTexture(int index);
@@ -48,6 +49,8 @@ public:
 	
 	int LoadShader(std::wstring ShaderLocation);
 	int RemoveShader(int index);
+
+	Vector2 GetWindowDimentions();
 
 	API_TYPE CurrentApi = API_TYPE::DIRECT_X_11;
 

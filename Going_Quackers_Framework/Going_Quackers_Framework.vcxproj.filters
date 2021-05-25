@@ -154,6 +154,12 @@
     <Filter Include="Source Files\Engine\Game Systems\Physics">
       <UniqueIdentifier>{9549ebba-ad42-4cf2-b0ff-caa04eea1462}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Game Systems\Physics\Joints">
+      <UniqueIdentifier>{79273ae4-14f9-41b8-bba3-b5cc14cc54f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Game Systems\Physics\Joints">
+      <UniqueIdentifier>{1036fbfe-f209-448f-a653-4e9a0599fa5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp">
@@ -211,9 +217,6 @@
       <Filter>Source Files\Engine\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.cpp">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.cpp">
@@ -276,6 +279,12 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\VirtualCamera.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -305,13 +314,7 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h">
-      <Filter>Header Files\Engine\Game Systems\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h">
@@ -362,9 +365,6 @@
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\Graphics.h">
-      <Filter>Header Files\Engine\Rendering\DirectX11 Element</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.h">
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Camera</Filter>
     </ClInclude>
@@ -405,16 +405,25 @@
       <Filter>Header Files\Engine\Game Systems\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\Graphics.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXImGui.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX RenderLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\KeyboardEvents.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Game Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\VirtualCamera.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

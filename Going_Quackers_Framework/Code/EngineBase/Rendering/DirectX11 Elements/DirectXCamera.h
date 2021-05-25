@@ -2,8 +2,9 @@
 #define _CAMERA_H_
 
 #include <directxmath.h>
-
 #include "../../Data Structures/Vectors.h"
+
+class VirtualCamera;
 
 class DirectXCamera
 {
@@ -21,10 +22,15 @@ public:
 	void Render();
 	void GetViewMatrix(DirectX::XMMATRIX& viewMatrix);
 
+	void SetNewVirtualCamera(VirtualCamera* newCam);
+	VirtualCamera* GetVirtualCamera();
+
 private:
 	Vector3 m_position;
 	Vector3 m_rotation;
 	DirectX::XMMATRIX m_viewMatrix;
+
+	VirtualCamera* CurrentVirtualCamera;
 };
 
 
