@@ -3,13 +3,13 @@
 
 #include "Component.h"
 
-enum SpringType
+enum class SpringType
 {
 	FIXED_HEAD = 0,
 	UNFIXED_HEAD = 1
 };
 
-enum SpringMode
+enum class SpringMode
 {
 	ATTRACT_AND_REPEL = 0,
 	ATTRACT_ONLY = 1,
@@ -36,8 +36,11 @@ public:
 	inline SpringMode GetSpringMode() { return m_mode; }
 	void SetSpringMode(SpringMode a_mode);
 
+	void OnDestroy() override;
 	void Update() override;
 	void ImGUIUpdate() override;
+	json* SceneSave() override;
+	void SceneLoad(json* componentJSON) override;
 
 private:
 	void ApplyFixedHeadSpringForce(float af_currentStretch);
@@ -54,6 +57,8 @@ private:
 	char* mp_jointObjectNameField;
 	char* mp_desiredLengthField;
 	char* mp_strengthField;
+	int mi_typeField;
+	int mi_modeField;
 };
 
 #endif
