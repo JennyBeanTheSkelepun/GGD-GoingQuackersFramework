@@ -3,15 +3,30 @@
 #pragma once
 
 #include "Component.h"
-#include "C:\Users\m013002i\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h"
+#include "GameObject.h"
 
 class Player : public Component
 {
 public:
+	enum class GRAPPLE_STATE
+	{
+		INACTIVE = 0,
+		EXTENDING = 1,
+		ATTACHED = 2,
+		RETRACTING = 3,
+		RETURNING = 4,
+	};
 	Player(GameObject* owner);
-	bool grabbed;
+	bool wallGrabbed;
+	//void ImGUIDisplay() override;
+	void Update() override;
+	GRAPPLE_STATE GetGrappleState();
+	void SetGrappleState(GRAPPLE_STATE state);
 private:
+	GRAPPLE_STATE m_grappleState;
 	void GrabWall();
+	Component PlayerBody;
 };
+
 
 #endif // !PLAYER_H
