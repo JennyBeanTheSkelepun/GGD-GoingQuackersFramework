@@ -12,6 +12,8 @@
 #include "Game Systems/KeyboardEvents.h"
 #include "Game Systems/Debug.h"
 
+class Rigidbody;
+
 class EngineMain
 {
 public:

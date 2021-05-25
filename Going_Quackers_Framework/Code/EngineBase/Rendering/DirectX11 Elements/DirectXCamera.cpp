@@ -1,9 +1,12 @@
 #include "DirectXCamera.h"
+#include "../../Game Systems/Components/VirtualCamera.h"
+
 
 DirectXCamera::DirectXCamera()
 {
 	m_position = Vector3();
 	m_rotation = Vector3();
+	CurrentVirtualCamera = nullptr;
 }
 
 DirectXCamera::~DirectXCamera()
@@ -32,7 +35,16 @@ Vector3 DirectXCamera::GetRotation()
 
 void DirectXCamera::Update()
 {
-
+	if (CurrentVirtualCamera != nullptr)
+	{
+		m_position = CurrentVirtualCamera->GetPosition();
+		m_rotation = CurrentVirtualCamera->GetRotation();
+	}
+	else
+	{
+		m_position = Vector3(0.0f,0.0f,-5.0f);
+		m_rotation = Vector3();
+	}
 }
 
 void DirectXCamera::Render()
@@ -87,4 +99,20 @@ void DirectXCamera::Render()
 void DirectXCamera::GetViewMatrix(DirectX::XMMATRIX& viewMatrix)
 {
 	viewMatrix = m_viewMatrix;
+}
+
+void DirectXCamera::SetNewVirtualCamera(VirtualCamera* newCam)
+{
+	if (CurrentVirtualCamera != nullptr)
+	{
+		CurrentVirtualCamera->CamDeselected();
+	}
+
+	CurrentVirtualCamera = newCam;
+	CurrentVirtualCamera->CamSelected();
+}
+
+VirtualCamera* DirectXCamera::GetVirtualCamera()
+{
+	return CurrentVirtualCamera;
 }

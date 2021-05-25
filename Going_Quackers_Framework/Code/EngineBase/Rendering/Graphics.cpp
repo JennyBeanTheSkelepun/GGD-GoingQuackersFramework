@@ -1,5 +1,6 @@
 #include "Graphics.h"
 #include "../../EngineBase/Game Systems/Components/SpriteRenderer.h"
+#include "../../EngineBase/Game Systems/Components/VirtualCamera.h"
 
 Graphics* Graphics::SingletonInstance = nullptr;
 
@@ -95,15 +96,24 @@ int Graphics::AddObjectToApiRenderILoop(SpriteRenderer* component)
 }
 
 
-//void Graphics::SetNewActiveCamera(VirtualCamera& NextActiveCamera)
-//{
-//	//switch (CurrentApi) {
-//	//case API_TYPE::DIRECT_X_11:
-//	//	return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->SetNewActiveCamera(NextActiveCamera);
-//	//	break;
-//	//}
-//}
+void Graphics::SetNewActiveCamera(VirtualCamera* NextActiveCamera)
+{
+	switch (CurrentApi) {
+	case API_TYPE::DIRECT_X_11:
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->SetNewActiveCamera(NextActiveCamera);
+		break;
+	}
+}
 
+VirtualCamera* Graphics::GetActiveCamera()
+{
+	switch (CurrentApi) {
+	case API_TYPE::DIRECT_X_11:
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->GetActiveCamera();
+		break;
+	}
+	return nullptr;
+}
 
 int Graphics::LoadTexture(std::string TextureLocation)
 {
@@ -166,6 +176,15 @@ int Graphics::RemoveShader(int index)
 	switch (CurrentApi) {
 	case API_TYPE::DIRECT_X_11:
 		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->RemoveShader(index);
+		break;
+	}
+}
+
+Vector2 Graphics::GetWindowDimentions()
+{
+	switch (CurrentApi) {
+	case API_TYPE::DIRECT_X_11:
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->GetWindowDimentions();
 		break;
 	}
 }

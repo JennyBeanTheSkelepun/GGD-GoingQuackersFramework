@@ -33,9 +33,9 @@ void Transform::Update()
 void Transform::ImGUIUpdate()
 {
 	//Position Set
-	float position[2] = { m_localPosition.X, m_localPosition.Y};
-	ImGui::InputFloat2("Position", position);
-	SetLocalPosition(Vector2(position[0], position[1]));
+	float* position[2] = { &m_localPosition.X, &m_localPosition.Y};
+	ImGui::InputFloat2("Position", position[0]);
+	SetPosition(Vector2(*position[0], *position[1]));
 
 	//Rotation Set
 	float rotation = m_localRotation;

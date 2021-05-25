@@ -304,6 +304,8 @@ bool DirectXClass::ResizeRenderBuffers(HWND hwnd, float af_screenDepth, float af
 	// Create an orthographic projection matrix for 2D rendering.
 	m_orthoMatrix = DirectX::XMMatrixOrthographicLH((float)ai_screenWidth, (float)ai_screenHeight, af_screenNear, af_screenDepth);
 
+
+
 	return true;
 }
 
