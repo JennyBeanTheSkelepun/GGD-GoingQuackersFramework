@@ -29,16 +29,29 @@ void Player::Update()
 	Vector2 playerPos = playerTransform->GetPosition();
 
 	// calculate vectors, centered on the centre of the player
-	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y);
-	Vector2 upVector = Vector2(0 + playerTransform->GetScale().X / 2, 1 + playerTransform->GetScale().Y / 2);
-	Vector2 mouseNormal = mouseVector.Normalize();
+	Vector2 origin = Vector2(playerPos.X + playerTransform->GetScale().X / 2, playerPos.Y + playerTransform->GetScale().Y / 2);
+	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - origin;
+	Vector2 upVector = Vector2(origin.X, origin.Y + 1);
+	float mouseLength = mouseVector.Length();
+	float upLength = upVector.Length();
 
 	// just don't change the angle if it would divide by zero
-	if (mouseNormal != Vector2(0, 0))
+	if (mouseLength != 0 && upLength != 0)
 	{
+		/*// use dot product over magnitude
+		float dot = upVector.Dot(mouseVector);
+		float angle = std::acosf(dot / (mouseLength * upLength));
+		// radians to degrees
+		angle *= 180 / 3.1415;
+		// flip sign
+		if (mouseVector.X > origin.X) angle *= -1;
+		this->GetOwner()->GetComponent<Transform>()->SetLocalRotation(angle);*/
+
 		// use dot product and determinant
-		float dot = upVector.Dot(mouseNormal);
-		float determinant = upVector.X * mouseNormal.Y - upVector.Y * mouseNormal.X;
+		Vector2 mouseNormal = mouseVector.Normalize();
+		Vector2 upNormal = upVector.Normalize();
+		float dot = upNormal.Dot(mouseNormal);
+		float determinant = upNormal.X * mouseNormal.Y - upNormal.Y * mouseNormal.X;
 		float angle = std::atan2f(determinant, dot);
 		// radians to degrees
 		angle *= 180 / 3.1415;
