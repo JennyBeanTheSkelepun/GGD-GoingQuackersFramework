@@ -65,7 +65,7 @@ private:
 	template<typename T>
 	void SaveComponent(std::string as_componentName, Component* ap_component, std::string* ap_componentType) {
 		*ap_componentType = as_componentName;
-		ap_component = static_cast<Rigidbody*>(ap_component);
+		ap_component = static_cast<T*>(ap_component);
 	}
 };
 
