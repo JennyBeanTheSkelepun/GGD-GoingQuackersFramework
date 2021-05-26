@@ -11,6 +11,10 @@ Scene::Scene(std::string as_ID, std::string as_DisplayName, std::string as_Type)
 Scene::~Scene()
 {
 	for (auto lp_object : mp_SceneObjects) {
+		for (auto lp_component : lp_object->GetComponents()) {
+			lp_component->ShouldDestroy();
+		}
+		lp_object->ShouldDestroy();
 		delete lp_object;
 	}
 	mp_SceneObjects.clear();

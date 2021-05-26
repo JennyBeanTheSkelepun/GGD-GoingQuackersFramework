@@ -43,7 +43,7 @@ protected:
 	ComponentTypes m_type;
 
 	int ID; //The ID of the Component. Used to determine the correct Component within the GameObjects list
-	bool shouldDestroy;
+	bool mb_stayAlive;
 	std::string name;
 };
 

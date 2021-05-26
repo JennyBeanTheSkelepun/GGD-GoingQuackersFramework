@@ -16,6 +16,14 @@ enum class PhysicsTypes
 	GE = 2 //Gravity Emitter
 };
 
+enum class MovementIgnore
+{
+	NONE = 0,
+	ACCEL = 1,
+	MASS = 2,
+	MASSACCEL = 3,
+};
+
 class Rigidbody : public Component
 {
 public:
@@ -33,6 +41,10 @@ public:
 	json* SceneSave() override;
 	void SceneLoad(json* componentJSON) override;
 
+	/// <summary>
+	/// Adds the force to the next frames Rigidbody calculation
+	/// </summary>
+	/// <param name="force"></param>
 	void AddForce(Vector2 force) { m_forces.push_back(force); }
 	void PhysicsCollide();
 
@@ -41,8 +53,6 @@ public:
 
 	void setType(PhysicsTypes type) { m_physicsType = type; }
 	PhysicsTypes getType() { return m_physicsType; }
-
-	Collision* getCollider() { return mp_collider; }
 
 	void RigidbodyCollide(std::vector<GameObject*>* collidingObjects);
 
@@ -58,6 +68,10 @@ public:
 	bool getCollideFlag() { return physicsChecked; }
 	void resetCollideFlag() { physicsChecked = false; }
 
+	void setUseAccel(MovementIgnore IgnoreFlag) { m_MoveIgnoreFlag = IgnoreFlag; }
+
+	std::vector<GameObject*> getCollidedObjects() { return collidingObjects; }
+
 private:
 	PhysicsTypes m_physicsType = PhysicsTypes::RB;
 
@@ -67,13 +81,12 @@ private:
 	float m_mass = 1.0f;
 
 	std::vector<Vector2> m_forces;
+	MovementIgnore m_MoveIgnoreFlag = MovementIgnore::NONE;
 
-	//TODO:: Remove when Collsion is singleton
-	Collision* mp_collider;
 	Trigger* mp_trigger;
 	GravityEmitter* mp_gravEmitter;
 
-	bool m_isStatic = true;
+	bool m_isStatic = false;
 
 	float m_radius = 0.0f;
 	Vector2 m_AABBRect = Vector2();
@@ -83,6 +96,8 @@ private:
 	void CalculateVelocity();
 
 	bool physicsChecked = false;
+
+	std::vector<GameObject*> collidingObjects;
 
 	std::string m_physicsTypeDropDown[3] = {"Rigidbody", "Trigger", "Gravity Zone"};
 	std::string  m_colliderShapeDropDown[2] = { "Sphere", "AABB" };

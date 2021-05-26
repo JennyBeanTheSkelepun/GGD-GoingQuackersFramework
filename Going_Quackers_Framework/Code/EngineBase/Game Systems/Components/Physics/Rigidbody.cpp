@@ -3,7 +3,6 @@
 //- Constructor -//
 Rigidbody::Rigidbody(GameObject* owner) : Component(owner, ComponentTypes::RIGIDBODY, "RigidBody")
 {
-	mp_collider = new Collision();
 	mp_gravEmitter = new GravityEmitter();
 	mp_trigger = new Trigger();
 }
@@ -11,7 +10,6 @@ Rigidbody::Rigidbody(GameObject* owner) : Component(owner, ComponentTypes::RIGID
 //- Descructor -//
 Rigidbody::~Rigidbody()
 {
-	delete mp_collider;
 	delete mp_gravEmitter;
 	delete mp_trigger;
 }
@@ -137,14 +135,45 @@ void Rigidbody::ImGUIUpdate()
 //- Scene Save / Load -//
 void Rigidbody::SceneLoad(json* componentJSON)
 {
-	//TODO:: ADD Sceneload for RB
+	m_velocity = Vector2((*componentJSON)["Velocity"][0], (*componentJSON)["Velocity"][1]);
+	m_acceleration = Vector2((*componentJSON)["Acceleration"][0], (*componentJSON)["Acceleration"][1]);
+	m_mass = (*componentJSON)["Mass"];
+	m_isStatic = (*componentJSON)["Static"];
+	m_DropdownPhysicsTypeSelected = (*componentJSON)["ObjectType"];
+	m_DropdownColliderShapeSelected = (*componentJSON)["ColliderShape"];
+
+	if (m_DropdownPhysicsTypeSelected == "Rigidbody")
+	{
+		m_physicsType = PhysicsTypes::RB;
+	}
+	else if (m_DropdownPhysicsTypeSelected == "Trigger")
+	{
+		m_physicsType = PhysicsTypes::Trig;
+	}
+	else if (m_DropdownPhysicsTypeSelected == "Gravity Zone")
+	{
+		m_physicsType = PhysicsTypes::GE;
+	}
+
+	if (m_DropdownColliderShapeSelected == "Sphere")
+	{
+		m_collisionType = CollisionTypes::Sphere;
+	}
+	else if (m_DropdownColliderShapeSelected == "AABB")
+	{
+		m_collisionType = CollisionTypes::AABB;
+	}
+
+	m_radius = (*componentJSON)["Radius"];
+	m_AABBRect = Vector2((*componentJSON)["AABBRect"][0], (*componentJSON)["AABBRect"][1]);
+	mp_gravEmitter->LoadGravType((*componentJSON)["GravityType"]);
+	mp_gravEmitter->SetGravityStrength((*componentJSON)["GravityStrength"]);
+	mp_gravEmitter->SetGravityDirection(Vector2((*componentJSON)["GravityDirection"][0], (*componentJSON)["GravityDirection"][1]));
 }
 
 json* Rigidbody::SceneSave()
 {
-	//TODO:: Create scene save for RB
-	
-	/*json* returnObj = new json({
+	json* returnObj = new json({
 		{"Velocity", {m_velocity.X, m_velocity.Y}},
 		{"Acceleration", {m_acceleration.X, m_acceleration.Y}},
 		{"Mass", m_mass},
@@ -152,12 +181,13 @@ json* Rigidbody::SceneSave()
 		{"ObjectType", m_DropdownPhysicsTypeSelected},
 		{"ColliderShape", m_DropdownColliderShapeSelected},
 		{"Radius", m_radius},
-		{"AABBRect", {m_AABBRect.X, m_AABBRect.Y}}
-		});*/
+		{"AABBRect", {m_AABBRect.X, m_AABBRect.Y}},
+		{"GravityType", mp_gravEmitter->SaveGravType()},
+		{"GravityStrength", mp_gravEmitter->GetGravityStrength()},
+		{"GravityDirection", {mp_gravEmitter->GetGravityDirection().X, mp_gravEmitter->GetGravityDirection().Y} }
+		});
 
-	//TODO:: Add data from Grav and Trigger to the JSON
-
-	return nullptr;
+	return returnObj;
 }
 
 //- Custom Functions -//
@@ -170,9 +200,30 @@ void Rigidbody::CalculateVelocity()
 		totalForce += force;
 	}
 
-	m_acceleration = totalForce / m_mass;
+	if (m_MoveIgnoreFlag == MovementIgnore::NONE)
+	{
+		m_acceleration = totalForce / m_mass;
 
-	m_velocity += m_acceleration * Time::GetDeltaTime();
+		m_velocity += m_acceleration * Time::GetDeltaTime();
+	}
+	else if(m_MoveIgnoreFlag == MovementIgnore::ACCEL)
+	{
+		m_velocity += totalForce / m_mass;
+
+		m_acceleration = Vector2();
+	}
+	else if (m_MoveIgnoreFlag == MovementIgnore::MASS)
+	{
+		m_acceleration = totalForce;
+
+		m_velocity += m_acceleration * Time::GetDeltaTime();
+	}
+	else if (m_MoveIgnoreFlag == MovementIgnore::MASSACCEL)
+	{
+		m_velocity += totalForce;
+
+		m_acceleration = Vector2();
+	}
 
 	Vector2 pos = GetOwner()->GetTransform()->GetPosition();
 	pos += m_velocity;
@@ -182,7 +233,7 @@ void Rigidbody::CalculateVelocity()
 void Rigidbody::PhysicsCollide()
 {
 	std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
-	std::vector<GameObject*> collidingObjects;
+	collidingObjects.clear();
 
 	for (GameObject* obj : allObjects)
 	{
@@ -193,25 +244,20 @@ void Rigidbody::PhysicsCollide()
 
 		Rigidbody* OtherRB = obj->GetComponent<Rigidbody>();
 
-		if (OtherRB->getCollideFlag() && OtherRB->getType() == PhysicsTypes::RB && getType() == PhysicsTypes::RB)
-		{
-			break;
-		}
-
 		switch (GetCollisionType())
 		{
 		case CollisionTypes::AABB:
 			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if (mp_collider->CollisionAABB(GetOwner(), obj)) 
+				if (Collision::getInstance()->CollisionAABB(GetOwner(), obj)) 
 				{ 
 					collidingObjects.push_back(obj); 
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID()); 
 				}
 				break;
 			case CollisionTypes::Sphere:
-				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj))
+				if(Collision::getInstance()->CollisionSphericalAABB(GetOwner(), obj))
 				{
 					collidingObjects.push_back(obj); 
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
@@ -223,14 +269,14 @@ void Rigidbody::PhysicsCollide()
 			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj)) 
+				if(Collision::getInstance()->CollisionSphericalAABB(GetOwner(), obj))
 				{
 					collidingObjects.push_back(obj);
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
 				}
 				break;
 			case CollisionTypes::Sphere:
-				if(mp_collider->CollisionSpherical(GetOwner(), obj)) 
+				if(Collision::getInstance()->CollisionSpherical(GetOwner(), obj))
 				{
 					collidingObjects.push_back(obj);
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
@@ -262,7 +308,7 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 	for (GameObject* obj : *collidingObjects)
 	{
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();
-		if (rb->getType() != PhysicsTypes::RB || rb->m_isStatic)
+		if (rb->getCollideFlag())
 		{
 			continue;
 		}
