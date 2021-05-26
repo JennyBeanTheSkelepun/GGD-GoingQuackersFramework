@@ -1,6 +1,23 @@
 #include "Collision.h"
 #include "Rigidbody.h"
 
+Collision* Collision::singletonInstance = 0;
+
+Collision::Collision()
+{
+
+}
+
+Collision* Collision::getInstance()
+{
+	if (singletonInstance == 0)
+	{
+		singletonInstance = new Collision();
+	}
+
+	return singletonInstance;
+}
+
 bool Collision::CollisionSpherical(GameObject* checkObjectA, GameObject* checkObjectB)
 {
 	if(checkObjectA != checkObjectB && checkObjectA->GetComponent<Rigidbody>() != nullptr && checkObjectB->GetComponent<Rigidbody>() != nullptr);

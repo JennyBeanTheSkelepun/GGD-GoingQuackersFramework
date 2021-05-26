@@ -33,6 +33,10 @@ public:
 	json* SceneSave() override;
 	void SceneLoad(json* componentJSON) override;
 
+	/// <summary>
+	/// Adds the force to the next frames Rigidbody calculation
+	/// </summary>
+	/// <param name="force"></param>
 	void AddForce(Vector2 force) { m_forces.push_back(force); }
 	void PhysicsCollide();
 
@@ -41,8 +45,6 @@ public:
 
 	void setType(PhysicsTypes type) { m_physicsType = type; }
 	PhysicsTypes getType() { return m_physicsType; }
-
-	Collision* getCollider() { return mp_collider; }
 
 	void RigidbodyCollide(std::vector<GameObject*>* collidingObjects);
 
@@ -68,8 +70,6 @@ private:
 
 	std::vector<Vector2> m_forces;
 
-	//TODO:: Remove when Collsion is singleton
-	Collision* mp_collider;
 	Trigger* mp_trigger;
 	GravityEmitter* mp_gravEmitter;
 

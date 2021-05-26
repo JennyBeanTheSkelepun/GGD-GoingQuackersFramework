@@ -1,5 +1,4 @@
-﻿  Player.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(20): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-  Going_Quackers_Framework.vcxproj -> C:\Users\mccan\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+﻿  Debug.cpp
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+KeyboardEvents.obj : warning LNK4204: 'C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\vc142.pdb' is missing debugging information for referencing module; linking object as if no debug info
+  Going_Quackers_Framework.vcxproj -> C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
