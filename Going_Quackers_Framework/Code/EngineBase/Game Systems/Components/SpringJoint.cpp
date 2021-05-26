@@ -5,13 +5,13 @@
 #include "Physics/Rigidbody.h"
 
 SpringJoint::SpringJoint(GameObject* ap_owner) : Component(ap_owner, ComponentTypes::SPRINGJOINTS, "Spring Joint") {
-	mp_jointObjectNameField = new char[100] { "" };
+	mp_jointObjectNameField = new char[100]{ "" };
 
 	mf_desiredLength = 1;
-	mp_desiredLengthField = new char[100] { "1" };
+	mp_desiredLengthField = new char[100]{ "1" };
 
 	mf_strength = 1;
-	mp_strengthField = new char[100] { "1" };
+	mp_strengthField = new char[100]{ "1" };
 }
 
 SpringJoint::~SpringJoint() {
@@ -56,16 +56,30 @@ void SpringJoint::Update() {
 	if (mp_connectedObject == nullptr)
 		return;
 
-	if(Input::getInstance()->isKeyPressedDown(KeyCode::Space))
-		mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Vector2(0.001f, 0));
+	//Testing
+	if (Input::getInstance()->isKeyPressedDown(KeyCode::D))
+		mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Vector2(0.1f, 0) / Time::GetDeltaTime());
+
+	if (Input::getInstance()->isKeyPressedDown(KeyCode::A)) {
+		Debug::getInstance()->Log("Keydown                                                        " + std::to_string(Time::GetTime()));
+		mp_connectedObject->GetComponent<Rigidbody>()->setUseAccel(MovementIgnore::MASSACCEL);
+		mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Vector2(-0.1f, 0) / Time::GetDeltaTime());
+	}
+
+	if (Input::getInstance()->isKeyPressedDown(KeyCode::W))
+		mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Vector2(0, 0.1f) / Time::GetDeltaTime());
+
+	if (Input::getInstance()->isKeyPressedDown(KeyCode::S))
+		mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Vector2(0, -0.1f) / Time::GetDeltaTime());
+	//End of testing
 
 	float currentLength = GetOwner()->GetTransform()->GetPosition().Distance(mp_connectedObject->GetTransform()->GetPosition());
-	Debug::getInstance()->Log(currentLength);
-	Debug::getInstance()->Log(mf_desiredLength);
+	Debug::getInstance()->Log("current length " + std::to_string(currentLength) + "                                            " + std::to_string(Time::GetTime()));
 
 	if (currentLength < mf_desiredLength && m_mode != SpringMode::REPEL_ONLY ||
 		currentLength > mf_desiredLength && m_mode != SpringMode::ATTRACT_ONLY) {
 		if (m_type == SpringType::FIXED_HEAD) {
+			Debug::getInstance()->Log("Applying force                                                        " + std::to_string(Time::GetTime()));
 			ApplyFixedHeadSpringForce(currentLength);
 		}
 		else
@@ -84,6 +98,10 @@ void SpringJoint::ImGUIUpdate() {
 	if (ImGui::Button("Update joint")) {
 		m_type = static_cast<SpringType>(mi_typeField);
 		m_mode = static_cast<SpringMode>(mi_modeField);
+
+		//Strength and length
+		SetDesiredLength(std::stof(mp_desiredLengthField));
+		SetStrength(std::stof(mp_strengthField));
 
 		//Connected joint
 		std::string objectNameField(mp_jointObjectNameField);
@@ -114,10 +132,6 @@ void SpringJoint::ImGUIUpdate() {
 
 		Debug::getInstance()->LogWarning("No match for \"" + objectNameField + "\" found in this scene");
 		SetConnectedObject(nullptr);
-
-		//Strength and length
-		SetDesiredLength(std::stof(mp_desiredLengthField));
-		SetStrength(std::stof(mp_strengthField));
 	}
 }
 
@@ -144,12 +158,24 @@ json* SpringJoint::SceneSave() {
 }
 
 void SpringJoint::ApplyFixedHeadSpringForce(float af_currentStretch) {
-	Vector2 position = GetOwner()->GetTransform()->GetPosition();
-	Vector2 direction = (position - mp_connectedObject->GetTransform()->GetPosition()).Normalize(); //TODO - check this is the right way around
+	Vector2 headPosition = GetOwner()->GetTransform()->GetPosition();
+	Vector2 tailPosition = mp_connectedObject->GetTransform()->GetPosition();
+	float distanceFromDesired = (mf_desiredLength - af_currentStretch);
+	//Debug::getInstance()->Log("distance from desired (" + std::to_string(distanceFromDesired) + ")                               " + std::to_string(Time::GetTime()));
 
-	float force = mf_strength * af_currentStretch;
 
-	mp_connectedObject->GetComponent<Rigidbody>()->AddForce(direction * force);
+	Vector2 directionFromHead = (tailPosition - headPosition).Normalize();
+
+	Vector2 directiontoDesiredDistance = ((headPosition + directionFromHead * mf_desiredLength) - tailPosition).Normalize();
+	//Debug::getInstance()->Log("test " + std::to_string((headPosition + directionFromHead * distanceFromDesired).X) + "                               " + std::to_string(Time::GetTime()));
+	//Debug::getInstance()->Log("direction to desired (" + std::to_string(directiontoDesiredDistance.X) + ", " + std::to_string(directiontoDesiredDistance.Y) + ")                               " + std::to_string(Time::GetTime()));
+
+	float force = (mf_strength * distanceFromDesired) / Time::GetDeltaTime();
+	//Debug::getInstance()->Log("force " + std::to_string(force) + "                                                    " + std::to_string(Time::GetTime()) + "\n\n");
+	Debug::getInstance()->Log("Final force (" + std::to_string((directiontoDesiredDistance * force).X) + ", " + std::to_string((directiontoDesiredDistance * force).Y) + ")                               " + std::to_string(Time::GetTime()));
+
+	mp_connectedObject->GetComponent<Rigidbody>()->setUseAccel(MovementIgnore::MASSACCEL);
+	mp_connectedObject->GetComponent<Rigidbody>()->AddForce(directiontoDesiredDistance * force);
 }
 
 void SpringJoint::ApplyNonFixedHeadSpringForce(float af_currentStretch) {
