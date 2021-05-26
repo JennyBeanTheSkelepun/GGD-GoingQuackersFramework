@@ -31,47 +31,6 @@ EngineGuiClass::~EngineGuiClass()
 	currentSelected = nullptr;
 }
 
-//void EngineGuiClass::DisplayChildren(GameObject* gameObject)
-//{
-//	//indentLevel++;
-//	//ImGui::Indent(25 * indentLevel);
-//
-//	//for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
-//	//{
-//	//	GameObject* child = gameObject->GetChildren()[i];
-//	//	if (ImGui::CollapsingHeader(child->GetName().c_str(), child->GetShouldLive()))
-//	//	{
-//	//		currentSelected = child;
-//	//		DisplayChildren(child, indentLevel);
-//	//	}
-//	//}
-//	//
-//	//indentLevel--;
-//	//ImGui::Indent(25 * indentLevel);
-//
-//
-//	std::vector<GameObject*> children = gameObject->GetChildren();
-//	int gameObjectSize = children.size();
-//	GameObject* currentObject;
-//	int SelectedObject;
-//
-//	for (int i(0); i < gameObjectSize; ++i)
-//	{
-//		currentObject = children.at(i);
-//		SelectedObject = i;
-//
-//		bool is_expanded = ImGui::TreeNodeEx(currentObject->GetName().c_str(), ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_AllowItemOverlap);
-//		ImGui::SameLine(ImGui::GetWindowWidth() - 25);
-//		*currentObject->GetShouldLive() = !ImGui::Button("x");
-//
-//		if (is_expanded)
-//		{
-//			DisplayChildren(currentObject);
-//			ImGui::TreePop();
-//		}
-//	}
-//}
-
 void EngineGuiClass::InitializeObjectList(std::vector<GameObject*>* gameObjects)
 {
 	this->gameObjects = gameObjects;
@@ -164,15 +123,49 @@ void EngineGuiClass::EditorUpdate()
 			}
 			ImGui::InputText(":Layout Name", LayoutName, 100);
 			ImGui::Separator();
-			for (int i = 0; i < AmountOfSaves; i++)
+
+			AmountOfSaves = WindowPositions.size();
+
+			for (int i(0); i < AmountOfSaves; ++i)
 			{
-				if (ImGui::MenuItem(WindowPositions[i].name.c_str()) && RecordingLayout == false)
+				ImGui::PushID(i);
+
+				ImGui::Separator();
+				ImGui::Text(WindowPositions[i].name.c_str());
+				
+				ImGui::SameLine(272); 
+				bool SelectOption = ImGui::Button("S");
+
+				ImGui::SameLine(290); 
+				bool DeleteOption = ImGui::Button("X");
+				
+				if (DeleteOption)
+				{
+					WindowPosToDelete.push_back(i);
+				}
+				if (SelectOption)
 				{
 					CurrentWindowPosition.name = WindowPositions[i].name;
 					CurrentWindowPosition.dimentions = WindowPositions[i].dimentions;
 					CurrentWindowPosition.positions = WindowPositions[i].positions;
 				}
+
+				ImGui::PopID();
 			}
+
+			if (ImGui::Button("Save Changes", ImVec2(300, 20)))
+			{
+				SaveWindowPositionsToFile();
+				LoadWindowPositions();
+			}
+
+			//- Delete Editor Layouts once not in use -//
+			for (int i = 0; i < WindowPosToDelete.size(); i++)
+			{
+				WindowPositions.erase(WindowPositions.begin() + WindowPosToDelete[i]);
+			}
+			WindowPosToDelete.clear();
+
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
@@ -185,7 +178,6 @@ void EngineGuiClass::EditorUpdate()
 		ImGui::SetNextWindowSize(CurrentWindowPosition.dimentions[0]);
 	}
 	ImGui::Begin("Scene Hierarchy");
-	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 	
 	//Create GameObjects
 	if (ImGui::Button("Create GameObject"))
@@ -321,6 +313,8 @@ void EngineGuiClass::DisplayObjects(std::vector<GameObject*>& gameObjects)
 
 	for (int i(0); i < gameObjectSize; ++i)
 	{
+		ImGui::PushID(i);
+
 		currentObject = gameObjects[i];
 
 		//- Controll Buttons -//
@@ -388,6 +382,8 @@ void EngineGuiClass::DisplayObjects(std::vector<GameObject*>& gameObjects)
 				currentSelected = currentObject;
 		}
 		ImGui::Separator();
+
+		ImGui::PopID();
 	}
 
 }

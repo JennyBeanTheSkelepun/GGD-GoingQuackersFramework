@@ -72,6 +72,7 @@ private:
 	char* NewSceneName;
 	char* NewSceneType;
 	std::vector<LayoutSettings> WindowPositions;
+	std::vector<int> WindowPosToDelete;
 	LayoutSettings CurrentWindowPosition;
 
 	std::vector<GameObject*>* gameObjects; //List of GameObjects
