@@ -38,6 +38,11 @@ void DirectXGraphics::ResizeWindowCall()
 	ImGui_ImplDX11_CreateDeviceObjects();
 }
 
+Vector2 DirectXGraphics::GetWindowDimentions()
+{
+	return Vector2(mp_Window->mi_width, mp_Window->mi_height);
+}
+
 int DirectXGraphics::AddObjectToRenderLoop(SpriteRenderer* ar_component)
 {
 	return mp_DirectXRenderLoop->SetObjectToRender(ar_component);
@@ -53,9 +58,15 @@ bool DirectXGraphics::InitalizeGraphicalApi()
 	return Initialize();
 }
 
-//void DirectXGraphics::SetNewActiveCamera(VirtualCamera& NextActiveCamera)
-//{
-//}
+void DirectXGraphics::SetNewActiveCamera(VirtualCamera* NextActiveCamera)
+{
+	mp_Camera->SetNewVirtualCamera(NextActiveCamera);
+}
+
+VirtualCamera* DirectXGraphics::GetActiveCamera()
+{
+	return mp_Camera->GetVirtualCamera();
+}
 
 int DirectXGraphics::LoadTexture(std::string TextureLocation)
 {
@@ -141,7 +152,7 @@ bool DirectXGraphics::Initialize()
 	mp_Camera->SetPosition(Vector3(0.0f, 0.0f, -5.0f));
 
 
-	mp_TextureManager = new DirectXTextureManager(*mp_DirectX, "stone.tga");
+	mp_TextureManager = new DirectXTextureManager(*mp_DirectX, "Assets/stone.tga");
 	if (!mp_TextureManager)
 	{
 		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Texture Manager object.", L"Error", MB_OK);
@@ -149,7 +160,7 @@ bool DirectXGraphics::Initialize()
 	}
 
 	// Create the color shader object.
-	mp_ShaderManager = new DirectXShaderManager(*mp_DirectX, *mp_Window, L"Code/EngineBase/Rendering/Shaders/TextureSimple.fx");
+	mp_ShaderManager = new DirectXShaderManager(*mp_DirectX, *mp_Window, L"Assets/Shaders/TextureSimple.fx");
 	if (!mp_ShaderManager)
 	{
 		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Shader Manager object.", L"Error", MB_OK);
@@ -157,12 +168,12 @@ bool DirectXGraphics::Initialize()
 	}
 
 	mp_DirectXRenderLoop = new DirectXRenderLoop(mp_DirectX);
+
 	return true;
 }
 
 void DirectXGraphics::Update()
 {
 	mp_Camera->Update();
-
-	mp_ImGui->Update(mp_DirectX->mp_renderTextureResourceView);
+	mp_ImGui->Update(mp_DirectX->mp_renderTextureResourceView, mp_Window->mi_width, mp_Window->mi_height);
 }

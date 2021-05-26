@@ -1,5 +1,5 @@
-#ifndef _RIGIDBODY_
-#define _RIGIDBODY_
+#ifndef _RIGIDBODY_H_
+#define _RIGIDBODY_H_
 
 #include "Collision.h"
 #include "GravityEmitter.h"
@@ -7,12 +7,13 @@
 #include "../Component.h"
 #include "../../Time.h"
 #include "../../../SceneManager/SceneManager.h"
+#include "../../Debug.h"
 
 enum class PhysicsTypes
 {
-	Trig, //Trigger
-	RB, //Rigidbody
-	GE //Gravity Emitter
+	Trig = 0, //Trigger
+	RB = 1, //Rigidbody
+	GE = 2 //Gravity Emitter
 };
 
 class Rigidbody : public Component
@@ -21,9 +22,21 @@ public:
 	Rigidbody(GameObject* owner);
 	~Rigidbody();
 
+	//- Basic Loops -//
+	void OnDestroy() override;
 	void Update() override;
+
+	//- ImGui UpdateLoop -//
 	void ImGUIUpdate() override;
 
+	//- Scene Save and Load -//
+	json* SceneSave() override;
+	void SceneLoad(json* componentJSON) override;
+
+	/// <summary>
+	/// Adds the force to the next frames Rigidbody calculation
+	/// </summary>
+	/// <param name="force"></param>
 	void AddForce(Vector2 force) { m_forces.push_back(force); }
 	void PhysicsCollide();
 
@@ -32,8 +45,6 @@ public:
 
 	void setType(PhysicsTypes type) { m_physicsType = type; }
 	PhysicsTypes getType() { return m_physicsType; }
-
-	Collision* getCollider() { return mp_collider; }
 
 	void RigidbodyCollide(std::vector<GameObject*>* collidingObjects);
 
@@ -59,9 +70,10 @@ private:
 
 	std::vector<Vector2> m_forces;
 
-	Collision* mp_collider;
 	Trigger* mp_trigger;
 	GravityEmitter* mp_gravEmitter;
+
+	bool m_isStatic = true;
 
 	float m_radius = 0.0f;
 	Vector2 m_AABBRect = Vector2();
@@ -71,6 +83,12 @@ private:
 	void CalculateVelocity();
 
 	bool physicsChecked = false;
+
+	std::string m_physicsTypeDropDown[3] = {"Rigidbody", "Trigger", "Gravity Zone"};
+	std::string  m_colliderShapeDropDown[2] = { "Sphere", "AABB" };
+
+	std::string  m_DropdownPhysicsTypeSelected = "Rigidbody";
+	std::string  m_DropdownColliderShapeSelected = "Sphere";
 };
 
-#endif _RIGIDBODY_
+#endif _RIGIDBODY_H_

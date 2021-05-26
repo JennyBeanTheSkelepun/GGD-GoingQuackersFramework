@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include "../ImGui/ImGui SourceCode/imgui.h"
+#include "../Data Structures/Vectors.h"
 
 static class Debug
 {
@@ -45,55 +46,56 @@ private:
 	LogData queue[10000];
 	int queueEnd;
 public:
-	// coloured text
+	/// <summary>
+	/// Add something to the log queue.
+	/// </summary>
+	/// <param name="info">Data to be logged.</param>
+	/// <param name="r">Amount of red (0-1).</param>
+	/// <param name="g">Amount of green (0-1).</param>
+	/// <param name="b">Amount of blue (0-1).</param>
+	/// <param name="type">This parameter is for internal use within the Debug class. Use LogWarning or LogError to log a different type of message.</param>
 	template <typename T>
-	void Log(T info, float r, float g, float b)
+	void Log(T info, float r = 1.f, float g = 1.f, float b = 1.f, LOG_TYPE type = LOG_TYPE::TEXT)
 	{
+		// convert info to string
 		converter.str(std::string());
 		converter << info;
-		Log(LOG_TYPE::TEXT, converter.str(), r, g, b);
+		// bounding colours
+		if (r > 1.f) r = 1.f;
+		else if (r < 0.f) r = 0.f;
+		// pass to private version
+		Log(converter.str(), r, g, b, type);
 	}
-	// specialisation for strings
-	template <>
-	void Log<std::string>(std::string info, float r, float g, float b)
+	/// <summary>
+	/// String-specific logging that avoids unnecessary conversions.
+	/// </summary>
+	template<>
+	void Log<std::string>(std::string info, float r, float g, float b, LOG_TYPE type)
 	{
-		Log(LOG_TYPE::TEXT, info, r, g, b);
+		Log(type, info, r, g, b);
 	}
-	template <typename T>
-	void Log(T info) 
-	{
-		Log(info, 1.f, 1.f, 1.f);
+	/// <summary>
+	/// Log the X and Y value of a 2D vector.
+	/// </summary>
+	template<>
+	void Log<Vector2>(Vector2 info, float r, float g, float b, LOG_TYPE type) {
+		std::string temp = "X: "+std::to_string(info.X) + " Y: "+std::to_string(info.Y);
+		Log(type, temp, r, g, b);
 	}
 	template <typename T>
 	void LogWarning(T info)
 	{
-		converter.str(std::string());
-		converter << info;
-		LogWarning(converter.str());
-	}
-	template <>
-	void LogWarning<std::string>(std::string info)
-	{
-		converter.str(std::string());
-		converter << info;
-		Log(LOG_TYPE::WARNING, info, 0.921f, 0.8f, 0.215f);
+		Log(info, 0.921f, 0.8f, 0.215f, LOG_TYPE::WARNING);
 	}
 	template <typename T>
 	void LogError(T info)
 	{
-		converter.str(std::string());
-		converter << info;
-		LogError(converter.str());
-	}
-	template <>
-	void LogError<std::string>(std::string info)
-	{
-		Log(LOG_TYPE::ERR, info, 1.f, 0.15f, 0.15f);
+		Log(info, 1.f, 0.15f, 0.15f, LOG_TYPE::ERR);
 	}
 	void ReadLog();
+	void FlushLog();
 private:
 	// the true base function; don't expose this
 	void Log(LOG_TYPE category, std::string info, float r, float g, float b);
-	void LogToFile();
 };
 #endif DEBUG

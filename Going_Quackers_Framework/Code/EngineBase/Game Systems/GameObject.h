@@ -7,6 +7,8 @@
 #include "Components/Component.h"
 #include "Components/Transform.h"
 
+#include "Debug.h"
+
 class GameObject
 {
 public:
@@ -16,9 +18,7 @@ public:
 
 	~GameObject();
 
-	void Initialize();
 	void Update();
-	void Render();
 
 	//Used to Update the Default ImGUI elements for each GameObject
 	void ImGUIUpdate();
@@ -29,10 +29,14 @@ public:
 	template<class T>
 	T* AddComponent()
 	{
-		if (std::is_base_of<Component, T>::value)
+		if (std::is_base_of<Component, T>::value && GetComponent<T>() == nullptr )
 		{
 			m_components.push_back(static_cast<Component*>(new T(this)));
 			return static_cast<T*>(m_components[m_components.size() - 1]);
+		}
+		else
+		{
+			Debug::getInstance()->LogError("Gameobject cant contain duplicate components");
 		}
 	}
 
@@ -97,9 +101,11 @@ public:
 
 	void SetToDestroy();
 	///<summary>Says if the GameObject should be destroyed next frame</summary>
-	bool ShouldDestroy() { return m_shouldDestroy; }
+	bool ShouldDestroy() { return !m_shouldLive; }
+	bool* GetShouldLive() { return &m_shouldLive; };
 
 private:
+
 	///<summary>The Transform attached to the GameObject.</summary>
 	Transform* mp_transform;
 
@@ -121,7 +127,7 @@ private:
 	// Name of object
 	std::string m_name = "";
 
-	bool m_shouldDestroy;
+	bool m_shouldLive;
 };
 
 #endif // !_GAMEOBJECT_H_

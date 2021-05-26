@@ -11,6 +11,7 @@ DirectXImGui::DirectXImGui(HWND hwnd, DirectXClass* mp_DirectX)
 	ImGui::StyleColorsDark();
 
 	EngineGuiClass::getInstance()->SetImGuiStyle();
+	m_scale = 2.0f;
 }
 
 DirectXImGui::~DirectXImGui()
@@ -18,7 +19,7 @@ DirectXImGui::~DirectXImGui()
 
 }
 
-bool DirectXImGui::Update(ID3D11ShaderResourceView* ap_renderTexture)
+bool DirectXImGui::Update(ID3D11ShaderResourceView* ap_renderTexture, float width, float height)
 {
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
@@ -36,8 +37,10 @@ bool DirectXImGui::Update(ID3D11ShaderResourceView* ap_renderTexture)
 			ImGui::SetNextWindowSize(EngineGuiClass::getInstance()->GetWindowInfo()->dimentions[2]);
 		}
 		ImGui::Begin("Game/Scene View");
-		ImGui::Image(RenderTexture, ImVec2((ImGui::GetWindowWidth() - 15), (ImGui::GetWindowHeight() - 35)));
-		
+		//ImGui::Image(RenderTexture, ImVec2((ImGui::GetWindowWidth() - 15), (ImGui::GetWindowHeight() - 35)));
+		ImGui::InputFloat("input float", &m_scale, 0.5f);
+		ImGui::Image(RenderTexture, ImVec2(width / m_scale, height / m_scale));
+
 		EngineGuiClass::getInstance()->GetWindowInfo()->positions[2].x = ImGui::GetWindowPos().x;
 		EngineGuiClass::getInstance()->GetWindowInfo()->positions[2].y = ImGui::GetWindowPos().y;
 		EngineGuiClass::getInstance()->GetWindowInfo()->dimentions[2].x = ImGui::GetWindowWidth();
