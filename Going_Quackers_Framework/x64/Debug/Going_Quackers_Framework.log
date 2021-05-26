@@ -1,4 +1,4 @@
-﻿  Transform.cpp
+﻿  Debug.cpp
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(148,69): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+KeyboardEvents.obj : warning LNK4204: 'C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\vc142.pdb' is missing debugging information for referencing module; linking object as if no debug info
   Going_Quackers_Framework.vcxproj -> C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

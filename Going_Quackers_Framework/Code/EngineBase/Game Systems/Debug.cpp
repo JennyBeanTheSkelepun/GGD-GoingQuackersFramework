@@ -33,7 +33,7 @@ void Debug::ReadLog()
 {
 	if (ImGui::Button("Clear Debug Log", ImVec2(ImGui::GetWindowWidth() - 15, 20)))
 	{
-		Debug::getInstance()->LogError("Nero Please Quickly add a way to clear the debug log");
+		FlushLog();
 	}
 
 	// just call ImGui::ColoredText from here
@@ -47,6 +47,23 @@ void Debug::ReadLog()
 		ImGui::TextColored(ImVec4(queue[i].r, queue[i].g, queue[i].b, 1.f), dataCount.c_str());
 		ImGui::PopID();
 	}
+}
+
+void Debug::FlushLog()
+{
+	std::ofstream ofile("debug_log.txt", std::ofstream::out | std::ofstream::app);
+	if (!ofile.is_open())
+	{
+		std::cout << "Debug log file couldn't be opened!";
+		return;
+	}
+	for (int i = 0; i <= queueEnd; i++) {
+		if (queue[i].type == LOG_TYPE::WARNING) ofile << "[WARNING] ";
+		else if (queue[i].type == LOG_TYPE::ERR) ofile << "[ERROR] ";
+		ofile << queue[i].data << std::endl;
+	}
+	ofile.close();
+	queueEnd = 0;
 }
 
 void Debug::Log(LOG_TYPE category, std::string info, float r, float g, float b)
@@ -72,21 +89,4 @@ void Debug::Log(LOG_TYPE category, std::string info, float r, float g, float b)
 	tempData.count = 1;
 	queue[queueEnd] = tempData;
 	queueEnd++;
-}
-
-void Debug::FlushLog()
-{
-	std::ofstream ofile("debug_log.txt", std::ofstream::out | std::ofstream::app);
-	if (!ofile.is_open())
-	{
-		std::cout << "Debug log file couldn't be opened!";
-		return;
-	}
-	for (int i = 0; i <= queueEnd; i++) {
-		if (queue[i].type == LOG_TYPE::WARNING) ofile << "[WARNING] ";
-		else if (queue[i].type == LOG_TYPE::ERR) ofile << "[ERROR] ";
-		ofile << queue[i].data << std::endl;
-	}
-	ofile.close();
-	queueEnd = 0;
 }
