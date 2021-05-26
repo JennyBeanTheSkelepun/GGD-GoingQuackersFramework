@@ -1,5 +1,0 @@
-[WARNING] Loading Name: GameObject 26962
-[ERROR] Gameobject cant contain duplicate components
-
-[ERROR] Gameobject cant contain duplicate components
-[ERROR] Gameobject cant contain duplicate components
