@@ -22,24 +22,32 @@ void Player::OnDestroy()
 
 void Player::Update()
 {
-#pragma region Grapple Controls
-	// this assumes that the grapple is a separate object or objects
-
-	// if the player is at the grapple's position, stop it from retracting more
-
-	// aim at cursor position; rotate to face it
+#pragma region Look At Cursor
+	// aim grapple at cursor position; rotate to face it
 	Transform* playerTransform = this->GetOwner()->GetComponent<Transform>();
 	Vector3 mousePos = Input::getInstance()->GetWorldSpaceMousePos();
-	/*Vector2 playerPos = playerTransform->GetPosition();
-	double angle = std::acos(playerPos.Normalize().Dot(Vector2(mousePos.X, mousePos.Y).Normalize()));
-	// radians to degrees
-	angle *= 180;
-	angle /= (2.f * std::acos(0.f));
-	// account for existing rotation
-	angle -= playerTransform->GetRotation();
-	// flip sign if cursor is on the right
-	if (mousePos.X > playerPos.X) angle *= -1;
-	this->GetOwner()->GetComponent<Transform>()->SetLocalRotation(angle);*/
+	Vector2 playerPos = playerTransform->GetPosition();
+
+	// calculate vectors, centered on the centre of the player
+	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y);
+	Vector2 upVector = Vector2(0 + playerTransform->GetScale().X / 2, 1 + playerTransform->GetScale().Y / 2);
+	Vector2 mouseNormal = mouseVector.Normalize();
+
+	// just don't change the angle if it would divide by zero
+	if (mouseNormal != Vector2(0, 0))
+	{
+		// use dot product and determinant
+		float dot = upVector.Dot(mouseNormal);
+		float determinant = upVector.X * mouseNormal.Y - upVector.Y * mouseNormal.X;
+		float angle = std::atan2f(determinant, dot);
+		// radians to degrees
+		angle *= 180 / 3.1415;
+		this->GetOwner()->GetComponent<Transform>()->SetLocalRotation(angle);
+	}
+#pragma endregion
+
+#pragma region Grapple Controls
+	// this assumes that the grapple is a separate object or objects
 
 	// fire grapple on left click down
 	if (GetGrappleState() == GRAPPLE_STATE::INACTIVE && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
