@@ -93,9 +93,9 @@ public:
 		Log(info, 1.f, 0.15f, 0.15f, LOG_TYPE::ERR);
 	}
 	void ReadLog();
+	void FlushLog();
 private:
 	// the true base function; don't expose this
 	void Log(LOG_TYPE category, std::string info, float r, float g, float b);
-	void LogToFile();
 };
 #endif DEBUG
