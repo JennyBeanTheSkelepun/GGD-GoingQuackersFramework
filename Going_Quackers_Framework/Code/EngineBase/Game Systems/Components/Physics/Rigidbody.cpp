@@ -3,7 +3,6 @@
 //- Constructor -//
 Rigidbody::Rigidbody(GameObject* owner) : Component(owner, ComponentTypes::RIGIDBODY, "RigidBody")
 {
-	mp_collider = new Collision();
 	mp_gravEmitter = new GravityEmitter();
 	mp_trigger = new Trigger();
 }
@@ -11,7 +10,6 @@ Rigidbody::Rigidbody(GameObject* owner) : Component(owner, ComponentTypes::RIGID
 //- Descructor -//
 Rigidbody::~Rigidbody()
 {
-	delete mp_collider;
 	delete mp_gravEmitter;
 	delete mp_trigger;
 }
@@ -137,8 +135,6 @@ void Rigidbody::ImGUIUpdate()
 //- Scene Save / Load -//
 void Rigidbody::SceneLoad(json* componentJSON)
 {
-	//TODO:: ADD Sceneload for RB
-
 	m_velocity = Vector2((*componentJSON)["Velocity"][0], (*componentJSON)["Velocity"][1]);
 	m_acceleration = Vector2((*componentJSON)["Acceleration"][0], (*componentJSON)["Acceleration"][1]);
 	m_mass = (*componentJSON)["Mass"];
@@ -191,7 +187,7 @@ json* Rigidbody::SceneSave()
 		{"GravityDirection", {mp_gravEmitter->GetGravityDirection().X, mp_gravEmitter->GetGravityDirection().Y} }
 		});
 
-	return nullptr;
+	return returnObj;
 }
 
 //- Custom Functions -//
@@ -238,14 +234,14 @@ void Rigidbody::PhysicsCollide()
 			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if (mp_collider->CollisionAABB(GetOwner(), obj)) 
+				if (Collision::getInstance()->CollisionAABB(GetOwner(), obj)) 
 				{ 
 					collidingObjects.push_back(obj); 
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID()); 
 				}
 				break;
 			case CollisionTypes::Sphere:
-				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj))
+				if(Collision::getInstance()->CollisionSphericalAABB(GetOwner(), obj))
 				{
 					collidingObjects.push_back(obj); 
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
@@ -257,14 +253,14 @@ void Rigidbody::PhysicsCollide()
 			switch (obj->GetComponent<Rigidbody>()->GetCollisionType())
 			{
 			case CollisionTypes::AABB:
-				if(mp_collider->CollisionSphericalAABB(GetOwner(), obj)) 
+				if(Collision::getInstance()->CollisionSphericalAABB(GetOwner(), obj))
 				{
 					collidingObjects.push_back(obj);
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
 				}
 				break;
 			case CollisionTypes::Sphere:
-				if(mp_collider->CollisionSpherical(GetOwner(), obj)) 
+				if(Collision::getInstance()->CollisionSpherical(GetOwner(), obj))
 				{
 					collidingObjects.push_back(obj);
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
