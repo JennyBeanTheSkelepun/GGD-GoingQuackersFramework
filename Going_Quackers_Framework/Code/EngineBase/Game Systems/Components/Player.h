@@ -25,6 +25,7 @@ private:
 	GRAPPLE_STATE m_grappleState;
 	void GrabWall();
 	GameObject* playerObj;
+	std::vector<GameObject*> wallObj;
 };
 
 #endif // !PLAYER_H
