@@ -2,6 +2,7 @@
 #define TIME_H
 
 #include <chrono>
+#include <algorithm>
 
 static class Time {
 public:

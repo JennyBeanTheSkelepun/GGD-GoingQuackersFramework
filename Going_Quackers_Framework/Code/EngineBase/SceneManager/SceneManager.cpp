@@ -1,21 +1,22 @@
 #include "SceneManager.h"
 
+#include "../Game Systems/Components/SpriteRenderer.h"
+#include "../Game Systems/Components/Physics/Rigidbody.h"
+#include "../Game Systems/Debug.h"
+
 #include <ostream>
 #include <fstream>
 #include <filesystem>
-#include "../JSON/nlohmann/json.hpp" // Adding JSON for modern C++
+#include <codecvt>
+#include <locale>
 
-#include "../Game Systems/GameObject.h"
-
-// For Convienience
-using json = nlohmann::json;
 
 SceneManager* SceneManager::mp_instance = 0;
 
 /// <summary>
 /// Returns the instance of the SceneManager Singleton and creates one if none exist.
 /// </summary>
-/// <returns></returns>
+/// <returns>Instance of Singleton class</returns>
 SceneManager* SceneManager::GetInstance()
 {
 	if (mp_instance == 0) {
@@ -32,142 +33,237 @@ SceneManager::SceneManager()
 	mp_CurrentScene = nullptr;
 }
 
-/// <summary>
-/// SceneManager Deconstructor
-/// </summary>
 SceneManager::~SceneManager()
 {
 	delete mp_CurrentScene;
 }
 
 /// <summary>
-/// Changes the scene to one matching the given ID
+/// Initialization function for Scene Manager
 /// </summary>
-/// <param name="as_SceneID">String containing ID of scene</param>
-void SceneManager::ChangeScene(std::string as_SceneID)
+void SceneManager::Initialize()
 {
-	// Unload current Scene
-	UnloadScene();
 
-	// Get path to JSON scene config
-	std::string ls_SceneConfigPath = "";
-
-	// Load new Scene
-	mp_CurrentScene = LoadScene(ls_SceneConfigPath);
 }
 
 /// <summary>
-/// Updates the currently loaded scene
+/// Changes the scene to one matching the given ID
 /// </summary>
-/// <param name="af_deltaTime">delta time</param>
+/// <param name="as_SceneID">String ID of the scene, should match file name (without .json)</param>
+void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
+{
+	// Unload current Scene
+	UnloadScene(as_SaveToJSON);
+
+	// Get path to JSON scene config
+	std::string ls_SceneConfigPath = "SceneConfig/" + as_SceneID + ".json";
+
+	// Load new Scene
+	mp_CurrentScene = LoadScene(ls_SceneConfigPath);
+
+	EngineGuiClass::getInstance()->InitializeObjectList(mp_CurrentScene->GetSceneObjectsList());
+}
+
+
+/// <summary>
+/// Creates a blank scene
+/// </summary>
+/// <param name="as_SceneID">ID of new scene</param>
+/// <param name="as_SceneName">Display name of new scene</param>
+/// <param name="as_SceneType">Type of new scene</param>
+/// <param name="as_SaveToJSON">Set to true to save the old scene to JSON</param>
+void SceneManager::NewScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType, bool as_SaveToJSON)
+{
+	UnloadScene(as_SaveToJSON);
+
+	// Create new scene object
+	Scene* lp_NewScene = new Scene(as_SceneID, as_SceneName, as_SceneType);
+	mp_CurrentScene = lp_NewScene;
+
+	EngineGuiClass::getInstance()->InitializeObjectList(mp_CurrentScene->GetSceneObjectsList());
+}
+
+void SceneManager::SaveCurrentScene()
+{
+	SaveToJSON(mp_CurrentScene);
+}
+
+/// <summary>
+/// Updates the current scene
+/// </summary>
+/// <param name="af_deltaTime">Delta time</param>
 void SceneManager::Update(float af_deltaTime)
 {
 	mp_CurrentScene->Update(af_deltaTime);
 }
 
 /// <summary>
-/// Renders the currently loaded scene
+/// Loads a scene from json file
 /// </summary>
-void SceneManager::Draw()
+/// <param name="as_Path">Path to json file</param>
+/// <returns>Returns new scene</returns>
+Scene* SceneManager::LoadScene(std::string as_Path)
 {
-	mp_CurrentScene->Draw();
-}
+	// Load Config from JSON file
+	std::ifstream l_file(as_Path);
+	json l_SceneConfig;
+	l_file >> l_SceneConfig;
 
-/// <summary>
-/// Loads scene from JSON config
-/// </summary>
-/// <param name="as_ID">String containing ID of scene to load</param>
-/// <returns>Loaded Scene Object</returns>
-Scene* SceneManager::LoadScene(std::string as_ID)
-{
-	// Get Local Path
-	std::string ls_path = "SceneConfig/" + as_ID + ".json";
+	// Create new scene object
+	Scene* lp_NewScene = new Scene(
+		l_SceneConfig["sceneID"],
+		l_SceneConfig["sceneName"],
+		l_SceneConfig["sceneType"]);
 
-	try {
-		// Load Config from JSON file
-		std::ifstream l_file(ls_path);
-		json l_SceneConfig;
-		l_file >> l_SceneConfig;
+	mp_CurrentScene = lp_NewScene;
 
-		// Create new scene object
-		Scene* lp_NewScene = new Scene(
-			l_SceneConfig["sceneID"],
-			l_SceneConfig["sceneName"],
-			l_SceneConfig["sceneType"]);
+	// Load objects
+	for (const auto& newObject : l_SceneConfig["objects"].items()) {
+		// Create Object
+		GameObject* lp_newObject = new GameObject();
 
-		// Create game objects and add to scene
-		for (int i = 0; i < sizeof(l_SceneConfig["objects"]); i++) {
-			// Load config into object
-			objectConfig l_objectConfig;
+		// Assign ID
+		lp_newObject->SetID(newObject.value()["id"]);
+		// Assign Name
+		lp_newObject->SetName(newObject.value()["name"]);
+		Debug::getInstance()->LogWarning("Loading Name: " + lp_newObject->GetName());
 
-			// Object ID
-			l_objectConfig.id = l_SceneConfig["objects"][i]["id"];
-
-			//Transform variables
-			l_objectConfig.pos = Vector2(l_SceneConfig["objects"][i]["pos"][0], l_SceneConfig["objects"][i]["pos"][1]);
-			l_objectConfig.rotation = l_SceneConfig["objects"][i]["rotation"];
-			l_objectConfig.scale = l_SceneConfig["objects"][i]["scale"];
-
-			// Sprite Rendering variables
-			l_objectConfig.texturePath = l_SceneConfig["objects"][i]["spriteRenderer"]["texturePath"];
-			//TODO: Colour
-
-			// Build the object
-			BuildObjectFromID(l_objectConfig);
+		// If it has a Transform Component, add Transform
+		if (newObject.value().contains("TRANSFORM")) {
+			lp_newObject->GetTransform()->SceneLoad(&newObject.value()["TRANSFORM"]);
 		}
 
-		// Close file
-		l_file.close();
-		// Return loaded Scene
-		return lp_NewScene;
+		// If it has a SpriteRenderer component, add SpriteRenderer
+		if (newObject.value().contains("SPRITERENDERER")) {
+			lp_newObject->AddComponent<SpriteRenderer>();
+			lp_newObject->GetComponent<SpriteRenderer>()->SceneLoad(&newObject.value()["SPRITERENDERER"]);
+		}
+
+		// If it has a Rigidbody component, add Rigidbody
+		if (newObject.value().contains("RIGIDBODY")) {
+			lp_newObject->AddComponent<Rigidbody>();
+			lp_newObject->GetComponent<Rigidbody>()->SceneLoad(&newObject.value()["RIGIDBODY"]);
+		}
+
+		mp_CurrentScene->AddObject(lp_newObject);
 	}
-	catch (const std::exception& e) {
+
+	// Go back and assign parent/child hierarchy
+	for (const auto& object : l_SceneConfig["objects"].items()) {
+		GameObject* lp_currentObject = mp_CurrentScene->GetObjectByID(object.value()["id"]);
+		if (object.value()["parent"] != "") {
+			GameObject* lp_parentObject = mp_CurrentScene->GetObjectByID(object.value()["parent"]);
+			if (lp_parentObject != nullptr) {
+				lp_parentObject->AddChild(lp_currentObject);
+				lp_currentObject->SetParent(lp_parentObject);
+			}
+			else {
+				Debug::getInstance()->LogError("Error: Could not find object parent for: " + lp_currentObject->GetID());
+			}
+		}
 	}
+
+	l_file.close();
+	return lp_NewScene;
 }
 
+
 /// <summary>
-/// Removes the currently loaded scene
+/// Unloads a scene
 /// </summary>
-void SceneManager::UnloadScene()
+/// <param name="as_SaveToJSON">Set to true if you want to save the scene</param>
+void SceneManager::UnloadScene(bool as_SaveToJSON)
 {
-	if (mp_CurrentScene != nullptr) {
-		delete mp_CurrentScene;
+	if (as_SaveToJSON) {
+		SaveToJSON(mp_CurrentScene);
 	}
+
+	delete mp_CurrentScene;
 }
 
+
 /// <summary>
-/// Converts Object ID string to Enum
+/// Saves scene information to JSON file
 /// </summary>
-/// <param name="as_id">String containing ID of an object</param>
-/// <returns>Object ID Enum</returns>
-ObjectIDs SceneManager::ObjectIDStringToEnum(std::string as_id)
+/// <param name="ap_Scene">Scene Object</param>
+void SceneManager::SaveToJSON(Scene* ap_Scene)
 {
-	if (as_id == "debugSquare") {
-		return debugSquare;
+	json l_outfile; // JSON Object to contain the saved data
+	std::string l_outfilePath = "SceneConfig/" + ap_Scene->GetSceneID() + ".json";
+	int li_totalObjects = ap_Scene->GetSceneObjects().size(); // Number of objects in scene
+
+	l_outfile["sceneName"] = ap_Scene->GetSceneDisplayName();
+	l_outfile["sceneID"] = ap_Scene->GetSceneID();
+	l_outfile["sceneType"] = ap_Scene->GetSceneType();
+	l_outfile["objects"] = {};
+
+	for (int i = 0; i < li_totalObjects; i++) {
+		// Get Object ID
+		std::string ls_id = ap_Scene->GetObjectByIndex(i)->GetID();
+
+		// Get Parent ID
+		std::string ls_parentID = "";
+		if (ap_Scene->GetObjectByIndex(i)->GetParent() != nullptr) {
+			ls_parentID = ap_Scene->GetObjectByIndex(i)->GetParent()->GetID();
+		}
+
+		// Get Object name
+		std::string ls_name = ap_Scene->GetObjectByIndex(i)->GetName();
+		Debug::getInstance()->LogWarning("Saving Name: " + ls_name);
+
+		json l_object = {
+			{"id", ls_id},
+			{"parent", ls_parentID},
+			{"name", ls_name}
+		};
+
+		std::vector<Component*> lp_components = ap_Scene->GetObjectByIndex(i)->GetComponents();
+		for (int j = 0; j < lp_components.size(); j++) {
+
+			Component* component = lp_components[j];
+			// Get component Type
+			std::string componentType;
+			switch (lp_components[j]->GetType()) {
+			case ComponentTypes::TRANSFORM:
+				componentType = "TRANSFORM";
+				component = static_cast<Transform*>(component);
+				break;
+			case ComponentTypes::SPRITERENDERER:
+				componentType = "SPRITERENDERER";
+				component = static_cast<SpriteRenderer*>(component);
+				break;
+			case ComponentTypes::RIGIDBODY:
+				componentType = "RIGIDBODY";
+				component = static_cast<Rigidbody*>(component);
+				break;
+			default:
+				componentType = "MISSING";
+				break;
+			}
+
+			json* lp_componentInfo = component->SceneSave();
+			if (lp_componentInfo != nullptr) {
+				l_object[componentType] = *lp_componentInfo;
+			}
+		}
+		
+		l_outfile["objects"] += l_object;
 	}
-	else {
-		return invalidOption;
-	}
+
+	std::ofstream file(l_outfilePath);
+	file << l_outfile;
+	file.close();
 }
 
-/// <summary>
-/// Builds Game Objects from given Enum ID
-/// </summary>
-/// <param name="a_objectConfig">Enum ID of object</param>
-void SceneManager::BuildObjectFromID(objectConfig a_objectConfig)
-{
-	// Convert String ID to Enum ID
-	ObjectIDs l_ObjectID = ObjectIDStringToEnum(a_objectConfig.id);
 
-	// Determine object type and set it up
-	//switch (l_ObjectID) {
-	//// Basic Object
-	//case debugSquare:
-	//	GameObject* l_NewDebugSquare = new GameObject();
-	//	
-	//	mp_CurrentScene->AddObject(l_NewDebugSquare);
-	//	break;
-	//default:
-	//	break;
-	//}
+/// <summary>
+/// Changes a string to wide string format.
+/// </summary>
+/// <param name="as_string">String to convert</param>
+/// <returns>Returns wstring</returns>
+std::wstring SceneManager::stringToWString(std::string as_string)
+{
+	std::wstring l_outString;
+	std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(as_string);
+	return l_outString;
 }

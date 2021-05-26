@@ -10,8 +10,18 @@ class Transform : public Component
 {
 public:
 	Transform(GameObject* owner);
+	~Transform();
 
-	void Initialize() override;
+	//- Basic Loops -//
+	void OnDestroy() override;
+	void Update() override;
+
+	//- ImGui UpdateLoop -//
+	void ImGUIUpdate() override;
+
+	//- Scene Save and Load -//
+	json* SceneSave() override;
+	void SceneLoad(json* componentJSON) override;
 
 	///<summary>Returns a matrix that converts from local space to world space</summary>
 	DirectX::XMMATRIX GetLocalToWorldMatrix();
@@ -26,7 +36,7 @@ public:
 	//Setters and Getters
 	void SetPosition(Vector2 position) { this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
 	Vector2 GetPosition() { return m_position; }
-	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; }
+	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; this->m_position = TransformPoint(position); }
 	Vector2 GetLocalPosition() { return this->m_localPosition; }
 
 	void SetRotation(double rotation) { this->m_rotation = rotation; }

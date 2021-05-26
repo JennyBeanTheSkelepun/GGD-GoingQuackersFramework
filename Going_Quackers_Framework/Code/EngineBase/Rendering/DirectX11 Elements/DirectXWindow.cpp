@@ -1,11 +1,23 @@
 #include "DirectXWindow.h"
+#include "DirectXGraphics.h"
+#include "../../Game Systems/Input.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-DirectXWindow::DirectXWindow()
+DirectXWindow::DirectXWindow(DirectXGraphics* ap_DirectX)
 {
-	mi_width = 0;
-	mi_height = 0;
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+	// The top left corner will have coordinates (0,0)
+	// and the bottom right corner will have coordinates
+	// (horizontal, vertical)
+	mi_width = desktop.right;
+	mi_height = desktop.bottom;
+
+	mp_DirectX = ap_DirectX;
 }
 
 DirectXWindow::~DirectXWindow()
@@ -58,12 +70,12 @@ LRESULT CALLBACK DirectXWindow::MessageHandler(HWND hwnd, UINT uint, WPARAM wPar
 
 
 		case WM_KEYDOWN:
-			//mp_Input->KeyDown((unsigned int)wParam);
+			Input::getInstance()->KeyDown((unsigned int)wParam);
 			return 0;
 			break;
 
 		case WM_KEYUP:
-			//mp_Input->KeyUp((unsigned int)wParam);
+			Input::getInstance()->KeyUp((unsigned int)wParam);
 			return 0;
 			break;
 
@@ -83,7 +95,7 @@ void DirectXWindow::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 
 	m_hInstance = GetModuleHandle(NULL);
 
-	m_applicationName = L"Going Quakers Engine";
+	m_applicationName = L"Going Quackers Engine";
 
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	wc.lpfnWndProc = WndProc;
@@ -100,8 +112,8 @@ void DirectXWindow::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 
 	RegisterClassEx(&wc);
 
-	ai_screenWidth = GetSystemMetrics(SM_CXSCREEN);
-	ai_screenHeight = GetSystemMetrics(SM_CYSCREEN);
+	ai_screenWidth = mi_width;
+	ai_screenHeight = mi_height;
 
 	if (FULL_SCREEN)
 	{
@@ -120,16 +132,13 @@ void DirectXWindow::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 	}
 	else
 	{
-		ai_screenWidth = 1280;
-		ai_screenHeight = 720;
-
-		li_posX = (GetSystemMetrics(SM_CXSCREEN) - ai_screenWidth) / 2;
-		li_posY = (GetSystemMetrics(SM_CYSCREEN) - ai_screenHeight) / 2;
+		li_posX = (GetSystemMetrics(SM_CXSCREEN) - mi_width) / 2;
+		li_posY = (GetSystemMetrics(SM_CYSCREEN) - mi_height) / 2;
 	}
 
 	m_hwnd = CreateWindowEx(0, m_applicationName, m_applicationName,
 		WS_OVERLAPPEDWINDOW,
-		li_posX, li_posY, ai_screenWidth, ai_screenHeight, NULL, NULL, m_hInstance, NULL);
+		li_posX, li_posY, mi_width, mi_height, NULL, NULL, m_hInstance, NULL);
 
 	ShowWindow(m_hwnd, SW_SHOW);
 	SetForegroundWindow(m_hwnd);

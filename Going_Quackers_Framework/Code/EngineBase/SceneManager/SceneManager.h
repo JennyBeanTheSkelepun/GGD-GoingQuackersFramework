@@ -1,24 +1,23 @@
-#pragma once
-
 #ifndef SCENEMANAGER
 #define SCENEMANAGER
 
+#include "../Game Systems/GameObject.h"
 #include "../SceneManager/Scene.h"
 #include "../Data Structures/Vectors.h"
+#include <vector>
 
-// Object IDs
-enum ObjectIDs {
-	invalidOption,
-	debugSquare
-};
+#include "../JSON/nlohmann/json.hpp" // Adding JSON for modern C++
+// For Convienience
+using json = nlohmann::json;
 
-struct objectConfig {
+struct ObjectConfig {
 	std::string id;
 	Vector2 pos;
 	float rotation;
-	float scale;
-	// Vector3 colour
+	Vector2 scale;
 	std::string texturePath;
+	std::string shaderPath;
+	std::string parentID;
 };
 
 class SceneManager
@@ -36,20 +35,23 @@ protected:
 public:
 	~SceneManager();
 
-	void ChangeScene(std::string as_SceneID);
+	void Initialize();
+	void ChangeScene(std::string as_SceneID, bool as_SaveToJSON);
+	void NewScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType, bool as_SaveToJSON);
+	void SaveCurrentScene();
 
 	void Update(float af_deltaTime);
-	void Draw();
 
 	Scene* GetCurrentScene() { return mp_CurrentScene; };
 
 private:
-	Scene* LoadScene(std::string as_ID);
-	void UnloadScene();
-	ObjectIDs ObjectIDStringToEnum(std::string as_id);
-	void BuildObjectFromID(objectConfig a_objectConfig);
+	Scene* LoadScene(std::string as_Path);
+	void UnloadScene(bool as_SaveToJSON);
 
 	Scene* mp_CurrentScene;
+
+	void SaveToJSON(Scene* ap_Scene);
+	std::wstring stringToWString(std::string as_string);
 };
 
-#endif // !SCENEMANAGER
+#endif /*SCENEMANAGER*/

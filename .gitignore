@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 
 Going_Quackers_Framework/.vs/*
+
+*.png

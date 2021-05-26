@@ -23,6 +23,8 @@ public:
 
 	bool Render(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);	
 	int SetObjectToRender(SpriteRenderer* ObjToRender);
+	int RemoveObjectToRenderLoop(int index);
+
 private:
 	std::vector<SpriteRenderer*> GameObjectsToRender;
 	DirectXTwoDObject* mp_2DModel;

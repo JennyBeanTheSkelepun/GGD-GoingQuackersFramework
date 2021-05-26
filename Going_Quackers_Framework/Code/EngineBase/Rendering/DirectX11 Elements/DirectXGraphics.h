@@ -8,15 +8,14 @@
 #include "../../Rendering/Interface/Graphics_API_Interface.h"
 #include "../../Rendering/DirectX11 Elements/DirectXWindow.h"
 #include "../../Rendering/DirectX11 Elements/DirectXClass.h"
-
 #include "../../Rendering/DirectX11 Elements/DirectXImGui.h"
-
 #include "../../Rendering/DirectX11 Elements/DirectXCamera.h"
 #include "../../Rendering/DirectX11 Elements/DirectXTextureManager.h"
 #include "../../Rendering/DirectX11 Elements/DirectXShaderManager.h"
 #include "../../Rendering/DirectX11 Elements/DirectXRenderLoop.h"
 
 class SpriteRenderer;
+class VirtualCamera;
 
 const bool VSYNC_ENABLED = false;
 const float SCREEN_DEPTH = 1000.0f;
@@ -27,25 +26,29 @@ class DirectXGraphics : public GraphicsInterface
 public:
 
 	bool InitalizeGraphicalApi();
-	//void SetNewActiveCamera(VirtualCamera& vCam) override;
+	void SetNewActiveCamera(VirtualCamera* vCam) override;
+	VirtualCamera* GetActiveCamera() override;
 
-	int AddObjectToRenderLoop(SpriteRenderer* ar_component) ;
-	int RemoveObjectFromRenderLoop(int index) ;
+	int AddObjectToRenderLoop(SpriteRenderer* ar_component);
+	int RemoveObjectFromRenderLoop(int index);
 	
-	int LoadTexture(std::string TextureLocation) ;
-	int RemoveTexture(int index) ;
-	void CleanUpTexturePool() ;
+	int LoadTexture(std::string TextureLocation);
+	int RemoveTexture(int index);
+	void CleanUpTexturePool();
 
-	int LoadShader(std::wstring ShaderLocation) ;
-	int RemoveShader(int index) ;
-	void CleanUpShaderPool() ;
+	int LoadShader(std::wstring ShaderLocation);
+	int RemoveShader(int index);
+	void CleanUpShaderPool();
 
-	int LoadSpriteSheet(std::string SpriteSheetLocation) ;
-	int RemoveSpriteSheet(int index) ;
-	void CleanUpSpriteSheetPool() ;
+	int LoadSpriteSheet(std::string SpriteSheetLocation);
+	int RemoveSpriteSheet(int index);
+	void CleanUpSpriteSheetPool();
 	
-	void GraphicsAPIUpdate() ;
-	void StartAPIRenderLoop() ;
+	void GraphicsAPIUpdate();
+	void StartAPIRenderLoop();
+
+	void ResizeWindowCall();
+	Vector2 GetWindowDimentions();
 
 	//- old functions -//
 	DirectXGraphics();
