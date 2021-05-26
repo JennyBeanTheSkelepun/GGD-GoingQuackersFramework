@@ -227,7 +227,6 @@ void EngineGuiClass::EditorUpdate()
 		ImGui::SetNextWindowSize(CurrentWindowPosition.dimentions[3]);
 	}
 	ImGui::Begin("OutputLog");
-	ImGui::Text(outputText.c_str()); // Game Object system stuff; todo switch to debug logging
 	Debug::getInstance()->ReadLog();
 
 	CurrentWindowPosition.positions[3].x = ImGui::GetWindowPos().x;

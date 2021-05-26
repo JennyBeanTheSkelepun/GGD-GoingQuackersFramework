@@ -31,14 +31,21 @@ Debug* Debug::getInstance()
 
 void Debug::ReadLog() 
 {
+	if (ImGui::Button("Clear Debug Log", ImVec2(ImGui::GetWindowWidth() - 15, 20)))
+	{
+		Debug::getInstance()->LogError("Nero Please Quickly add a way to clear the debug log");
+	}
+
 	// just call ImGui::ColoredText from here
 	for (int i = 0; i < queueEnd; i++)
 	{
+		ImGui::PushID(i);
 		std::string dataCount;
 		if (queue[i].type == LOG_TYPE::WARNING) dataCount = "[WARNING] ";
 		else if (queue[i].type == LOG_TYPE::ERR) dataCount = "[ERROR] ";
 		dataCount += queue[i].data+" ("+std::to_string(queue[i].count)+")";
 		ImGui::TextColored(ImVec4(queue[i].r, queue[i].g, queue[i].b, 1.f), dataCount.c_str());
+		ImGui::PopID();
 	}
 }
 
