@@ -6,7 +6,25 @@ Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER,"Pla
 	playerObj = GetOwner();
 }
 
+void Player::ImGUIDisplay()
+{
+	/*const char* name = "Player";
 
+	if (ImGui::CollapsingHeader(name))
+	{
+		if (ImGui::Button("Delete"))
+		{
+
+		}
+
+		ImGUIUpdate();
+	}*/
+}
+
+void Player::Update()
+{
+	GrabWall();
+}
 
 void Player::GrabWall()
 {

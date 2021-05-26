@@ -18,6 +18,8 @@ public:
 		RETURNING = 4,
 	};
 	Player(GameObject* owner);
+	void ImGUIDisplay();
+	void Update();
 	bool wallGrabbed;
 	GRAPPLE_STATE GetGrappleState();
 	void SetGrappleState(GRAPPLE_STATE state);
