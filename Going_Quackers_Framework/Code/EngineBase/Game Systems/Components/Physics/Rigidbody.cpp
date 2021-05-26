@@ -200,9 +200,30 @@ void Rigidbody::CalculateVelocity()
 		totalForce += force;
 	}
 
-	m_acceleration = totalForce / m_mass;
+	if (m_MoveIgnoreFlag == MovementIgnore::NONE)
+	{
+		m_acceleration = totalForce / m_mass;
 
-	m_velocity += m_acceleration * Time::GetDeltaTime();
+		m_velocity += m_acceleration * Time::GetDeltaTime();
+	}
+	else if(m_MoveIgnoreFlag == MovementIgnore::ACCEL)
+	{
+		m_velocity += totalForce / m_mass;
+
+		m_acceleration = Vector2();
+	}
+	else if (m_MoveIgnoreFlag == MovementIgnore::MASS)
+	{
+		m_acceleration = totalForce;
+
+		m_velocity += m_acceleration * Time::GetDeltaTime();
+	}
+	else if (m_MoveIgnoreFlag == MovementIgnore::MASSACCEL)
+	{
+		m_velocity += totalForce;
+
+		m_acceleration = Vector2();
+	}
 
 	Vector2 pos = GetOwner()->GetTransform()->GetPosition();
 	pos += m_velocity;
@@ -212,7 +233,7 @@ void Rigidbody::CalculateVelocity()
 void Rigidbody::PhysicsCollide()
 {
 	std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
-	std::vector<GameObject*> collidingObjects;
+	collidingObjects.clear();
 
 	for (GameObject* obj : allObjects)
 	{
@@ -222,11 +243,6 @@ void Rigidbody::PhysicsCollide()
 		}
 
 		Rigidbody* OtherRB = obj->GetComponent<Rigidbody>();
-
-		if (OtherRB->getCollideFlag() && OtherRB->getType() == PhysicsTypes::RB && getType() == PhysicsTypes::RB)
-		{
-			break;
-		}
 
 		switch (GetCollisionType())
 		{
@@ -292,7 +308,7 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 	for (GameObject* obj : *collidingObjects)
 	{
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();
-		if (rb->getType() != PhysicsTypes::RB || rb->m_isStatic)
+		if (rb->getCollideFlag())
 		{
 			continue;
 		}
