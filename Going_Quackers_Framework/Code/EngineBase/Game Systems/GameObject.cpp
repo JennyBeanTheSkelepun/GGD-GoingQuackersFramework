@@ -14,7 +14,7 @@ GameObject::GameObject(const char* name, GameObject* parent)
 	m_components = std::vector<Component*>();
 	m_children = std::vector<GameObject*>();
 
-	this->m_shouldDestroy = false;
+	this->m_shouldLive = true;
 
 	mp_transform = AddComponent<Transform>();
 	m_active = true;
@@ -129,7 +129,7 @@ void GameObject::ImGUIUpdate()
 
 void GameObject::SetToDestroy()
 {
-	m_shouldDestroy = true;
+	m_shouldLive = false;
 	for (size_t i = 0; i < m_children.size(); i++)
 	{
 		m_children[i]->SetToDestroy();

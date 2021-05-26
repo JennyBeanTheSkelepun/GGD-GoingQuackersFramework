@@ -31,18 +31,46 @@ EngineGuiClass::~EngineGuiClass()
 	currentSelected = nullptr;
 }
 
-void EngineGuiClass::DisplayChildren(GameObject* gameObject)
-{
-	for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
-	{
-		GameObject* child = gameObject->GetChildren()[i];
-		if (ImGui::CollapsingHeader(child->GetName().c_str()))
-		{
-			currentSelected = child;
-			DisplayChildren(child);
-		}
-	}
-}
+//void EngineGuiClass::DisplayChildren(GameObject* gameObject)
+//{
+//	//indentLevel++;
+//	//ImGui::Indent(25 * indentLevel);
+//
+//	//for (size_t i = 0; i < gameObject->GetChildren().size(); i++)
+//	//{
+//	//	GameObject* child = gameObject->GetChildren()[i];
+//	//	if (ImGui::CollapsingHeader(child->GetName().c_str(), child->GetShouldLive()))
+//	//	{
+//	//		currentSelected = child;
+//	//		DisplayChildren(child, indentLevel);
+//	//	}
+//	//}
+//	//
+//	//indentLevel--;
+//	//ImGui::Indent(25 * indentLevel);
+//
+//
+//	std::vector<GameObject*> children = gameObject->GetChildren();
+//	int gameObjectSize = children.size();
+//	GameObject* currentObject;
+//	int SelectedObject;
+//
+//	for (int i(0); i < gameObjectSize; ++i)
+//	{
+//		currentObject = children.at(i);
+//		SelectedObject = i;
+//
+//		bool is_expanded = ImGui::TreeNodeEx(currentObject->GetName().c_str(), ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_AllowItemOverlap);
+//		ImGui::SameLine(ImGui::GetWindowWidth() - 25);
+//		*currentObject->GetShouldLive() = !ImGui::Button("x");
+//
+//		if (is_expanded)
+//		{
+//			DisplayChildren(currentObject);
+//			ImGui::TreePop();
+//		}
+//	}
+//}
 
 void EngineGuiClass::InitializeObjectList(std::vector<GameObject*>* gameObjects)
 {
@@ -70,7 +98,6 @@ void EngineGuiClass::GameUpdate()
 
 void EngineGuiClass::EditorUpdate()
 {
-
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -151,8 +178,6 @@ void EngineGuiClass::EditorUpdate()
 		ImGui::EndMainMenuBar();
 	}
 
-	currentSelected = nullptr;
-
 	//- Scene Heiarchy -//
 	if (isRecording())
 	{
@@ -160,20 +185,7 @@ void EngineGuiClass::EditorUpdate()
 		ImGui::SetNextWindowSize(CurrentWindowPosition.dimentions[0]);
 	}
 	ImGui::Begin("Scene Hierarchy");
-	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
-	int index = 0;
-	for (size_t i = 0; i < gameObjects->size(); i++)
-	{
-		GameObject* gameObject = gameObjects->at(i);
-		if(ImGui::CollapsingHeader(gameObject->GetName().c_str()))
-		{
-			index = i;
-			DisplayChildren(gameObject);
-		}
-	}
-	
-	if (currentSelected == nullptr && !gameObjects->empty())
-		currentSelected = gameObjects->at(index);
+	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 	
 	//Create GameObjects
 	if (ImGui::Button("Create GameObject"))
@@ -183,6 +195,14 @@ void EngineGuiClass::EditorUpdate()
 		gameObject->SetID(name);
 		gameObjects->push_back(gameObject);
 	}
+	ImGui::SameLine();
+	ImGui::Text("Currently Editing: "); 
+	ImGui::SameLine();
+	ImGui::Text(SceneManager::GetInstance()->GetCurrentScene()->GetSceneDisplayName().c_str());
+
+	ImGui::Separator();
+
+	DisplayObjects(*gameObjects);
 
 	CurrentWindowPosition.positions[0].x = ImGui::GetWindowPos().x;
 	CurrentWindowPosition.positions[0].y = ImGui::GetWindowPos().y;
@@ -291,27 +311,85 @@ const char* EngineGuiClass::BoolToString(bool Input)
 		return "False";
 }
 
-bool EngineGuiClass::SelectableTreeNode(const char* label, bool isSelected)
+void EngineGuiClass::DisplayObjects(std::vector<GameObject*>& gameObjects)
 {
-	// Selection
-	if (isSelected)
+	GameObject* currentObject;
+	int gameObjectSize = gameObjects.size();
+
+	if (gameObjectSize == 0)
+		ImGui::Text("No Children Exist");
+
+	for (int i(0); i < gameObjectSize; ++i)
 	{
-		ImU32 col = ImColor(ImGui::GetStyle().Colors[ImGuiCol_HeaderHovered]);
-		/*x += os.x;
-		y += os.y;
-		ImGui::RenderFrame(ImVec2(x, y), ImVec2(x + itemFullWidth, y + itemFullHeight), col, true, 3.f);
-		x -= os.x;
-		y -= os.y;*/
+		currentObject = gameObjects[i];
+
+		//- Controll Buttons -//
+		bool is_expanded = ImGui::TreeNodeEx(currentObject->GetName().c_str(), ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth);
+		
+		ImGui::SameLine(ImGui::GetWindowWidth() - 25);
+		bool DeleteElement = ImGui::Button("X");
+
+		ImGui::SameLine(ImGui::GetWindowWidth() - 43);
+		bool AddChild = ImGui::Button("+");
+
+		ImGui::SameLine(ImGui::GetWindowWidth() - 68);
+		bool MoveUpScene = ImGui::Button("/\\");
+
+		ImGui::SameLine(ImGui::GetWindowWidth() - 93);
+		bool MoveDownScene = ImGui::Button("\\/");
+
+		ImGui::SameLine(ImGui::GetWindowWidth() - 111);
+		bool Selected = ImGui::Button("S");
+
+		//- Logic -//
+		if (is_expanded)
+		{
+			std::vector<GameObject*> temp = currentObject->GetChildren();
+			DisplayObjects(temp);
+			ImGui::TreePop();
+		}
+		
+		if (DeleteElement)
+		{
+			currentSelected = nullptr;
+			*currentObject->GetShouldLive() = false;
+		}
+		
+		if (AddChild)
+		{
+			currentObject->AddChild(new GameObject("Child 1", currentObject));
+		}
+		
+		if (MoveUpScene)
+		{
+			if (i - 1 > -1)
+			{
+				GameObject* temp = gameObjects[i - 1];
+				gameObjects[i - 1] = gameObjects[i];
+				gameObjects[i] = temp;
+			}
+		}
+		
+		if (MoveDownScene)
+		{
+			if (i + 1 < gameObjectSize)
+			{
+				GameObject* temp = gameObjects[i + 1];
+				gameObjects[i + 1] = gameObjects[i];
+				gameObjects[i] = temp;
+			}
+		}
+
+		if (Selected)
+		{
+			if (currentSelected == currentObject)
+				currentSelected = nullptr;
+			else
+				currentSelected = currentObject;
+		}
+		ImGui::Separator();
 	}
 
-	ImGui::PushID(label);
-	bool opened = ImGui::Selectable(label, true);
-	ImGui::PopID();
-
-	if (opened)
-		ImGui::TreePush(label);
-
-	return opened;
 }
 
 void EngineGuiClass::LoadWindowPositions()

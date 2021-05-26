@@ -101,7 +101,8 @@ public:
 
 	void SetToDestroy();
 	///<summary>Says if the GameObject should be destroyed next frame</summary>
-	bool ShouldDestroy() { return m_shouldDestroy; }
+	bool ShouldDestroy() { return !m_shouldLive; }
+	bool* GetShouldLive() { return &m_shouldLive; };
 
 private:
 
@@ -126,7 +127,7 @@ private:
 	// Name of object
 	std::string m_name = "";
 
-	bool m_shouldDestroy;
+	bool m_shouldLive;
 };
 
 #endif // !_GAMEOBJECT_H_

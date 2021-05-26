@@ -33,8 +33,6 @@ private:
 	EngineGuiClass();
 	~EngineGuiClass();
 
-	void DisplayChildren(GameObject* gameObject);
-
 public:
 	void InitializeObjectList(std::vector<GameObject*>* gameObjects);
 
@@ -47,12 +45,18 @@ public:
 
 	inline bool IsInPlayMode() { return mb_playGame; }
 
-	bool SelectableTreeNode(const char* label, bool isSelected);
 	LayoutSettings* GetWindowInfo() { return &CurrentWindowPosition; };
 
 	bool isRecording() { return !RecordingLayout; }
 
 private:
+	void DisplayObjects(std::vector<GameObject*>& gameObjects);
+
+	void LoadWindowPositions();
+	void SaveWindowPositionsToFile();
+	
+	std::vector<int> m_selectionList;
+
 	bool mb_maxEditor = false;
 	bool mb_maxOnPlay = false;
 	bool mb_playGame = false;
@@ -69,9 +73,6 @@ private:
 	char* NewSceneType;
 	std::vector<LayoutSettings> WindowPositions;
 	LayoutSettings CurrentWindowPosition;
-
-	void LoadWindowPositions();
-	void SaveWindowPositionsToFile();
 
 	std::vector<GameObject*>* gameObjects; //List of GameObjects
 	GameObject* currentSelected; //The Currently Selected GameObject
