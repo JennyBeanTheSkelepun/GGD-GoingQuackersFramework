@@ -56,12 +56,19 @@ void EngineMain::Run()
 		}
 		else
 		{
-			lb_result = UpdateRenderLoop();
-			if (!lb_result)
-				lb_done = true;
+			if (Time::GetDeltaTime() < 0.032f)
+			{
+				Debug::getInstance()->Log("Frame Skipped");
+				Time::UpdateTimeSinceLastFrameEnd();
+			}
+			else
+			{
+				lb_result = UpdateRenderLoop();
+				if (!lb_result)
+					lb_done = true;
+				Time::FrameEnd();
+			}
 		}
-
-		Time::FrameEnd();
 	}
 
 	return;
@@ -72,6 +79,8 @@ bool EngineMain::UpdateRenderLoop()
 	bool lb_result;
 	if (Input::getInstance()->isKeyHeldDown(KeyCode::ESCAPE))
 		return false;
+
+	Debug::getInstance()->Log("Frame Run");
 
 	//- UPDATE LOOP START-//
 
@@ -90,15 +99,6 @@ bool EngineMain::UpdateRenderLoop()
 			SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>()->resetCollideFlag();
 		}
 	}
-
-	//if (Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
-	//{
-	//	Debug::getInstance()->Log("you did it2");
-	//}
-	//if (Input::getInstance()->isKeyPressedUp(KeyCode::RightMouse))
-	//{
-	//	Debug::getInstance()->Log("you did it1");
-	//}
 
 	Input::getInstance()->Update();
 	Graphics::getInstance()->StartApiUpdateLoop();
