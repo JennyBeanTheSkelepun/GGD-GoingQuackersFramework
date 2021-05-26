@@ -13,7 +13,7 @@ Debug::Debug()
 Debug::~Debug() 
 {
 	// save log
-	LogToFile();
+	FlushLog();
 
 	if (SingletonInstance != nullptr) 
 	{
@@ -61,13 +61,13 @@ void Debug::Log(LOG_TYPE category, std::string info, float r, float g, float b)
 	}
 
 	// no copy found
-	if (queueEnd == 10000) LogToFile();
+	if (queueEnd == 10000) FlushLog();
 	tempData.count = 1;
 	queue[queueEnd] = tempData;
 	queueEnd++;
 }
 
-void Debug::LogToFile()
+void Debug::FlushLog()
 {
 	std::ofstream ofile("debug_log.txt", std::ofstream::out | std::ofstream::app);
 	if (!ofile.is_open())
@@ -75,7 +75,7 @@ void Debug::LogToFile()
 		std::cout << "Debug log file couldn't be opened!";
 		return;
 	}
-	for (int i = 0; i <= 10000; i++) {
+	for (int i = 0; i <= queueEnd; i++) {
 		if (queue[i].type == LOG_TYPE::WARNING) ofile << "[WARNING] ";
 		else if (queue[i].type == LOG_TYPE::ERR) ofile << "[ERROR] ";
 		ofile << queue[i].data << std::endl;
