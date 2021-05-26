@@ -22,6 +22,7 @@ void Player::GrabWall()
 
 	if (wallGrabbed)
 	{
+		//todo set the players position to be their own position - the walls position, this will need to be tested so it works the actual calculation is correct
 
 		//todo set the player to face the wall they are colliding with
 	}

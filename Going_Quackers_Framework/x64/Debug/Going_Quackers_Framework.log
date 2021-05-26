@@ -1,11 +1,5 @@
-﻿  EngineMain.cpp
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(20,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(44,67): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(18,72): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(25,7): warning C4101: 'result': unreferenced local variable
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(79,6): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(81,73): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(85,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(71,7): warning C4101: 'lb_result': unreferenced local variable
-  Going_Quackers_Framework.vcxproj -> C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+﻿  Player.cpp
+c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(20): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+  Going_Quackers_Framework.vcxproj -> C:\Users\mccan\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
