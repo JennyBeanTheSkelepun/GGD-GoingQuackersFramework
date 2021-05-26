@@ -46,7 +46,6 @@ public:
 	/// </summary>
 	/// <param name="force"></param>
 	void AddForce(Vector2 force) { m_forces.push_back(force); }
-	void PhysicsCollide();
 
 	void SetMass(float mass) { m_mass = mass <= 0 ? 1.0f : mass; }
 	float GetMass() { return m_mass; }
@@ -73,6 +72,8 @@ public:
 	std::vector<GameObject*> getCollidedObjects() { return collidingObjects; }
 
 private:
+	void PhysicsCollide();
+	
 	PhysicsTypes m_physicsType = PhysicsTypes::RB;
 
 	Vector2 m_velocity;
