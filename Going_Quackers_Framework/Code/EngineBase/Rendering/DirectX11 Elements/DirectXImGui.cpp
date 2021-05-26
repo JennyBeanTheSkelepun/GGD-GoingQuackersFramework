@@ -38,6 +38,8 @@ bool DirectXImGui::Update(ID3D11ShaderResourceView* ap_renderTexture, float widt
 		}
 		ImGui::Begin("Game/Scene View");
 		//ImGui::Image(RenderTexture, ImVec2((ImGui::GetWindowWidth() - 15), (ImGui::GetWindowHeight() - 35)));
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::SameLine();
 		ImGui::InputFloat("input float", &m_scale, 0.5f);
 		ImGui::Image(RenderTexture, ImVec2(width / m_scale, height / m_scale));
 
