@@ -22,11 +22,11 @@ public:
 	~DirectXRenderLoop();
 
 	bool Render(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);	
-	int SetObjectToRender(SpriteRenderer* ObjToRender);
-	int RemoveObjectToRenderLoop(int index);
+	int SetObjectToRender(SpriteRenderer* ap_objToRender);
+	int RemoveObjectToRenderLoop(int ai_index);
 
 private:
-	std::vector<SpriteRenderer*> GameObjectsToRender;
+	std::vector<SpriteRenderer*> m_gameObjectsToRender;
 	DirectXTwoDObject* mp_2DModel;
 
 	bool EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);

@@ -12,8 +12,8 @@ public:
 	DirectXShader();
 	~DirectXShader();
 
-	bool Initialize(ID3D11Device* device, HWND hwnd, std::wstring fileLocation);
-	bool Render(ID3D11DeviceContext* deviceContext, int indexCount , DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX rotationMatrix, DirectX::XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture);
+	bool Initialize(ID3D11Device* ap_device, HWND a_hwnd, std::wstring as_fileLocation);
+	bool Render(ID3D11DeviceContext* ap_deviceContext, int ai_indexCount , DirectX::XMMATRIX a_worldMatrix, DirectX::XMMATRIX a_rotationMatrix, DirectX::XMMATRIX a_projectionMatrix, ID3D11ShaderResourceView* ap_texture);
 
 private:
 	struct MatrixBuffer
@@ -23,12 +23,12 @@ private:
 		DirectX::XMMATRIX projection;
 	};
 
-	bool InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFileName, WCHAR* psFileName);
+	bool InitializeShader(ID3D11Device* ap_device, HWND a_hwnd, WCHAR* ap_vsFileName, WCHAR* ap_psFileName);
 	void ShutdownShader();
-	void OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFileName);
+	void OutputShaderErrorMessage(ID3D10Blob* ap_errorMessage, HWND a_hwnd, WCHAR* ap_shaderFileName);
 
-	bool SetShaderParameters(ID3D11DeviceContext* deviceContext, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture);
-	void RenderShader(ID3D11DeviceContext* deviceContext, int indexCount);
+	bool SetShaderParameters(ID3D11DeviceContext* ap_deviceContext, DirectX::XMMATRIX a_worldMatrix, DirectX::XMMATRIX a_viewMatrix, DirectX::XMMATRIX a_projectionMatrix, ID3D11ShaderResourceView* ap_texture);
+	void RenderShader(ID3D11DeviceContext* ap_deviceContext, int ai_indexCount);
 
 	ID3D11VertexShader* mp_vertexShader;
 	ID3D11PixelShader* mp_pixelShader;

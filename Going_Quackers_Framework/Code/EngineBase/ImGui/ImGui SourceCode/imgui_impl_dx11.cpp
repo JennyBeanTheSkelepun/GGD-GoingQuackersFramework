@@ -2,7 +2,7 @@
 // This needs to be used along with a Platform Backend (e.g. Win32)
 
 // Implemented features:
-//  [X] Renderer: User texture binding. Use 'ID3D11ShaderResourceView*' as ImTextureID. Read the FAQ about ImTextureID!
+//  [X] Renderer: User mp_texture binding. Use 'ID3D11ShaderResourceView*' as ImTextureID. Read the FAQ about ImTextureID!
 //  [X] Renderer: Support for large meshes (64k+ vertices) with 16-bit indices.
 
 // You can copy and use unmodified imgui_impl_* files in your project. See examples/ folder for examples of using this.
@@ -11,8 +11,8 @@
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
-//  2019-08-01: DirectX11: Fixed code querying the Geometry Shader state (would generally error with Debug layer enabled).
-//  2019-07-21: DirectX11: Backup, clear and restore Geometry Shader is any is bound when calling ImGui_ImplDX10_RenderDrawData. Clearing Hull/Domain/Compute shaders without backup/restore.
+//  2019-08-01: DirectX11: Fixed code querying the Geometry mp_shader state (would generally error with Debug layer enabled).
+//  2019-07-21: DirectX11: Backup, clear and restore Geometry mp_shader is any is bound when calling ImGui_ImplDX10_RenderDrawData. Clearing Hull/Domain/Compute shaders without backup/restore.
 //  2019-05-29: DirectX11: Added support for large mesh (64K+ vertices), enable ImGuiBackendFlags_RendererHasVtxOffset flag.
 //  2019-04-30: DirectX11: Added support for special ImDrawCallback_ResetRenderState callback to reset render state.
 //  2018-12-03: Misc: Added #pragma comment statement to automatically link with d3dcompiler.lib when using D3DCompile().
@@ -246,7 +246,7 @@ void ImGui_ImplDX11_RenderDrawData(ImDrawData* draw_data)
                 const D3D11_RECT r = { (LONG)(pcmd->ClipRect.x - clip_off.x), (LONG)(pcmd->ClipRect.y - clip_off.y), (LONG)(pcmd->ClipRect.z - clip_off.x), (LONG)(pcmd->ClipRect.w - clip_off.y) };
                 ctx->RSSetScissorRects(1, &r);
 
-                // Bind texture, Draw
+                // Bind mp_texture, Draw
                 ID3D11ShaderResourceView* texture_srv = (ID3D11ShaderResourceView*)pcmd->TextureId;
                 ctx->PSSetShaderResources(0, 1, &texture_srv);
                 ctx->DrawIndexed(pcmd->ElemCount, pcmd->IdxOffset + global_idx_offset, pcmd->VtxOffset + global_vtx_offset);
@@ -278,13 +278,13 @@ void ImGui_ImplDX11_RenderDrawData(ImDrawData* draw_data)
 
 static void ImGui_ImplDX11_CreateFontsTexture()
 {
-    // Build texture atlas
+    // Build mp_texture atlas
     ImGuiIO& io = ImGui::GetIO();
     unsigned char* pixels;
     int width, height;
     io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
-    // Upload texture to graphics system
+    // Upload mp_texture to graphics system
     {
         D3D11_TEXTURE2D_DESC desc;
         ZeroMemory(&desc, sizeof(desc));
@@ -305,7 +305,7 @@ static void ImGui_ImplDX11_CreateFontsTexture()
         subResource.SysMemSlicePitch = 0;
         g_pd3dDevice->CreateTexture2D(&desc, &subResource, &pTexture);
 
-        // Create texture view
+        // Create mp_texture view
         D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
         ZeroMemory(&srvDesc, sizeof(srvDesc));
         srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -319,7 +319,7 @@ static void ImGui_ImplDX11_CreateFontsTexture()
     // Store our identifier
     io.Fonts->TexID = (ImTextureID)g_pFontTextureView;
 
-    // Create texture sampler
+    // Create mp_texture sampler
     {
         D3D11_SAMPLER_DESC desc;
         ZeroMemory(&desc, sizeof(desc));

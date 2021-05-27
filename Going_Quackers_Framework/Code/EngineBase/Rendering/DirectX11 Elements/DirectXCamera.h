@@ -30,7 +30,7 @@ private:
 	Vector3 m_rotation;
 	DirectX::XMMATRIX m_viewMatrix;
 
-	VirtualCamera* CurrentVirtualCamera;
+	VirtualCamera* mp_currentVirtualCamera;
 };
 
 

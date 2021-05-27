@@ -76,7 +76,7 @@ void SpriteRenderer::InitialzeTextureShader(std::string TextureLocation, std::ws
 	m_ShaderLocation.assign(ShaderLocation.begin(), ShaderLocation.end());
 	Graphics* temp = Graphics::getInstance();
 
-	//- If Texture/Shader/Object is instantiated then dont try and remake it  -//
+	//- If Texture/mp_shader/Object is instantiated then dont try and remake it  -//
 	if (mi_Texture == -1) 
 	{ 
 		mi_Texture = Graphics::getInstance()->LoadTexture(TextureLocation);
@@ -95,7 +95,7 @@ void SpriteRenderer::InitialzeTextureShader(std::string TextureLocation, std::ws
 
 void SpriteRenderer::RemoveTextureShader()
 {
-	//- If Texture/Shader/Object isnt instantiated then dont try and remove it -//
+	//- If Texture/mp_shader/Object isnt instantiated then dont try and remove it -//
 	if (mi_Texture != -1) 
 	{
 		mi_Texture = Graphics::getInstance()->RemoveTexture(mi_Texture); 

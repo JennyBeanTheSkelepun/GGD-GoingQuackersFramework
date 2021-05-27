@@ -61,11 +61,6 @@ bool Graphics::InitaliseAPIs()
 	return true;
 }
 
-void Graphics::ResizeRenderingSystem()
-{
-
-}
-
 void Graphics::StartApiUpdateLoop()
 {
 	switch (CurrentApi) {

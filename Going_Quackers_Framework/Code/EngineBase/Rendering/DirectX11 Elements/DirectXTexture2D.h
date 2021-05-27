@@ -11,7 +11,7 @@ public:
 	Texture2D(const Texture2D&);
 	~Texture2D();
 
-	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const char* filename);
+	bool Initialize(ID3D11Device* ap_device, ID3D11DeviceContext* ap_deviceContext, const char* apc_filename);
 	void Shutdown();
 
 	ID3D11ShaderResourceView* GetTexture();
@@ -26,11 +26,11 @@ private:
 		unsigned char data2;
 	};
 
-	bool LoadTarga(const char* filename, int& height, int& width);
+	bool LoadTarga(const char* apc_filename, int& ari_height, int& ari_width);
 
-	unsigned char* m_targaData;
-	ID3D11Texture2D* m_texture;
-	ID3D11ShaderResourceView* m_textureView;
+	unsigned char* mpc_targaData;
+	ID3D11Texture2D* mp_texture;
+	ID3D11ShaderResourceView* mp_textureView;
 };
 
 #endif // !_TEXTURE_CLASS_H_

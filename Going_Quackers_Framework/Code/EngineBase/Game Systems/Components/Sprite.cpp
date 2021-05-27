@@ -21,7 +21,7 @@
 //{
 //	bool result;
 //
-//	// Create the texture object.
+//	// Create the mp_texture object.
 //	mi_texture = Graphics::getInstance()->LoadTexture<DirectXGraphics*>(fileName);
 //
 //	return true;
@@ -29,7 +29,7 @@
 //
 //void Sprite::ReleaseTexture()
 //{
-//	// Release the texture object.
+//	// Release the mp_texture object.
 //
 //	Graphics::getInstance()->RemoveTexture<DirectXGraphics*>(index);
 //

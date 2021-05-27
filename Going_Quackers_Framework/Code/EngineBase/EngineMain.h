@@ -1,17 +1,10 @@
-#ifndef ENGINE_MAIN_H
-#define ENGINE_MAIN_H
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
+#ifndef _ENGINE_MAIN_H_
+#define _ENGINE_MAIN_H_
 
 #include "Game Systems/Time.h"
 #include "Game Systems/GameObject.h"
 #include "Game Systems/Input.h"
-#include "Game Systems/KeyboardEvents.h"
 #include "Game Systems/Debug.h"
-
 class Rigidbody;
 
 class EngineMain
@@ -19,15 +12,12 @@ class EngineMain
 public:
 	EngineMain();
 	~EngineMain();
-
-	void Run();
 	bool Initalize();
+	void Run();
 
 private:
 	bool UpdateRenderLoop();
-
-	std::vector<GameObject*> gameObjects;
 };
 
-#endif // !ENGINE_MAIN_H
+#endif // !_ENGINE_MAIN_H_
 

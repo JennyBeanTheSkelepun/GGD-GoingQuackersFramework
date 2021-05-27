@@ -1,60 +1,61 @@
 #include "DirectXShaderManager.h"
 
-DirectXShaderManager::DirectXShaderManager(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow, std::wstring StandardshaderLocation)
+DirectXShaderManager::DirectXShaderManager(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow, std::wstring as_standardshaderLocation)
 {
-	CreateShader(ar_DirectXClass, ar_DirectXWindow, StandardshaderLocation);
+	CreateShader(ar_DirectXClass, ar_DirectXWindow, as_standardshaderLocation);
 }
 
 DirectXShaderManager::~DirectXShaderManager()
 {
 }
 
-int DirectXShaderManager::CreateShader(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow , std::wstring fileLocation)
+int DirectXShaderManager::CreateShader(DirectXClass& ar_DirectXClass, DirectXWindow& ar_DirectXWindow , std::wstring as_fileLocation)
 {
 	//- check if its already in use if so use it -//
-	for (unsigned int i = 0; i < ShaderPool.size(); i++)
+	for (unsigned int li_i = 0; li_i < m_shaderPool.size(); li_i++)
 	{
-		if (ShaderPool[i].FileLocation == fileLocation)
+		if (m_shaderPool[li_i].ms_fileLocation == as_fileLocation)
 		{
-			ShaderPool[i].UsedByCount++;
-			return i;
+			m_shaderPool[li_i].mi_usedByCount++;
+			return li_i;
 		}
 	}
 
 	//- if not in use then make new shader -//
-	DirectXSmartShader newshader;
-	newshader.FileLocation = fileLocation;
-	newshader.UsedByCount = 1;
-	newshader.Shader = new DirectXShader();
-	newshader.Shader->Initialize(ar_DirectXClass.GetDevice(), ar_DirectXWindow.m_hwnd, fileLocation.c_str());
+	DirectXSmartShader l_newshader;
+	l_newshader.ms_fileLocation = as_fileLocation;
+	l_newshader.mi_usedByCount = 1;
+	l_newshader.mp_shader = new DirectXShader();
+	l_newshader.mp_shader->Initialize(ar_DirectXClass.GetDevice(), ar_DirectXWindow.m_hwnd, as_fileLocation.c_str());
 
 	//- add to pool after -//
-	ShaderPool.push_back(newshader);
+	m_shaderPool.push_back(l_newshader);
 
-	//- return 0 index position of shader -//
-	return ShaderPool.size() - 1;
+	//- return 0 ai_index position of shader -//
+	return m_shaderPool.size() - 1;
 }
 
-int DirectXShaderManager::DeleteShader(int index)
+int DirectXShaderManager::DeleteShader(int ai_index)
 {
-	ShaderPool[index].UsedByCount--;
+	m_shaderPool[ai_index].mi_usedByCount--;
 	return -1;
 }
 
-DirectXShader* DirectXShaderManager::GetShader(int index)
+DirectXShader* DirectXShaderManager::GetShader(int ai_index)
 {
-	return ShaderPool[index].Shader;
+	return m_shaderPool[ai_index].mp_shader;
 }
 
 void DirectXShaderManager::RemoveUnusedShader()
 {
-	for (int i = 0; i < ShaderPool.size(); i++)
+	int li_shaderPoolSize = m_shaderPool.size();
+	for (int li_i(0); li_i < m_shaderPool.size(); ++li_i)
 	{
-		if (ShaderPool[i].UsedByCount < 1)
+		if (m_shaderPool[li_i].mi_usedByCount < 1)
 		{
-			delete ShaderPool[i].Shader;
-			ShaderPool[i].Shader = nullptr;
-			ShaderPool.erase(ShaderPool.begin() + i);
+			delete m_shaderPool[li_i].mp_shader;
+			m_shaderPool[li_i].mp_shader = nullptr;
+			m_shaderPool.erase(m_shaderPool.begin() + li_i);
 		}
 	}
 }

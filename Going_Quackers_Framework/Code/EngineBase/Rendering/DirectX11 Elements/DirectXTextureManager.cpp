@@ -1,60 +1,61 @@
 #include "DirectXTextureManager.h"
 
-DirectXTextureManager::DirectXTextureManager(DirectXClass& ar_DirectXClass, std::string StandardTextureLocation)
+DirectXTextureManager::DirectXTextureManager(DirectXClass& ar_DirectXClass, std::string as_standardTextureLocation)
 {
-	CreateTexture(ar_DirectXClass, StandardTextureLocation);
+	CreateTexture(ar_DirectXClass, as_standardTextureLocation);
 }
 
 DirectXTextureManager::~DirectXTextureManager()
 {
 }
 
-int DirectXTextureManager::CreateTexture(DirectXClass& ar_DirectXClass , std::string fileLocation)
+int DirectXTextureManager::CreateTexture(DirectXClass& ar_DirectXClass , std::string as_fileLocation)
 {
 	//- check if its already in use if so use it -//
-	for (unsigned int i = 0; i < texturePool.size(); i++)
+	for (unsigned int li_i(0); li_i < m_texturePool.size(); ++li_i)
 	{
-		if (texturePool[i].FileLocation == fileLocation)
+		if (m_texturePool[li_i].ms_fileLocation == as_fileLocation)
 		{
-			texturePool[i].UsedByCount++;
-			return i;
+			m_texturePool[li_i].mi_usedByCount++;
+			return li_i;
 		}
 	}
 
-	//- if not in use then make new texture -//
-	DirectXSmartTexture newTexture;
-	newTexture.FileLocation = fileLocation;
-	newTexture.UsedByCount = 1;
-	newTexture.texture = new Texture2D();
-	newTexture.texture->Initialize(ar_DirectXClass.GetDevice(), ar_DirectXClass.GetDeviceContext(), fileLocation.c_str());
+	//- if not in use then make new mp_texture -//
+	DirectXSmartTexture l_newTexture;
+	l_newTexture.ms_fileLocation = as_fileLocation;
+	l_newTexture.mi_usedByCount = 1;
+	l_newTexture.mp_texture = new Texture2D();
+	l_newTexture.mp_texture->Initialize(ar_DirectXClass.GetDevice(), ar_DirectXClass.GetDeviceContext(), as_fileLocation.c_str());
 
 	//- add to pool after -//
-	texturePool.push_back(newTexture);
+	m_texturePool.push_back(l_newTexture);
 
-	//- return 0 index position of texture -//
-	return texturePool.size() - 1;
+	//- return 0 ai_index position of mp_texture -//
+	return m_texturePool.size() - 1;
 }
 
-int DirectXTextureManager::DeleteTexture(int index)
+int DirectXTextureManager::DeleteTexture(int ai_index)
 {
-	texturePool[index].UsedByCount--;
+	m_texturePool[ai_index].mi_usedByCount--;
 	return -1;
 }
 
-Texture2D* DirectXTextureManager::GetTexture(int index)
+Texture2D* DirectXTextureManager::GetTexture(int ai_index)
 {
-	return texturePool[index].texture;
+	return m_texturePool[ai_index].mp_texture;
 }
 
 void DirectXTextureManager::RemoveUnusedTextures()
 {
-	for (int i = 0; i < texturePool.size(); i++)
+	int li_texturePoolSize = m_texturePool.size();
+	for (int li_i(0); li_i < li_texturePoolSize; ++li_i)
 	{
-		if (texturePool[i].UsedByCount < 1)
+		if (m_texturePool[li_i].mi_usedByCount < 1)
 		{
-			delete texturePool[i].texture;
-			texturePool[i].texture = nullptr;
-			texturePool.erase(texturePool.begin() + i);
+			delete m_texturePool[li_i].mp_texture;
+			m_texturePool[li_i].mp_texture = nullptr;
+			m_texturePool.erase(m_texturePool.begin() + li_i);
 		}
 	}
 }

@@ -10,7 +10,7 @@ Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANS
 
 	m_position = Vector2(0.0f, 0.0f);
 	m_rotation = 0.0f;
-	m_scale = Vector2(1.0f, 1.0f);
+	mf_scale = Vector2(1.0f, 1.0f);
 	m_localPosition = Vector2(0.0f, 0.0f);
 	m_localRotation = 0.0f;
 	m_localScale = Vector2(1.0f, 1.0f);
@@ -50,6 +50,9 @@ void Transform::ImGUIUpdate()
 	}
 	if (ImGui::TreeNode("Global"))
 	{
+		ImGui::TextColored(ImVec4(255,0,0,1), "DONT CHANGE GLOBAL ELEMENTS");
+		ImGui::TextColored(ImVec4(255,0,0,1), "ADAM IS FIXING IT SO ASK HIM");
+
 		//Position Set
 		float* position[2] = { &m_position.X, &m_position.Y };
 		ImGui::InputFloat2("Position", position[0]);
@@ -59,7 +62,7 @@ void Transform::ImGUIUpdate()
 		ImGui::InputDouble("Rotation", &m_rotation);
 
 		//Scale Set
-		float scale[2] = { m_scale.X, m_scale.Y };
+		float scale[2] = { mf_scale.X, mf_scale.Y };
 		ImGui::InputFloat2("Scale", scale);
 		//SetLocalScale(Vector2(scale[0], scale[1]));
 		ImGui::TreePop();

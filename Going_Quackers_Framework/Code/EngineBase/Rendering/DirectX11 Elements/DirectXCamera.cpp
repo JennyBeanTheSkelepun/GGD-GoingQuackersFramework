@@ -6,21 +6,21 @@ DirectXCamera::DirectXCamera()
 {
 	m_position = Vector3();
 	m_rotation = Vector3();
-	CurrentVirtualCamera = nullptr;
+	mp_currentVirtualCamera = nullptr;
 }
 
 DirectXCamera::~DirectXCamera()
 {
 }
 
-void DirectXCamera::SetPosition(Vector3 pos)
+void DirectXCamera::SetPosition(Vector3 a_pos)
 {
-	m_position = pos;
+	m_position = a_pos;
 }
 
-void DirectXCamera::SetRotation(Vector3 rotation)
+void DirectXCamera::SetRotation(Vector3 a_rotation)
 {
-	m_rotation = rotation;
+	m_rotation = a_rotation;
 }
 
 Vector3 DirectXCamera::GetPosition()
@@ -35,10 +35,10 @@ Vector3 DirectXCamera::GetRotation()
 
 void DirectXCamera::Update()
 {
-	if (CurrentVirtualCamera != nullptr)
+	if (mp_currentVirtualCamera != nullptr)
 	{
-		m_position = CurrentVirtualCamera->GetPosition();
-		m_rotation = CurrentVirtualCamera->GetRotation();
+		m_position = mp_currentVirtualCamera->GetPosition();
+		m_rotation = mp_currentVirtualCamera->GetRotation();
 	}
 	else
 	{
@@ -49,70 +49,70 @@ void DirectXCamera::Update()
 
 void DirectXCamera::Render()
 {
-	DirectX::XMFLOAT3 temp;
-	Vector3 up, position, lookAt;
-	DirectX::XMVECTOR upVector, positionVector, lookAtVector;
-	float yaw, pitch, roll;
-	DirectX::XMMATRIX rotationMatrix;
+	DirectX::XMFLOAT3 l_temp;
+	Vector3 l_up, l_position, l_lookAt;
+	DirectX::XMVECTOR l_upVector, l_positionVector, l_lookAtVector;
+	float lf_yaw, lf_pitch, lf_roll;
+	DirectX::XMMATRIX l_rotationMatrix;
 
 	// Setup the vector that points upwards.
-	up = Vector3(0.0f, 1.0f, 0.0f);
+	l_up = Vector3(0.0f, 1.0f, 0.0f);
 
 	// Load it into a XMVECTOR structure.
-	temp = up.ConvertToXMFLOAT3();
-	upVector = DirectX::XMLoadFloat3(&temp);
+	l_temp = l_up.ConvertToXMFLOAT3();
+	l_upVector = DirectX::XMLoadFloat3(&l_temp);
 
-	// Setup the position of the camera in the world.
-	position = m_position;
+	// Setup the l_position of the camera in the world.
+	l_position = m_position;
 
 	// Load it into a XMVECTOR structure.
-	temp = position.ConvertToXMFLOAT3();
-	positionVector = DirectX::XMLoadFloat3(&temp);
+	l_temp = l_position.ConvertToXMFLOAT3();
+	l_positionVector = DirectX::XMLoadFloat3(&l_temp);
 
 	// Setup where the camera is looking by default.
-	lookAt = Vector3(0.0f, 0.0f, 1.0f);
+	l_lookAt = Vector3(0.0f, 0.0f, 1.0f);
 
 	// Load it into a XMVECTOR structure.
-	temp = lookAt.ConvertToXMFLOAT3();
-	lookAtVector = DirectX::XMLoadFloat3(&temp);
+	l_temp = l_lookAt.ConvertToXMFLOAT3();
+	l_lookAtVector = DirectX::XMLoadFloat3(&l_temp);
 
-	// Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.
-	pitch = m_rotation.X * 0.0174532925f;
-	yaw = m_rotation.Y * 0.0174532925f;
-	roll = m_rotation.Z * 0.0174532925f;
+	// Set the lf_yaw (Y axis), lf_pitch (X axis), and lf_roll (Z axis) rotations in radians.
+	lf_pitch = m_rotation.X * 0.0174532925f;
+	lf_yaw = m_rotation.Y * 0.0174532925f;
+	lf_roll = m_rotation.Z * 0.0174532925f;
 
-	// Create the rotation matrix from the yaw, pitch, and roll values.
-	rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
+	// Create the a_rotation matrix from the lf_yaw, lf_pitch, and lf_roll values.
+	l_rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(lf_pitch, lf_yaw, lf_roll);
 
-	// Transform the lookAt and up vector by the rotation matrix so the view is correctly rotated at the origin.
-	lookAtVector = XMVector3TransformCoord(lookAtVector, rotationMatrix);
-	upVector = XMVector3TransformCoord(upVector, rotationMatrix);
+	// Transform the l_lookAt and l_up vector by the a_rotation matrix so the view is correctly rotated at the origin.
+	l_lookAtVector = XMVector3TransformCoord(l_lookAtVector, l_rotationMatrix);
+	l_upVector = XMVector3TransformCoord(l_upVector, l_rotationMatrix);
 
-	// Translate the rotated camera position to the location of the viewer.
-	lookAtVector = DirectX::XMVectorAdd(positionVector, lookAtVector);
+	// Translate the rotated camera l_position to the location of the viewer.
+	l_lookAtVector = DirectX::XMVectorAdd(l_positionVector, l_lookAtVector);
 
 	// Finally create the view matrix from the three updated vectors.
-	m_viewMatrix = DirectX::XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
+	m_viewMatrix = DirectX::XMMatrixLookAtLH(l_positionVector, l_lookAtVector, l_upVector);
 
 }
 
-void DirectXCamera::GetViewMatrix(DirectX::XMMATRIX& viewMatrix)
+void DirectXCamera::GetViewMatrix(DirectX::XMMATRIX& ar_viewMatrix)
 {
-	viewMatrix = m_viewMatrix;
+	ar_viewMatrix = m_viewMatrix;
 }
 
-void DirectXCamera::SetNewVirtualCamera(VirtualCamera* newCam)
+void DirectXCamera::SetNewVirtualCamera(VirtualCamera* ap_newCam)
 {
-	if (CurrentVirtualCamera != nullptr)
+	if (mp_currentVirtualCamera != nullptr)
 	{
-		CurrentVirtualCamera->CamDeselected();
+		mp_currentVirtualCamera->CamDeselected();
 	}
 
-	CurrentVirtualCamera = newCam;
-	CurrentVirtualCamera->CamSelected();
+	mp_currentVirtualCamera = ap_newCam;
+	mp_currentVirtualCamera->CamSelected();
 }
 
 VirtualCamera* DirectXCamera::GetVirtualCamera()
 {
-	return CurrentVirtualCamera;
+	return mp_currentVirtualCamera;
 }

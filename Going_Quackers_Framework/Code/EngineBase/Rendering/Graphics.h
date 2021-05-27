@@ -31,7 +31,6 @@ private:
 public:
 	bool InitaliseAPIs();
 
-	void ResizeRenderingSystem();
 	void StartApiUpdateLoop();  
 	void StartRenderLoop();
 	

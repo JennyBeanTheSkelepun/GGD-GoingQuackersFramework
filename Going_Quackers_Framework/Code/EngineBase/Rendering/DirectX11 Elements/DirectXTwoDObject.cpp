@@ -2,10 +2,12 @@
 #include "../../Data Structures/Vertex.h"
 #include <vector>
 
-
 DirectXTwoDObject::DirectXTwoDObject()
 {
-
+	mp_device = nullptr;
+	mp_deviceContext = nullptr;
+	mp_indexBuffer = nullptr;
+	mp_vertexBuffer = nullptr;
 }
 
 DirectXTwoDObject::~DirectXTwoDObject()
@@ -25,31 +27,26 @@ DirectXTwoDObject::~DirectXTwoDObject()
 	}
 }
 
-bool DirectXTwoDObject::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
+bool DirectXTwoDObject::Initialize(ID3D11Device* ap_device, ID3D11DeviceContext* ap_deviceContext)
 {	
-	bool result;
-
 	// Initialize the vertex and index buffers.
-	result = InitializeBuffers(device);
-	if (!result)
+	if (!InitializeBuffers(ap_device))
 	{
 		return false;
 	}
-
-	mp_device = device;
-	mp_deviceContext = deviceContext;
-
+	mp_device = ap_device;
+	mp_deviceContext = ap_deviceContext;
 	return true;
 }
 
-bool DirectXTwoDObject::InitializeBuffers(ID3D11Device* device)
+bool DirectXTwoDObject::InitializeBuffers(ID3D11Device* ap_device)
 {
-	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
-	D3D11_SUBRESOURCE_DATA vertexData, indexData;
-	HRESULT result;
+	D3D11_BUFFER_DESC l_vertexBufferDesc, l_indexBufferDesc;
+	D3D11_SUBRESOURCE_DATA l_vertexData, l_indexData;
+	HRESULT l_result;
 
 	// Create the vertex array.
-	std::vector<Vertex2D> vertices =
+	std::vector<Vertex2D> l_vertices =
 	{
 		Vertex2D(-1.0f, 1.0f, 0.0f, 0.0f), //Top Left
 		Vertex2D(1.0f, 1.0f, 1.0f, 0.0f), //Top Right
@@ -57,48 +54,48 @@ bool DirectXTwoDObject::InitializeBuffers(ID3D11Device* device)
 		Vertex2D(1.0f, -1.0f, 1.0f, 1.0f), //Bottom right
 	};
 
-	std::vector<DWORD> indices =
+	std::vector<DWORD> l_indices =
 	{
 		0, 1, 2,
 		2, 1, 3,
 	};
 
 	// Set up the description of the static vertex buffer.
-	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(Vertex2D) * 4; //4 = vertices Count
-	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.CPUAccessFlags = 0;
-	vertexBufferDesc.MiscFlags = 0;
-	vertexBufferDesc.StructureByteStride = 0;
+	l_vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	l_vertexBufferDesc.ByteWidth = sizeof(Vertex2D) * 4; //4 = l_vertices Count
+	l_vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	l_vertexBufferDesc.CPUAccessFlags = 0;
+	l_vertexBufferDesc.MiscFlags = 0;
+	l_vertexBufferDesc.StructureByteStride = 0;
 
 	// Give the subresource structure a pointer to the vertex data.
-	vertexData.pSysMem = vertices.data();
-	vertexData.SysMemPitch = 0;
-	vertexData.SysMemSlicePitch = 0;
+	l_vertexData.pSysMem = l_vertices.data();
+	l_vertexData.SysMemPitch = 0;
+	l_vertexData.SysMemSlicePitch = 0;
 
 	// Now create the vertex buffer.
-	result = device->CreateBuffer(&vertexBufferDesc, &vertexData, &mp_vertexBuffer);
-	if (FAILED(result))
+	l_result = ap_device->CreateBuffer(&l_vertexBufferDesc, &l_vertexData, &mp_vertexBuffer);
+	if (FAILED(l_result))
 	{
 		return false;
 	}
 
 	// Set up the description of the static index buffer.
-	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	indexBufferDesc.ByteWidth = sizeof(unsigned long) * 6; //6 = indices Count
-	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.CPUAccessFlags = 0;
-	indexBufferDesc.MiscFlags = 0;
-	indexBufferDesc.StructureByteStride = 0;
+	l_indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	l_indexBufferDesc.ByteWidth = sizeof(unsigned long) * 6; //6 = l_indices Count
+	l_indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	l_indexBufferDesc.CPUAccessFlags = 0;
+	l_indexBufferDesc.MiscFlags = 0;
+	l_indexBufferDesc.StructureByteStride = 0;
 
 	// Give the subresource structure a pointer to the index data.
-	indexData.pSysMem = indices.data();
-	indexData.SysMemPitch = 0;
-	indexData.SysMemSlicePitch = 0;
+	l_indexData.pSysMem = l_indices.data();
+	l_indexData.SysMemPitch = 0;
+	l_indexData.SysMemSlicePitch = 0;
 
 	// Create the index buffer.
-	result = device->CreateBuffer(&indexBufferDesc, &indexData, &mp_indexBuffer);
-	if (FAILED(result))
+	l_result = ap_device->CreateBuffer(&l_indexBufferDesc, &l_indexData, &mp_indexBuffer);
+	if (FAILED(l_result))
 	{
 		return false;
 	}
@@ -113,19 +110,15 @@ void DirectXTwoDObject::Render()
 
 void DirectXTwoDObject::RenderBuffers(ID3D11DeviceContext* deviceContext)
 {
-	unsigned int stride;
-	unsigned int offset;
-
-	// Set vertex buffer stride and offset.
-	stride = sizeof(Vertex2D);
-	offset = 0;
-
-	// Set the vertex buffer to active in the input assembler so it can be rendered.
-	deviceContext->IASetVertexBuffers(0, 1, &mp_vertexBuffer, &stride, &offset);
-
-	// Set the index buffer to active in the input assembler so it can be rendered.
+	unsigned int li_stride;
+	unsigned int li_offset;
+	//- Set vertex buffer li_stride and li_offset -//
+	li_stride = sizeof(Vertex2D);
+	li_offset = 0;
+	//- Set the vertex buffer to active in the input assembler so it can be rendered -//
+	deviceContext->IASetVertexBuffers(0, 1, &mp_vertexBuffer, &li_stride, &li_offset);
+	//- Set the index buffer to active in the input assembler so it can be rendered. -//
 	deviceContext->IASetIndexBuffer(mp_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-
-	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
+	//- Set the type of primitive that should be rendered from this vertex buffer -//
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }

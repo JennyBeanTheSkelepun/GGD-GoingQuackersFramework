@@ -91,7 +91,7 @@ void DirectXWindow::InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight)
 	DEVMODE dmScreenSettings;
 	int li_posX, li_posY;
 
-	ApplicationHandle = this;
+	gp_ApplicationHandle = this;
 
 	m_hInstance = GetModuleHandle(NULL);
 
@@ -160,7 +160,7 @@ void DirectXWindow::ShutdownWindows()
 
 	DestroyWindow(m_hwnd);
 	m_hInstance = NULL;
-	ApplicationHandle = NULL;
+	gp_ApplicationHandle = NULL;
 	return;
 }
 
@@ -190,7 +190,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam)
 		// All other messages pass to the message handler in the system class.
 		default:
 		{
-			return ApplicationHandle->MessageHandler(hwnd, uMessage, wParam, lParam);
+			return gp_ApplicationHandle->MessageHandler(hwnd, uMessage, wParam, lParam);
 		}
 	}
 }

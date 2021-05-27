@@ -30,8 +30,8 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 									 DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui)
 {
 	//- Decliration of matix -//
-	DirectX::XMMATRIX worldMatrix, viewMatrix, projectionMatrix;
-	bool result;
+	DirectX::XMMATRIX l_worldMatrix, l_viewMatrix, l_projectionMatrix;
+	bool l_result;
 
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
 	ar_DirectX.mp_deviceContext->OMSetRenderTargets(1, &ar_DirectX.mp_renderTextureRenderTargetView, ar_DirectX.mp_depthStencilView);
@@ -46,22 +46,22 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 	ar_Camera.Render();
 
 	// Get the world, view, and projection matrices from the camera and d3d objects.
-	ar_DirectX.GetWorldMatrix(worldMatrix);
-	ar_Camera.GetViewMatrix(viewMatrix);
-	ar_DirectX.GetProjectionMatrix(projectionMatrix);
+	ar_DirectX.GetWorldMatrix(l_worldMatrix);
+	ar_Camera.GetViewMatrix(l_viewMatrix);
+	ar_DirectX.GetProjectionMatrix(l_projectionMatrix);
 
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	for (size_t i = 0; i < GameObjectsToRender.size(); i++)
+	// Put the model vertex and ai_index buffers on the graphics pipeline to prepare them for drawing.
+	for (size_t li_i = 0; li_i < m_gameObjectsToRender.size(); li_i++)
 	{
 		//- universal Plane for 2d elements -//
 		mp_2DModel->Render();
-		DirectXShader* tempShader = ar_Shader.GetShader(GameObjectsToRender[i]->GetShader());
-		Texture2D* tempTexture = ar_texture.GetTexture(GameObjectsToRender[i]->GetTexture());
+		DirectXShader* lp_tempShader = ar_Shader.GetShader(m_gameObjectsToRender[li_i]->GetShader());
+		Texture2D* lp_tempTexture = ar_texture.GetTexture(m_gameObjectsToRender[li_i]->GetTexture());
 
-		GameObject* tempGameObject = GameObjectsToRender[i]->GetOwner();
+		GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
 
-		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, tempGameObject->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
-		if (!result)
+		l_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
+		if (!l_result)
 		{
 			return false;
 		}
@@ -79,9 +79,9 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 	ar_Camera.Render();
 
 	// Get the world, view, and projection matrices from the camera and d3d objects.
-	ar_DirectX.GetWorldMatrix(worldMatrix);
-	ar_Camera.GetViewMatrix(viewMatrix);
-	ar_DirectX.GetProjectionMatrix(projectionMatrix);
+	ar_DirectX.GetWorldMatrix(l_worldMatrix);
+	ar_Camera.GetViewMatrix(l_viewMatrix);
+	ar_DirectX.GetProjectionMatrix(l_projectionMatrix);
 
 	//- ImGui Call to render -//
 	ar_ImGui.Render();
@@ -92,8 +92,8 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, 
 										 DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui)
 {
-	DirectX::XMMATRIX worldMatrix, viewMatrix, projectionMatrix;
-	bool result;
+	DirectX::XMMATRIX l_worldMatrix, l_viewMatrix, l_projectionMatrix;
+	bool lb_result;
 
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
 	ar_DirectX.mp_deviceContext->OMSetRenderTargets(1, &ar_DirectX.mp_renderTargetView, ar_DirectX.mp_depthStencilView);
@@ -105,22 +105,22 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 	ar_Camera.Render();
 
 	// Get the world, view, and projection matrices from the camera and d3d objects.
-	ar_DirectX.GetWorldMatrix(worldMatrix);
-	ar_Camera.GetViewMatrix(viewMatrix);
-	ar_DirectX.GetProjectionMatrix(projectionMatrix);
+	ar_DirectX.GetWorldMatrix(l_worldMatrix);
+	ar_Camera.GetViewMatrix(l_viewMatrix);
+	ar_DirectX.GetProjectionMatrix(l_projectionMatrix);
 
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	for (size_t i = 0; i < GameObjectsToRender.size(); i++)
+	// Put the model vertex and ai_index buffers on the graphics pipeline to prepare them for drawing.
+	for (size_t li_i = 0; li_i < m_gameObjectsToRender.size(); li_i++)
 	{
 		//- universal Plane for 2d elements -//
 		mp_2DModel->Render();
-		DirectXShader* tempShader = ar_Shader.GetShader(GameObjectsToRender[i]->GetShader());
-		Texture2D* tempTexture = ar_texture.GetTexture(GameObjectsToRender[i]->GetShader());
+		DirectXShader* lp_tempShader = ar_Shader.GetShader(m_gameObjectsToRender[li_i]->GetShader());
+		Texture2D* lp_tempTexture = ar_texture.GetTexture(m_gameObjectsToRender[li_i]->GetShader());
 
-		GameObject* tempGameObject = GameObjectsToRender[i]->GetOwner();
+		GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
 
-		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, tempGameObject->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
-		if (!result)
+		lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
+		if (!lb_result)
 		{
 			return false;
 		}
@@ -130,14 +130,14 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 	ar_DirectX.EndScene();
 }
 
-int DirectXRenderLoop::SetObjectToRender(SpriteRenderer* ObjToRender)
+int DirectXRenderLoop::SetObjectToRender(SpriteRenderer* ap_ObjToRender)
 {
-	GameObjectsToRender.push_back(ObjToRender);
-	return GameObjectsToRender.size() - 1;
+	m_gameObjectsToRender.push_back(ap_ObjToRender);
+	return m_gameObjectsToRender.size() - 1;
 }
 
-int DirectXRenderLoop::RemoveObjectToRenderLoop(int index)
+int DirectXRenderLoop::RemoveObjectToRenderLoop(int ai_index)
 {
-	GameObjectsToRender.erase(GameObjectsToRender.begin() + index);
+	m_gameObjectsToRender.erase(m_gameObjectsToRender.begin() + ai_index);
 	return -1;
 }

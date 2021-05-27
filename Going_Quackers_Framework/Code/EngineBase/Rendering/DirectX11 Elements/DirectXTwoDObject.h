@@ -9,7 +9,7 @@ public:
 	DirectXTwoDObject();
 	~DirectXTwoDObject();
 
-	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
+	bool Initialize(ID3D11Device* ap_device, ID3D11DeviceContext* ap_deviceContext);
 	void Render();
 
 private:
@@ -19,8 +19,8 @@ private:
 	ID3D11Buffer* mp_vertexBuffer;
 	ID3D11Buffer* mp_indexBuffer;
 
-	bool InitializeBuffers(ID3D11Device* device);
-	void RenderBuffers(ID3D11DeviceContext* deviceContext);
+	bool InitializeBuffers(ID3D11Device* ap_device);
+	void RenderBuffers(ID3D11DeviceContext* ap_deviceContext);
 };
 
 #endif /* _DIRECT_2D_OBJECT_H_ */

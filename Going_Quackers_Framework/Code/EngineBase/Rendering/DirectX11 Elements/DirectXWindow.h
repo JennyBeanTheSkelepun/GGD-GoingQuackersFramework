@@ -18,8 +18,8 @@ public:
 	~DirectXWindow();
 
 	bool SetupWindow();
-	LRESULT MessageHandler(HWND hwnd, UINT uint, WPARAM wParam, LPARAM lParam);
-	void InitalizeWindows(int& ai_screenWidth, int& ai_screenHeight);
+	LRESULT MessageHandler(HWND a_hwnd, UINT a_uint, WPARAM a_wParam, LPARAM a_lParam);
+	void InitalizeWindows(int& ari_screenWidth, int& ari_screenHeight);
 
 	void ShutdownWindows();
 
@@ -38,6 +38,6 @@ public:
 
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
 
-static DirectXWindow* ApplicationHandle = 0;
+static DirectXWindow* gp_ApplicationHandle = 0;
 
 #endif /* _DIRECT_X_WINDOW_H_ */

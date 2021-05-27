@@ -78,7 +78,7 @@ private:
 	LayoutSettings CurrentWindowPosition;
 
 	std::vector<GameObject*>* gameObjects; //List of GameObjects
-	GameObject* currentSelected; //The Currently Selected GameObject
+	GameObject* currentSelected; //The Currently selected GameObject
 };
 
 #endif // !_ENGINE_IM_GUI_

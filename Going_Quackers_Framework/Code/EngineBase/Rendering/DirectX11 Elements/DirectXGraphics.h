@@ -3,8 +3,6 @@
 
 #include <Windows.h>
 
-//- Need to forward declare Interface as its included in graphics singleton -//
-
 #include "../../Rendering/Interface/Graphics_API_Interface.h"
 #include "../../Rendering/DirectX11 Elements/DirectXWindow.h"
 #include "../../Rendering/DirectX11 Elements/DirectXClass.h"
@@ -57,28 +55,19 @@ public:
 //private:
 
 	bool Initialize();
-
 	void Update();
 
-	//std::vector<GameObject*> gameObjects;
-
 	DirectXWindow* mp_Window;
-
 	// Direct X and Render Texture Setup
 	DirectXClass* mp_DirectX;
-
 	// Imgui Renderer
 	DirectXImGui* mp_ImGui;
-
 	// Camera
 	DirectXCamera* mp_Camera;
-
 	// Texture Manager
 	DirectXTextureManager* mp_TextureManager;
-
-	// Shader Manager
+	// mp_shader Manager
 	DirectXShaderManager* mp_ShaderManager;
-
 	// RenderLoop 
 	DirectXRenderLoop* mp_DirectXRenderLoop;
 };

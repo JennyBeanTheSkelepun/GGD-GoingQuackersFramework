@@ -1041,7 +1041,7 @@ bool ImGui::ImageButton(ImTextureID user_texture_id, const ImVec2& size, const I
     if (window->SkipItems)
         return false;
 
-    // Default to using texture ID as ID. User can still push string/integer prefixes.
+    // Default to using mp_texture ID as ID. User can still push string/integer prefixes.
     PushID((void*)(intptr_t)user_texture_id);
     const ImGuiID id = window->GetID("#image");
     PopID();
@@ -7676,7 +7676,7 @@ bool    ImGui::TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, 
     ImVec2 pos = window->DC.CursorPos;
     ImRect bb(pos, pos + size);
 
-    // We don't have CPU clipping primitives to clip the CloseButton (until it becomes a texture), so need to add an extra draw call (temporary in the case of vertical animation)
+    // We don't have CPU clipping primitives to clip the CloseButton (until it becomes a mp_texture), so need to add an extra draw call (temporary in the case of vertical animation)
     const bool want_clip_rect = is_central_section && (bb.Min.x < tab_bar->ScrollingRectMinX || bb.Max.x > tab_bar->ScrollingRectMaxX);
     if (want_clip_rect)
         PushClipRect(ImVec2(ImMax(bb.Min.x, tab_bar->ScrollingRectMinX), bb.Min.y - 1), ImVec2(tab_bar->ScrollingRectMaxX, bb.Max.y), true);

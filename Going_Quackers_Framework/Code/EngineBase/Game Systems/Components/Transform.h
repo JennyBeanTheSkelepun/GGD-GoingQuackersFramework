@@ -44,8 +44,8 @@ public:
 	void SetLocalRotation(double rotation) { this->m_localRotation = rotation; }
 	double GetLocalRotation() { return this->m_localRotation; }
 
-	void SetScale(Vector2 scale) { this->m_scale = scale; }
-	Vector2 GetScale() { return this->m_scale; }
+	void SetScale(Vector2 scale) { this->mf_scale = scale; }
+	Vector2 GetScale() { return this->mf_scale; }
 	void SetLocalScale(Vector2 scale) { this->m_localScale = scale; }
 	Vector2 GetLocalScale() { return this->m_localScale; }
 
@@ -53,7 +53,7 @@ private:
 	//World Positions
 	Vector2 m_position;
 	double m_rotation;
-	Vector2 m_scale;
+	Vector2 mf_scale;
 
 	//Local Positions
 	Vector2 m_localPosition;

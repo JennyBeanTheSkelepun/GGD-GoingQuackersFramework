@@ -152,7 +152,6 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Debug.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\GameObject.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Input.cpp" />
-    <ClCompile Include="Code\EngineBase\Game Systems\KeyboardEvents.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Time.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\EngineGuiClass.cpp" />
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp" />
@@ -193,7 +192,6 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Debug.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\GameObject.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Input.h" />
-    <ClInclude Include="Code\EngineBase\Game Systems\KeyboardEvents.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Time.h" />
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h" />
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h" />

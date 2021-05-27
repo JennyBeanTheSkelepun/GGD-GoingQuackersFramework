@@ -11,13 +11,13 @@
 class DirectXImGui
 {
 public:
-	DirectXImGui(HWND hwnd, DirectXClass* mp_DirectX);
+	DirectXImGui(HWND a_hwnd, DirectXClass* ap_DirectX);
 	~DirectXImGui();
 
-	bool Update(ID3D11ShaderResourceView* ap_renderTexture, float width, float height);
+	bool Update(ID3D11ShaderResourceView* ap_renderTexture, float af_width, float af_height);
 	bool Render();
 private:
-	float m_scale;
+	float mf_scale;
 
 };
 
