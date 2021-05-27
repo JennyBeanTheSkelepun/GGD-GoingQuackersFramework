@@ -55,11 +55,8 @@ private:
 
 	template<typename T>
 	void LoadComponentFromScene(std::string as_ComponentName, GameObject* ap_object, json* ap_json) {
-		// If it has a matching component, load it
-		if (ap_json->contains(as_ComponentName)) {
-			ap_object->AddComponent<T>();
-			ap_object->GetComponent<T>()->SceneLoad(ap_json);
-		}
+		ap_object->AddComponent<T>();
+		ap_object->GetComponent<T>()->SceneLoad(ap_json);
 	}
 
 	template<typename T>
