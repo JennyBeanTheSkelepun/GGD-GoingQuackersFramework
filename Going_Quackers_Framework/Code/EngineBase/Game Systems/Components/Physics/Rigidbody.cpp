@@ -22,6 +22,11 @@ void Rigidbody::OnDestroy()
 //- Update Render Functions -//
 void Rigidbody::Update()
 {
+	if (Collision::getInstance()->RaycastSphere(Vector2(3, 0), Vector2(), GetOwner()))
+	{
+		Debug::getInstance()->Log("Ray hit " + GetOwner()->GetName());
+	}
+
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
 		PhysicsCollide();
@@ -290,7 +295,7 @@ void Rigidbody::PhysicsCollide()
 	switch (m_PhysicsType)
 	{
 	case PhysicsTypes::GE:
-		mp_GravEmitter->applyGravity(GetOwner(), &m_CollidingObjects);
+		mp_GravEmitter->ApplyGravity(GetOwner(), &m_CollidingObjects);
 		break;
 	case PhysicsTypes::RB:
 		RigidbodyCollide(&m_CollidingObjects);
