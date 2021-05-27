@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER,"Player") {
-	m_grappleState = GRAPPLE_STATE::ATTACHED;
+	m_grappleState = GRAPPLE_STATE::ATTACHED; //changed to attached for testing
 	wallGrabbed = false;
 	playerObj = GetOwner();
 }
@@ -44,17 +44,22 @@ json* Player::SceneSave()
 
 void Player::GrabWall()
 {
+	if (playerObj->GetComponent<Rigidbody>()==nullptr)
+	{
+		Debug::getInstance()->LogError("the player doesn't have a rigidbody component");
+	}
 	//todo add rope length to the if statement
-	if (m_grappleState == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerObj->GetComponent<Rigidbody>()->GetCollideFlag() == true)
+	else if (m_grappleState == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerObj->GetComponent<Rigidbody>()->GetCollideFlag() == true)
 	{
 		wallGrabbed = true;
 		//note: wallGrabbed can be used by whoever is making the jump system to set it to false and release the grapple
 
-		//this gets the objects the player has coollided with and puts them into a variable to use 
+		//this gets the object the player is coolliding with and puts it into a variable to use 
 		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
 		Debug::getInstance()->Log(wallGrabbed);
 		
 	}
+
 
 	if (wallGrabbed)
 	{

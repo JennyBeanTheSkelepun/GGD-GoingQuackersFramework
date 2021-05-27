@@ -1,6 +1,6 @@
 ﻿  Player.cpp
 c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
 c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(22): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(70): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(74): warning C4305: 'argument': truncation from 'double' to 'const float'
 c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
   Going_Quackers_Framework.vcxproj -> C:\Users\mccan\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
