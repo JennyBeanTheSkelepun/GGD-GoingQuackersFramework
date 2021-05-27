@@ -2,6 +2,7 @@
 
 #include "../Game Systems/Components/SpriteRenderer.h"
 #include "../Game Systems/Components/Physics/Rigidbody.h"
+
 #include "../Game Systems/Debug.h"
 
 #include <ostream>
@@ -129,21 +130,13 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		Debug::getInstance()->LogWarning("Loading Name: " + lp_newObject->GetName());
 
 		// If it has a Transform Component, add Transform
-		if (newObject.value().contains("TRANSFORM")) {
-			lp_newObject->GetTransform()->SceneLoad(&newObject.value()["TRANSFORM"]);
-		}
+		lp_newObject->GetTransform()->SceneLoad(&newObject.value()["TRANSFORM"]);
 
 		// If it has a SpriteRenderer component, add SpriteRenderer
-		if (newObject.value().contains("SPRITERENDERER")) {
-			lp_newObject->AddComponent<SpriteRenderer>();
-			lp_newObject->GetComponent<SpriteRenderer>()->SceneLoad(&newObject.value()["SPRITERENDERER"]);
-		}
+		LoadComponentFromScene<SpriteRenderer>("SPRITERENDERER", lp_newObject, &newObject.value()["SPRITERENDERER"]);
 
 		// If it has a Rigidbody component, add Rigidbody
-		if (newObject.value().contains("RIGIDBODY")) {
-			lp_newObject->AddComponent<Rigidbody>();
-			lp_newObject->GetComponent<Rigidbody>()->SceneLoad(&newObject.value()["RIGIDBODY"]);
-		}
+		LoadComponentFromScene<Rigidbody>("RIGIDBODY", lp_newObject, &newObject.value()["RIGIDBODY"]);
 
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
@@ -225,16 +218,13 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			std::string componentType;
 			switch (lp_components[j]->GetType()) {
 			case ComponentTypes::TRANSFORM:
-				componentType = "TRANSFORM";
-				component = static_cast<Transform*>(component);
+				SaveComponent<Transform>("TRANSFORM", component, &componentType);
 				break;
 			case ComponentTypes::SPRITERENDERER:
-				componentType = "SPRITERENDERER";
-				component = static_cast<SpriteRenderer*>(component);
+				SaveComponent<SpriteRenderer>("SPRITERENDERER", component, &componentType);
 				break;
 			case ComponentTypes::RIGIDBODY:
-				componentType = "RIGIDBODY";
-				component = static_cast<Rigidbody*>(component);
+				SaveComponent<Rigidbody>("RIGIDBODY", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
@@ -242,8 +232,11 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			}
 
 			json* lp_componentInfo = component->SceneSave();
-			if (lp_componentInfo != nullptr) {
+			if (lp_componentInfo != nullptr && componentType != "MISSING") {
 				l_object[componentType] = *lp_componentInfo;
+			}
+			else {
+				Debug::getInstance()->LogError("Error saving to file.");
 			}
 		}
 		

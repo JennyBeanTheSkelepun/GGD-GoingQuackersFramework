@@ -1,5 +1,5 @@
-#ifndef SCENEMANAGER
-#define SCENEMANAGER
+#ifndef _SCENEMANAGER_H_
+#define _SCENEMANAGER_H_
 
 #include "../Game Systems/GameObject.h"
 #include "../SceneManager/Scene.h"
@@ -52,6 +52,36 @@ private:
 
 	void SaveToJSON(Scene* ap_Scene);
 	std::wstring stringToWString(std::string as_string);
+
+	template<typename T>
+	void LoadComponentFromScene(std::string as_ComponentName, GameObject* ap_object, json* ap_json) {
+		// If it has a matching component, load it
+		if (ap_json->contains(as_ComponentName)) {
+			ap_object->AddComponent<T>();
+			ap_object->GetComponent<T>()->SceneLoad(ap_json);
+		}
+	}
+
+	template<typename T>
+	void SaveComponent(std::string as_componentName, Component* ap_component, std::string* ap_componentType) {
+		*ap_componentType = as_componentName;
+		ap_component = static_cast<T*>(ap_component);
+	}
 };
 
-#endif /*SCENEMANAGER*/
+//template<typename T>
+//void SceneManager::LoadComponentFromScene(std::string as_ComponentName, GameObject* ap_object, json* ap_json) {
+//	// If it has a matching component, load it
+//	if (ap_json->contains(as_ComponentName)) {
+//		ap_object->AddComponent<T>();
+//		ap_object->GetComponent<T>()->SceneLoad(ap_json);
+//	}
+//}
+//
+//template<typename T>
+//void SceneManager::SaveComponent(std::string as_componentName, Component* ap_component, std::string* ap_componentType) {
+//	*ap_componentType = as_componentName;
+//	ap_component = static_cast<Rigidbody*>(ap_component);
+//}
+
+#endif /*_SCENEMANAGER_H_*/
