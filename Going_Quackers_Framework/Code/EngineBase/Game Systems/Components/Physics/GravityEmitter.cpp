@@ -1,7 +1,7 @@
 #include "GravityEmitter.h"
 #include "Rigidbody.h"
 
-void GravityEmitter::applyGravity(GameObject* callObj, std::vector<GameObject*>* CollidedObjects)
+void GravityEmitter::ApplyGravity(GameObject* callObj, std::vector<GameObject*>* CollidedObjects)
 {
 	Vector2 gravityPosition = callObj->GetTransform()->GetPosition();
 	
@@ -11,13 +11,13 @@ void GravityEmitter::applyGravity(GameObject* callObj, std::vector<GameObject*>*
 		if (rb != nullptr)
 		{
 
-			switch (m_gravType)
+			switch (m_GravType)
 			{
 			case GravityTypes::DIRECTION:
-				rb->AddForce(m_gravityDirection * m_gravityStrength);
+				rb->AddForce(m_GravityDirection * m_GravityStrength);
 				break;
 			case GravityTypes::CENTRE:
-				Vector2 force = (gravityPosition - obj->GetTransform()->GetPosition()).Normalize() * m_gravityStrength;
+				Vector2 force = (gravityPosition - obj->GetTransform()->GetPosition()).Normalize() * m_GravityStrength;
 				obj->GetComponent<Rigidbody>()->AddForce(force);
 				break;
 			}
@@ -31,17 +31,17 @@ void GravityEmitter::LoadGravType(std::string gravType)
 
 	if (m_GravTypeDropdownSelected == "Direction")
 	{
-		m_gravType = GravityTypes::DIRECTION;
+		m_GravType = GravityTypes::DIRECTION;
 	}
 	else if (m_GravTypeDropdownSelected == "Centre")
 	{
-		m_gravType = GravityTypes::CENTRE;
+		m_GravType = GravityTypes::CENTRE;
 	}
 }
 
 void GravityEmitter::ImGuiSetup()
 {
-	ImGui::InputFloat("Gravity Strength", &m_gravityStrength);
+	ImGui::InputFloat("Gravity Strength", &m_GravityStrength);
 
 	if (ImGui::BeginCombo("Gravity Type", m_GravTypeDropdownSelected.c_str()))
 	{
@@ -55,11 +55,11 @@ void GravityEmitter::ImGuiSetup()
 
 				if (m_GravTypeDropdownSelected == "Direction")
 				{
-					m_gravType = GravityTypes::DIRECTION;
+					m_GravType = GravityTypes::DIRECTION;
 				}
 				else if (m_GravTypeDropdownSelected == "Centre")
 				{
-					m_gravType = GravityTypes::CENTRE;
+					m_GravType = GravityTypes::CENTRE;
 				}
 			}
 
