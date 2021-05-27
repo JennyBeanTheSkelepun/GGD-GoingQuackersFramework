@@ -45,6 +45,8 @@ public:
 	/// <returns>Bool for colliding</returns>
 	bool CollisionSphericalAABB(GameObject* checkObjectA, GameObject* checkObjectB);
 
+	bool RaycastSphere(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject);
+
 private:
 	static Collision* singletonInstance;
 	Collision();
