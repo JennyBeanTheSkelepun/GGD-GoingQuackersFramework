@@ -5,6 +5,7 @@
 #include "../Components/Component.h"
 #include "../GameObject.h"
 #include "Physics/Rigidbody.h"
+#include "../Debug.h"
 
 class Player : public Component
 {
@@ -22,6 +23,8 @@ public:
 	void OnDestroy() override;
 	void Update() override;
 	void ImGUIUpdate() override;
+	json* SceneSave() override;
+	void SceneLoad(json* componentJSON) override;
 	bool wallGrabbed;
 	GRAPPLE_STATE GetGrappleState();
 	void SetGrappleState(GRAPPLE_STATE state);
