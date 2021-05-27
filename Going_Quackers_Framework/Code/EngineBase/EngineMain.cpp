@@ -58,7 +58,6 @@ void EngineMain::Run()
 		{
 			if (Time::GetDeltaTime() < 0.032f)
 			{
-				Debug::getInstance()->Log("Frame Skipped");
 				Time::UpdateTimeSinceLastFrameEnd();
 			}
 			else
@@ -80,7 +79,6 @@ bool EngineMain::UpdateRenderLoop()
 	if (Input::getInstance()->isKeyHeldDown(KeyCode::ESCAPE))
 		return false;
 
-	Debug::getInstance()->Log("Frame Run");
 
 	//- UPDATE LOOP START-//
 
