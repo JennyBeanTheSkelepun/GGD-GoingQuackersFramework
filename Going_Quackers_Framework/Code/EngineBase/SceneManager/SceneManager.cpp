@@ -82,6 +82,7 @@ void SceneManager::NewScene(std::string as_SceneID, std::string as_SceneName, st
 	mp_CurrentScene = lp_NewScene;
 
 	EngineGuiClass::getInstance()->InitializeObjectList(mp_CurrentScene->GetSceneObjectsList());
+	SaveCurrentScene();
 }
 
 void SceneManager::SaveCurrentScene()
@@ -127,16 +128,19 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		lp_newObject->SetID(newObject.value()["id"]);
 		// Assign Name
 		lp_newObject->SetName(newObject.value()["name"]);
-		Debug::getInstance()->LogWarning("Loading Name: " + lp_newObject->GetName());
 
 		// If it has a Transform Component, add Transform
 		lp_newObject->GetTransform()->SceneLoad(&newObject.value()["TRANSFORM"]);
 
 		// If it has a SpriteRenderer component, add SpriteRenderer
-		LoadComponentFromScene<SpriteRenderer>("SPRITERENDERER", lp_newObject, &newObject.value()["SPRITERENDERER"]);
+		if (newObject.value().contains("SPRITERENDERER")) {
+			LoadComponentFromScene<SpriteRenderer>("SPRITERENDERER", lp_newObject, &newObject.value()["SPRITERENDERER"]);
+		}
 
 		// If it has a Rigidbody component, add Rigidbody
-		LoadComponentFromScene<Rigidbody>("RIGIDBODY", lp_newObject, &newObject.value()["RIGIDBODY"]);
+		if (newObject.value().contains("RIGIDBODY")) {
+			LoadComponentFromScene<Rigidbody>("RIGIDBODY", lp_newObject, &newObject.value()["RIGIDBODY"]);
+		}
 
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
@@ -202,7 +206,6 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 
 		// Get Object name
 		std::string ls_name = ap_Scene->GetObjectByIndex(i)->GetName();
-		Debug::getInstance()->LogWarning("Saving Name: " + ls_name);
 
 		json l_object = {
 			{"id", ls_id},
