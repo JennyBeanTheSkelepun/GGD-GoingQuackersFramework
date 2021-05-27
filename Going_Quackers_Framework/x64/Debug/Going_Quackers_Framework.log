@@ -1,90 +1,43 @@
 ﻿  EngineMain.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(20): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\enginemain.cpp(19): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\enginemain.cpp(26): warning C4101: 'result': unreferenced local variable
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\enginemain.cpp(80): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\enginemain.cpp(82): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\enginemain.cpp(86): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\enginemain.cpp(88): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\enginemain.cpp(90): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\enginemain.cpp(72): warning C4101: 'lb_result': unreferenced local variable
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(19,72): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(26,7): warning C4101: 'result': unreferenced local variable
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(89,6): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(91,73): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(95,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(97,6): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(99,70): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(79,7): warning C4101: 'lb_result': unreferenced local variable
   Collision.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(20): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\physics\collision.cpp(23): warning C4390: ';': empty controlled statement found; is this the intent?
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\physics\collision.cpp(41): warning C4390: ';': empty controlled statement found; is this the intent?
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(23,142): warning C4390: ';': empty controlled statement found; is this the intent?
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(41,143): warning C4390: ';': empty controlled statement found; is this the intent?
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(79,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(103,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   GravityEmitter.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(20): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Rigidbody.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(20): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   Trigger.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-  Player.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(20): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(50): warning C4305: 'argument': truncation from 'double' to 'const float'
-  SpriteRenderer.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-  Transform.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.cpp(148): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  VirtualCamera.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
   GameObject.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(20): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(34): error C2259: 'Player': cannot instantiate abstract class
-  c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(34): note: due to following members:
-  c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(34): note: 'json *Component::SceneSave(void)': is abstract
-  c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\component.h(30): note: see declaration of 'Component::SceneSave'
-  c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(34): note: 'void Component::SceneLoad(json *)': is abstract
-  c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\component.h(31): note: see declaration of 'Component::SceneLoad'
-  c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.cpp(93): note: see reference to function template instantiation 'T *GameObject::AddComponent<Player>(void)' being compiled
-          with
-          [
-              T=Player
-          ]
-  Input.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-  EngineGuiClass.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\imgui\engineguiclass.cpp(127): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\imgui\engineguiclass.cpp(308): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  DirectXGraphics.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\directx11 elements\directxgraphics.cpp(43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\directx11 elements\directxgraphics.cpp(178): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  DirectXRenderLoop.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\directx11 elements\directxrenderloop.cpp(136): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  DirectXWindow.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-  Graphics.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-  Scene.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   SceneManager.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(20): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\scenemanager\scenemanager.cpp(193): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Main.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(20): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  The contents of <filesystem> are available only with C++17 or later.
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(186,58): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(260,52): warning C4834: discarding return value of function with 'nodiscard' attribute
   Generating Code...
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(41): warning C4715: 'GameObject::AddComponent<SpriteRenderer>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(125): warning C4715: 'Graphics::LoadTexture': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(135): warning C4715: 'Graphics::LoadTileSheet': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(96): warning C4715: 'Graphics::AddObjectToApiRenderILoop': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(154): warning C4715: 'Graphics::RemoveObjectFromRenderLoop': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(145): warning C4715: 'Graphics::LoadShader': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(163): warning C4715: 'Graphics::RemoveTexture': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(172): warning C4715: 'Graphics::RemoveTileSheet': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(181): warning C4715: 'Graphics::RemoveShader': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\graphics.cpp(190): warning C4715: 'Graphics::GetWindowDimentions': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\directx11 elements\directxrenderloop.cpp(89): warning C4715: 'DirectXRenderLoop::EditorRender': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\rendering\directx11 elements\directxrenderloop.cpp(131): warning C4715: 'DirectXRenderLoop::ActiveGameRender': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<SpriteRenderer>': not all control paths return a value
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Transform>': not all control paths return a value
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<SpriteRenderer>': not all control paths return a value
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<VirtualCamera>': not all control paths return a value
+  Going_Quackers_Framework.vcxproj -> G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

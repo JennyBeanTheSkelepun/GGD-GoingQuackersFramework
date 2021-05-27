@@ -81,3 +81,33 @@ bool Collision::CollisionSphericalAABB(GameObject* checkObjectA, GameObject* che
 	//Statistically, this is almost always correct.
 	return distance > radius;
 }
+
+bool Collision::RaycastSphere(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject)
+{
+	Vector2 RayEnd = RayOrigin + Ray;
+
+	Rigidbody* rb = checkObject->GetComponent<Rigidbody>();
+
+	if (rb == nullptr)
+		return false;
+
+	Vector2 CircleCentre = checkObject->GetTransform()->GetPosition();
+	float CircleRadius = rb->GetRadius();
+
+	Vector2 RayStartShifted = RayOrigin - CircleCentre;
+	Vector2 RayEndShifted = RayEnd - CircleCentre;
+
+	float m = (RayEndShifted.Y - RayStartShifted.Y) / (RayEndShifted.X - RayStartShifted.X);
+	float c = RayStartShifted.Y - m * RayStartShifted.X;
+
+	float underRadical = pow((pow(CircleRadius, 2) * pow(m, 2) + 1), 2) - pow(c, 2);
+
+	if (underRadical < 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}

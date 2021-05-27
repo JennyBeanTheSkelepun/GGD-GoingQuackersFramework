@@ -66,6 +66,7 @@ void EngineGuiClass::EditorUpdate()
 			ImGui::InputText(":Scene To Load", SceneToLoad, 100);
 			if (ImGui::MenuItem("Load Scene")) {
 				if (std::string(SceneToLoad) != "") {
+					ClearInspector();
 					SceneManager::GetInstance()->ChangeScene(SceneToLoad, false);
 				}
 				else {
@@ -78,6 +79,7 @@ void EngineGuiClass::EditorUpdate()
 			ImGui::InputText(":New Scene Type", NewSceneType, 100);
 			if (ImGui::MenuItem("New Scene")) {
 				if (std::string(NewSceneID) != "" && std::string(NewSceneName) != "" && std::string(NewSceneType) != "") {
+					ClearInspector();
 					SceneManager::GetInstance()->NewScene(NewSceneID, NewSceneName, NewSceneType, false);
 				}
 				else {
