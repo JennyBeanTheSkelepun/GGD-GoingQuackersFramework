@@ -285,6 +285,9 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\VirtualCamera.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Player.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -423,6 +426,9 @@
       <Filter>Header Files\Engine\Game Systems</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\VirtualCamera.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Player.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
   </ItemGroup>
