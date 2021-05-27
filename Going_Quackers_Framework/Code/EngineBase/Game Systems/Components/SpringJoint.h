@@ -27,8 +27,14 @@ public:
 	inline float GetStrength() { return mf_strength; }
 	void SetStrength(float af_strength);
 
-	inline float GetDesiredLength() { return mf_desiredLength; }
-	void SetDesiredLength(float af_desiredLength);
+	inline float GetDefaultDesiredLength() { return mf_defaultDesiredLength; }
+	void SetDefaultDesiredLength(float af_desiredLength);
+
+	inline float GetCurrentDesiredLength() { return mf_desiredLength; }
+	void SetCurrentDesiredLength(float af_desiredLength);
+
+	inline bool GetSelfAdjustDesiredLength() { return mb_selfAdjustDesiredLength; }
+	void SetSelfAdjustDesiredLength(bool ab_selfAdjusting);
 
 	inline SpringType GetSpringType() { return m_type; }
 	void SetSpringType(SpringType a_type);
@@ -43,13 +49,17 @@ public:
 	void SceneLoad(json* componentJSON) override;
 
 private:
+	void ApplyForce(float af_currentStretch);
 	void ApplyFixedHeadSpringForce(float af_currentStretch);
 	void ApplyNonFixedHeadSpringForce(float af_currentStretch);
 
 	GameObject* mp_connectedObject;
 
 	float mf_strength;
+
+	float mf_defaultDesiredLength;
 	float mf_desiredLength;
+	bool mb_selfAdjustDesiredLength;
 
 	SpringType m_type;
 	SpringMode m_mode;

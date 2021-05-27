@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 #include "../Game Systems/Components/SpriteRenderer.h"
+#include "../Game Systems/Components/SpringJoint.h"
 #include "../Game Systems/Components/Physics/Rigidbody.h"
 
 #include "../Game Systems/Debug.h"
@@ -142,6 +143,9 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<Rigidbody>("RIGIDBODY", lp_newObject, &newObject.value()["RIGIDBODY"]);
 		}
 
+		// If it has a SpringJoint component, add SpringJoint
+		LoadComponentFromScene<SpringJoint>("SPRINGJOINT", lp_newObject, &newObject.value()["SPRINGJOINT"]);
+
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
 
@@ -228,6 +232,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				break;
 			case ComponentTypes::RIGIDBODY:
 				SaveComponent<Rigidbody>("RIGIDBODY", component, &componentType);
+				break;
+			case ComponentTypes::SPRINGJOINTS:
+				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
