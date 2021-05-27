@@ -3,15 +3,15 @@
 //- Constructor -//
 Rigidbody::Rigidbody(GameObject* owner) : Component(owner, ComponentTypes::RIGIDBODY, "RigidBody")
 {
-	mp_gravEmitter = new GravityEmitter();
-	mp_trigger = new Trigger();
+	mp_GravEmitter = new GravityEmitter();
+	mp_Trigger = new Trigger();
 }
 
 //- Descructor -//
 Rigidbody::~Rigidbody()
 {
-	delete mp_gravEmitter;
-	delete mp_trigger;
+	delete mp_GravEmitter;
+	delete mp_Trigger;
 }
 
 void Rigidbody::OnDestroy()
@@ -26,19 +26,19 @@ void Rigidbody::Update()
 	{
 		PhysicsCollide();
 
-		if (m_physicsType == PhysicsTypes::RB && !m_isStatic)
+		if (m_PhysicsType == PhysicsTypes::RB && !m_IsStatic)
 		{
 			CalculateVelocity();
 		}
 
-		if (m_isStatic)
+		if (m_IsStatic)
 		{
-			m_velocity = Vector2();
-			m_acceleration = Vector2();
+			m_Velocity = Vector2();
+			m_Acceleration = Vector2();
 		}
 	}
 
-	m_forces.clear();
+	m_Forces.clear();
 }
 
 //- ImGui -//
@@ -46,25 +46,25 @@ void Rigidbody::ImGUIUpdate()
 {
 	if (ImGui::BeginCombo("Object Type", m_DropdownPhysicsTypeSelected.c_str()))
 	{
-		for (int i = 0; i < IM_ARRAYSIZE(m_physicsTypeDropDown); i++)
+		for (int i = 0; i < IM_ARRAYSIZE(m_PhysicsTypeDropDown); i++)
 		{
-			bool is_selected = (m_DropdownPhysicsTypeSelected == m_physicsTypeDropDown[i]);
+			bool is_selected = (m_DropdownPhysicsTypeSelected == m_PhysicsTypeDropDown[i]);
 
-			if (ImGui::Selectable(m_physicsTypeDropDown[i].c_str(), is_selected))
+			if (ImGui::Selectable(m_PhysicsTypeDropDown[i].c_str(), is_selected))
 			{
-				m_DropdownPhysicsTypeSelected = m_physicsTypeDropDown[i];
+				m_DropdownPhysicsTypeSelected = m_PhysicsTypeDropDown[i];
 				
 				if (m_DropdownPhysicsTypeSelected == "Rigidbody")
 				{
-					m_physicsType = PhysicsTypes::RB;
+					m_PhysicsType = PhysicsTypes::RB;
 				}
 				else if (m_DropdownPhysicsTypeSelected == "Trigger")
 				{
-					m_physicsType = PhysicsTypes::Trig;
+					m_PhysicsType = PhysicsTypes::Trig;
 				}
 				else if (m_DropdownPhysicsTypeSelected == "Gravity Zone")
 				{
-					m_physicsType = PhysicsTypes::GE;
+					m_PhysicsType = PhysicsTypes::GE;
 				}
 			}
 
@@ -81,21 +81,21 @@ void Rigidbody::ImGUIUpdate()
 
 	if (ImGui::BeginCombo("Collision Type", m_DropdownColliderShapeSelected.c_str()))
 	{
-		for (int i = 0; i < IM_ARRAYSIZE(m_colliderShapeDropDown); i++)
+		for (int i = 0; i < IM_ARRAYSIZE(m_ColliderShapeDropDown); i++)
 		{
-			bool is_selected = (m_DropdownColliderShapeSelected == m_colliderShapeDropDown[i]);
+			bool is_selected = (m_DropdownColliderShapeSelected == m_ColliderShapeDropDown[i]);
 
-			if (ImGui::Selectable(m_colliderShapeDropDown[i].c_str(), is_selected))
+			if (ImGui::Selectable(m_ColliderShapeDropDown[i].c_str(), is_selected))
 			{
-				m_DropdownColliderShapeSelected = m_colliderShapeDropDown[i];
+				m_DropdownColliderShapeSelected = m_ColliderShapeDropDown[i];
 				
 				if (m_DropdownColliderShapeSelected == "Sphere")
 				{
-					m_collisionType = CollisionTypes::Sphere;
+					m_CollisionType = CollisionTypes::Sphere;
 				}
 				else if (m_DropdownColliderShapeSelected == "AABB")
 				{
-					m_collisionType = CollisionTypes::AABB;
+					m_CollisionType = CollisionTypes::AABB;
 				}
 			}
 
@@ -110,11 +110,11 @@ void Rigidbody::ImGUIUpdate()
 
 	ImGui::Dummy(ImVec2(0.0f, 20.0f));
 
-	if (m_collisionType == CollisionTypes::Sphere)
+	if (m_CollisionType == CollisionTypes::Sphere)
 	{
-		ImGui::InputFloat("Radius", &m_radius);
+		ImGui::InputFloat("Radius", &m_Radius);
 	}
-	else if (m_collisionType == CollisionTypes::AABB)
+	else if (m_CollisionType == CollisionTypes::AABB)
 	{
 		ImGui::InputFloat("Rect Width", &m_AABBRect.X);
 		ImGui::InputFloat("Rect Height", &m_AABBRect.Y);
@@ -122,69 +122,69 @@ void Rigidbody::ImGUIUpdate()
 
 	ImGui::Dummy(ImVec2(0.0f, 20.0f));
 
-	if (m_physicsType == PhysicsTypes::RB)
+	if (m_PhysicsType == PhysicsTypes::RB)
 	{
-		ImGui::Checkbox("Static", &m_isStatic);
+		ImGui::Checkbox("Static", &m_IsStatic);
 	}
-	else if (m_physicsType == PhysicsTypes::GE)
+	else if (m_PhysicsType == PhysicsTypes::GE)
 	{
-		mp_gravEmitter->ImGuiSetup();
+		mp_GravEmitter->ImGuiSetup();
 	}
 }
 
 //- Scene Save / Load -//
 void Rigidbody::SceneLoad(json* componentJSON)
 {
-	m_velocity = Vector2((*componentJSON)["Velocity"][0], (*componentJSON)["Velocity"][1]);
-	m_acceleration = Vector2((*componentJSON)["Acceleration"][0], (*componentJSON)["Acceleration"][1]);
-	m_mass = (*componentJSON)["Mass"];
-	m_isStatic = (*componentJSON)["Static"];
+	m_Velocity = Vector2((*componentJSON)["Velocity"][0], (*componentJSON)["Velocity"][1]);
+	m_Acceleration = Vector2((*componentJSON)["Acceleration"][0], (*componentJSON)["Acceleration"][1]);
+	m_Mass = (*componentJSON)["Mass"];
+	m_IsStatic = (*componentJSON)["Static"];
 	m_DropdownPhysicsTypeSelected = (*componentJSON)["ObjectType"];
 	m_DropdownColliderShapeSelected = (*componentJSON)["ColliderShape"];
 
 	if (m_DropdownPhysicsTypeSelected == "Rigidbody")
 	{
-		m_physicsType = PhysicsTypes::RB;
+		m_PhysicsType = PhysicsTypes::RB;
 	}
 	else if (m_DropdownPhysicsTypeSelected == "Trigger")
 	{
-		m_physicsType = PhysicsTypes::Trig;
+		m_PhysicsType = PhysicsTypes::Trig;
 	}
 	else if (m_DropdownPhysicsTypeSelected == "Gravity Zone")
 	{
-		m_physicsType = PhysicsTypes::GE;
+		m_PhysicsType = PhysicsTypes::GE;
 	}
 
 	if (m_DropdownColliderShapeSelected == "Sphere")
 	{
-		m_collisionType = CollisionTypes::Sphere;
+		m_CollisionType = CollisionTypes::Sphere;
 	}
 	else if (m_DropdownColliderShapeSelected == "AABB")
 	{
-		m_collisionType = CollisionTypes::AABB;
+		m_CollisionType = CollisionTypes::AABB;
 	}
 
-	m_radius = (*componentJSON)["Radius"];
+	m_Radius = (*componentJSON)["Radius"];
 	m_AABBRect = Vector2((*componentJSON)["AABBRect"][0], (*componentJSON)["AABBRect"][1]);
-	mp_gravEmitter->LoadGravType((*componentJSON)["GravityType"]);
-	mp_gravEmitter->SetGravityStrength((*componentJSON)["GravityStrength"]);
-	mp_gravEmitter->SetGravityDirection(Vector2((*componentJSON)["GravityDirection"][0], (*componentJSON)["GravityDirection"][1]));
+	mp_GravEmitter->LoadGravType((*componentJSON)["GravityType"]);
+	mp_GravEmitter->SetGravityStrength((*componentJSON)["GravityStrength"]);
+	mp_GravEmitter->SetGravityDirection(Vector2((*componentJSON)["GravityDirection"][0], (*componentJSON)["GravityDirection"][1]));
 }
 
 json* Rigidbody::SceneSave()
 {
 	json* returnObj = new json({
-		{"Velocity", {m_velocity.X, m_velocity.Y}},
-		{"Acceleration", {m_acceleration.X, m_acceleration.Y}},
-		{"Mass", m_mass},
-		{"Static", m_isStatic},
+		{"Velocity", {m_Velocity.X, m_Velocity.Y}},
+		{"Acceleration", {m_Acceleration.X, m_Acceleration.Y}},
+		{"Mass", m_Mass},
+		{"Static", m_IsStatic},
 		{"ObjectType", m_DropdownPhysicsTypeSelected},
 		{"ColliderShape", m_DropdownColliderShapeSelected},
-		{"Radius", m_radius},
+		{"Radius", m_Radius},
 		{"AABBRect", {m_AABBRect.X, m_AABBRect.Y}},
-		{"GravityType", mp_gravEmitter->SaveGravType()},
-		{"GravityStrength", mp_gravEmitter->GetGravityStrength()},
-		{"GravityDirection", {mp_gravEmitter->GetGravityDirection().X, mp_gravEmitter->GetGravityDirection().Y} }
+		{"GravityType", mp_GravEmitter->SaveGravType()},
+		{"GravityStrength", mp_GravEmitter->GetGravityStrength()},
+		{"GravityDirection", {mp_GravEmitter->GetGravityDirection().X, mp_GravEmitter->GetGravityDirection().Y} }
 		});
 
 	return returnObj;
@@ -195,45 +195,45 @@ void Rigidbody::CalculateVelocity()
 {
 	Vector2 totalForce;
 
-	for(Vector2 force : m_forces)
+	for(Vector2 force : m_Forces)
 	{
 		totalForce += force;
 	}
 
 	if (m_MoveIgnoreFlag == MovementIgnore::NONE)
 	{
-		m_acceleration = totalForce / m_mass;
+		m_Acceleration = totalForce / m_Mass;
 
-		m_velocity += m_acceleration * Time::GetDeltaTime();
+		m_Velocity += m_Acceleration * Time::GetDeltaTime();
 	}
 	else if(m_MoveIgnoreFlag == MovementIgnore::ACCEL)
 	{
-		m_velocity += totalForce / m_mass;
+		m_Velocity += totalForce / m_Mass;
 
-		m_acceleration = Vector2();
+		m_Acceleration = Vector2();
 	}
 	else if (m_MoveIgnoreFlag == MovementIgnore::MASS)
 	{
-		m_acceleration = totalForce;
+		m_Acceleration = totalForce;
 
-		m_velocity += m_acceleration * Time::GetDeltaTime();
+		m_Velocity += m_Acceleration * Time::GetDeltaTime();
 	}
 	else if (m_MoveIgnoreFlag == MovementIgnore::MASSACCEL)
 	{
-		m_velocity += totalForce;
+		m_Velocity += totalForce;
 
-		m_acceleration = Vector2();
+		m_Acceleration = Vector2();
 	}
 
 	Vector2 pos = GetOwner()->GetTransform()->GetPosition();
-	pos += m_velocity;
+	pos += m_Velocity;
 	GetOwner()->GetTransform()->SetPosition(pos);
 }
 
 void Rigidbody::PhysicsCollide()
 {
 	std::vector<GameObject*> allObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
-	collidingObjects.clear();
+	m_CollidingObjects.clear();
 
 	for (GameObject* obj : allObjects)
 	{
@@ -252,14 +252,14 @@ void Rigidbody::PhysicsCollide()
 			case CollisionTypes::AABB:
 				if (Collision::getInstance()->CollisionAABB(GetOwner(), obj)) 
 				{ 
-					collidingObjects.push_back(obj); 
+					m_CollidingObjects.push_back(obj); 
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID()); 
 				}
 				break;
 			case CollisionTypes::Sphere:
 				if(Collision::getInstance()->CollisionSphericalAABB(GetOwner(), obj))
 				{
-					collidingObjects.push_back(obj); 
+					m_CollidingObjects.push_back(obj); 
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
 				}
 				break;
@@ -271,14 +271,14 @@ void Rigidbody::PhysicsCollide()
 			case CollisionTypes::AABB:
 				if(Collision::getInstance()->CollisionSphericalAABB(GetOwner(), obj))
 				{
-					collidingObjects.push_back(obj);
+					m_CollidingObjects.push_back(obj);
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
 				}
 				break;
 			case CollisionTypes::Sphere:
 				if(Collision::getInstance()->CollisionSpherical(GetOwner(), obj))
 				{
-					collidingObjects.push_back(obj);
+					m_CollidingObjects.push_back(obj);
 					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
 				}
 				break;
@@ -287,20 +287,20 @@ void Rigidbody::PhysicsCollide()
 		}
 	}
 
-	switch (m_physicsType)
+	switch (m_PhysicsType)
 	{
 	case PhysicsTypes::GE:
-		mp_gravEmitter->applyGravity(GetOwner(), &collidingObjects);
+		mp_GravEmitter->applyGravity(GetOwner(), &m_CollidingObjects);
 		break;
 	case PhysicsTypes::RB:
-		RigidbodyCollide(&collidingObjects);
+		RigidbodyCollide(&m_CollidingObjects);
 		break;
 	case PhysicsTypes::Trig:
-		mp_trigger->CheckColliding(&collidingObjects);
+		mp_Trigger->CheckColliding(&m_CollidingObjects);
 		break;
 	}
 	
-	physicsChecked = true;
+	m_PhysicsChecked = true;
 }
 
 void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
@@ -308,7 +308,7 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 	for (GameObject* obj : *collidingObjects)
 	{
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();
-		if (rb->getCollideFlag())
+		if (rb->GetCollideFlag())
 		{
 			continue;
 		}
