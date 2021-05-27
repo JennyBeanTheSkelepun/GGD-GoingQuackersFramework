@@ -7,6 +7,7 @@
 static class Time {
 public:
 	static void FrameEnd();
+	static void UpdateTimeSinceLastFrameEnd();
 	static void SetTimeScale(float timeScale);
 	static float GetTimeScale();
 	static float GetTime();
@@ -15,6 +16,7 @@ public:
 private:
 	static float mf_timeScale;
 	static float mf_totalTime;
+	static std::chrono::time_point<std::chrono::steady_clock> currentTime;
 	static std::chrono::duration<float> m_deltaTime;
 	static std::chrono::time_point<std::chrono::steady_clock> m_lastFrame;
 };
