@@ -22,7 +22,7 @@ void Rigidbody::OnDestroy()
 //- Update Render Functions -//
 void Rigidbody::Update()
 {
-	if (Collision::getInstance()->RaycastSphere(Vector2(3, 0), Vector2(), GetOwner()))
+	if (Collision::getInstance()->RaycastAABB(Vector2(3, 0), Vector2(), GetOwner()))
 	{
 		Debug::getInstance()->Log("Ray hit " + GetOwner()->GetName());
 	}
