@@ -96,7 +96,7 @@ bool EngineMain::UpdateRenderLoop()
 
 		if (SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>() != nullptr)
 		{
-			SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>()->resetCollideFlag();
+			SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>()->ResetCollideFlag();
 		}
 	}
 
