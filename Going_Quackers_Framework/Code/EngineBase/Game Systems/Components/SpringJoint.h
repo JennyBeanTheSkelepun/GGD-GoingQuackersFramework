@@ -54,6 +54,8 @@ private:
 	void ApplyNonFixedHeadSpringForce(float af_currentStretch);
 
 	GameObject* mp_connectedObject;
+	std::string ms_connectedObjectID;
+	bool mb_checkForConnectedObject;
 
 	float mf_strength;
 
@@ -64,9 +66,7 @@ private:
 	SpringType m_type;
 	SpringMode m_mode;
 
-	char* mp_jointObjectNameField;
-	char* mp_desiredLengthField;
-	char* mp_strengthField;
+	char m_jointObjectNameField[128]{ "" };
 	int mi_typeField;
 	int mi_modeField;
 };

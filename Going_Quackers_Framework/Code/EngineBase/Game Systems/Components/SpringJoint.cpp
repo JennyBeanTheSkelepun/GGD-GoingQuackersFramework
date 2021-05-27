@@ -1,23 +1,16 @@
 #include "SpringJoint.h"
-#include "../GameObject.h"
 #include "../Input.h"
 #include "../Debug.h"
 #include "Physics/Rigidbody.h"
 
 SpringJoint::SpringJoint(GameObject* ap_owner) : Component(ap_owner, ComponentTypes::SPRINGJOINTS, "Spring Joint") {
-	mp_jointObjectNameField = new char[100]{ "" };
-
+	mf_defaultDesiredLength = 1;
 	mf_desiredLength = 1;
-	mp_desiredLengthField = new char[100]{ "1" };
-
 	mf_strength = 1;
-	mp_strengthField = new char[100]{ "1" };
 }
 
 SpringJoint::~SpringJoint() {
-	delete[] mp_jointObjectNameField;
-	delete[] mp_desiredLengthField;
-	delete[] mp_strengthField;
+	//TODO make sure connectedObjectField is properly destroyed/if it needs to be
 }
 
 void SpringJoint::OnDestroy() {
@@ -58,6 +51,13 @@ void SpringJoint::SetSpringMode(SpringMode a_mode) {
 }
 
 void SpringJoint::Update() {
+	if (mb_checkForConnectedObject) {
+		mp_connectedObject = ms_connectedObjectID == "NULL" ? nullptr : SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(ms_connectedObjectID);
+		mp_connectedObject->GetName().copy(m_jointObjectNameField, mp_connectedObject->GetName().size());
+
+		mb_checkForConnectedObject = false;
+	}
+
 	if (!EngineGuiClass::getInstance()->IsInPlayMode())
 		return;
 
@@ -67,37 +67,37 @@ void SpringJoint::Update() {
 	//Testing
 	if (Input::getInstance()->isKeyPressedDown(KeyCode::D)) {
 		Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-		connectedObjectRb->setUseAccel(MovementIgnore::MASSACCEL);
+		connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
 		connectedObjectRb->AddForce(Vector2(0.1f, 0));
-		connectedObjectRb->setUseAccel(MovementIgnore::NONE);
+		connectedObjectRb->SetUseAccel(MovementIgnore::NONE);
 	}
 
 	if (Input::getInstance()->isKeyPressedDown(KeyCode::A)) {
 		Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-		connectedObjectRb->setUseAccel(MovementIgnore::MASSACCEL);
+		connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
 		connectedObjectRb->AddForce(Vector2(-0.1f, 0));
-		connectedObjectRb->setUseAccel(MovementIgnore::NONE);
+		connectedObjectRb->SetUseAccel(MovementIgnore::NONE);
 	}
 
 	if (Input::getInstance()->isKeyPressedDown(KeyCode::W)) {
 		Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-		connectedObjectRb->setUseAccel(MovementIgnore::MASSACCEL);
+		connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
 		connectedObjectRb->AddForce(Vector2(0, 0.1f));
-		connectedObjectRb->setUseAccel(MovementIgnore::NONE);
+		connectedObjectRb->SetUseAccel(MovementIgnore::NONE);
 	}
 
 	if (Input::getInstance()->isKeyPressedDown(KeyCode::S)) {
 		Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-		connectedObjectRb->setUseAccel(MovementIgnore::MASSACCEL);
+		connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
 		connectedObjectRb->AddForce(Vector2(0, -0.1f));
-		connectedObjectRb->setUseAccel(MovementIgnore::NONE);
+		connectedObjectRb->SetUseAccel(MovementIgnore::NONE);
 	}
 
 	if (Input::getInstance()->isKeyPressedDown(KeyCode::Space)) {
 		Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-		connectedObjectRb->setUseAccel(MovementIgnore::MASSACCEL);
+		connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
 		connectedObjectRb->AddForce(-connectedObjectRb->GetVelocity());
-		mp_connectedObject->GetComponent<Rigidbody>()->setUseAccel(MovementIgnore::NONE);
+		mp_connectedObject->GetComponent<Rigidbody>()->SetUseAccel(MovementIgnore::NONE);
 	}
 	//End of testing
 
@@ -116,9 +116,9 @@ void SpringJoint::Update() {
 
 		if (m_mode == SpringMode::ATTRACT_ONLY) {
 			Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-			connectedObjectRb->setUseAccel(MovementIgnore::MASSACCEL);
+			connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
 			connectedObjectRb->AddForce(-connectedObjectRb->GetVelocity());
-			connectedObjectRb->setUseAccel(MovementIgnore::NONE);
+			connectedObjectRb->SetUseAccel(MovementIgnore::NONE);
 		}
 		else
 			ApplyForce(currentLength);
@@ -129,9 +129,9 @@ void SpringJoint::Update() {
 
 		if (m_mode == SpringMode::REPEL_ONLY) {
 			Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-			connectedObjectRb->setUseAccel(MovementIgnore::MASSACCEL);
+			connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
 			connectedObjectRb->AddForce(-connectedObjectRb->GetVelocity());
-			connectedObjectRb->setUseAccel(MovementIgnore::NONE);
+			connectedObjectRb->SetUseAccel(MovementIgnore::NONE);
 		}
 		else
 			ApplyForce(currentLength);
@@ -143,24 +143,23 @@ void SpringJoint::Update() {
 }
 
 void SpringJoint::ImGUIUpdate() {
-	ImGui::InputText(((std::string)"Enter joint object name").c_str(), mp_jointObjectNameField, 128);
-	ImGui::InputText(((std::string)"Enter desired length").c_str(), mp_desiredLengthField, 128);
-	ImGui::InputText(((std::string)"Enter strength").c_str(), mp_strengthField, 128);
-
-	ImGui::Combo("Joint type", &mi_typeField, "Fixed\0Non fixed\0");
-	ImGui::Combo("Mode type", &mi_modeField, "Attract & Repel\0Attract\0Repel\0");
+	ImGui::InputText("Enter joint object name", m_jointObjectNameField, IM_ARRAYSIZE(m_jointObjectNameField));
+	ImGui::InputFloat("Enter desired length", &mf_defaultDesiredLength, IM_ARRAYSIZE(&mf_defaultDesiredLength));
+	ImGui::InputFloat("Enter strength", &mf_strength, IM_ARRAYSIZE(&mf_strength), 0.1f);
+	ImGui::Separator();
+	ImGui::Combo("Joint type", &mi_typeField, "Fixed\0Non fixed\0\0");
+	ImGui::Combo("Mode type", &mi_modeField, "Attract & Repel\0Attract\0Repel\0\0");
 	ImGui::Checkbox("Self adjust desired distance", &mb_selfAdjustDesiredLength);
+	ImGui::Separator();
 
 	if (ImGui::Button("Update joint")) {
 		m_type = static_cast<SpringType>(mi_typeField);
 		m_mode = static_cast<SpringMode>(mi_modeField);
 
-		//Strength and length
-		SetCurrentDesiredLength(std::stof(mp_desiredLengthField));
-		SetStrength(std::stof(mp_strengthField));
+		SetCurrentDesiredLength(mf_desiredLength);
 
 		//Connected joint
-		std::string objectNameField(mp_jointObjectNameField);
+		std::string objectNameField(m_jointObjectNameField);
 
 		if (objectNameField == GetOwner()->GetName()) {
 			Debug::getInstance()->LogWarning("Cannot join \"" + objectNameField + "\" to itself");
@@ -192,15 +191,18 @@ void SpringJoint::ImGUIUpdate() {
 }
 
 void SpringJoint::SceneLoad(json* componentJSON) {
-	std::string objectID = (*componentJSON)["ConnectedObjectID"];
-	mp_connectedObject = objectID == "NULL" ? nullptr : SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(objectID);
+	//Fails to find object. Probably because it's still being made. Make it search the next frame for it
+	ms_connectedObjectID = (*componentJSON)["ConnectedObjectID"];
+	mb_checkForConnectedObject = true;
 
 	mf_defaultDesiredLength = (*componentJSON)["DefaultDesiredLength"];
-	mf_desiredLength = mf_defaultDesiredLength;
-
 	mf_strength = (*componentJSON)["Strength"];
+
 	m_type = (*componentJSON)["Type"];
+	mi_typeField = (int)m_type;
+
 	m_mode = (*componentJSON)["Mode"];
+	mi_modeField = (int)m_mode;
 
 	mb_selfAdjustDesiredLength = (*componentJSON)["SelfAdjustDesiredLength"];
 }
@@ -237,9 +239,9 @@ void SpringJoint::ApplyFixedHeadSpringForce(float af_currentStretch) {
 	float force = (mf_strength * distanceFromDesired);
 
 	Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-	connectedObjectRb->setUseAccel(MovementIgnore::MASSACCEL);
+	connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
 	connectedObjectRb->AddForce((directionFromHead * force));
-	connectedObjectRb->setUseAccel(MovementIgnore::NONE);
+	connectedObjectRb->SetUseAccel(MovementIgnore::NONE);
 }
 
 void SpringJoint::ApplyNonFixedHeadSpringForce(float af_currentStretch) {

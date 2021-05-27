@@ -1,43 +1,6 @@
-﻿  EngineMain.cpp
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(19,72): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(26,7): warning C4101: 'result': unreferenced local variable
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(89,6): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(91,73): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(95,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(97,6): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(99,70): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\EngineMain.cpp(79,7): warning C4101: 'lb_result': unreferenced local variable
-  Collision.cpp
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(23,142): warning C4390: ';': empty controlled statement found; is this the intent?
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(41,143): warning C4390: ';': empty controlled statement found; is this the intent?
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(79,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(103,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  GravityEmitter.cpp
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Rigidbody.cpp
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Trigger.cpp
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-  GameObject.cpp
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  SceneManager.cpp
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  The contents of <filesystem> are available only with C++17 or later.
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(186,58): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\SceneManager\SceneManager.cpp(260,52): warning C4834: discarding return value of function with 'nodiscard' attribute
-  Generating Code...
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<SpriteRenderer>': not all control paths return a value
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Transform>': not all control paths return a value
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<SpriteRenderer>': not all control paths return a value
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
-G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<VirtualCamera>': not all control paths return a value
-  Going_Quackers_Framework.vcxproj -> G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1097,5): warning MSB8027: Two or more files with the name of SpringJoint.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are Code\EngineBase\Game Systems\Components\SpringJoint.cpp, SpringJoint.cpp.
+  SpringJoint.cpp
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\SpringJoint.cpp(174,44): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Going_Quackers_Framework.vcxproj -> G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

@@ -144,7 +144,9 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		}
 
 		// If it has a SpringJoint component, add SpringJoint
-		LoadComponentFromScene<SpringJoint>("SPRINGJOINT", lp_newObject, &newObject.value()["SPRINGJOINT"]);
+		if (newObject.value().contains("SPRINGJOINT")) {
+			LoadComponentFromScene<SpringJoint>("SPRINGJOINT", lp_newObject, &newObject.value()["SPRINGJOINT"]);
+		}
 
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
