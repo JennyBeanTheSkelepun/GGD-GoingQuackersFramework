@@ -49,6 +49,8 @@ public:
 
 	bool isRecording() { return !RecordingLayout; }
 
+	inline void ClearInspector() { currentSelected = nullptr; }
+
 private:
 	void DisplayObjects(std::vector<GameObject*>& gameObjects);
 
