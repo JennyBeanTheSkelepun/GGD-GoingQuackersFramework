@@ -20,7 +20,8 @@ public:
 	Player(GameObject* owner);
 	~Player();
 	void OnDestroy() override;
-	void Update();
+	void Update() override;
+	void ImGUIUpdate() override;
 	bool wallGrabbed;
 	GRAPPLE_STATE GetGrappleState();
 	void SetGrappleState(GRAPPLE_STATE state);

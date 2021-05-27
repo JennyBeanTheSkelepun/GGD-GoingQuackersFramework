@@ -15,6 +15,10 @@ void Player::OnDestroy()
 	this->~Player();
 }
 
+void Player::ImGUIUpdate()
+{
+	
+}
 
 void Player::Update()
 {
