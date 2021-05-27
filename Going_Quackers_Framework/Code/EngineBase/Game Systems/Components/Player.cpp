@@ -59,6 +59,15 @@ void Player::GrabWall()
 		Debug::getInstance()->Log(wallGrabbed);
 		
 	}
+	else
+	{
+		//for testing
+		Debug::getInstance()->Log(playerObj->GetComponent<Rigidbody>()->GetCollideFlag());
+		/*Vector2* testvector
+		testvector.X = 1;
+		testvector.Y = 0;
+		playerObj->AddComponent<Rigidbody>()->AddForce(testvector);*/
+	}
 
 
 	if (wallGrabbed)
