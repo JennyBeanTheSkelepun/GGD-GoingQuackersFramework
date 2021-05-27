@@ -105,28 +105,20 @@ public:
 	bool* GetShouldLive() { return &m_shouldLive; };
 
 private:
-
 	///<summary>The Transform attached to the GameObject.</summary>
 	Transform* mp_transform;
-
 	//A list of Components for the GameObject
 	std::vector<Component*> m_components;
-
 	//A list of Children that the GameObject is a parent of
 	std::vector<GameObject*> m_children;
-
 	//The parent of the GameObject
 	GameObject* mp_parent;
-
 	//Is the GameObject currently updating and rendering?
 	bool m_active;
-
 	// ID of object
 	std::string m_id;
-
 	// Name of object
 	std::string m_name = "";
-
 	bool m_shouldLive;
 };
 
