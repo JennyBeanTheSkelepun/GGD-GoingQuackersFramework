@@ -18,7 +18,8 @@ public:
 		RETURNING = 4,
 	};
 	Player(GameObject* owner);
-	void ImGUIDisplay();
+	~Player();
+	void OnDestroy() override;
 	void Update();
 	bool wallGrabbed;
 	GRAPPLE_STATE GetGrappleState();
