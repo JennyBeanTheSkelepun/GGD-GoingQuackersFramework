@@ -2,7 +2,6 @@
 #define _DIRECTX_GRAPHICS_H_
 
 #include <Windows.h>
-#include <Dbt.h>
 
 #include "../../Rendering/Interface/Graphics_API_Interface.h"
 #include "../../Rendering/DirectX11 Elements/DirectXWindow.h"
@@ -12,7 +11,6 @@
 #include "../../Rendering/DirectX11 Elements/DirectXTextureManager.h"
 #include "../../Rendering/DirectX11 Elements/DirectXShaderManager.h"
 #include "../../Rendering/DirectX11 Elements/DirectXRenderLoop.h"
-#include "../../Rendering/DirectX11 Elements/DirectXAudio.h"
 
 class SpriteRenderer;
 class VirtualCamera;
@@ -49,7 +47,7 @@ public:
 	void StartAPIRenderLoop();
 
 	void ResizeWindowCall();
-	Vector2 GetWindowDimensions();
+	Vector2 GetWindowDimentions();
 
 	void AddLineRenderer(LineRenderer* lineRenderer);
 	LineRenderer* RemoveLineRenderer(LineRenderer* lineRenderer);
@@ -76,9 +74,6 @@ public:
 	DirectXShaderManager* mp_ShaderManager;
 	// RenderLoop 
 	DirectXRenderLoop* mp_DirectXRenderLoop;
-
-	//Audio
-	AudioManager* mp_AudioManager;
 };
 
 #endif // !_DIRECTX_GRAPHICS_H_

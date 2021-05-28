@@ -49,7 +49,7 @@ public:
 	int LoadShader(std::wstring ShaderLocation);
 	int RemoveShader(int index);
 
-	Vector2 GetWindowDimensions();
+	Vector2 GetWindowDimentions();
 
 	void AddLineRenderer(LineRenderer* lineRenderer);
 	LineRenderer* RemoveLineRenderer(LineRenderer* lineRenderer);

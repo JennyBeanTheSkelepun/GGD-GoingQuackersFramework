@@ -15,7 +15,7 @@ enum class ComponentTypes
 	RIGIDBODY = 3,
 	VIRTUALCAMERA = 4,
 	PLAYER = 5,
-	AUDIOSOURCE = 6,
+	LINERENDERER = 6,
 };
 
 class Component

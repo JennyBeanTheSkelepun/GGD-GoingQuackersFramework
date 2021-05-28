@@ -187,26 +187,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam)
 			return 0;
 		}
 
-		case WM_DEVICECHANGE:
-		{
-			//Change Audio Device is new one is Detected
-			if (wParam == DBT_DEVICEARRIVAL)
-			{
-				auto pDev = reinterpret_cast<PDEV_BROADCAST_HDR>(lParam);
-				if (pDev)
-				{
-					if (pDev->dbch_devicetype == DBT_DEVTYP_DEVICEINTERFACE)
-					{
-						auto pInter = reinterpret_cast<const PDEV_BROADCAST_DEVICEINTERFACE>(pDev);
-						if (pInter->dbcc_classguid == KSCATEGORY_AUDIO)
-						{
-							ApplicationHandle->mp_DirectX->mp_AudioManager->OnNewAudioDevice();
-						}
-					}
-				}
-			}
-		}
-
 		// All other messages pass to the message handler in the system class.
 		default:
 		{

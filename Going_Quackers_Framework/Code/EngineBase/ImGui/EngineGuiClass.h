@@ -16,7 +16,7 @@ struct LayoutSettings
 {
 	std::string name;
 	std::vector<ImVec2> positions;
-	std::vector<ImVec2> dimensions;
+	std::vector<ImVec2> dimentions;
 };
 
 class EngineGuiClass
