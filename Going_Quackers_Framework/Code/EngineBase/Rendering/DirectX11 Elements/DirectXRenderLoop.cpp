@@ -73,9 +73,9 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 		if (lp_tempGameObject->GetParent() != nullptr)
 		{
 			DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetGlobalPosition().X, lp_tempGameObject->GetTransform()->GetGlobalPosition().Y, 0.0f);
-			XMStoreFloat4x4(&_world1, scale * roation * translation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180));
+			XMStoreFloat4x4(&_world1, scale * roation * translation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetGlobalRotation() * 3.1415) / 180));
 
-			XMStoreFloat4x4(&_world2, scale * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415)/180) * translation);
+			XMStoreFloat4x4(&_world2, scale * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetGlobalRotation() * 3.1415)/180) * translation);
 			DirectX::XMMATRIX temp1, temp2;
 
 			temp1 = DirectX::XMLoadFloat4x4(&_world1);
@@ -89,7 +89,7 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 		else
 		{
 			DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetGlobalPosition().X, lp_tempGameObject->GetTransform()->GetGlobalPosition().Y, 0.0f);
-			XMStoreFloat4x4(&_world1, scale * roation * translation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180));
+			XMStoreFloat4x4(&_world1, scale * roation * translation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetGlobalRotation() * 3.1415) / 180));
 
 			worldMatrix = DirectX::XMLoadFloat4x4(&_world1);
 		}
