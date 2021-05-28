@@ -58,8 +58,10 @@ void SpringJoint::Update() {
 		mb_checkForConnectedObject = false;
 	}
 
-	if (!EngineGuiClass::getInstance()->IsInPlayMode())
+	if (!EngineGuiClass::getInstance()->IsInPlayMode()) {
+		mf_desiredLength = mf_defaultDesiredLength;
 		return;
+	}
 
 	if (mp_connectedObject == nullptr)
 		return;
@@ -101,49 +103,45 @@ void SpringJoint::Update() {
 	}
 	//End of testing
 
-	float currentLength = GetOwner()->GetTransform()->GetPosition().Distance(mp_connectedObject->GetTransform()->GetPosition());
-	Debug::getInstance()->Log("current is " + std::to_string(currentLength) + " and desired is " + std::to_string(mf_desiredLength) + "                                            " + std::to_string(Time::GetTime()));
+	Vector2 position = GetOwner()->GetTransform()->GetPosition();
+	Vector2 tailOffset = mp_connectedObject->GetTransform()->GetPosition() - position;
+	float currentLength = tailOffset.Length();
+	float nextTailPositionLength = (tailOffset + mp_connectedObject->GetComponent<Rigidbody>()->GetVelocity()).Length();
+
+	Debug::getInstance()->Log("current is " + std::to_string(currentLength) + " and desired is " + std::to_string(mf_desiredLength) + " and next is " + std::to_string(nextTailPositionLength) + "                                            " + std::to_string(Time::GetTime()));
+
+	if (currentLength == mf_defaultDesiredLength)
+		return;
+
+	if (mb_selfAdjustDesiredLength) {
+		if (currentLength < mf_desiredLength && m_mode != SpringMode::REPEL_ONLY ||
+			currentLength > mf_desiredLength && m_mode != SpringMode::ATTRACT_ONLY) {
+			Debug::getInstance()->Log("Adjusted desired length                                                            " + std::to_string(Time::GetTime()));
+			mf_desiredLength = currentLength;
+			//return;      ???
+		}
+	}
+
+
+	if (nextTailPositionLength < currentLength && m_mode == SpringMode::REPEL_ONLY ||
+		nextTailPositionLength > currentLength && m_mode == SpringMode::ATTRACT_ONLY) {
+		Debug::getInstance()->Log("Cancelled force                                                            " + std::to_string(Time::GetTime()));
+		Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
+		connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
+		connectedObjectRb->AddForce(-connectedObjectRb->GetVelocity());
+		//connectedObjectRb->SetUseAccel(MovementIgnore::NONE);SnapTailToDesiredDistance();
+	}
+
+	if (nextTailPositionLength < mf_desiredLength && m_mode == SpringMode::ATTRACT_ONLY ||
+		nextTailPositionLength > mf_desiredLength && m_mode == SpringMode::REPEL_ONLY) {
+		SnapTailToDesiredDistance();
+	}
 	
-	if (currentLength < mf_desiredLength) {
-		if (mb_selfAdjustDesiredLength && m_mode != SpringMode::REPEL_ONLY) {
-			Debug::getInstance()->Log("Adjusted desired length                                                            " + std::to_string(Time::GetTime()));
-			mf_desiredLength = currentLength;
-		}
-
-		if (m_mode == SpringMode::ATTRACT_ONLY) {
-			Debug::getInstance()->Log("Cancelled force                                                            " + std::to_string(Time::GetTime()));
-			Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-			connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
-			connectedObjectRb->AddForce(-connectedObjectRb->GetVelocity());
-			//connectedObjectRb->SetUseAccel(MovementIgnore::NONE);
-		}
-		else {
-			Debug::getInstance()->Log("Applied force                                                            " + std::to_string(Time::GetTime()));
-			ApplyForce(currentLength);
-		}
+	if (nextTailPositionLength < mf_desiredLength && m_mode != SpringMode::ATTRACT_ONLY ||
+		nextTailPositionLength > mf_desiredLength && m_mode != SpringMode::REPEL_ONLY) {
+		Debug::getInstance()->Log("Applied force                                                            " + std::to_string(Time::GetTime()));
+		ApplyForce(currentLength);
 	}
-	else if (currentLength > mf_desiredLength) {
-		if (mb_selfAdjustDesiredLength && m_mode != SpringMode::ATTRACT_ONLY) {
-			Debug::getInstance()->Log("Adjusted desired length                                                            " + std::to_string(Time::GetTime()));
-			mf_desiredLength = currentLength;
-		}
-
-		if (m_mode == SpringMode::REPEL_ONLY) {
-			Debug::getInstance()->Log("Cancelled force                                                            " + std::to_string(Time::GetTime()));
-			Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-			connectedObjectRb->SetUseAccel(MovementIgnore::MASSACCEL);
-			connectedObjectRb->AddForce(-connectedObjectRb->GetVelocity());
-			//connectedObjectRb->SetUseAccel(MovementIgnore::NONE);
-		}
-		else {
-			Debug::getInstance()->Log("Applied force                                                            " + std::to_string(Time::GetTime()));
-			ApplyForce(currentLength);
-		}
-	}
-
-	/*if (currentLength < mf_desiredLength && m_mode != SpringMode::ATTRACT_ONLY ||
-		currentLength > mf_desiredLength && m_mode != SpringMode::REPEL_ONLY)
-		ApplyForce(currentLength);*/
 }
 
 void SpringJoint::ImGUIUpdate() {
@@ -227,6 +225,15 @@ json* SpringJoint::SceneSave() {
 		});
 
 	return returnObj;
+}
+
+void SpringJoint::SnapTailToDesiredDistance() {
+	Transform* tailTransform = mp_connectedObject->GetTransform();
+	Debug::getInstance()->Log("Snapping                                                            " + std::to_string(Time::GetTime()));
+
+	Vector2 directionFromHead = (tailTransform->GetPosition() - GetOwner()->GetTransform()->GetPosition()).Normalize();
+
+	tailTransform->SetPosition(directionFromHead * mf_desiredLength);
 }
 
 void SpringJoint::ApplyForce(float af_currentStretch) {

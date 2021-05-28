@@ -1,6 +1,5 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1097,5): warning MSB8027: Two or more files with the name of SpringJoint.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are Code\EngineBase\Game Systems\Components\SpringJoint.cpp, SpringJoint.cpp.
-  SpringJoint.cpp
-G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\SpringJoint.cpp(182,44): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Going_Quackers_Framework.vcxproj -> G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+﻿  SpringJoint.cpp
+C:\Users\j017000i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+C:\Users\j017000i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+C:\Users\j017000i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\SpringJoint.cpp(178,44): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Going_Quackers_Framework.vcxproj -> C:\Users\j017000i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

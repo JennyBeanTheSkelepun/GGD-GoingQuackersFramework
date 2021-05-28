@@ -437,6 +437,12 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpringJoint.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringJoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Going_Quackers_Framework.rc">

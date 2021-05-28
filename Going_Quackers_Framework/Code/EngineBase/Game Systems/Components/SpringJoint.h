@@ -49,6 +49,7 @@ public:
 	void SceneLoad(json* componentJSON) override;
 
 private:
+	void SnapTailToDesiredDistance();
 	void ApplyForce(float af_currentStretch);
 	void ApplyFixedHeadSpringForce(float af_currentStretch);
 	void ApplyNonFixedHeadSpringForce(float af_currentStretch);
