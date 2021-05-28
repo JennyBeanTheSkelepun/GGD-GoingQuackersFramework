@@ -2,6 +2,8 @@
 
 #include "../Game Systems/Components/SpriteRenderer.h"
 #include "../Game Systems/Components/Physics/Rigidbody.h"
+#include "../Game Systems/Components/VirtualCamera.h"
+#include "../Game Systems/Components/Player.h"
 
 #include "../Game Systems/Debug.h"
 
@@ -10,6 +12,7 @@
 #include <filesystem>
 #include <codecvt>
 #include <locale>
+#include <sys/stat.h>
 
 
 SceneManager* SceneManager::mp_instance = 0;
@@ -32,6 +35,7 @@ SceneManager* SceneManager::GetInstance()
 SceneManager::SceneManager()
 {
 	mp_CurrentScene = nullptr;
+	mb_doAutoSave = false;
 }
 
 SceneManager::~SceneManager()
@@ -58,11 +62,14 @@ void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
 
 	// Get path to JSON scene config
 	std::string ls_SceneConfigPath = "SceneConfig/" + as_SceneID + ".json";
-
+	
 	// Load new Scene
-	mp_CurrentScene = LoadScene(ls_SceneConfigPath);
+	Scene* scene = LoadScene(ls_SceneConfigPath);
 
-	EngineGuiClass::getInstance()->InitializeObjectList(mp_CurrentScene->GetSceneObjectsList());
+	if (scene != nullptr) {
+		mp_CurrentScene = scene;
+		EngineGuiClass::getInstance()->InitializeObjectList(mp_CurrentScene->GetSceneObjectsList());
+	}
 }
 
 
@@ -106,6 +113,15 @@ void SceneManager::Update(float af_deltaTime)
 /// <returns>Returns new scene</returns>
 Scene* SceneManager::LoadScene(std::string as_Path)
 {
+	Debug::getInstance()->Log("Loading Scene from path: " + as_Path);
+
+	// Check File Exists
+	struct stat buffer;
+	if (stat(as_Path.c_str(), &buffer) != 0) {
+		Debug::getInstance()->LogError("Could not find SceneConfig File. Please make sure you save your scenes.");
+		return nullptr;
+	}
+
 	// Load Config from JSON file
 	std::ifstream l_file(as_Path);
 	json l_SceneConfig;
@@ -129,17 +145,22 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		// Assign Name
 		lp_newObject->SetName(newObject.value()["name"]);
 
-		// If it has a Transform Component, add Transform
 		lp_newObject->GetTransform()->SceneLoad(&newObject.value()["TRANSFORM"]);
 
-		// If it has a SpriteRenderer component, add SpriteRenderer
 		if (newObject.value().contains("SPRITERENDERER")) {
-			LoadComponentFromScene<SpriteRenderer>("SPRITERENDERER", lp_newObject, &newObject.value()["SPRITERENDERER"]);
+			LoadComponentFromScene<SpriteRenderer>(lp_newObject, &newObject.value()["SPRITERENDERER"]);
 		}
 
-		// If it has a Rigidbody component, add Rigidbody
 		if (newObject.value().contains("RIGIDBODY")) {
-			LoadComponentFromScene<Rigidbody>("RIGIDBODY", lp_newObject, &newObject.value()["RIGIDBODY"]);
+			LoadComponentFromScene<Rigidbody>(lp_newObject, &newObject.value()["RIGIDBODY"]);
+		}
+
+		if (newObject.value().contains("PLAYER")) {
+			LoadComponentFromScene<Player>(lp_newObject, &newObject.value()["PLAYER"]);
+		}
+
+		if (newObject.value().contains("VIRTUALCAMERA")) {
+			LoadComponentFromScene<VirtualCamera>(lp_newObject, &newObject.value()["VIRTUALCAMERA"]);
 		}
 
 		mp_CurrentScene->AddObject(lp_newObject);
@@ -160,6 +181,7 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		}
 	}
 
+	Debug::getInstance()->Log("Scene load complete.");
 	l_file.close();
 	return lp_NewScene;
 }
@@ -185,6 +207,7 @@ void SceneManager::UnloadScene(bool as_SaveToJSON)
 /// <param name="ap_Scene">Scene Object</param>
 void SceneManager::SaveToJSON(Scene* ap_Scene)
 {
+
 	json l_outfile; // JSON Object to contain the saved data
 	std::string l_outfilePath = "SceneConfig/" + ap_Scene->GetSceneID() + ".json";
 	int li_totalObjects = ap_Scene->GetSceneObjects().size(); // Number of objects in scene
@@ -229,6 +252,12 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::RIGIDBODY:
 				SaveComponent<Rigidbody>("RIGIDBODY", component, &componentType);
 				break;
+			case ComponentTypes::PLAYER:
+				SaveComponent<Player>("PLAYER", component, &componentType);
+				break;
+			case ComponentTypes::VIRTUALCAMERA:
+				SaveComponent<VirtualCamera>("VIRTUALCAMERA", component, &componentType);
+				break;
 			default:
 				componentType = "MISSING";
 				break;
@@ -239,7 +268,7 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				l_object[componentType] = *lp_componentInfo;
 			}
 			else {
-				Debug::getInstance()->LogError("Error saving to file.");
+				Debug::getInstance()->LogError("Error saving to file, Component Type Error: " + std::string(componentType));
 			}
 		}
 		
@@ -249,6 +278,7 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 	std::ofstream file(l_outfilePath);
 	file << l_outfile;
 	file.close();
+	Debug::getInstance()->Log("Scene Saved: " + ap_Scene->GetSceneDisplayName());
 }
 
 
