@@ -4,6 +4,7 @@
 
 #include "Component.h"
 #include "../../Data Structures/Vectors.h"
+#include "../GameObject.h"
 
 class Player : public Component
 {
@@ -29,11 +30,16 @@ public:
 	GRAPPLE_STATE GetGrappleState() { return m_grappleState; };
 	void SetGrappleState(GRAPPLE_STATE state);
 
-	bool grabbed;
+	bool wallGrabbed;
 private:
 	GRAPPLE_STATE m_grappleState;
-	void GrabWall();
+	void HandleInput();
 	void GrappleFire(Vector2 targetPos);
+	void GrappleReturn();
+	void GrappleRetract();
+	void WallPush();
+	void GrabWall();
+	GameObject* playerObj;
 };
 
 #endif // !PLAYER_H

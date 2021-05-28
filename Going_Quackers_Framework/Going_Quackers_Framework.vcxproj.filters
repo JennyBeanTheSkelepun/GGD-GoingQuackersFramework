@@ -160,6 +160,9 @@
     <Filter Include="Header Files\Engine\Game Systems\Physics\Joints">
       <UniqueIdentifier>{1036fbfe-f209-448f-a653-4e9a0599fa5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\SceneManager">
+      <UniqueIdentifier>{f46fd4e8-1c3f-49a9-9980-1774f0a924f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp">
@@ -288,6 +291,9 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Player.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
+    <ClCompile Include="SpringJoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -346,12 +352,6 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\ImGui\EngineGuiClass.h">
       <Filter>Header Files\Engine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
-      <Filter>Source Files\Engine\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
       <Filter>Source Files\Engine\SceneManager</Filter>
@@ -430,6 +430,15 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Player.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringJoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
+      <Filter>Header Files\Engine\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h">
+      <Filter>Header Files\Engine\SceneManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
