@@ -205,9 +205,8 @@ void Player::GrabWall()
 	//todo add rope length to the if statement
 	else if (m_grappleState == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerObj->GetComponent<Rigidbody>()->GetCollideFlag() == true)
 	{
-		wallGrabbed = true;
-		//note: wallGrabbed can be used by whoever is making the jump system to set it to false and release the grapple
 
+		wallGrabbed = true;
 
 		//this gets the object the player is coolliding with and puts it into a variable to use 
 		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
@@ -247,8 +246,9 @@ void Player::GrabWall()
 			playerRigidbody->AddForce(realForce);
 			if (vectorBetweenPlayerAndWall.Length()<=1)
 			{
+				//todo replace with the actual function when pushed to main
 				playerRigidbody->m_IsStatic = true;
-				Debug::getInstance()->Log("attached")
+				Debug::getInstance()->Log("attached");
 			}
 		}
 

@@ -78,6 +78,7 @@ public:
 
 	std::vector<GameObject*> GetCollidedObjects() { return m_CollidingObjects; }
 
+	//todo move back to private when main updated
 	bool m_IsStatic = false;
 
 private:
