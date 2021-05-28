@@ -1,6 +1,5 @@
 cbuffer MatrixBuffer
 {
-    //float4x4 WVP;
 	matrix worldMatrix;
 	matrix viewMatrix;
 	matrix projectionMatrix;
@@ -10,18 +9,20 @@ struct VertexInputType
 {
 	float4 position: POSITION;
     float2 tex : TEXCOORD0;
+    float4 color : COLOR;
 };
 
 struct PixelInputType
 {
     float4 position : SV_POSITION;
     float2 tex : TEXCOORD0;
+    float4 color : COLOR;
 };
 
 Texture2D shaderTexture;
 SamplerState SampleType;
 
-PixelInputType TextureVertexShader(VertexInputType input)
+PixelInputType GQFVertexShader(VertexInputType input)
 {
     PixelInputType output;
 
@@ -39,7 +40,7 @@ PixelInputType TextureVertexShader(VertexInputType input)
     return output;
 }
 
-float4 TexturePixelShader(PixelInputType input) : SV_TARGET
+float4 GQFPixelShader(PixelInputType input) : SV_TARGET
 {
     float4 textureColor;
     // Sample the pixel color from the texture using the sampler at this texture coordinate location.

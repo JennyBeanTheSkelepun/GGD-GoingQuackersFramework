@@ -48,15 +48,18 @@ bool DirectXLineObject::InitializeBuffers(ID3D11Device* ap_device)
 	// Create the vertex array.
 	std::vector<Vertex2D> l_vertices =
 	{
-		Vertex2D(-0.5f, 0.0f, 0.0f, 0.0f), //Left
-		Vertex2D(0.0f, 0.0f, 0.0f, 0.0f), //Centre
-		Vertex2D(0.5f, 0.0f, 0.0f, 0.0f), //Right
-		//eg (-0.5,0,0)---------------(0,0,0)-----------------(0.5,0,0) Three points are required as rendering engine is tri based
+		Vertex2D(-0.5f, -0.25f, 0.0f, 0.0f),	Vertex2D(0.5f, -0.25f, 0.0f, 0.0f),
+		Vertex2D(-0.5f,  0.25f, 0.0f, 0.0f),	Vertex2D(0.5f,  0.25f, 0.0f, 0.0f),
+
+		//eg (-0.5, -0.25, 0)--------------------------------(0.5, -0.25, 0) 
+		//			  |												 |			This Creates a rectangle / a line
+		//	 (-0.5,  0.25, 0)---------------------------------(0.5, 0.25, 0)
 	};
 
 	std::vector<DWORD> l_indices =
 	{
-		0, 1, 2
+		0, 1, 2,
+		2, 1, 3,
 	};
 
 	// Set up the description of the static vertex buffer.

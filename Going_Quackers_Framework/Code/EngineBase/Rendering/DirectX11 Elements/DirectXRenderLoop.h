@@ -14,8 +14,7 @@
 #include "DirectXShaderManager.h"
 #include "DirectXTextureManager.h"
 #include "DirectXTwoDObject.h"
-
-class DirectXLineRendererObject;
+#include "DirectXLineRendererObject.h"
 
 class DirectXRenderLoop
 {
@@ -35,7 +34,7 @@ private:
 	DirectXTwoDObject* mp_2DModel;
 
 	std::vector<LineRenderer*> m_linesToRender;
-	DirectXLineRendererObject* mp_Line;
+	DirectXLineObject* mp_Line;
 
 	bool EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
 	bool ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);

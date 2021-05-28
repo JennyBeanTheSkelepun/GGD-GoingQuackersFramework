@@ -172,6 +172,7 @@ bool DirectXGraphics::Initialize()
 
 	// Create the color shader object.
 	mp_ShaderManager = new DirectXShaderManager(*mp_DirectX, *mp_Window, L"Assets/Shaders/TextureSimple.fx");
+	mp_ShaderManager->CreateShader(*mp_DirectX, *mp_Window, L"Assets/Shaders/BlockColourShader.fx");
 	if (!mp_ShaderManager)
 	{
 		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Shader Manager object.", L"Error", MB_OK);

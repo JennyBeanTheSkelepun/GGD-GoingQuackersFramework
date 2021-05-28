@@ -4,6 +4,9 @@ DirectXRenderLoop::DirectXRenderLoop(DirectXClass* ap_DirectX)
 {
 	mp_2DModel = new DirectXTwoDObject();
 	mp_2DModel->Initialize(ap_DirectX->GetDevice(), ap_DirectX->GetDeviceContext());
+
+	mp_Line = new DirectXLineObject();
+	mp_Line->Initialize(ap_DirectX->GetDevice(), ap_DirectX->GetDeviceContext());
 }
 
 DirectXRenderLoop::~DirectXRenderLoop()
@@ -67,6 +70,22 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 		}
 	}
 
+	// Put the model vertex and ai_index buffers on the graphics pipeline to prepare them for drawing.
+	for (size_t li_i = 0; li_i < m_linesToRender.size(); li_i++)
+	{
+		//- universal line (width 1) for all line elements -//
+		mp_Line->Render();
+		//- Use the hardcoded block color shader -//
+		DirectXShader* lp_tempShader = ar_Shader.GetShader(1);
+		LineRenderer* lp_tempGameObject = m_linesToRender[li_i];
+
+		l_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 3, lp_tempGameObject->GetOwner()->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, nullptr);
+		if (!l_result)
+		{
+			return false;
+		}
+	}
+
 	//-----------------//
 	//- Engine Render -//
 	//-----------------//
@@ -120,6 +139,22 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 		GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
 
 		lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
+		if (!lb_result)
+		{
+			return false;
+		}
+	}
+
+	// Put the model vertex and ai_index buffers on the graphics pipeline to prepare them for drawing.
+	for (size_t li_i = 0; li_i < m_linesToRender.size(); li_i++)
+	{
+		//- universal line (width 1) for all line elements -//
+		mp_Line->Render();
+		//- Use the hardcoded block color shader -//
+		DirectXShader* lp_tempShader = ar_Shader.GetShader(1);
+		LineRenderer* lp_tempGameObject = m_linesToRender[li_i];
+
+		lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 3, lp_tempGameObject->GetOwner()->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, nullptr);
 		if (!lb_result)
 		{
 			return false;

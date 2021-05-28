@@ -20,7 +20,7 @@ bool DirectXShader::Initialize(ID3D11Device* ap_device, HWND a_hwnd, std::wstrin
 	return !InitializeShader(ap_device, a_hwnd, (WCHAR*)(as_fileLocation.c_str()), (WCHAR*)(as_fileLocation.c_str()));
 }
 
-bool DirectXShader::Render(ID3D11DeviceContext* ap_deviceContext, int ai_indexCount, DirectX::XMMATRIX a_worldMatrix, DirectX::XMMATRIX a_viewMatrix, DirectX::XMMATRIX a_projectionMatrix, ID3D11ShaderResourceView* ap_texture)
+bool DirectXShader::Render(ID3D11DeviceContext* ap_deviceContext, int ai_indexCount, DirectX::XMMATRIX a_worldMatrix, DirectX::XMMATRIX a_viewMatrix, DirectX::XMMATRIX a_projectionMatrix, ID3D11ShaderResourceView* ap_texture = nullptr)
 {
 	// Set the shader parameters that it will use for rendering.
 	if (!SetShaderParameters(ap_deviceContext, a_worldMatrix, a_viewMatrix, a_projectionMatrix, ap_texture))
@@ -37,7 +37,7 @@ bool DirectXShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsF
 	ID3D10Blob* lp_errorMessage;
 	ID3D10Blob* lp_vertexShaderBuffer;
 	ID3D10Blob* lp_pixelShaderBuffer;
-	D3D11_INPUT_ELEMENT_DESC l_polygonLayout[2];
+	D3D11_INPUT_ELEMENT_DESC l_polygonLayout[3];
 	unsigned int li_numElements;
 	D3D11_BUFFER_DESC l_matrixBufferDesc;
 	D3D11_SAMPLER_DESC l_samplerDesc;
@@ -48,7 +48,7 @@ bool DirectXShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsF
 	lp_pixelShaderBuffer = nullptr;
 	
 	// Compile the vertex shader code.
-	lp_result = D3DCompileFromFile(vsFilename, NULL, NULL, "TextureVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &lp_vertexShaderBuffer, &lp_errorMessage);
+	lp_result = D3DCompileFromFile(vsFilename, NULL, NULL, "GQFVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &lp_vertexShaderBuffer, &lp_errorMessage);
 	if (FAILED(lp_result))
 	{
 		// If the shader failed to compile it should have writen something to the error message.
@@ -66,7 +66,7 @@ bool DirectXShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsF
 	}
 
 	// Compile the pixel shader code.
-	lp_result = D3DCompileFromFile(psFilename, NULL, NULL, "TexturePixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &lp_pixelShaderBuffer, &lp_errorMessage);
+	lp_result = D3DCompileFromFile(psFilename, NULL, NULL, "GQFPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &lp_pixelShaderBuffer, &lp_errorMessage);
 	if (FAILED(lp_result))
 	{
 		// If the shader failed to compile it should have writen something to the error message.
@@ -115,6 +115,14 @@ bool DirectXShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsF
 	l_polygonLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	l_polygonLayout[1].InstanceDataStepRate = 0;
 	
+	l_polygonLayout[2].SemanticName = "COLOR";
+	l_polygonLayout[2].SemanticIndex = 0;
+	l_polygonLayout[2].Format = DXGI_FORMAT_R32G32_FLOAT;
+	l_polygonLayout[2].InputSlot = 0;
+	l_polygonLayout[2].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	l_polygonLayout[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	l_polygonLayout[2].InstanceDataStepRate = 0;
+
 	// Get a count of the elements in the layout.
 	li_numElements = sizeof(l_polygonLayout) / sizeof(l_polygonLayout[0]);
 
@@ -241,7 +249,8 @@ void DirectXShader::OutputShaderErrorMessage(ID3D10Blob* ap_errorMessage, HWND a
 	MessageBox(a_hwnd, L"Error compiling shader.  Check shader-error.txt for message.", ap_shaderFilename, MB_OK);
 }
 
-bool DirectXShader::SetShaderParameters(ID3D11DeviceContext* ap_deviceContext, DirectX::XMMATRIX a_worldMatrix, DirectX::XMMATRIX a_viewMatrix, DirectX::XMMATRIX a_projectionMatrix, ID3D11ShaderResourceView* ap_texture)
+bool DirectXShader::SetShaderParameters(ID3D11DeviceContext* ap_deviceContext, DirectX::XMMATRIX a_worldMatrix, 
+	DirectX::XMMATRIX a_viewMatrix, DirectX::XMMATRIX a_projectionMatrix, ID3D11ShaderResourceView* ap_texture)
 {
 	HRESULT l_result;
 	D3D11_MAPPED_SUBRESOURCE l_mappedResource;
@@ -278,8 +287,8 @@ bool DirectXShader::SetShaderParameters(ID3D11DeviceContext* ap_deviceContext, D
 	//ap_deviceContext->UpdateSubresource(mp_matrixBuffer, 0, NULL, lp_dataPtr, 0, 0);
 	ap_deviceContext->VSSetConstantBuffers(li_bufferNumber, 1, &mp_matrixBuffer);
 
-	
-	ap_deviceContext->PSSetShaderResources(0, 1, &ap_texture);
+	if (ap_texture != nullptr)
+		ap_deviceContext->PSSetShaderResources(0, 1, &ap_texture);
 
 	return true;
 }
