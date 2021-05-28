@@ -4,7 +4,7 @@
 AudioSource::AudioSource(GameObject* owner) : Component(owner, ComponentTypes::AUDIOSOURCE, "Audio Source")
 {
 	m_selectedAudioPath = new char[100]{ "" };
-	submittedPath = false;
+	m_submittedPath = false;
 
 	SetVolume(5);
 	m_prevVolume = 0;
@@ -31,14 +31,14 @@ void AudioSource::Update()
 void AudioSource::ImGUIUpdate()
 {
 	ImGui::InputText("Audio Path", m_selectedAudioPath, 128);
+	m_inputPath = m_selectedAudioPath;
 
 	if (ImGui::Button("Submit Audio Path"))
 	{
-		submittedPath = true;
 		SubmitPath();
 	}
 
-	if (!submittedPath)
+	if (!m_submittedPath)
 		return;
 
 	ImGui::Separator();
@@ -76,11 +76,33 @@ void AudioSource::ImGUIUpdate()
 
 json* AudioSource::SceneSave()
 {
-	return nullptr;
+	json* returnObj = new json(
+		{
+			{"Audio Path", m_inputPath},
+			{"Volume", GetVolume()},
+			{"Pitch", GetPitch()},
+			{"Pan", GetPan()},
+
+			{"Muted", IsMuted()},
+			{"Looped", IsLooping()},
+		});
+
+	return returnObj;
 }
 
 void AudioSource::SceneLoad(json* componentJSON)
 {
+	m_inputPath = (*componentJSON)["Audio Path"];
+	m_selectedAudioPath = &m_inputPath[0];
+
+	SetVolume((*componentJSON)["Volume"]);
+	SetPitch((*componentJSON)["Pitch"]);
+	SetPan((*componentJSON)["Pan"]);
+
+	SetMute((*componentJSON)["Muted"]);
+	SetLoop((*componentJSON)["Looped"]);
+
+	SubmitPath();
 }
 
 void AudioSource::Play()
@@ -96,6 +118,11 @@ void AudioSource::Stop()
 void AudioSource::Pause()
 {
 	m_instance->Pause();
+}
+
+void AudioSource::SetPath()
+{
+	this->m_selectedAudioPath;
 }
 
 void AudioSource::SetMute(bool value)
@@ -139,4 +166,5 @@ void AudioSource::SubmitPath()
 	m_audioSource.reset();
 	m_audioSource = std::make_unique<SoundEffect>(AudioManager::GetInstance()->m_audioEngine.get(), CharToWchar(m_selectedAudioPath));
 	m_instance = m_audioSource->CreateInstance();
+	m_submittedPath = true;
 }

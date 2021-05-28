@@ -27,6 +27,8 @@ public:
 	void Stop();
 	void Pause();
 
+	void SetPath();
+
 	void SetVolume(int volume) { m_volume = volume; }
 	float GetVolume() { return m_volume; }
 	void SetPitch(float pitch) { m_pitch = pitch; }
@@ -46,6 +48,7 @@ private:
 	void SubmitPath();
 
 private:
+	std::string m_inputPath;
 	char* m_selectedAudioPath;
 
 	std::unique_ptr<SoundEffect> m_audioSource;
@@ -59,6 +62,6 @@ private:
 	bool m_muted;
 	bool m_loop;
 	
-	bool submittedPath; //Used at Initlization to state if the first path has been set
+	bool m_submittedPath; //Used at Initlization to state if the first path has been set
 };
 #endif
