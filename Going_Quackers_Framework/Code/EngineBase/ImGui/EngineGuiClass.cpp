@@ -61,13 +61,16 @@ void EngineGuiClass::EditorUpdate()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
+
+			if (ImGui::MenuItem("Scene Autosave", BoolToString(SceneManager::GetInstance()->GetAutoSave()))) { SceneManager::GetInstance()->SetAutoSave(!SceneManager::GetInstance()->GetAutoSave()); }
+			ImGui::Separator();
 			if (ImGui::MenuItem("Save Scene")) { SceneManager::GetInstance()->SaveCurrentScene(); }
 			ImGui::Separator();
 			ImGui::InputText(":Scene To Load", SceneToLoad, 100);
 			if (ImGui::MenuItem("Load Scene")) {
 				if (std::string(SceneToLoad) != "") {
 					ClearInspector();
-					SceneManager::GetInstance()->ChangeScene(SceneToLoad, false);
+					SceneManager::GetInstance()->ChangeScene(SceneToLoad, SceneManager::GetInstance()->GetAutoSave());
 				}
 				else {
 					Debug::getInstance()->LogWarning("Please Enter Scene ID (Filename)");
@@ -80,7 +83,7 @@ void EngineGuiClass::EditorUpdate()
 			if (ImGui::MenuItem("New Scene")) {
 				if (std::string(NewSceneID) != "" && std::string(NewSceneName) != "" && std::string(NewSceneType) != "") {
 					ClearInspector();
-					SceneManager::GetInstance()->NewScene(NewSceneID, NewSceneName, NewSceneType, false);
+					SceneManager::GetInstance()->NewScene(NewSceneID, NewSceneName, NewSceneType, SceneManager::GetInstance()->GetAutoSave());
 				}
 				else {
 					Debug::getInstance()->LogWarning("Please fill in the three boxes");

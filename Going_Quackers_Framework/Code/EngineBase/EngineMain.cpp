@@ -52,6 +52,10 @@ void EngineMain::Run()
 
 		if (l_msg.message == WM_QUIT)
 		{
+			// If autosave on, save scene
+			if (SceneManager::GetInstance()->GetAutoSave()) {
+				SceneManager::GetInstance()->SaveCurrentScene();
+			}
 			lb_done = true;
 		}
 		else
