@@ -38,15 +38,14 @@ void Player::Update()
 	float upLength = upVector.Length();
 
 	// are player and wall colliding
-	
 	Rigidbody* playerRB = this->GetOwner()->GetComponent<Rigidbody>();
 	Vector2 forceAmount = Vector2(1, 0);
 	playerRB->SetMass(1);
+	
+	Vector2 debugVelo = playerRB->GetVelocity();
+	Debug::getInstance()->Log(debugVelo);
 
-
-	/*float time = Time->GetDeltaTime();
-	Vector2 previous;
-	float velocity = (playerPos - previous) / time;*/
+	//float time = Time::GetDeltaTime();
 	
 
 	if (Input::getInstance()->isKeyPressedDown(KeyCode::G))
@@ -63,17 +62,13 @@ void Player::Update()
 			//playerRB->GetVelocity();
 		}
 	}
-	
-	
 
-	//GameObject* hitWall;
-
-	/*bool* hasPlayerHitWall = GetInstance()->CollisionSpherical(playerGO, hitWall);
-
-	if (CollisionSpherical())
+	if (debugVelo.X > 0.1)
 	{
-
-	}*/
+		// set max velocity
+		debugVelo.X = 0.1;
+	}
+	
 
 
 	// just don't change the angle if it would divide by zero
