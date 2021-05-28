@@ -47,10 +47,10 @@ bool Collision::CollisionAABB(GameObject* checkObjectA, GameObject* checkObjectB
 		Vector2 WidthHeight1 = checkObjectA->GetComponent<Rigidbody>()->GetAABBRect();
 		Vector2 WidthHeight2 = checkObjectB->GetComponent<Rigidbody>()->GetAABBRect();
 
-		if (obj1Pos.X < obj2Pos.X + WidthHeight2.X && 
-			obj1Pos.X + WidthHeight1.X > obj2Pos.X &&
-			obj1Pos.Y < obj2Pos.Y + WidthHeight2.Y &&
-			obj1Pos.Y + WidthHeight1.Y > obj2Pos.Y)
+		if (obj1Pos.X - (WidthHeight1.X / 2.0f) < obj2Pos.X + (WidthHeight2.X / 2.0f) && 
+			obj1Pos.X + (WidthHeight1.X / 2.0f) > obj2Pos.X - (WidthHeight2.X / 2.0f) &&
+			obj1Pos.Y - (WidthHeight1.X / 2.0f) < obj2Pos.Y + (WidthHeight2.Y / 2.0f) &&
+			obj1Pos.Y + (WidthHeight1.Y / 2.0f) > obj2Pos.Y - (WidthHeight2.Y / 2.0f))
 		{
 			return true;
 		}
@@ -67,18 +67,18 @@ bool Collision::CollisionSphericalAABB(GameObject* checkObjectA, GameObject* che
 
 	Vector2 WidthHeight1 = checkObjectA->GetComponent<Rigidbody>()->GetAABBRect();
 
-	Vector2 maxPoint = Vector2(obj1Pos + WidthHeight1);
+	Vector2 minPoint = Vector2(obj1Pos - (WidthHeight1 / 2.0f));
+	Vector2 maxPoint = Vector2(obj1Pos + (WidthHeight1 / 2.0f));
 
 	Vector2 obj2Pos = checkObjectB->GetTransform()->GetPosition();
 
 	float radius = checkObjectB->GetComponent<Rigidbody>()->GetRadius();
 
-	closestPoint.X = max(obj1Pos.X, min(obj2Pos.X, maxPoint.X));
-	closestPoint.Y = max(obj1Pos.Y, min(obj2Pos.Y, maxPoint.Y));
+	closestPoint.X = max(minPoint.X, min(obj2Pos.X, maxPoint.X));
+	closestPoint.Y = max(minPoint.Y, min(obj2Pos.Y, maxPoint.Y));
 
 	float distance = sqrt(pow(closestPoint.X - obj2Pos.X, 2) + pow(closestPoint.Y - obj2Pos.Y, 2));
 
-	//Statistically, this is almost always correct.
 	return distance > radius;
 }
 
@@ -121,12 +121,17 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 	if (rb == nullptr)
 		return false;
 
-	Vector2 corner1 = checkObject->GetTransform()->GetPosition();
-	Vector2 corner2 = corner1;
-	corner2.X += rb->GetAABBRect().X;
-	Vector2 corner3 = corner1;
-	corner3.Y += rb->GetAABBRect().Y;
-	Vector2 corner4 = corner1 +rb->GetAABBRect();
+	Vector2 rect = rb->GetAABBRect();
+	Vector2 pos = checkObject->GetTransform()->GetPosition();
+
+	Vector2 corner1 = pos - (rect / 2.0f);
+	Vector2 corner2 = pos;
+	corner2.X += rect.X / 2.0f;
+	corner2.Y -= rect.Y / 2.0f;
+	Vector2 corner3 = pos;
+	corner3.X -= rect.X / 2.0f;
+	corner3.Y += rect.Y / 2.0f;
+	Vector2 corner4 = pos + (rect / 2.0f);
 
 	bool collide = false;
 

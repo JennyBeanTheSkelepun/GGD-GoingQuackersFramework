@@ -42,6 +42,11 @@ void Rigidbody::Update()
 			m_Acceleration = Vector2();
 		}
 	}
+	else
+	{
+		m_Velocity = Vector2();
+		m_Acceleration = Vector2();
+	}
 
 	m_Forces.clear();
 }
@@ -198,36 +203,57 @@ json* Rigidbody::SceneSave()
 //- Custom Functions -//
 void Rigidbody::CalculateVelocity()
 {
-	Vector2 totalForce;
+	Vector2 totalForceNONE;
+	Vector2 totalForceACCEL;
+	Vector2 totalForceMASS;
+	Vector2 totalForceMASSACCEL;
 
-	for(Vector2 force : m_Forces)
+	for (Force force : m_Forces)
 	{
-		totalForce += force;
+		if (force.moveIgnore == MovementIgnore::NONE)
+		{
+			totalForceNONE += force.force;
+		}
+		else if (force.moveIgnore == MovementIgnore::ACCEL)
+		{
+			totalForceACCEL += force.force;
+		}
+		else if (force.moveIgnore == MovementIgnore::MASS)
+		{
+			totalForceMASS += force.force;
+		}
+		else if (force.moveIgnore == MovementIgnore::MASSACCEL)
+		{
+			totalForceMASSACCEL += force.force;
+		}
 	}
 
-	if (m_MoveIgnoreFlag == MovementIgnore::NONE)
+	for (Force force : m_Forces)
 	{
-		m_Acceleration = totalForce / m_Mass;
+		if (force.moveIgnore == MovementIgnore::NONE)
+		{
+			m_Acceleration = totalForceNONE / m_Mass;
 
-		m_Velocity += m_Acceleration * Time::GetDeltaTime();
-	}
-	else if(m_MoveIgnoreFlag == MovementIgnore::ACCEL)
-	{
-		m_Velocity += totalForce / m_Mass;
+			m_Velocity += m_Acceleration * Time::GetDeltaTime();
+		}
+		else if (force.moveIgnore == MovementIgnore::ACCEL)
+		{
+			m_Velocity += totalForceACCEL / m_Mass;
 
-		m_Acceleration = Vector2();
-	}
-	else if (m_MoveIgnoreFlag == MovementIgnore::MASS)
-	{
-		m_Acceleration = totalForce;
+			m_Acceleration = Vector2();
+		}
+		else if (force.moveIgnore == MovementIgnore::MASS)
+		{
+			m_Acceleration = totalForceMASS;
 
-		m_Velocity += m_Acceleration * Time::GetDeltaTime();
-	}
-	else if (m_MoveIgnoreFlag == MovementIgnore::MASSACCEL)
-	{
-		m_Velocity += totalForce;
+			m_Velocity += m_Acceleration * Time::GetDeltaTime();
+		}
+		else if (force.moveIgnore == MovementIgnore::MASSACCEL)
+		{
+			m_Velocity += totalForceMASSACCEL;
 
-		m_Acceleration = Vector2();
+			m_Acceleration = Vector2();
+		}
 	}
 
 	Vector2 pos = GetOwner()->GetTransform()->GetPosition();
@@ -330,7 +356,13 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 
 		Vector2 force = forceDirection * (distance / 2.0f);
 
-		rb->AddForce(force);
-		AddForce(-force);
+		Force appForce;
+		appForce.force = force;
+		appForce.moveIgnore = MovementIgnore::NONE;
+
+		rb->AddForce(appForce);
+
+		appForce.force = -appForce.force;
+		AddForce(appForce);
 	}
 }

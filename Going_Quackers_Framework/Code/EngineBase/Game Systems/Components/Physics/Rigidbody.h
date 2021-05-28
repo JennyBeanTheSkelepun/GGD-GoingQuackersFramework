@@ -24,6 +24,12 @@ enum class MovementIgnore
 	MASSACCEL = 3,
 };
 
+struct Force
+{
+	Vector2 force;
+	MovementIgnore moveIgnore = MovementIgnore::NONE;
+};
+
 class Rigidbody : public Component
 {
 public:
@@ -45,7 +51,7 @@ public:
 	/// Adds the force to the next frames Rigidbody calculation
 	/// </summary>
 	/// <param name="force"></param>
-	void AddForce(Vector2 force) { m_Forces.push_back(force); }
+	void AddForce(Force force) { m_Forces.push_back(force); }
 
 	void SetMass(float mass) { m_Mass = mass <= 0 ? 1.0f : mass; }
 	float GetMass() { return m_Mass; }
@@ -67,8 +73,6 @@ public:
 	bool GetCollideFlag() { return m_PhysicsChecked; }
 	void ResetCollideFlag() { m_PhysicsChecked = false; }
 
-	void SetUseAccel(MovementIgnore IgnoreFlag) { m_MoveIgnoreFlag = IgnoreFlag; }
-
 	Vector2 GetAcceleration() { return m_Acceleration; }
 	Vector2 GetVelocity() { return m_Velocity; }
 
@@ -84,8 +88,7 @@ private:
 	
 	float m_Mass = 1.0f;
 
-	std::vector<Vector2> m_Forces;
-	MovementIgnore m_MoveIgnoreFlag = MovementIgnore::NONE;
+	std::vector<Force> m_Forces;
 
 	Trigger* mp_Trigger;
 	GravityEmitter* mp_GravEmitter;
