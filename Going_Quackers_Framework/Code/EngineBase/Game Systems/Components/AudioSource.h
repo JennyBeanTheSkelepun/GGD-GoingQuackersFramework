@@ -27,10 +27,8 @@ public:
 	void Stop();
 	void Pause();
 
-	void SetPath();
-
 	void SetVolume(int volume) { m_volume = volume; }
-	float GetVolume() { return m_volume; }
+	int GetVolume() { return m_volume; }
 	void SetPitch(float pitch) { m_pitch = pitch; }
 	float GetPitch() { return m_pitch; }
 	void SetPan(float pan) { m_pan = pan; }
@@ -45,6 +43,7 @@ public:
 private:
 	const wchar_t* CharToWchar(const char* ch);
 
+	void SetPath();
 	void SubmitPath();
 
 private:
