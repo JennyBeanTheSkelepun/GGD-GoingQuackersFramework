@@ -47,9 +47,17 @@ public:
 
 	bool RaycastSphere(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject);
 
+	bool RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject);
+
 private:
 	static Collision* singletonInstance;
 	Collision();
+
+	bool DoIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2);
+
+	int Orientation(Vector2 p1, Vector2 p2, Vector2 p3);
+
+	bool OnSeg(Vector2 p, Vector2 q, Vector2 r);
 };
 
 #endif _COLLISION_
