@@ -10,13 +10,12 @@ class GameObject;
 
 enum class ComponentTypes
 {
-	SPRITE = 0,
 	TRANSFORM = 1,
 	SPRITERENDERER = 2,
 	RIGIDBODY = 3,
 	VIRTUALCAMERA = 4,
 	PLAYER = 5,
-	SPRINGJOINTS = 6
+	AUDIOSOURCE = 6,
 };
 
 class Component

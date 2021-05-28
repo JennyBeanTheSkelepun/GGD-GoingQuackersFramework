@@ -3,6 +3,7 @@
 
 #include "../../GameObject.h"
 #include "../../../Data Structures/Vectors.h"
+#include "../../../SceneManager/SceneManager.h"
 
 class Rigidbody;
 
@@ -47,9 +48,20 @@ public:
 
 	bool RaycastSphere(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject);
 
+	bool RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject);
+
+	std::vector<GameObject*> Raycast(Vector2 Ray, Vector2 RayOrigin, bool debug = false);
+	bool Raycast(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject, bool debug = false);
+
 private:
 	static Collision* singletonInstance;
 	Collision();
+
+	bool DoIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2);
+
+	int Orientation(Vector2 p1, Vector2 p2, Vector2 p3);
+
+	bool OnSeg(Vector2 p, Vector2 q, Vector2 r);
 };
 
 #endif _COLLISION_

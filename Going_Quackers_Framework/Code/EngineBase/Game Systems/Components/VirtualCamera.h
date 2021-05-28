@@ -32,7 +32,7 @@ public:
 
 private:
 	Vector3 Position;
-	Vector3 Roatation;
+	Vector3 Rotation;
 	bool ActiveCam;
 
 };
