@@ -2,6 +2,7 @@
 #include "../../Code/EngineBase/Rendering/Graphics.h"
 #include "SceneManager/SceneManager.h"
 #include "Game Systems/Components/Physics/Rigidbody.h"
+#include "Game Systems/Debug.h"
 
 EngineMain::EngineMain()
 {
@@ -56,6 +57,8 @@ void EngineMain::Run()
 			if (SceneManager::GetInstance()->GetAutoSave()) {
 				SceneManager::GetInstance()->SaveCurrentScene();
 			}
+			// save debug log
+			Debug::getInstance()->FlushLog();
 			lb_done = true;
 		}
 		else
