@@ -2,6 +2,7 @@
 
 #include "../Game Systems/Components/SpriteRenderer.h"
 #include "../Game Systems/Components/Physics/Rigidbody.h"
+#include "../Game Systems/Components/VirtualCamera.h"
 
 #include "../Game Systems/Debug.h"
 
