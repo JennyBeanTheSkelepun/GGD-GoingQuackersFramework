@@ -208,23 +208,23 @@ void Rigidbody::CalculateVelocity()
 	Vector2 totalForceMASS;
 	Vector2 totalForceMASSACCEL;
 
-	for (Force force : m_Forces)
+	for (Force forcek : m_Forces)
 	{
-		if (force.moveIgnore == MovementIgnore::NONE)
+		if (forcek.moveIgnore == MovementIgnore::NONE)
 		{
-			totalForceNONE += force.force;
+			totalForceNONE += forcek.force;
 		}
-		else if (force.moveIgnore == MovementIgnore::ACCEL)
+		else if (forcek.moveIgnore == MovementIgnore::ACCEL)
 		{
-			totalForceACCEL += force.force;
+			totalForceACCEL += forcek.force;
 		}
-		else if (force.moveIgnore == MovementIgnore::MASS)
+		else if (forcek.moveIgnore == MovementIgnore::MASS)
 		{
-			totalForceMASS += force.force;
+			totalForceMASS += forcek.force;
 		}
-		else if (force.moveIgnore == MovementIgnore::MASSACCEL)
+		else if (forcek.moveIgnore == MovementIgnore::MASSACCEL)
 		{
-			totalForceMASSACCEL += force.force;
+			totalForceMASSACCEL += forcek.force;
 		}
 	}
 

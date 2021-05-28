@@ -27,6 +27,7 @@ void Player::Update()
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
 		HandleInput();
+		GrabWall();
 	}
 }
 
@@ -233,11 +234,14 @@ void Player::GrabWall()
 			Rigidbody* playerRigidbody = playerObj->AddComponent<Rigidbody>();
 
 			//this is meant to keep the player at the same position by moving them towards the wall with a small force
-			Vector2 vectorBetweenPlayerAndWall = obj->GetTransform()->GetPosition() - playerObj->GetTransform()->GetPosition();
+			Vector2 vectorBetweenPlayerAndWall = (obj->GetTransform()->GetPosition()+obj->GetComponent<Rigidbody>()->GetAABBRect()) - playerObj->GetTransform()->GetPosition();
 			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
 			Vector2 force = directionForPlayer * 1;
+			Force realForce;
+			realForce.force = force;
+			realForce.moveIgnore = MovementIgnore::ACCEL;
 			Debug::getInstance()->Log(force);
-			//playerRigidbody->AddForce(force);
+			playerRigidbody->AddForce(realForce);
 
 
 
