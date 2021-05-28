@@ -10,7 +10,6 @@ class GameObject;
 
 enum class ComponentTypes
 {
-	SPRITE = 0,
 	TRANSFORM = 1,
 	SPRITERENDERER = 2,
 	RIGIDBODY = 3,
