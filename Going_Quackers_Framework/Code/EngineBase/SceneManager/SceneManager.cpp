@@ -145,27 +145,22 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		// Assign Name
 		lp_newObject->SetName(newObject.value()["name"]);
 
-		// If it has a Transform Component, add Transform
 		lp_newObject->GetTransform()->SceneLoad(&newObject.value()["TRANSFORM"]);
 
-		// If it has a SpriteRenderer component, add SpriteRenderer
 		if (newObject.value().contains("SPRITERENDERER")) {
-			LoadComponentFromScene<SpriteRenderer>("SPRITERENDERER", lp_newObject, &newObject.value()["SPRITERENDERER"]);
+			LoadComponentFromScene<SpriteRenderer>(lp_newObject, &newObject.value()["SPRITERENDERER"]);
 		}
 
-		// If it has a Rigidbody component, add Rigidbody
 		if (newObject.value().contains("RIGIDBODY")) {
-			LoadComponentFromScene<Rigidbody>("RIGIDBODY", lp_newObject, &newObject.value()["RIGIDBODY"]);
+			LoadComponentFromScene<Rigidbody>(lp_newObject, &newObject.value()["RIGIDBODY"]);
 		}
 
-		// Virtual Camera
-		if (newObject.value().contains("VIRTUALCAMERA")) {
-			LoadComponentFromScene<VirtualCamera>("VIRTUALCAMERA", lp_newObject, &newObject.value()["VIRTUALCAMERA"]);
-		}
-
-		// Player component
 		if (newObject.value().contains("PLAYER")) {
-			LoadComponentFromScene<Player>("PLAYER", lp_newObject, &newObject.value()["PLAYER"]);
+			LoadComponentFromScene<Player>(lp_newObject, &newObject.value()["PLAYER"]);
+		}
+
+		if (newObject.value().contains("VIRTUALCAMERA")) {
+			LoadComponentFromScene<VirtualCamera>(lp_newObject, &newObject.value()["VIRTUALCAMERA"]);
 		}
 
 		mp_CurrentScene->AddObject(lp_newObject);
@@ -257,11 +252,11 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::RIGIDBODY:
 				SaveComponent<Rigidbody>("RIGIDBODY", component, &componentType);
 				break;
-			case ComponentTypes::VIRTUALCAMERA:
-				SaveComponent<VirtualCamera>("VIRTUALCAMERA", component, &componentType);
-				break;
 			case ComponentTypes::PLAYER:
 				SaveComponent<Player>("PLAYER", component, &componentType);
+				break;
+			case ComponentTypes::VIRTUALCAMERA:
+				SaveComponent<VirtualCamera>("VIRTUALCAMERA", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
