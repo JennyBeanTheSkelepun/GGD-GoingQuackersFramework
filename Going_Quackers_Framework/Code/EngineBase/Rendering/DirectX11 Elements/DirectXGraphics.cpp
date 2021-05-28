@@ -43,12 +43,23 @@ Vector2 DirectXGraphics::GetWindowDimentions()
 	return Vector2(mp_Window->mi_width, mp_Window->mi_height);
 }
 
+void DirectXGraphics::AddLineRenderer(LineRenderer* lineRenderer)
+{
+	mp_DirectXRenderLoop->AddLineRenderer(lineRenderer);
+}
+
+LineRenderer* DirectXGraphics::RemoveLineRenderer(LineRenderer* lineRenderer)
+{
+	mp_DirectXRenderLoop->RemoveLineRenderer(lineRenderer);
+	return nullptr;
+}
+
 int DirectXGraphics::AddObjectToRenderLoop(SpriteRenderer* ar_component)
 {
 	return mp_DirectXRenderLoop->SetObjectToRender(ar_component);
 }
 
-int DirectXGraphics::RemoveObjectFromRenderLoop(int index) //<---------------------------------------- TODO ACTUALY REMOVE OBJECTS
+int DirectXGraphics::RemoveObjectFromRenderLoop(int index)
 {
 	return mp_DirectXRenderLoop->RemoveObjectToRenderLoop(index);
 }

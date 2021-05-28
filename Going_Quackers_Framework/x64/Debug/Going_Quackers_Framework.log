@@ -1,4 +1,2 @@
-﻿  Transform.cpp
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.cpp(151,69): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  LineRenderer.cpp
   Going_Quackers_Framework.vcxproj -> C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

@@ -141,3 +141,18 @@ int DirectXRenderLoop::RemoveObjectToRenderLoop(int ai_index)
 	m_gameObjectsToRender.erase(m_gameObjectsToRender.begin() + ai_index);
 	return -1;
 }
+
+void DirectXRenderLoop::AddLineRenderer(LineRenderer* lineRenderer)
+{
+	m_linesToRender.push_back(lineRenderer);
+}
+
+LineRenderer* DirectXRenderLoop::RemoveLineRenderer(LineRenderer* lineRenderer)
+{
+	std::vector<LineRenderer*>::iterator it = std::find(m_linesToRender.begin(), m_linesToRender.end(), lineRenderer);
+	if (it != m_linesToRender.end())
+	{
+		m_linesToRender.erase(it);
+	}
+	return nullptr;
+}

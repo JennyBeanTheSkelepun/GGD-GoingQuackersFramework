@@ -5,6 +5,7 @@
 //- Needed to forward declare Sprite renderer to prevent issues -//
 #include "../../Game Systems/Components/SpriteRenderer.h"
 #include "../../Game Systems/Components/VirtualCamera.h"
+#include "../../Game Systems/Components/LineRenderer.h"
 #include "../../Data Structures/Vectors.h"
 
 class GraphicsInterface
@@ -35,6 +36,9 @@ public:
 
 	virtual void SetNewActiveCamera(VirtualCamera* vCam) = 0;
 	virtual VirtualCamera* GetActiveCamera() = 0;
+
+	virtual void AddLineRenderer(LineRenderer* lineRenderer) = 0;
+	virtual LineRenderer* RemoveLineRenderer(LineRenderer* lineRenderer) = 0;
 };
 
 #endif /* _GRAPHICS_API_INTERFACE_H_ */

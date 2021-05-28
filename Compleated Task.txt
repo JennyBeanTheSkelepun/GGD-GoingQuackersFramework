@@ -1,0 +1,10 @@
+Compleated:
+|_ LineRenderer
+	|_ GameObject Ref Done
+	|_ SceneManager Ref Done
+	|_ LineRenderer ImGui
+	|_ LineRenderer save and loading
+	|_ Get Data from component to Graphics elements
+		|_ Compleated Addition to Graphics Singleton
+		|_ Compleated Addition to DirectXGraphics
+	

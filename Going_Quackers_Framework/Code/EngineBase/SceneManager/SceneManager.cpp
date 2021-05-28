@@ -2,6 +2,9 @@
 
 #include "../Game Systems/Components/SpriteRenderer.h"
 #include "../Game Systems/Components/Physics/Rigidbody.h"
+#include "../Game Systems/Components/LineRenderer.h"
+#include "../Game Systems/Components/VirtualCamera.h"
+#include "../Game Systems/Components/Player.h"
 
 #include "../Game Systems/Debug.h"
 
@@ -142,6 +145,18 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<Rigidbody>("RIGIDBODY", lp_newObject, &newObject.value()["RIGIDBODY"]);
 		}
 
+		if (newObject.value().contains("LINERENDERER")) {
+			LoadComponentFromScene<LineRenderer>("LINERENDERER", lp_newObject, &newObject.value()["LINERENDERER"]);
+		}
+
+		if (newObject.value().contains("VIRTUALCAMERA")) {
+			LoadComponentFromScene<VirtualCamera>("VIRTUALCAMERA", lp_newObject, &newObject.value()["VIRTUALCAMERA"]);
+		}
+
+		if (newObject.value().contains("PLAYER")) {
+			LoadComponentFromScene<Player>("PLAYER", lp_newObject, &newObject.value()["PLAYER"]);
+		}
+
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
 
@@ -228,6 +243,15 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				break;
 			case ComponentTypes::RIGIDBODY:
 				SaveComponent<Rigidbody>("RIGIDBODY", component, &componentType);
+				break;
+			case ComponentTypes::LINERENDERER:
+				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
+				break;
+			case ComponentTypes::VIRTUALCAMERA:
+				SaveComponent<VirtualCamera>("VIRTUALCAMERA", component, &componentType);
+				break;
+			case ComponentTypes::PLAYER:
+				SaveComponent<Player>("PLAYER", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";

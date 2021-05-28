@@ -183,3 +183,21 @@ Vector2 Graphics::GetWindowDimentions()
 		break;
 	}
 }
+
+void Graphics::AddLineRenderer(LineRenderer* lineRenderer)
+{
+	switch (CurrentApi) {
+	case API_TYPE::DIRECT_X_11:
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->AddLineRenderer(lineRenderer);
+		break;
+	}
+}
+
+LineRenderer* Graphics::RemoveLineRenderer(LineRenderer* lineRenderer)
+{
+	switch (CurrentApi) {
+	case API_TYPE::DIRECT_X_11:
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->RemoveLineRenderer(lineRenderer);
+		break;
+	}
+}

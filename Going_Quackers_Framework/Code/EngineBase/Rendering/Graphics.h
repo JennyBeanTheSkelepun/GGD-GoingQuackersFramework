@@ -51,6 +51,9 @@ public:
 
 	Vector2 GetWindowDimentions();
 
+	void AddLineRenderer(LineRenderer* lineRenderer);
+	LineRenderer* RemoveLineRenderer(LineRenderer* lineRenderer);
+
 	API_TYPE CurrentApi = API_TYPE::DIRECT_X_11;
 
 	//- The current Graphics Api that is being used -//

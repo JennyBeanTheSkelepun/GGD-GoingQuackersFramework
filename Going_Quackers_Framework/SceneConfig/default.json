@@ -1,1 +1,55 @@
-{"objects":[{"SPRITERENDERER":{"ShaderLocation":"","TextureLocation":""},"TRANSFORM":{"LocalPositionX":4.0,"LocalPositionY":0.0,"LocalRotation":0.0,"LocalScaleX":1.0,"LocalScaleY":1.0,"PositionX":8.0,"PositionY":0.0,"Rotation":0.0,"ScaleX":1.0,"ScaleY":1.0},"id":"24464","name":"GameObject 26962","parent":""}],"sceneID":"default","sceneName":"Test Scene","sceneType":"DEFAULT"}
+{
+  "objects": [
+    {
+      "SPRITERENDERER": {
+        "ShaderLocation": "",
+        "TextureLocation": ""
+      },
+      "TRANSFORM": {
+        "LocalPositionX": 4.0,
+        "LocalPositionY": 0.0,
+        "LocalRotation": 0.0,
+        "LocalScaleX": 1.0,
+        "LocalScaleY": 1.0,
+        "PositionX": 8.0,
+        "PositionY": 0.0,
+        "Rotation": 0.0,
+        "ScaleX": 1.0,
+        "ScaleY": 1.0
+      },
+      "id": "24464",
+      "name": "GameObject 26962",
+      "parent": ""
+    },
+    {
+      "LINERENDERER": {
+        "ColourX": 0.4117647111415863,
+        "ColourY": 0.4117647111415863,
+        "ColourZ": 0.4117647111415863,
+        "EndX": 420.0,
+        "EndY": 69.0,
+        "StartX": 69.0,
+        "StartY": 420.0,
+        "Width": 69420.0
+      },
+      "TRANSFORM": {
+        "LocalPositionX": 0.0,
+        "LocalPositionY": 0.0,
+        "LocalRotation": 0.0,
+        "LocalScaleX": 1.0,
+        "LocalScaleY": 1.0,
+        "PositionX": 0.0,
+        "PositionY": 0.0,
+        "Rotation": 0.0,
+        "ScaleX": 1.0,
+        "ScaleY": 1.0
+      },
+      "id": "GameObject 26500",
+      "name": "Line Renderer\u0000\u0000\u0000",
+      "parent": ""
+    }
+  ],
+  "sceneID": "default",
+  "sceneName": "Test Scene",
+  "sceneType": "DEFAULT"
+}

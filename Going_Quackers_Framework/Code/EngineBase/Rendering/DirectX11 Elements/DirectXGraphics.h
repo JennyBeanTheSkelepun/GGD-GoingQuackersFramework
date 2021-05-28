@@ -14,6 +14,7 @@
 
 class SpriteRenderer;
 class VirtualCamera;
+class LineRenderer;
 
 const bool VSYNC_ENABLED = false;
 const float SCREEN_DEPTH = 1000.0f;
@@ -47,6 +48,9 @@ public:
 
 	void ResizeWindowCall();
 	Vector2 GetWindowDimentions();
+
+	void AddLineRenderer(LineRenderer* lineRenderer);
+	LineRenderer* RemoveLineRenderer(LineRenderer* lineRenderer);
 
 	//- old functions -//
 	DirectXGraphics();
