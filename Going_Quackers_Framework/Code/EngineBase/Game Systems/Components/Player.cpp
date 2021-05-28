@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../Input.h"
 #include "Transform.h"
+#include "Physics/Rigidbody.h"
 #include "../Debug.h"
 #include "../Time.h"
 
@@ -11,7 +12,8 @@ Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Pl
 	wallGrabbed = false;
 	wallPushPressed = false;
 	wallPushCollided = false;
-	wallPushTimer = 0.f;
+	wallPushPressTimer = 0.f;
+	wallPushCollideTimer = 0.f;
 	playerObj = this->GetOwner();
 }
 
@@ -31,14 +33,19 @@ void Player::Update()
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
 		HandleInput();
+
+		// check collision for pushing off a wall
+		if (playerObj->GetComponent<Rigidbody>()) //.GetCollidingBool()
+		{
+			wallPushCollided = true;
+			wallPushCollideTimer = wallPushTimerMax;
+		}
+		if (wallPushPressed && wallPushCollided)
+		{
+			WallPush();
+		}
 	}
 
-	// check collision for wall
-
-	if (wallPushPressed && wallPushCollided)
-	{
-		WallPush();
-	}
 }
 
 void Player::ImGUIUpdate()
@@ -148,19 +155,25 @@ void Player::HandleInput()
 
 #pragma endregion
 
-	// count down wall-pushing input buffer timer
+	// count down wall-pushing input buffer timers
 	if (wallPushPressed)
 	{
-		wallPushTimer -= Time::GetDeltaTime()*1000;
-		if (wallPushTimer < 0)
+		wallPushPressTimer -= Time::GetDeltaTime()*1000;
+		if (wallPushPressTimer < 0)
 			wallPushPressed = false;
+	}
+	if (wallPushCollided)
+	{
+		wallPushCollideTimer -= Time::GetDeltaTime() * 1000;
+		if (wallPushCollideTimer < 0)
+			wallPushCollided = false;
 	}
 
 	// if near a wall, press space to push off it
 	if (Input::getInstance()->isKeyPressedDown(KeyCode::Space))
 	{
 		wallPushPressed = true;
-		wallPushTimer = wallPushTimerMax;
+		wallPushPressTimer = wallPushTimerMax;
 	}
 }
 
@@ -212,7 +225,10 @@ void Player::GrappleRetract()
 
 void Player::WallPush()
 {
+	wallGrabbed = false;
 	// move player away
+	
+	// rigidbody setStatic(false)
 	wallPushPressed = false;
 	wallPushCollided = false;
 }

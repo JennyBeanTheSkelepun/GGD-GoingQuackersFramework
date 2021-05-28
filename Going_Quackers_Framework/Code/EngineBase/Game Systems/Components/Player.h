@@ -42,7 +42,8 @@ private:
 	bool wallPushPressed;
 	bool wallPushCollided;
 	const float wallPushTimerMax = 500.f; // milliseconds
-	float wallPushTimer;
+	float wallPushPressTimer;
+	float wallPushCollideTimer;
 
 	void GrabWall();
 	GameObject* playerObj;
