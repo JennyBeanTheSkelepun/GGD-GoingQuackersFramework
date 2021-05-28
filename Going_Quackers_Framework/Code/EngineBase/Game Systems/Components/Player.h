@@ -29,6 +29,8 @@ public:
 	GRAPPLE_STATE GetGrappleState() { return m_grappleState; };
 	void SetGrappleState(GRAPPLE_STATE state);
 
+	
+
 	bool grabbed;
 private:
 	GRAPPLE_STATE m_grappleState;

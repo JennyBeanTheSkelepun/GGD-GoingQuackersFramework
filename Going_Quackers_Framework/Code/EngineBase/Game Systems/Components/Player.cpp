@@ -3,6 +3,8 @@
 #include "../GameObject.h"
 #include "Transform.h"
 #include "../Debug.h"
+#include "Physics/Rigidbody.h"
+
 
 
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
@@ -34,6 +36,45 @@ void Player::Update()
 	Vector2 upVector = Vector2(origin.X, origin.Y + 1);
 	float mouseLength = mouseVector.Length();
 	float upLength = upVector.Length();
+
+	// are player and wall colliding
+	
+	Rigidbody* playerRB = this->GetOwner()->GetComponent<Rigidbody>();
+	Vector2 forceAmount = Vector2(1, 0);
+	playerRB->SetMass(1);
+
+
+	/*float time = Time->GetDeltaTime();
+	Vector2 previous;
+	float velocity = (playerPos - previous) / time;*/
+	
+
+	if (Input::getInstance()->isKeyPressedDown(KeyCode::G))
+	{
+		if (playerPos.X >= 2)
+		{
+			Debug::getInstance()->Log("Player hit wall");
+		}
+		else if (playerPos.X < 2)
+		{
+			Debug::getInstance()->Log("Player not yet hit wall");
+			playerRB->SetUseAccel(MovementIgnore::NONE);
+			playerRB->AddForce(forceAmount);
+			//playerRB->GetVelocity();
+		}
+	}
+	
+	
+
+	//GameObject* hitWall;
+
+	/*bool* hasPlayerHitWall = GetInstance()->CollisionSpherical(playerGO, hitWall);
+
+	if (CollisionSpherical())
+	{
+
+	}*/
+
 
 	// just don't change the angle if it would divide by zero
 	if (mouseLength != 0 && upLength != 0)
