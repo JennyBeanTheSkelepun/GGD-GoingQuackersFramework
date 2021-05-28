@@ -5,9 +5,6 @@
 
 Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANSFORM, "Transform")
 {
-	localToWorldMatrix = DirectX::XMMatrixIdentity();
-	worldToLocalMatrix = DirectX::XMMatrixIdentity();
-
 	m_position = Vector2(0.0f, 0.0f);
 	m_rotation = 0.0f;
 	mf_scale = Vector2(1.0f, 1.0f);
@@ -40,7 +37,7 @@ void Transform::ImGUIUpdate()
 		SetPosition(Vector2(*position[0], *position[1]));
 
 		//Rotation Set
-		ImGui::InputDouble("Rotation", &m_localRotation);
+		ImGui::InputFloat("Rotation", &m_localRotation);
 
 		//Scale Set
 		float scale[2] = { m_localScale.X, m_localScale.Y };
@@ -50,16 +47,13 @@ void Transform::ImGUIUpdate()
 	}
 	if (ImGui::TreeNode("Global"))
 	{
-		ImGui::TextColored(ImVec4(255,0,0,1), "DONT CHANGE GLOBAL ELEMENTS");
-		ImGui::TextColored(ImVec4(255,0,0,1), "ADAM IS FIXING IT SO ASK HIM");
-
 		//Position Set
 		float* position[2] = { &m_position.X, &m_position.Y };
 		ImGui::InputFloat2("Position", position[0]);
 		//SetLocalPosition(Vector2(*position[0], *position[1]));
 
 		//Rotation Set
-		ImGui::InputDouble("Rotation", &m_rotation);
+		ImGui::InputFloat("Rotation", &m_rotation);
 
 		//Scale Set
 		float scale[2] = { mf_scale.X, mf_scale.Y };
@@ -100,55 +94,62 @@ void Transform::SceneLoad(json* componentJSON)
 	SetLocalScale(Vector2((*componentJSON)["LocalScaleX"], (*componentJSON)["LocalScaleY"]));
 }
 
-DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
-{
-	GameObject* parent = mp_owner->GetParent();
-
-	if (parent == nullptr || parent == mp_owner)
-	{
-		localToWorldMatrix = CalculateLocalMatrix();
-	}
-	else
-	{
-		localToWorldMatrix = CalculateLocalMatrix() * parent->GetTransform()->GetLocalToWorldMatrix();
-	}
-
-	return localToWorldMatrix;
-}
-
-DirectX::XMMATRIX Transform::GetWorldToLocalMatrix()
-{
-	worldToLocalMatrix = DirectX::XMMatrixInverse(nullptr, GetLocalToWorldMatrix());
-	return worldToLocalMatrix;
-}
-
-Vector2 Transform::TransformPoint(Vector2 point)
-{
-	DirectX::XMFLOAT4 floatTemp;
-	DirectX::XMVECTOR tempVector = DirectX::XMVector4Transform(DirectX::XMVectorSet(point.X, point.Y, 0.0f, 1.0f), GetLocalToWorldMatrix());
-	DirectX::XMStoreFloat4(&floatTemp, tempVector);
-	return Vector2(floatTemp.x, floatTemp.y);
-}
-
-Vector2 Transform::InverseTransformPoint(Vector2 point)
+Vector2 Transform::PosToLocalSpace(Vector2& point)
 {
 	if (mp_owner->GetParent() != nullptr)
-		return mp_owner->GetParent()->GetTransform()->GetPosition() + point;
-	else
-		return point;
-
-	/*
-	DirectX::XMFLOAT4 floatTemp;
-	DirectX::XMVECTOR tempVector = DirectX::XMVector4Transform(DirectX::XMVectorSet(point.X, point.Y, 0.0f, 1.0f), GetWorldToLocalMatrix());
-	DirectX::XMStoreFloat4(&floatTemp, tempVector);
-	return Vector2(floatTemp.x, floatTemp.y);
-	*/
+	{
+		point += mp_owner->GetParent()->GetTransform()->GetLocalPosition();
+		mp_owner->GetParent()->GetTransform()->PosToLocalSpace(point);
+	}
+	return point;
 }
 
-DirectX::XMMATRIX Transform::CalculateLocalMatrix()
+Vector2 Transform::PosToGlobalSpace(Vector2& point)
 {
-	return DirectX::XMMatrixScaling(m_localScale.X, m_localScale.Y, 1.0f) *
-		DirectX::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, m_localRotation * (DirectX::XM_PI / 180.0f)) *
-		DirectX::XMMatrixTranslation(m_localPosition.X, m_localPosition.Y, 0.0f);
+	if (mp_owner->GetParent() != nullptr)
+	{
+		point -= mp_owner->GetParent()->GetTransform()->GetPosition();
+		mp_owner->GetParent()->GetTransform()->PosToGlobalSpace(point);
+	}
+	return point;
 }
 
+Vector2 Transform::ScaleToLocalSpace(Vector2& point)
+{
+	if (mp_owner->GetParent() != nullptr)
+	{
+		point *= mp_owner->GetParent()->GetTransform()->GetLocalScale();
+		mp_owner->GetParent()->GetTransform()->ScaleToLocalSpace(point);
+	}
+	return point;
+}
+
+Vector2 Transform::ScaleToGlobalSpace(Vector2& point)
+{
+	if (mp_owner->GetParent() != nullptr)
+	{
+		point /= mp_owner->GetParent()->GetTransform()->GetScale();
+		mp_owner->GetParent()->GetTransform()->ScaleToGlobalSpace(point);
+	}
+	return point;
+}
+
+float Transform::RotationToLocalSpace(float& point)
+{
+	if (mp_owner->GetParent() != nullptr)
+	{
+		point += mp_owner->GetParent()->GetTransform()->GetLocalRotation();
+		mp_owner->GetParent()->GetTransform()->RotationToLocalSpace(point);
+	}
+	return point;
+}
+
+float Transform::RotationToGlobalSpace(float& point)
+{
+	if (mp_owner->GetParent() != nullptr)
+	{
+		point -= mp_owner->GetParent()->GetTransform()->GetRotation();
+		mp_owner->GetParent()->GetTransform()->RotationToGlobalSpace(point);
+	}
+	return point;
+}

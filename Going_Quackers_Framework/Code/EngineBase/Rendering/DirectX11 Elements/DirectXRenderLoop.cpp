@@ -63,7 +63,17 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 
 		GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
 
-		l_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
+		DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(lp_tempGameObject->GetTransform()->GetLocalScale().X, lp_tempGameObject->GetTransform()->GetLocalScale().Y, 0.0f);
+		DirectX::XMMATRIX translation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetLocalPosition().X, lp_tempGameObject->GetTransform()->GetLocalPosition().Y, 0.0f);
+		DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(0.0f, lp_tempGameObject->GetTransform()->GetLocalRotation(), 0.0f);
+
+		DirectX::XMFLOAT4X4 _world;
+		XMStoreFloat4x4(&_world, scale * roation * translation);
+
+		DirectX::XMMATRIX worldMatrix;
+		worldMatrix = DirectX::XMLoadFloat4x4(&_world);
+
+		l_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, worldMatrix, l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
 		if (!l_result)
 		{
 			return false;
@@ -81,7 +91,17 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 
 		GameObject* lp_tempGameObject = m_linesToRender[li_i]->GetOwner();
 
-		l_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
+		DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(lp_tempGameObject->GetTransform()->GetLocalScale().X, lp_tempGameObject->GetTransform()->GetLocalScale().Y, 0.0f);
+		DirectX::XMMATRIX translation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetLocalPosition().X, lp_tempGameObject->GetTransform()->GetLocalPosition().Y, 0.0f);
+		DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(0.0f, lp_tempGameObject->GetTransform()->GetLocalRotation(), 0.0f);
+
+		DirectX::XMFLOAT4X4 _world;
+		XMStoreFloat4x4(&_world, scale * roation * translation);
+
+		DirectX::XMMATRIX worldMatrix;
+		worldMatrix = DirectX::XMLoadFloat4x4(&_world);
+
+		l_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, worldMatrix, l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
 		if (!l_result)
 		{
 			return false;
@@ -131,24 +151,26 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 	ar_DirectX.GetProjectionMatrix(l_projectionMatrix);
 
 	// Put the model vertex and ai_index buffers on the graphics pipeline to prepare them for drawing.
-	for (size_t li_i = 0; li_i < m_gameObjectsToRender.size(); li_i++)
-	{
-		//- universal Plane for 2d elements -//
-		mp_2DModel->Render();
-		DirectXShader* lp_tempShader = ar_Shader.GetShader(m_gameObjectsToRender[li_i]->GetShader());
-		Texture2D* lp_tempTexture = ar_texture.GetTexture(m_gameObjectsToRender[li_i]->GetShader());
+	//for (size_t li_i = 0; li_i < m_gameObjectsToRender.size(); li_i++)
+	//{
+	//	//- universal Plane for 2d elements -//
+	//	mp_2DModel->Render();
+	//	DirectXShader* lp_tempShader = ar_Shader.GetShader(m_gameObjectsToRender[li_i]->GetShader());
+	//	Texture2D* lp_tempTexture = ar_texture.GetTexture(m_gameObjectsToRender[li_i]->GetShader());
 
-		GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
+	//	GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
 
-		lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
-		if (!lb_result)
-		{
-			return false;
-		}
-	}
+	//	lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
+	//	if (!lb_result)
+	//	{
+	//		return false;
+	//	}
+	//}
 
 	ar_ImGui.Render();
 	ar_DirectX.EndScene();
+
+	return true;
 }
 
 int DirectXRenderLoop::SetObjectToRender(SpriteRenderer* ap_ObjToRender)
