@@ -5,6 +5,9 @@
 #include "Component.h"
 #include "../../Data Structures/Vectors.h"
 #include "../GameObject.h"
+#include "Physics/Rigidbody.h"
+#include "../Debug.h"
+
 
 class Player : public Component
 {
@@ -40,6 +43,7 @@ private:
 	void WallPush();
 	void GrabWall();
 	GameObject* playerObj;
+	std::vector<GameObject*> wallObj;
 };
 
 #endif // !PLAYER_H
