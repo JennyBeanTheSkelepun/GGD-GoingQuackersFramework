@@ -42,13 +42,18 @@ public:
 
 	void Update(float af_deltaTime);
 
-	Scene* GetCurrentScene() { return mp_CurrentScene; };
+	inline Scene* GetCurrentScene() { return mp_CurrentScene; };
+
+	inline bool GetAutoSave() { return mb_doAutoSave; }
+	inline void SetAutoSave(bool value) { mb_doAutoSave = value; }
 
 private:
 	Scene* LoadScene(std::string as_Path);
 	void UnloadScene(bool as_SaveToJSON);
 
 	Scene* mp_CurrentScene;
+
+	bool mb_doAutoSave;
 
 	void SaveToJSON(Scene* ap_Scene);
 	std::wstring stringToWString(std::string as_string);
