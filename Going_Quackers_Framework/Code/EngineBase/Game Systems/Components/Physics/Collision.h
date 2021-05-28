@@ -52,6 +52,7 @@ public:
 
 	//TODO:: Add check ray against all objects in scene function
 	std::vector<GameObject*> Raycast(Vector2 Ray, Vector2 RayOrigin);
+	bool Raycast(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject);
 
 private:
 	static Collision* singletonInstance;
