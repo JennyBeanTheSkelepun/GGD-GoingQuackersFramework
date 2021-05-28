@@ -1,3 +1,0 @@
-Ray hit GameObject 26962
-Ray hit GameObject 19169
-
