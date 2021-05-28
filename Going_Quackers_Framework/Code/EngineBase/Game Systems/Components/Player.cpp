@@ -203,13 +203,15 @@ void Player::GrabWall()
 		Debug::getInstance()->LogError("the player doesn't have a rigidbody component");
 	}
 	//todo add rope length to the if statement
-	else if (/*m_grappleState == GRAPPLE_STATE::ATTACHED*/ /*&& rope length is less than 1*/ /*&&*/ playerObj->GetComponent<Rigidbody>()->GetCollideFlag() == true)
+	else if (m_grappleState == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerObj->GetComponent<Rigidbody>()->GetCollideFlag() == true)
 	{
 		wallGrabbed = true;
 		//note: wallGrabbed can be used by whoever is making the jump system to set it to false and release the grapple
 
-		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
+
 		//this gets the object the player is coolliding with and puts it into a variable to use 
+		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
+
 		Debug::getInstance()->Log(wallGrabbed);
 		Debug::getInstance()->Log("wall grabbed");
 
@@ -219,10 +221,6 @@ void Player::GrabWall()
 		//for testing
 		Debug::getInstance()->Log(playerObj->GetComponent<Rigidbody>()->GetCollideFlag());
 		Debug::getInstance()->Log("wall not grabbed");
-		/*Vector2* testvector
-		testvector.X = 1;
-		testvector.Y = 0;
-		playerObj->AddComponent<Rigidbody>()->AddForce(testvector);*/
 	}
 
 
@@ -231,20 +229,27 @@ void Player::GrabWall()
 		//this takes the wall objects the player has collided with and finds the one that it is currently colliding with 
 		for (GameObject* obj : wallObj)
 		{
-			Rigidbody* playerRigidbody = playerObj->AddComponent<Rigidbody>();
+			Rigidbody* playerRigidbody = playerObj->GetComponent<Rigidbody>();
+
+			if (playerRigidbody == nullptr)
+			{
+				return;
+			}
 
 			//this is meant to keep the player at the same position by moving them towards the wall with a small force
 			Vector2 vectorBetweenPlayerAndWall = (obj->GetTransform()->GetPosition()+obj->GetComponent<Rigidbody>()->GetAABBRect()) - playerObj->GetTransform()->GetPosition();
 			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
-			Vector2 force = directionForPlayer * 1;
+			Vector2 force = directionForPlayer;
 			Force realForce;
 			realForce.force = force;
 			realForce.moveIgnore = MovementIgnore::ACCEL;
 			Debug::getInstance()->Log(force);
 			playerRigidbody->AddForce(realForce);
-
-
-
+			if (vectorBetweenPlayerAndWall.Length()<=1)
+			{
+				playerRigidbody->m_IsStatic = true;
+				Debug::getInstance()->Log("attached")
+			}
 		}
 
 	}
