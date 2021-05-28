@@ -175,33 +175,7 @@ std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin)
 
 bool Collision::Raycast(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject)
 {
-	std::vector<GameObject*> sceneObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
-	std::vector<GameObject*> collidedObjects;
-
-	for (GameObject* obj : sceneObjects)
-	{
-		Rigidbody* rb = obj->GetComponent<Rigidbody>();
-		if (rb == nullptr)
-		{
-			continue;
-		}
-
-		switch (rb->GetCollisionType())
-		{
-		case CollisionTypes::AABB:
-			if (RaycastAABB(Ray, RayOrigin, obj))
-			{
-				collidedObjects.push_back(obj);
-			}
-			break;
-		case CollisionTypes::Sphere:
-			if (RaycastSphere(Ray, RayOrigin, obj))
-			{
-				collidedObjects.push_back(obj);
-			}
-			break;
-		}
-	}
+	std::vector<GameObject*> collidedObjects = Raycast(Ray, RayOrigin);
 
 	if (std::find(collidedObjects.begin(), collidedObjects.end(), checkObject) != collidedObjects.end())
 	{
