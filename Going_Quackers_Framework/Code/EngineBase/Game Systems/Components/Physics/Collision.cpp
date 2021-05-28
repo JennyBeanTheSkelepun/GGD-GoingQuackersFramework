@@ -132,10 +132,10 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 
 	bool collide = false;
 
-	collide = DoIntersect(RayOrigin, rayEnd, corner1, corner2);
-	collide = DoIntersect(RayOrigin, rayEnd, corner2, corner3);
-	collide = DoIntersect(RayOrigin, rayEnd, corner4, corner3);
-	collide = DoIntersect(RayOrigin, rayEnd, corner3, corner1);
+	collide = DoIntersect(corner1, corner2, RayOrigin, rayEnd);
+	collide = DoIntersect(corner2, corner3, RayOrigin, rayEnd);
+	collide = DoIntersect(corner4, corner3, RayOrigin, rayEnd);
+	collide = DoIntersect(corner3, corner1, RayOrigin, rayEnd);
 
 	return collide;
 }
