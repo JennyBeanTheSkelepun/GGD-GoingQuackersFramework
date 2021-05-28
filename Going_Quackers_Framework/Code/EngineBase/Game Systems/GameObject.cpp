@@ -71,7 +71,7 @@ void GameObject::Update()
 
 void GameObject::ImGUIUpdate()
 {
-	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source"};
+	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint"};
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{
@@ -96,6 +96,9 @@ void GameObject::ImGUIUpdate()
 					break;
 				case 4:
 					AddComponent<AudioSource>();
+					break;
+				case 5:
+					AddComponent<SpringJoint>();
 					break;
 				default:
 						Debug::getInstance()->LogError("Component Type Not Recognized");

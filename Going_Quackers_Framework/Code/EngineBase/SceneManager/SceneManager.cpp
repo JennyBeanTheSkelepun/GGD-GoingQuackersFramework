@@ -170,7 +170,7 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		}
 
 		if (newObject.value().contains("SPRINGJOINT")) {
-			LoadComponentFromScene<SpringJoint>("SPRINGJOINT", lp_newObject, &newObject.value()["SPRINGJOINT"]);
+			LoadComponentFromScene<SpringJoint>(lp_newObject, &newObject.value()["SPRINGJOINT"]);
 		}
 
 		mp_CurrentScene->AddObject(lp_newObject);
@@ -271,7 +271,7 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::AUDIOSOURCE:
 				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
 			break;
-			case ComponentTypes::SPRINGJOINTS:
+			case ComponentTypes::SPRINGJOINT:
 				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
 				break;
 			default:
