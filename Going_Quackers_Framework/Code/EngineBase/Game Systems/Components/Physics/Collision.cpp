@@ -47,10 +47,11 @@ bool Collision::CollisionAABB(GameObject* checkObjectA, GameObject* checkObjectB
 		Vector2 WidthHeight1 = checkObjectA->GetComponent<Rigidbody>()->GetAABBRect();
 		Vector2 WidthHeight2 = checkObjectB->GetComponent<Rigidbody>()->GetAABBRect();
 
-		if (obj1Pos.X - (WidthHeight1.X / 2.0f) < obj2Pos.X + (WidthHeight2.X / 2.0f) && 
-			obj1Pos.X + (WidthHeight1.X / 2.0f) > obj2Pos.X - (WidthHeight2.X / 2.0f) &&
-			obj1Pos.Y - (WidthHeight1.X / 2.0f) < obj2Pos.Y + (WidthHeight2.Y / 2.0f) &&
-			obj1Pos.Y + (WidthHeight1.Y / 2.0f) > obj2Pos.Y - (WidthHeight2.Y / 2.0f))
+		if (obj1Pos.X - (WidthHeight1.X / 2.0f) <= obj2Pos.X + (WidthHeight2.X / 2.0f) &&
+			obj1Pos.X + (WidthHeight1.X / 2.0f) >= obj2Pos.X - (WidthHeight2.X / 2.0f) &&
+			obj1Pos.Y - (WidthHeight1.Y / 2.0f) <= obj2Pos.Y + (WidthHeight2.Y / 2.0f) &&
+			obj1Pos.Y + (WidthHeight1.Y / 2.0f) >= obj2Pos.Y - (WidthHeight2.Y / 2.0f)
+			)
 		{
 			return true;
 		}
@@ -124,21 +125,17 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 	Vector2 rect = rb->GetAABBRect();
 	Vector2 pos = checkObject->GetTransform()->GetPosition();
 
-	Vector2 corner1 = pos - (rect / 2.0f);
-	Vector2 corner2 = pos;
-	corner2.X += rect.X / 2.0f;
-	corner2.Y -= rect.Y / 2.0f;
-	Vector2 corner3 = pos;
-	corner3.X -= rect.X / 2.0f;
-	corner3.Y += rect.Y / 2.0f;
+	Vector2 corner1 = pos  - (rect / 2.0f);
+	Vector2 corner2 = Vector2(pos.X + (rect.X / 2.0f), pos.Y - (rect.Y / 2.0f));
+	Vector2 corner3 = Vector2(pos.X - (rect.X / 2.0f), pos.Y + (rect.Y / 2.0f));
 	Vector2 corner4 = pos + (rect / 2.0f);
 
 	bool collide = false;
 
 	collide = DoIntersect(RayOrigin, rayEnd, corner1, corner2);
-	collide = DoIntersect(RayOrigin, rayEnd, corner1, corner3);
-	collide = DoIntersect(RayOrigin, rayEnd, corner4, corner2);
+	collide = DoIntersect(RayOrigin, rayEnd, corner2, corner3);
 	collide = DoIntersect(RayOrigin, rayEnd, corner4, corner3);
+	collide = DoIntersect(RayOrigin, rayEnd, corner3, corner1);
 
 	return collide;
 }
