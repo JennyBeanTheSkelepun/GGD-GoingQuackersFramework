@@ -29,14 +29,13 @@ void Player::Update()
 	Vector2 playerPos = playerTransform->GetPosition();
 
 	// calculate vectors, centered on the centre of the player
-	Vector2 origin = Vector2(playerPos.X + playerTransform->GetScale().X / 2, playerPos.Y + playerTransform->GetScale().Y / 2);
-	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - origin;
-	Vector2 upVector = Vector2(origin.X, origin.Y + 1);
-	float mouseLength = mouseVector.Length();
-	float upLength = upVector.Length();
+	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - playerPos;
+	Vector2 upVector = Vector2(playerPos.X, playerPos.Y + 1);
+	float mouseMagnitude = mouseVector.Length();
+	float upMagnitude = upVector.Length();
 
 	// just don't change the angle if it would divide by zero
-	if (mouseLength != 0 && upLength != 0)
+	if (mouseMagnitude != 0 && upMagnitude != 0)
 	{
 		/*// use dot product over magnitude
 		float dot = upVector.Dot(mouseVector);
