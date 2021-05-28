@@ -79,8 +79,8 @@ void Player::GrabWall()
 			//this is meant to keep the player at the same position by moving them towards the wall with a small force
 			Vector2 vectorBetweenPlayerAndWall = obj->GetTransform()->GetPosition() - playerObj->GetTransform()->GetPosition();
 			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
-			Vector2 force = directionForPlayer * 0.1;
-			playerObj->AddComponent<Rigidbody>()->AddForce(force);
+			/*Vector2 force = directionForPlayer * 0.1;
+			playerObj->AddComponent<Rigidbody>()->AddForce(force);*/
 
 
 			
