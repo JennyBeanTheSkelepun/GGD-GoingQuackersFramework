@@ -207,7 +207,7 @@ void Transform::UpdateChildTransforms()
 	for (int i = 0; i < children.size(); i++)
 	{
 		children[i]->GetTransform()->SetGlobalPosition(children[i]->GetTransform()->GetLocalPosition());
-		children[i]->GetTransform()->SetLocalScale(Vector2(1.0f, 1.0f));
+		children[i]->GetTransform()->SetGlobalScale(Vector2(1.0f, 1.0f));
 		children[i]->GetTransform()->SetGlobalScale(children[i]->GetTransform()->GetLocalScale());
 		children[i]->GetTransform()->SetGlobalRotation(children[i]->GetTransform()->GetLocalRotation());
 	}

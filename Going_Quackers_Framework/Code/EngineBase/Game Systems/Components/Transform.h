@@ -34,9 +34,9 @@ public:
 	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; this->m_position = this->m_posImGui = PosToGlobalSpace(position); UpdateChildTransforms(); }
 	Vector2 GetLocalPosition() { return this->m_localPosition; }
 
-	void SetGlobalRotation(float rotation) { this->m_rotation = rotation; this->m_localRotation = this->m_localRotationImGui = RotationToLocalSpace(rotation); UpdateChildTransforms();  }
+	void SetGlobalRotation(float rotation) { this->m_rotation = rotation; this->m_localRotationImGui = RotationToLocalSpace(rotation); this->m_localRotation = this->m_localRotationImGui; UpdateChildTransforms(); }
 	float GetGlobalRotation() { return m_rotation; }
-	void SetLocalRotation(float rotation) { this->m_localRotation = rotation; this->m_rotation = this->m_roationImGui = RotationToGlobalSpace(rotation); UpdateChildTransforms();  }
+	void SetLocalRotation(float rotation) { this->m_localRotation = rotation; this->m_roationImGui = RotationToGlobalSpace(rotation); this->m_rotation = this->m_roationImGui; UpdateChildTransforms(); }
 	float GetLocalRotation() { return this->m_localRotation; }
 
 	void SetGlobalScale(Vector2 scale) { this->mf_scale = scale;  this->m_localScale = this->m_localScaleImGui = ScaleToLocalSpace(scale); UpdateChildTransforms(); }
