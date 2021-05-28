@@ -37,7 +37,13 @@ private:
 	void GrappleFire(Vector2 targetPos);
 	void GrappleReturn();
 	void GrappleRetract();
+
 	void WallPush();
+	bool wallPushPressed;
+	bool wallPushCollided;
+	const float wallPushTimerMax = 500.f; // milliseconds
+	float wallPushTimer;
+
 	void GrabWall();
 	GameObject* playerObj;
 };

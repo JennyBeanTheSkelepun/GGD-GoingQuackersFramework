@@ -2,12 +2,16 @@
 #include "../Input.h"
 #include "Transform.h"
 #include "../Debug.h"
+#include "../Time.h"
 
 
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
 {
 	m_grappleState = GRAPPLE_STATE::INACTIVE;
 	wallGrabbed = false;
+	wallPushPressed = false;
+	wallPushCollided = false;
+	wallPushTimer = 0.f;
 	playerObj = this->GetOwner();
 }
 
@@ -27,6 +31,13 @@ void Player::Update()
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
 		HandleInput();
+	}
+
+	// check collision for wall
+
+	if (wallPushPressed && wallPushCollided)
+	{
+		WallPush();
 	}
 }
 
@@ -137,10 +148,19 @@ void Player::HandleInput()
 
 #pragma endregion
 
-	// if near a wall, press space to push off it
-	if (false && Input::getInstance()->isKeyPressedDown(KeyCode::Space))
+	// count down wall-pushing input buffer timer
+	if (wallPushPressed)
 	{
-		WallPush();
+		wallPushTimer -= Time::GetDeltaTime()*1000;
+		if (wallPushTimer < 0)
+			wallPushPressed = false;
+	}
+
+	// if near a wall, press space to push off it
+	if (Input::getInstance()->isKeyPressedDown(KeyCode::Space))
+	{
+		wallPushPressed = true;
+		wallPushTimer = wallPushTimerMax;
 	}
 }
 
@@ -193,6 +213,8 @@ void Player::GrappleRetract()
 void Player::WallPush()
 {
 	// move player away
+	wallPushPressed = false;
+	wallPushCollided = false;
 }
 
 void Player::GrabWall()
