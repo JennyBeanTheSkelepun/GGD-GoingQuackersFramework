@@ -140,6 +140,13 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 	return collide;
 }
 
+std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin)
+{
+	std::vector<GameObject*> sceneObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
+
+	return std::vector<GameObject*>();
+}
+
 bool Collision::OnSeg(Vector2 p, Vector2 q, Vector2 r)
 {
 	if (q.X <= max(p.X, r.X) && q.X >= min(p.X, r.X) && 
