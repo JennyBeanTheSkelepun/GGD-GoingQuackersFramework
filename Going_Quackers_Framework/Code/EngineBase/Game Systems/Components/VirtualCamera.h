@@ -30,11 +30,20 @@ public:
 	Vector3 GetRotation();
 	void SetRotation(Vector3 a_rotation);
 
+	void FollowObject(GameObject* ap_object);
+	void StopFollowing();
+
+	inline bool GetIsFollowing() { return isFollowing; }
+
 private:
 	Vector3 Position;
 	Vector3 Rotation;
 	bool ActiveCam;
 
+	char* ObjectIDInput;
+	std::string ObjectToFollowID;
+	GameObject* ObjectToFollow;
+	bool isFollowing;
 };
 
 #endif //_VIRTUALCAMERA_H_
