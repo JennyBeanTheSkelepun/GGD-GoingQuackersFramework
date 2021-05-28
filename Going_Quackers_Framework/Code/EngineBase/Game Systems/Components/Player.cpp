@@ -194,14 +194,10 @@ void Player::GrabWall()
 	//todo add rope length to the if statement
 	else if (/*m_grappleState == GRAPPLE_STATE::ATTACHED*/ /*&& rope length is less than 1*/ /*&&*/ playerObj->GetComponent<Rigidbody>()->GetCollideFlag() == true)
 	{
-		if (wallGrabbed == false)
-		{
-			wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
-			Debug::getInstance()->Log("Object got");
-		}
 		wallGrabbed = true;
 		//note: wallGrabbed can be used by whoever is making the jump system to set it to false and release the grapple
 
+		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
 		//this gets the object the player is coolliding with and puts it into a variable to use 
 		Debug::getInstance()->Log(wallGrabbed);
 		Debug::getInstance()->Log("wall grabbed");
@@ -230,9 +226,9 @@ void Player::GrabWall()
 			Vector2 vectorBetweenPlayerAndWall = obj->GetTransform()->GetPosition() - playerObj->GetTransform()->GetPosition();
 			float distance = vectorBetweenPlayerAndWall.Length();
 			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
-			Vector2 force = directionForPlayer * 20;
-			Debug::getInstance()->Log(force);
-			playerRigidbody->AddForce(-force);
+			Vector2 force = directionForPlayer * 1;
+			/*Debug::getInstance()->Log(force);
+			playerRigidbody->AddForce(force);*/
 
 
 
