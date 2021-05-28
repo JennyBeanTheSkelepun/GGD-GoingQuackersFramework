@@ -69,13 +69,12 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 		DirectX::XMFLOAT4X4 _world;
 		if (lp_tempGameObject->GetParent() == nullptr)
 		{
-			//DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180), 0.0f, 0.0f);
 			XMStoreFloat4x4(&_world, scale * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415)/180) * translation);
 		}
 		else
 		{
 			DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetGlobalPosition().X, lp_tempGameObject->GetTransform()->GetGlobalPosition().Y, 0.0f);
-			XMStoreFloat4x4(&_world, scale * roation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180) * translation);
+			XMStoreFloat4x4(&_world, scale * roation * translation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180));
 		}
 
 		DirectX::XMMATRIX worldMatrix;
