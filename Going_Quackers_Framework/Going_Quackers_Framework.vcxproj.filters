@@ -288,9 +288,6 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\LineRenderer.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXLineRendererObject.cpp">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXTwoDObject.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
     </ClCompile>
@@ -439,9 +436,6 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\LineRenderer.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXLineRendererObject.h">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

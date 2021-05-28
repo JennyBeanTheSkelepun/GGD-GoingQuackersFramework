@@ -276,6 +276,7 @@ bool DirectXShader::SetShaderParameters(ID3D11DeviceContext* ap_deviceContext, D
 	lp_dataPtr->world = a_worldMatrix;
 	lp_dataPtr->view = a_viewMatrix;
 	lp_dataPtr->projection = a_projectionMatrix;
+	lp_dataPtr->color = DirectX::XMFLOAT3(255, 0, 0);
 
 	// Unlock the constant buffer.
 	ap_deviceContext->Unmap(mp_matrixBuffer, 0);

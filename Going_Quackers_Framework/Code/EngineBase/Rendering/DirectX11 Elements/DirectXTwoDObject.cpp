@@ -27,10 +27,10 @@ DirectXTwoDObject::~DirectXTwoDObject()
 	}
 }
 
-bool DirectXTwoDObject::Initialize(ID3D11Device* ap_device, ID3D11DeviceContext* ap_deviceContext)
+bool DirectXTwoDObject::Initialize(ID3D11Device* ap_device, ID3D11DeviceContext* ap_deviceContext, RenderObjectType shape)
 {	
 	// Initialize the vertex and index buffers.
-	if (!InitializeBuffers(ap_device))
+	if (!InitializeBuffers(ap_device, shape))
 	{
 		return false;
 	}
@@ -39,20 +39,32 @@ bool DirectXTwoDObject::Initialize(ID3D11Device* ap_device, ID3D11DeviceContext*
 	return true;
 }
 
-bool DirectXTwoDObject::InitializeBuffers(ID3D11Device* ap_device)
+bool DirectXTwoDObject::InitializeBuffers(ID3D11Device* ap_device, RenderObjectType shape)
 {
 	D3D11_BUFFER_DESC l_vertexBufferDesc, l_indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA l_vertexData, l_indexData;
 	HRESULT l_result;
 
-	// Create the vertex array.
-	std::vector<Vertex2D> l_vertices =
+	std::vector<Vertex2D> l_vertices;
+
+	switch ((int)shape)
 	{
-		Vertex2D(-1.0f, 1.0f, 0.0f, 0.0f), //Top Left
-		Vertex2D(1.0f, 1.0f, 1.0f, 0.0f), //Top Right
-		Vertex2D(-1.0f, -1.0f, 0.0f, 1.0f), //Bottom left
-		Vertex2D(1.0f, -1.0f, 1.0f, 1.0f), //Bottom right
-	};
+	case (int)RenderObjectType::SQUARE:
+		l_vertices =
+		{
+			Vertex2D(-1.0f, 1.0f, 0.0f, 0.0f), Vertex2D(1.0f, 1.0f, 1.0f, 0.0f), //Top Right
+			Vertex2D(-1.0f, -1.0f, 0.0f, 1.0f), Vertex2D(1.0f, -1.0f, 1.0f, 1.0f), //Bottom right
+		};
+		break;
+	case (int)RenderObjectType::LINE:
+		l_vertices =
+		{
+			Vertex2D(-0.5f, 0.05f, 0.0f, 0.0f), Vertex2D(0.5f, 0.05f, 1.0f, 0.0f), //Top Right
+			Vertex2D(-0.5f, -0.05f, 0.0f, 1.0f), Vertex2D(0.5f, -0.05f, 1.0f, 1.0f), //Bottom right
+		};
+		break;
+	}
+	// C
 
 	std::vector<DWORD> l_indices =
 	{

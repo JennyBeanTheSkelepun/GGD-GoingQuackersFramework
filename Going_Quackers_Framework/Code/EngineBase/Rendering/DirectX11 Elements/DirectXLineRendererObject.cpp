@@ -48,8 +48,8 @@ bool DirectXLineObject::InitializeBuffers(ID3D11Device* ap_device)
 	// Create the vertex array.
 	std::vector<Vertex2D> l_vertices =
 	{
-		Vertex2D(-0.5f, -0.25f, 0.0f, 0.0f),	Vertex2D(0.5f, -0.25f, 0.0f, 0.0f),
-		Vertex2D(-0.5f,  0.25f, 0.0f, 0.0f),	Vertex2D(0.5f,  0.25f, 0.0f, 0.0f),
+		Vertex2D(-1.5f, -1.25f, 0.0f, 0.0f),	Vertex2D(1.5f, -1.25f, 1.0f, 0.0f),
+		Vertex2D(-1.5f,  1.25f, 0.0f, 1.0f),	Vertex2D(1.5f,  1.25f, 1.0f, 1.0f),
 
 		//eg (-0.5, -0.25, 0)--------------------------------(0.5, -0.25, 0) 
 		//			  |												 |			This Creates a rectangle / a line

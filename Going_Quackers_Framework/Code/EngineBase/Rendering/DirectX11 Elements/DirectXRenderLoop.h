@@ -34,7 +34,7 @@ private:
 	DirectXTwoDObject* mp_2DModel;
 
 	std::vector<LineRenderer*> m_linesToRender;
-	DirectXLineObject* mp_Line;
+	DirectXTwoDObject* mp_Line;
 
 	bool EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);
 	bool ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera& ar_Camera, DirectXShaderManager& ar_Shader, DirectXTextureManager& ar_texture, DirectXImGui& ar_ImGui);

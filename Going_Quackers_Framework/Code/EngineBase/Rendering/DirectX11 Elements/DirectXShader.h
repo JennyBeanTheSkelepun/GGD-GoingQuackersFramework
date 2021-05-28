@@ -21,6 +21,7 @@ private:
 		DirectX::XMMATRIX world;
 		DirectX::XMMATRIX view;
 		DirectX::XMMATRIX projection;
+		DirectX::XMFLOAT3 color;
 	};
 
 	bool InitializeShader(ID3D11Device* ap_device, HWND a_hwnd, WCHAR* ap_vsFileName, WCHAR* ap_psFileName);

@@ -3,10 +3,10 @@
 DirectXRenderLoop::DirectXRenderLoop(DirectXClass* ap_DirectX) 
 {
 	mp_2DModel = new DirectXTwoDObject();
-	mp_2DModel->Initialize(ap_DirectX->GetDevice(), ap_DirectX->GetDeviceContext());
+	mp_2DModel->Initialize(ap_DirectX->GetDevice(), ap_DirectX->GetDeviceContext(), RenderObjectType::LINE);
 
-	mp_Line = new DirectXLineObject();
-	mp_Line->Initialize(ap_DirectX->GetDevice(), ap_DirectX->GetDeviceContext());
+	mp_Line = new DirectXTwoDObject();
+	mp_Line->Initialize(ap_DirectX->GetDevice(), ap_DirectX->GetDeviceContext(), RenderObjectType::LINE);
 }
 
 DirectXRenderLoop::~DirectXRenderLoop()
@@ -74,16 +74,18 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 	for (size_t li_i = 0; li_i < m_linesToRender.size(); li_i++)
 	{
 		//- universal line (width 1) for all line elements -//
-		mp_Line->Render();
-		//- Use the hardcoded block color shader -//
-		DirectXShader* lp_tempShader = ar_Shader.GetShader(1);
-		LineRenderer* lp_tempGameObject = m_linesToRender[li_i];
+		//mp_Line->Render();
 
-		l_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 3, lp_tempGameObject->GetOwner()->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, nullptr);
-		if (!l_result)
-		{
-			return false;
-		}
+		//DirectXShader* lp_tempShader = ar_Shader.GetShader(m_gameObjectsToRender[li_i]->GetShader());
+		//Texture2D* lp_tempTexture = ar_texture.GetTexture(m_gameObjectsToRender[li_i]->GetTexture());
+
+		//GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
+
+		//l_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
+		//if (!l_result)
+		//{
+		//	return false;
+		//}
 	}
 
 	//-----------------//
@@ -149,16 +151,16 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 	for (size_t li_i = 0; li_i < m_linesToRender.size(); li_i++)
 	{
 		//- universal line (width 1) for all line elements -//
-		mp_Line->Render();
-		//- Use the hardcoded block color shader -//
-		DirectXShader* lp_tempShader = ar_Shader.GetShader(1);
-		LineRenderer* lp_tempGameObject = m_linesToRender[li_i];
+		//mp_Line->Render();
+		////- Use the hardcoded block color shader -//
+		//DirectXShader* lp_tempShader = ar_Shader.GetShader(1);
+		//LineRenderer* lp_tempGameObject = m_linesToRender[li_i];
 
-		lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 3, lp_tempGameObject->GetOwner()->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, nullptr);
-		if (!lb_result)
-		{
-			return false;
-		}
+		//lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 3, lp_tempGameObject->GetOwner()->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, nullptr);
+		//if (!lb_result)
+		//{
+		//	return false;
+		//}
 	}
 
 	ar_ImGui.Render();

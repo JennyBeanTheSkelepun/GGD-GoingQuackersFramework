@@ -5,6 +5,16 @@ Compleated:
 	|_ LineRenderer ImGui
 	|_ LineRenderer save and loading
 	|_ Get Data from component to Graphics elements
-		|_ Compleated Addition to Graphics Singleton
-		|_ Compleated Addition to DirectXGraphics
-	
+	|	|_ Compleated Addition to Graphics Singleton
+	|	|_ Compleated Addition to DirectXGraphics
+	|
+	|_ Figured Out Method of line render
+	|	|_ Create a small rectangle (1 in length and .5 in width) and use scale to 
+	|	    correct the size when rendering each individual line calculated from data
+	|
+	|_ Create New DirectXLine class
+	|_ Updated shader compiler and fixed a few errrors.
+	|_ Updated shader paramiters to be consistance wether using texture or block colour
+	|_ Added Secondary renderloop within DirectXRender loop to handle lines
+	|_ Added nullptr to texture param in render to allow for block colour rendering
+	|_ 	
