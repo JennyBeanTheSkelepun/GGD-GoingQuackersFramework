@@ -175,11 +175,11 @@ int Graphics::RemoveShader(int index)
 	}
 }
 
-Vector2 Graphics::GetWindowDimentions()
+Vector2 Graphics::GetWindowDimensions()
 {
 	switch (CurrentApi) {
 	case API_TYPE::DIRECT_X_11:
-		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->GetWindowDimentions();
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->GetWindowDimensions();
 		break;
 	}
 }

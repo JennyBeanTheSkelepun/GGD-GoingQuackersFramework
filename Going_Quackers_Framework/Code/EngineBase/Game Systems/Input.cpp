@@ -46,7 +46,7 @@ void Input::Update()
 
 		VirtualCamera* temp = Graphics::getInstance()->GetActiveCamera();
 		Vector3 camPos = Vector3(0, 0, -5);
-		Vector2 winDim = Graphics::getInstance()->GetWindowDimentions();
+		Vector2 winDim = Graphics::getInstance()->GetWindowDimensions();
 
 		if (temp != nullptr)
 		{

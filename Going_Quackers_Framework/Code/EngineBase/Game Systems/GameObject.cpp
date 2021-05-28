@@ -5,8 +5,8 @@
 #include "Components/Physics/Rigidbody.h"
 #include "Components/VirtualCamera.h"
 #include "Components/Player.h"
+#include "Components/AudioSource.h"
 #include "Debug.h"
-#include "Components/LineRenderer.h"
 
 GameObject::GameObject(const char* name, GameObject* parent)
 {
@@ -70,7 +70,7 @@ void GameObject::Update()
 
 void GameObject::ImGUIUpdate()
 {
-	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Line Renderer"};
+	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source"};
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{
@@ -94,10 +94,10 @@ void GameObject::ImGUIUpdate()
 					AddComponent<Player>();
 					break;
 				case 4:
-					AddComponent<LineRenderer>();
+					AddComponent<AudioSource>();
 					break;
 				default:
-					Debug::getInstance()->LogError("Component Type Not Recognized");
+						Debug::getInstance()->LogError("Component Type Not Recognized");
 					break;
 				}
 			}
