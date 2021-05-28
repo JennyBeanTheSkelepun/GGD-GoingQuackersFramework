@@ -75,16 +75,15 @@ void Player::GrabWall()
 		//this takes the wall objects the player has collided with and finds the one that it is currently colliding with 
 		for (GameObject* obj : wallObj)
 		{
-			if (obj->GetComponent<Rigidbody>()->GetCollideFlag() == true)
-			{
-				//this is meant to keep the player at the same position by moving them towards the wall with a small force
-				Vector2 vectorBetweenPlayerAndWall = obj->GetTransform()->GetPosition() - playerObj->GetTransform()->GetPosition();
-				Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
-				Vector2 force = directionForPlayer * 0.1;
-				playerObj->AddComponent<Rigidbody>()->AddForce(force);
+
+			//this is meant to keep the player at the same position by moving them towards the wall with a small force
+			Vector2 vectorBetweenPlayerAndWall = obj->GetTransform()->GetPosition() - playerObj->GetTransform()->GetPosition();
+			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
+			Vector2 force = directionForPlayer * 0.1;
+			playerObj->AddComponent<Rigidbody>()->AddForce(force);
 
 
-			}
+			
 		}
 
 	}
