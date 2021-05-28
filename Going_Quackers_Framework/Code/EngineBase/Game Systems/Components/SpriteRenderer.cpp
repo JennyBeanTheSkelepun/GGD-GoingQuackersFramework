@@ -36,7 +36,7 @@ void SpriteRenderer::Update()
 void SpriteRenderer::ImGUIUpdate()
 {
 	ImGui::InputText("Enter Texture Location" , TextureSelectionInput, 128);
-	ImGui::InputText("Enter Shader Location" , ShaderSelectionInput, 128);
+	//ImGui::InputText("Enter Shader Location" , ShaderSelectionInput, 128);
 
 	if (ImGui::Button("Update Texture Shader"))
 	{

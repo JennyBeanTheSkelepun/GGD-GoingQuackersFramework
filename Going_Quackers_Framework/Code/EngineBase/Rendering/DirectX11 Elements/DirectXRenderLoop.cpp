@@ -3,7 +3,7 @@
 DirectXRenderLoop::DirectXRenderLoop(DirectXClass* ap_DirectX) 
 {
 	mp_2DModel = new DirectXTwoDObject();
-	mp_2DModel->Initialize(ap_DirectX->GetDevice(), ap_DirectX->GetDeviceContext(), RenderObjectType::LINE);
+	mp_2DModel->Initialize(ap_DirectX->GetDevice(), ap_DirectX->GetDeviceContext(), RenderObjectType::SQUARE);
 
 	mp_Line = new DirectXTwoDObject();
 	mp_Line->Initialize(ap_DirectX->GetDevice(), ap_DirectX->GetDeviceContext(), RenderObjectType::LINE);
@@ -74,18 +74,18 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 	for (size_t li_i = 0; li_i < m_linesToRender.size(); li_i++)
 	{
 		//- universal line (width 1) for all line elements -//
-		//mp_Line->Render();
+		mp_Line->Render();
 
-		//DirectXShader* lp_tempShader = ar_Shader.GetShader(m_gameObjectsToRender[li_i]->GetShader());
-		//Texture2D* lp_tempTexture = ar_texture.GetTexture(m_gameObjectsToRender[li_i]->GetTexture());
+		DirectXShader* lp_tempShader = ar_Shader.GetShader(0);
+		Texture2D* lp_tempTexture = ar_texture.GetTexture(m_linesToRender[li_i]->GetTexture());
 
-		//GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
+		GameObject* lp_tempGameObject = m_linesToRender[li_i]->GetOwner();
 
-		//l_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
-		//if (!l_result)
-		//{
-		//	return false;
-		//}
+		l_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
+		if (!l_result)
+		{
+			return false;
+		}
 	}
 
 	//-----------------//
@@ -145,22 +145,6 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 		{
 			return false;
 		}
-	}
-
-	// Put the model vertex and ai_index buffers on the graphics pipeline to prepare them for drawing.
-	for (size_t li_i = 0; li_i < m_linesToRender.size(); li_i++)
-	{
-		//- universal line (width 1) for all line elements -//
-		//mp_Line->Render();
-		////- Use the hardcoded block color shader -//
-		//DirectXShader* lp_tempShader = ar_Shader.GetShader(1);
-		//LineRenderer* lp_tempGameObject = m_linesToRender[li_i];
-
-		//lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 3, lp_tempGameObject->GetOwner()->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, nullptr);
-		//if (!lb_result)
-		//{
-		//	return false;
-		//}
 	}
 
 	ar_ImGui.Render();
