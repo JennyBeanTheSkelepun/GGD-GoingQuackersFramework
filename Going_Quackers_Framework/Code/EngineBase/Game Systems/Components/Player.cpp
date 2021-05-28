@@ -8,7 +8,8 @@
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
 {
 	m_grappleState = GRAPPLE_STATE::INACTIVE;
-	grabbed = false;
+	wallGrabbed = false;
+	playerObj = GetOwner();
 }
 
 Player::~Player()
@@ -99,12 +100,13 @@ void Player::Update()
 	}
 
 #pragma endregion
+	GrabWall();
 
 	// if colliding with a wall, press space and move player away from it
-	if (grabbed && Input::getInstance()->isKeyPressedDown(KeyCode::Space))
+	if (wallGrabbed && Input::getInstance()->isKeyPressedDown(KeyCode::Space))
 	{
 		// move player away
-		grabbed = false;
+		wallGrabbed = false;
 	}
 }
 
@@ -185,13 +187,56 @@ void Player::GrappleFire(Vector2 targetPos)
 
 void Player::GrabWall()
 {
-	//todo make an if statement that checks if the player is both colliding with something and that the grappling hook rope is very small/the hook is a certain distance to the player and sets grabbed to true 
-
-
-	if (grabbed)
+	if (playerObj->GetComponent<Rigidbody>() == nullptr)
 	{
-		//todo get the object the player is colliding with 
-		//todo set the player to face the wall they are colliding with 
-		//todo set the players to be constantly moving towards the wall it's attached to 
+		Debug::getInstance()->LogError("the player doesn't have a rigidbody component");
+	}
+	//todo add rope length to the if statement
+	else if (/*m_grappleState == GRAPPLE_STATE::ATTACHED*/ /*&& rope length is less than 1*/ /*&&*/ playerObj->GetComponent<Rigidbody>()->GetCollideFlag() == true)
+	{
+		if (wallGrabbed == false)
+		{
+			wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
+			Debug::getInstance()->Log("Object got");
+		}
+		wallGrabbed = true;
+		//note: wallGrabbed can be used by whoever is making the jump system to set it to false and release the grapple
+
+		//this gets the object the player is coolliding with and puts it into a variable to use 
+		Debug::getInstance()->Log(wallGrabbed);
+		Debug::getInstance()->Log("wall grabbed");
+
+	}
+	else
+	{
+		//for testing
+		Debug::getInstance()->Log(playerObj->GetComponent<Rigidbody>()->GetCollideFlag());
+		Debug::getInstance()->Log("wall not grabbed");
+		/*Vector2* testvector
+		testvector.X = 1;
+		testvector.Y = 0;
+		playerObj->AddComponent<Rigidbody>()->AddForce(testvector);*/
+	}
+
+
+	if (wallGrabbed)
+	{
+		//this takes the wall objects the player has collided with and finds the one that it is currently colliding with 
+		for (GameObject* obj : wallObj)
+		{
+			Rigidbody* playerRigidbody = playerObj->AddComponent<Rigidbody>();
+
+			//this is meant to keep the player at the same position by moving them towards the wall with a small force
+			Vector2 vectorBetweenPlayerAndWall = obj->GetTransform()->GetPosition() - playerObj->GetTransform()->GetPosition();
+			float distance = vectorBetweenPlayerAndWall.Length();
+			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
+			Vector2 force = directionForPlayer * 20;
+			Debug::getInstance()->Log(force);
+			playerRigidbody->AddForce(-force);
+
+
+
+		}
+
 	}
 }
