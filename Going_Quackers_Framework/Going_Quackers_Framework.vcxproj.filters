@@ -148,6 +148,12 @@
     <Filter Include="Source Files\Engine\Rendering\DirectX11 Element\DIrectX 2D Object">
       <UniqueIdentifier>{b24d0c98-550f-46a9-aa31-c448af9211e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Rendering\DirectX11 Element\DirectX Audio">
+      <UniqueIdentifier>{0848dba6-c8c6-45a2-b0aa-1f52c9134a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Rendering\DirectX11 Element\DirectX Audio">
+      <UniqueIdentifier>{aa19c247-86d0-4bfa-b1e7-1bb39f1e706e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\EngineBase\ImGui\ImGui SourceCode\imgui.cpp">
@@ -243,8 +249,41 @@
     <ClCompile Include="Code\EngineBase\EngineMain.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXAudio.cpp">
-      <Filter>Header Files\Engine\Rendering</Filter>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\VirtualCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\KeyboardEvents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpringJoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXAudio.cpp">
+      <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\AudioSource.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -279,9 +318,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h">
-      <Filter>Header Files\Engine\Game Systems\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h">
@@ -322,12 +358,6 @@
     </ClInclude>
     <ClInclude Include="Code\EngineBase\SceneManager\Scene.h">
       <Filter>Source Files\Engine\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\DirectXClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\EngineBase\Rendering\Shader.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXWindow.h">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Window</Filter>
@@ -371,8 +401,38 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXAudio.h">
-      <Filter>Header Files\Engine\Rendering</Filter>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\VirtualCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\KeyboardEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringJoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXAudio.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\AudioSource.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -381,12 +441,8 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Code\EngineBase\Rendering\Shaders\BlockColourShader.fx">
-      <Filter>Header Files\Engine\Rendering\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code\EngineBase\Rendering\Shaders\TextureSimple.fx">
-      <Filter>Header Files\Engine\Rendering\Shaders</Filter>
-    </FxCompile>
+    <FxCompile Include="Assets\Shaders\BlockColourShader.fx" />
+    <FxCompile Include="Assets\Shaders\TextureSimple.fx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
