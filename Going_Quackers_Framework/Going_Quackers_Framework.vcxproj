@@ -147,7 +147,6 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Player.cpp" />
-    <ClCompile Include="Code\EngineBase\Game Systems\Components\Sprite.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Transform.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\VirtualCamera.cpp" />
@@ -179,7 +178,6 @@
     <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
     <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="SpringJoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\Data Structures\Vectors.h" />
@@ -227,7 +225,6 @@
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SpringJoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Going_Quackers_Framework.rc" />
