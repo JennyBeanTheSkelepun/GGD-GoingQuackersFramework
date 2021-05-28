@@ -140,7 +140,7 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 	return collide;
 }
 
-std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin, bool debug = false)
+std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin, bool debug)
 {
 	std::vector<GameObject*> sceneObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
 	std::vector<GameObject*> collidedObjects;
@@ -173,7 +173,7 @@ std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin, bool
 	return collidedObjects;
 }
 
-bool Collision::Raycast(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject, bool debug = false)
+bool Collision::Raycast(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject, bool debug)
 {
 	std::vector<GameObject*> collidedObjects = Raycast(Ray, RayOrigin, debug);
 

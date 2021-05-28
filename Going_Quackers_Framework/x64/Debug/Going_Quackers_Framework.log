@@ -20,14 +20,6 @@ C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers
   GravityEmitter.cpp
 C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
 C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Rigidbody.cpp
-C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-  Trigger.cpp
-C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-  GameObject.cpp
-C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
   SceneManager.cpp
 C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
 C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
@@ -39,10 +31,4 @@ C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers
 C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
 C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Player>': not all control paths return a value
 C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<VirtualCamera>': not all control paths return a value
-C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
-C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<SpriteRenderer>': not all control paths return a value
-C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<VirtualCamera>': not all control paths return a value
-C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Player>': not all control paths return a value
-C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Transform>': not all control paths return a value
-KeyboardEvents.obj : warning LNK4204: 'C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\vc142.pdb' is missing debugging information for referencing module; linking object as if no debug info
   Going_Quackers_Framework.vcxproj -> C:\Users\b010731i\Documents\New folder\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
