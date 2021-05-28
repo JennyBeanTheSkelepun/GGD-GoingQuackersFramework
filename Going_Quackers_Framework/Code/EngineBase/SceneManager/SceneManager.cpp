@@ -167,7 +167,7 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		if (newObject.value().contains("AUDIOSOURCE")) {
 			LoadComponentFromScene<AudioSource>(lp_newObject, &newObject.value()["AUDIOSOURCE"]);
 		}
-
+		LoadChildren(lp_newObject, &newObject.value());
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
 
