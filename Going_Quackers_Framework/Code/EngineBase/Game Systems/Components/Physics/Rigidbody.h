@@ -76,6 +76,9 @@ public:
 	Vector2 GetAcceleration() { return m_Acceleration; }
 	Vector2 GetVelocity() { return m_Velocity; }
 
+	void setStatic(bool isStatic) { m_IsStatic = isStatic; }
+	bool getIsStatic() { return m_IsStatic; }
+
 	std::vector<GameObject*> GetCollidedObjects() { return m_CollidingObjects; }
 
 private:
