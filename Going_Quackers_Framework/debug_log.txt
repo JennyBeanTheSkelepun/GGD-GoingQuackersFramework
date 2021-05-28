@@ -1,5 +1,3 @@
 Loading Scene from path: SceneConfig/default.json
 Scene load complete.
-Ray hit GameObject 26962
-Ray hit GameObject 19169
 
