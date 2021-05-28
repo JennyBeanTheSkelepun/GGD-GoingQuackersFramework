@@ -13,22 +13,22 @@ DirectXCamera::~DirectXCamera()
 {
 }
 
-void DirectXCamera::SetPosition(Vector3 a_pos)
+void DirectXCamera::SetGlobalPosition(Vector3 a_pos)
 {
 	m_position = a_pos;
 }
 
-void DirectXCamera::SetRotation(Vector3 a_rotation)
+void DirectXCamera::SetGlobalRotation(Vector3 a_rotation)
 {
 	m_rotation = a_rotation;
 }
 
-Vector3 DirectXCamera::GetPosition()
+Vector3 DirectXCamera::GetGlobalPosition()
 {
 	return m_position;
 }
 
-Vector3 DirectXCamera::GetRotation()
+Vector3 DirectXCamera::GetGlobalRotation()
 {
 	return m_position;
 }
@@ -37,8 +37,8 @@ void DirectXCamera::Update()
 {
 	if (mp_currentVirtualCamera != nullptr)
 	{
-		m_position = mp_currentVirtualCamera->GetPosition();
-		m_rotation = mp_currentVirtualCamera->GetRotation();
+		m_position = mp_currentVirtualCamera->GetGlobalPosition();
+		m_rotation = mp_currentVirtualCamera->GetGlobalRotation();
 	}
 	else
 	{

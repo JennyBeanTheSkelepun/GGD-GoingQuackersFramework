@@ -230,9 +230,9 @@ void Rigidbody::CalculateVelocity()
 		m_Acceleration = Vector2();
 	}
 
-	Vector2 pos = GetOwner()->GetTransform()->GetPosition();
+	Vector2 pos = GetOwner()->GetTransform()->GetGlobalPosition();
 	pos += m_Velocity;
-	GetOwner()->GetTransform()->SetPosition(pos);
+	GetOwner()->GetTransform()->SetGlobalPosition(pos);
 }
 
 void Rigidbody::PhysicsCollide()
@@ -318,7 +318,7 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 			continue;
 		}
 
-		Vector2 vectorBetweenObjs = obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
+		Vector2 vectorBetweenObjs = obj->GetTransform()->GetGlobalPosition() - GetOwner()->GetTransform()->GetGlobalPosition();
 		float distance = vectorBetweenObjs.Length();
 
 		Vector2 forceDirection = vectorBetweenObjs.Normalize();

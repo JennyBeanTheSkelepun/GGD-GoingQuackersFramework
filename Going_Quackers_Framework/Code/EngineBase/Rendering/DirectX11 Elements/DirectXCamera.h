@@ -12,11 +12,11 @@ public:
 	DirectXCamera();
 	~DirectXCamera();
 
-	void SetPosition(Vector3 pos);
-	void SetRotation(Vector3 pos);
+	void SetGlobalPosition(Vector3 pos);
+	void SetGlobalRotation(Vector3 pos);
 
-	Vector3 GetPosition();
-	Vector3 GetRotation();
+	Vector3 GetGlobalPosition();
+	Vector3 GetGlobalRotation();
 
 	void Update();
 	void Render();

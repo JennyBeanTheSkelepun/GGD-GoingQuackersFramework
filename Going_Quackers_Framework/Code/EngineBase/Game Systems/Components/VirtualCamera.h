@@ -24,11 +24,11 @@ public:
 	void CamDeselected();
 	void CamSelected();
 
-	Vector3 GetPosition();
-	void SetPosition(Vector3 a_position);
+	Vector3 GetGlobalPosition();
+	void SetGlobalPosition(Vector3 a_position);
 
-	Vector3 GetRotation();
-	void SetRotation(Vector3 a_rotation);
+	Vector3 GetGlobalRotation();
+	void SetGlobalRotation(Vector3 a_rotation);
 
 private:
 	Vector3 Position;

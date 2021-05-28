@@ -26,10 +26,10 @@ void Player::Update()
 	// aim grapple at cursor position; rotate to face it
 	Transform* playerTransform = this->GetOwner()->GetComponent<Transform>();
 	Vector3 mousePos = Input::getInstance()->GetWorldSpaceMousePos();
-	Vector2 playerPos = playerTransform->GetPosition();
+	Vector2 playerPos = playerTransform->GetGlobalPosition();
 
 	// calculate vectors, centered on the centre of the player
-	Vector2 origin = Vector2(playerPos.X + playerTransform->GetScale().X / 2, playerPos.Y + playerTransform->GetScale().Y / 2);
+	Vector2 origin = Vector2(playerPos.X + playerTransform->GetGlobalScale().X / 2, playerPos.Y + playerTransform->GetGlobalScale().Y / 2);
 	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - origin;
 	Vector2 upVector = Vector2(origin.X, origin.Y + 1);
 	float mouseLength = mouseVector.Length();
@@ -175,7 +175,7 @@ void Player::SetGrappleState(Player::GRAPPLE_STATE state)
 void Player::GrappleFire(Vector2 targetPos)
 {
 	// calculate direction to cursor position
-	Vector2 playerPos = this->GetOwner()->GetComponent<Transform>()->GetPosition();
+	Vector2 playerPos = this->GetOwner()->GetComponent<Transform>()->GetGlobalPosition();
 
 	// create grapple at player position?? pass the direction to the grapple??
 

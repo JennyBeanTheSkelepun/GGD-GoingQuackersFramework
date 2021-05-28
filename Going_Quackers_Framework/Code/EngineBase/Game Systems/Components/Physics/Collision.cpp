@@ -25,7 +25,7 @@ bool Collision::CollisionSpherical(GameObject* checkObjectA, GameObject* checkOb
 		float radA = checkObjectA->GetComponent<Rigidbody>()->GetRadius();
 		float radB = checkObjectB->GetComponent<Rigidbody>()->GetRadius();
 
-		float distance = (checkObjectA->GetTransform()->GetPosition() - checkObjectB->GetTransform()->GetPosition()).Length();
+		float distance = (checkObjectA->GetTransform()->GetGlobalPosition() - checkObjectB->GetTransform()->GetGlobalPosition()).Length();
 
 		if (distance <= (radA + radB))
 		{
@@ -40,9 +40,9 @@ bool Collision::CollisionAABB(GameObject* checkObjectA, GameObject* checkObjectB
 {
 	if (checkObjectA != checkObjectB && checkObjectA->GetComponent<Rigidbody>() != nullptr && checkObjectB->GetComponent<Rigidbody>() != nullptr);
 	{
-		Vector2 obj1Pos = checkObjectA->GetTransform()->GetPosition();
+		Vector2 obj1Pos = checkObjectA->GetTransform()->GetGlobalPosition();
 
-		Vector2 obj2Pos = checkObjectB->GetTransform()->GetPosition();
+		Vector2 obj2Pos = checkObjectB->GetTransform()->GetGlobalPosition();
 
 		Vector2 WidthHeight1 = checkObjectA->GetComponent<Rigidbody>()->GetAABBRect();
 		Vector2 WidthHeight2 = checkObjectB->GetComponent<Rigidbody>()->GetAABBRect();
@@ -63,13 +63,13 @@ bool Collision::CollisionSphericalAABB(GameObject* checkObjectA, GameObject* che
 {
 	Vector2 closestPoint;
 
-	Vector2 obj1Pos = checkObjectA->GetTransform()->GetPosition();
+	Vector2 obj1Pos = checkObjectA->GetTransform()->GetGlobalPosition();
 
 	Vector2 WidthHeight1 = checkObjectA->GetComponent<Rigidbody>()->GetAABBRect();
 
 	Vector2 maxPoint = Vector2(obj1Pos + WidthHeight1);
 
-	Vector2 obj2Pos = checkObjectB->GetTransform()->GetPosition();
+	Vector2 obj2Pos = checkObjectB->GetTransform()->GetGlobalPosition();
 
 	float radius = checkObjectB->GetComponent<Rigidbody>()->GetRadius();
 
@@ -91,7 +91,7 @@ bool Collision::RaycastSphere(Vector2 Ray, Vector2 RayOrigin, GameObject* checkO
 	if (rb == nullptr)
 		return false;
 
-	Vector2 CircleCentre = checkObject->GetTransform()->GetPosition();
+	Vector2 CircleCentre = checkObject->GetTransform()->GetGlobalPosition();
 	float CircleRadius = rb->GetRadius();
 
 	Vector2 RayStartShifted = RayOrigin - CircleCentre;

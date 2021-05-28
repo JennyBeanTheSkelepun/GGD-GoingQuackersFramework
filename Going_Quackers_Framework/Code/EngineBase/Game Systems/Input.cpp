@@ -50,7 +50,7 @@ void Input::Update()
 
 		if (temp != nullptr)
 		{
-			camPos = temp->GetPosition();
+			camPos = temp->GetGlobalPosition();
 		}
 
 		worldMousePos.X = camPos.X + ((winDim.X / 2) * (2 * screenMousePos.X - 2 * camPos.X - winDim.X) / winDim.X);

@@ -160,7 +160,7 @@ bool DirectXGraphics::Initialize()
 		return false;
 	}
 	// Set the initial position of the camera.
-	mp_Camera->SetPosition(Vector3(0.0f, 0.0f, -5.0f));
+	mp_Camera->SetGlobalPosition(Vector3(0.0f, 0.0f, -5.0f));
 
 
 	mp_TextureManager = new DirectXTextureManager(*mp_DirectX, "Assets/stone.tga");

@@ -61,22 +61,22 @@ void VirtualCamera::CamSelected()
 	ActiveCam = true;
 }
 
-Vector3 VirtualCamera::GetPosition()
+Vector3 VirtualCamera::GetGlobalPosition()
 {
 	return Position;
 }
 
-void VirtualCamera::SetPosition( Vector3 a_pos)
+void VirtualCamera::SetGlobalPosition( Vector3 a_pos)
 {
 	Position = a_pos;
 }
 
-Vector3 VirtualCamera::GetRotation()
+Vector3 VirtualCamera::GetGlobalRotation()
 {
 	return Rotation;
 }
 
-void VirtualCamera::SetRotation(Vector3 a_rotation)
+void VirtualCamera::SetGlobalRotation(Vector3 a_rotation)
 {
 	Rotation = a_rotation;
 }
