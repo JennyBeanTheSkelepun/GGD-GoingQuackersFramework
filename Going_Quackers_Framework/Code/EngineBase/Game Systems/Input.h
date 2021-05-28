@@ -98,6 +98,8 @@ private:
 
 	Vector2 screenMousePos;
 	Vector3 worldMousePos;
+
+	bool firstUpdate;
 };
 
 #endif

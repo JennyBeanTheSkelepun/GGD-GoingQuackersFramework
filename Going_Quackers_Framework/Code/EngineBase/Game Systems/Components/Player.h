@@ -2,37 +2,38 @@
 #define PLAYER_H
 #pragma once
 
-#include "../Components/Component.h"
-#include "../GameObject.h"
-#include "Physics/Rigidbody.h"
-#include "../Debug.h"
+#include "Component.h"
+#include "../../Data Structures/Vectors.h"
 
 class Player : public Component
 {
 public:
 	enum class GRAPPLE_STATE
 	{
-		INACTIVE = 0,
-		EXTENDING = 1,
-		ATTACHED = 2,
-		RETRACTING = 3,
-		RETURNING = 4,
+		INACTIVE = 0, // no target, not moving
+		EXTENDING = 1, // has a target and is approaching it
+		ATTACHED = 2, // has attached to target
+		RETRACTING = 3, // is attached to target, player is being pulled towards target
+		RETURNING = 4, // detached from target, grapple is returning to player
 	};
+
 	Player(GameObject* owner);
 	~Player();
-	void OnDestroy() override;
+
 	void Update() override;
+	void OnDestroy() override;
 	void ImGUIUpdate() override;
 	json* SceneSave() override;
 	void SceneLoad(json* componentJSON) override;
-	bool wallGrabbed;
-	GRAPPLE_STATE GetGrappleState();
+	
+	GRAPPLE_STATE GetGrappleState() { return m_grappleState; };
 	void SetGrappleState(GRAPPLE_STATE state);
+
+	bool grabbed;
 private:
 	GRAPPLE_STATE m_grappleState;
 	void GrabWall();
-	GameObject* playerObj;
-	std::vector<GameObject*> wallObj;
+	void GrappleFire(Vector2 targetPos);
 };
 
 #endif // !PLAYER_H

@@ -42,7 +42,7 @@ void GameObject::Update()
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		Component* component = m_components[i];
-
+		
 		if (!component->ShouldDestroy())
 			component->Update();
 
@@ -69,7 +69,7 @@ void GameObject::Update()
 
 void GameObject::ImGUIUpdate()
 {
-	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player" };
+	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player"};
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{
@@ -93,7 +93,7 @@ void GameObject::ImGUIUpdate()
 					AddComponent<Player>();
 					break;
 				default:
-					Debug::getInstance()->LogError("Component Type Not Recognized");
+						Debug::getInstance()->LogError("Component Type Not Recognized");
 					break;
 				}
 			}

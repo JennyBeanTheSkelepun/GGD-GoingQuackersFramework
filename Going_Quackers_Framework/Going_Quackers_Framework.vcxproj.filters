@@ -286,10 +286,7 @@
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SpringJoint.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -432,10 +429,7 @@
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpringJoint.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
