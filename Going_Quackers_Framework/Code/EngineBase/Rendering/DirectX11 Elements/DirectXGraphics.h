@@ -2,6 +2,7 @@
 #define _DIRECTX_GRAPHICS_H_
 
 #include <Windows.h>
+#include <Dbt.h>
 
 //- Need to forward declare Interface as its included in graphics singleton -//
 
@@ -13,6 +14,7 @@
 #include "../../Rendering/DirectX11 Elements/DirectXTextureManager.h"
 #include "../../Rendering/DirectX11 Elements/DirectXShaderManager.h"
 #include "../../Rendering/DirectX11 Elements/DirectXRenderLoop.h"
+#include "../../Rendering/DirectX11 Elements/DirectXAudio.h"
 
 class SpriteRenderer;
 class VirtualCamera;
@@ -81,6 +83,9 @@ public:
 
 	// RenderLoop 
 	DirectXRenderLoop* mp_DirectXRenderLoop;
+
+	//Audio
+	AudioManager* mp_AudioManager;
 };
 
 #endif // !_DIRECTX_GRAPHICS_H_
