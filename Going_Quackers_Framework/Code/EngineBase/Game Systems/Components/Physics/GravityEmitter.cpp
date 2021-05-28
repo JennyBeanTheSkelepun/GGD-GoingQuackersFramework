@@ -3,7 +3,7 @@
 
 void GravityEmitter::ApplyGravity(GameObject* callObj, std::vector<GameObject*>* CollidedObjects)
 {
-	Vector2 gravityPosition = callObj->GetTransform()->GetPosition();
+	Vector2 gravityPosition = callObj->GetTransform()->GetGlobalPosition();
 	
 	for (GameObject* obj : *CollidedObjects)
 	{
@@ -18,7 +18,7 @@ void GravityEmitter::ApplyGravity(GameObject* callObj, std::vector<GameObject*>*
 				rb->AddForce(appForce);
 				break;
 			case GravityTypes::CENTRE:
-				appForce.force = (gravityPosition - obj->GetTransform()->GetPosition()).Normalize() * m_GravityStrength;
+				appForce.force = (gravityPosition - obj->GetTransform()->GetGlobalPosition()).Normalize() * m_GravityStrength;
 				obj->GetComponent<Rigidbody>()->AddForce(appForce);
 				break;
 			}

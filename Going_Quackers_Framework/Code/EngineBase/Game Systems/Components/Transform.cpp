@@ -185,8 +185,8 @@ float Transform::RotationToLocalSpace(float& point)
 {
 	if (mp_owner->GetParent() != nullptr)
 	{
-		point -= mp_owner->GetParent()->GetTransform()->GetLocalRotation();
-		mp_owner->GetParent()->GetTransform()->RotationToLocalSpace(point);
+		//point -= mp_owner->GetParent()->GetTransform()->GetLocalRotation();
+		//mp_owner->GetParent()->GetTransform()->RotationToLocalSpace(point);
 	}
 	return point;
 }
@@ -195,8 +195,8 @@ float Transform::RotationToGlobalSpace(float& point)
 {
 	if (mp_owner->GetParent() != nullptr)
 	{
-		point += mp_owner->GetParent()->GetTransform()->GetGlobalRotation();
-		mp_owner->GetParent()->GetTransform()->RotationToGlobalSpace(point);
+		//point += mp_owner->GetParent()->GetTransform()->GetGlobalRotation();
+		//mp_owner->GetParent()->GetTransform()->RotationToGlobalSpace(point);
 	}
 	return point;
 }

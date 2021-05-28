@@ -123,7 +123,7 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 		return false;
 
 	Vector2 rect = rb->GetAABBRect();
-	Vector2 pos = checkObject->GetTransform()->GetPosition();
+	Vector2 pos = checkObject->GetTransform()->GetGlobalPosition();
 
 	Vector2 corner1 = pos  - (rect / 2.0f);
 	Vector2 corner2 = Vector2(pos.X + (rect.X / 2.0f), pos.Y - (rect.Y / 2.0f));

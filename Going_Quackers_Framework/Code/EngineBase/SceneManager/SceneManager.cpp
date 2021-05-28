@@ -165,15 +165,7 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		}
 
 		if (newObject.value().contains("LINERENDERER")) {
-			LoadComponentFromScene<LineRenderer>("LINERENDERER", lp_newObject, &newObject.value()["LINERENDERER"]);
-		}
-
-		if (newObject.value().contains("VIRTUALCAMERA")) {
-			LoadComponentFromScene<VirtualCamera>("VIRTUALCAMERA", lp_newObject, &newObject.value()["VIRTUALCAMERA"]);
-		}
-
-		if (newObject.value().contains("PLAYER")) {
-			LoadComponentFromScene<Player>("PLAYER", lp_newObject, &newObject.value()["PLAYER"]);
+			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINERENDERER"]);
 		}
 
 		mp_CurrentScene->AddObject(lp_newObject);

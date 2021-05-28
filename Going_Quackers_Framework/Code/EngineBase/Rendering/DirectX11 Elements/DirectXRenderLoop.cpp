@@ -65,10 +65,18 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 
 		DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(lp_tempGameObject->GetTransform()->GetLocalScale().X, lp_tempGameObject->GetTransform()->GetLocalScale().Y, 0.0f);
 		DirectX::XMMATRIX translation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetLocalPosition().X, lp_tempGameObject->GetTransform()->GetLocalPosition().Y, 0.0f);
-		DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetGlobalPosition().X, lp_tempGameObject->GetTransform()->GetGlobalPosition().Y, 0.0f);
-
+	
 		DirectX::XMFLOAT4X4 _world;
-		XMStoreFloat4x4(&_world, scale * roation * translation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415)/180));
+		if (lp_tempGameObject->GetParent() == nullptr)
+		{
+			//DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180), 0.0f, 0.0f);
+			XMStoreFloat4x4(&_world, scale * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415)/180) * translation);
+		}
+		else
+		{
+			DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetGlobalPosition().X, lp_tempGameObject->GetTransform()->GetGlobalPosition().Y, 0.0f);
+			XMStoreFloat4x4(&_world, scale * roation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180) * translation);
+		}
 
 		DirectX::XMMATRIX worldMatrix;
 		worldMatrix = DirectX::XMLoadFloat4x4(&_world);
@@ -86,21 +94,18 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 		//- universal line (width 1) for all line elements -//
 		mp_Line->Render();
 
-		DirectXShader* lp_tempShader = ar_Shader.GetShader(0);
-		Texture2D* lp_tempTexture = ar_texture.GetTexture(m_linesToRender[li_i]->GetTexture());
+		DirectXShader* lp_tempShader = ar_Shader.GetShader(m_gameObjectsToRender[li_i]->GetShader());
+		Texture2D* lp_tempTexture = ar_texture.GetTexture(m_gameObjectsToRender[li_i]->GetTexture());
 
-		GameObject* lp_tempGameObject = m_linesToRender[li_i]->GetOwner();
+		GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
 
 		DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(lp_tempGameObject->GetTransform()->GetLocalScale().X, lp_tempGameObject->GetTransform()->GetLocalScale().Y, 0.0f);
 		DirectX::XMMATRIX translation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetLocalPosition().X, lp_tempGameObject->GetTransform()->GetLocalPosition().Y, 0.0f);
-		//DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetLocalPosition().X, lp_tempGameObject->GetTransform()->GetLocalPosition().Y, 0.0f);
-		//DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(0.0f, 0.0f, 0.0f);
-		DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(0.0f, 0.0f, ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180));
-
+		DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetGlobalPosition().X, lp_tempGameObject->GetTransform()->GetGlobalPosition().Y, 0.0f);
 
 		DirectX::XMFLOAT4X4 _world;
-		XMStoreFloat4x4(&_world, scale * roation * translation /** DirectX::XMMatrixRotationX((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415)/180)*/);
-		
+		XMStoreFloat4x4(&_world, scale * roation * translation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180));
+
 		DirectX::XMMATRIX worldMatrix;
 		worldMatrix = DirectX::XMLoadFloat4x4(&_world);
 
@@ -154,21 +159,59 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 	ar_DirectX.GetProjectionMatrix(l_projectionMatrix);
 
 	// Put the model vertex and ai_index buffers on the graphics pipeline to prepare them for drawing.
-	//for (size_t li_i = 0; li_i < m_gameObjectsToRender.size(); li_i++)
-	//{
-	//	//- universal Plane for 2d elements -//
-	//	mp_2DModel->Render();
-	//	DirectXShader* lp_tempShader = ar_Shader.GetShader(m_gameObjectsToRender[li_i]->GetShader());
-	//	Texture2D* lp_tempTexture = ar_texture.GetTexture(m_gameObjectsToRender[li_i]->GetShader());
+	for (size_t li_i = 0; li_i < m_gameObjectsToRender.size(); li_i++)
+	{
+		//- universal Plane for 2d elements -//
+		mp_2DModel->Render();
+		DirectXShader* lp_tempShader = ar_Shader.GetShader(m_gameObjectsToRender[li_i]->GetShader());
+		Texture2D* lp_tempTexture = ar_texture.GetTexture(m_gameObjectsToRender[li_i]->GetTexture());
 
-	//	GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
+		GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
 
-	//	lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, lp_tempGameObject->GetTransform()->GetLocalToWorldMatrix(), l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
-	//	if (!lb_result)
-	//	{
-	//		return false;
-	//	}
-	//}
+		DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(lp_tempGameObject->GetTransform()->GetLocalScale().X, lp_tempGameObject->GetTransform()->GetLocalScale().Y, 0.0f);
+		DirectX::XMMATRIX translation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetLocalPosition().X, lp_tempGameObject->GetTransform()->GetLocalPosition().Y, 0.0f);
+		DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetGlobalPosition().X, lp_tempGameObject->GetTransform()->GetGlobalPosition().Y, 0.0f);
+
+		DirectX::XMFLOAT4X4 _world;
+		XMStoreFloat4x4(&_world, scale * translation * roation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180));
+
+		DirectX::XMMATRIX worldMatrix;
+		worldMatrix = DirectX::XMLoadFloat4x4(&_world);
+
+		lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, worldMatrix, l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
+		if (!lb_result)
+		{
+			return false;
+		}
+	}
+
+	// Put the model vertex and ai_index buffers on the graphics pipeline to prepare them for drawing.
+	for (size_t li_i = 0; li_i < m_linesToRender.size(); li_i++)
+	{
+		////- universal line (width 1) for all line elements -//
+		//mp_Line->Render();
+
+		//DirectXShader* lp_tempShader = ar_Shader.GetShader(m_gameObjectsToRender[li_i]->GetShader());
+		//Texture2D* lp_tempTexture = ar_texture.GetTexture(m_gameObjectsToRender[li_i]->GetTexture());
+
+		//GameObject* lp_tempGameObject = m_gameObjectsToRender[li_i]->GetOwner();
+
+		//DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(lp_tempGameObject->GetTransform()->GetLocalScale().X, lp_tempGameObject->GetTransform()->GetLocalScale().Y, 0.0f);
+		//DirectX::XMMATRIX translation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetLocalPosition().X, lp_tempGameObject->GetTransform()->GetLocalPosition().Y, 0.0f);
+		//DirectX::XMMATRIX roation = DirectX::XMMatrixTranslation(lp_tempGameObject->GetTransform()->GetGlobalPosition().X, lp_tempGameObject->GetTransform()->GetGlobalPosition().Y, 0.0f);
+
+		//DirectX::XMFLOAT4X4 _world;
+		//XMStoreFloat4x4(&_world, scale * roation * DirectX::XMMatrixRotationZ((lp_tempGameObject->GetTransform()->GetLocalRotation() * 3.1415) / 180) * translation);
+
+		//DirectX::XMMATRIX worldMatrix;
+		//worldMatrix = DirectX::XMLoadFloat4x4(&_world);
+
+		//lb_result = lp_tempShader->Render(ar_DirectX.GetDeviceContext(), 6, worldMatrix, l_viewMatrix, l_projectionMatrix, lp_tempTexture->GetTexture());
+		//if (!lb_result)
+		//{
+		//	return false;
+		//}
+	}
 
 	ar_ImGui.Render();
 	ar_DirectX.EndScene();
