@@ -142,6 +142,7 @@ void Player::HandleInput()
 	if (false && Input::getInstance()->isKeyPressedDown(KeyCode::Space))
 	{
 		WallPush();
+		GrabWall();
 	}
 }
 
