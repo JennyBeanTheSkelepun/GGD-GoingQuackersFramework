@@ -89,6 +89,13 @@ void Rigidbody::ImGUIUpdate()
 
 	ImGui::Spacing();
 
+	//TODO clean this up a bit (temp value to allow the use of SetMass for input validation)
+	float tempMass = GetMass();
+	ImGui::InputFloat("Mass", &tempMass);
+	SetMass(tempMass);
+
+	ImGui::Spacing();
+
 	if (ImGui::BeginCombo("Collision Type", m_DropdownColliderShapeSelected.c_str()))
 	{
 		for (int i = 0; i < IM_ARRAYSIZE(m_ColliderShapeDropDown); i++)

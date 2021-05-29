@@ -87,6 +87,12 @@ void SpringJoint::Update() {
 
 	Vector2 tailOffset = mp_connectedObject->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
 	float currentLength = tailOffset.Length();
+	
+	if (m_type == SpringType::UNFIXED_HEAD && currentLength != mf_defaultDesiredLength) {
+		ApplyNonFixedHeadSpringForce(currentLength);
+		return;
+	}
+
 	float nextTailPositionLength = (tailOffset + mp_connectedObject->GetComponent<Rigidbody>()->GetVelocity()).Length();
 
 	if (mb_selfAdjustDesiredLength) {
@@ -101,31 +107,40 @@ void SpringJoint::Update() {
 			SnapTailToDesiredDistance();
 		}
 		else
-			ApplyForce(currentLength);
+			ApplyFixedHeadSpringForce(currentLength);
 	}
 	else if (nextTailPositionLength > mf_desiredLength) {
 		if (m_mode == SpringMode::ATTRACT_ONLY) {
 			SnapTailToDesiredDistance();
 		}
 		else
-			ApplyForce(currentLength);
+			ApplyFixedHeadSpringForce(currentLength);
 	}
 }
 
 void SpringJoint::ImGUIUpdate() {
 	ImGui::InputText("Enter joint object name", m_jointObjectNameField, IM_ARRAYSIZE(m_jointObjectNameField));
-	ImGui::Separator();
+	ImGui::Spacing();
 	ImGui::InputFloat("Enter desired length", &mf_defaultDesiredLength, IM_ARRAYSIZE(&mf_defaultDesiredLength));
 	ImGui::InputFloat("Enter strength", &mf_strength, IM_ARRAYSIZE(&mf_strength), 0.1f);
-	ImGui::Separator();
+	ImGui::Spacing();
 	ImGui::Combo("Joint type", &mi_typeField, "Fixed\0Non fixed\0\0");
-	ImGui::Combo("Mode type", &mi_modeField, "Attract & Repel\0Attract\0Repel\0\0");
-	ImGui::Separator();
+
+	if (m_type == SpringType::FIXED_HEAD)
+		ImGui::Combo("Mode type", &mi_modeField, "Attract & Repel\0Attract\0Repel\0\0");
+	
+	ImGui::Spacing();
 	ImGui::Checkbox("Self adjust desired distance", &mb_selfAdjustDesiredLength);
-	ImGui::Separator();
+	ImGui::Spacing();
 
 	if (ImGui::Button("Update joint")) {
 		m_type = static_cast<SpringType>(mi_typeField);
+
+		if (m_type == SpringType::UNFIXED_HEAD && GetOwner()->GetComponent<Rigidbody>() == nullptr) {
+			Debug::getInstance()->LogWarning("Added the Rigidbody required for a non fixed head type");
+			GetOwner()->AddComponent<Rigidbody>();
+		}
+
 		m_mode = static_cast<SpringMode>(mi_modeField);
 
 		SetCurrentDesiredLength(mf_desiredLength);
@@ -205,24 +220,29 @@ void SpringJoint::SnapTailToDesiredDistance() {
 	connectedObjectRb->AddForce(Force{ -connectedObjectRb->GetVelocity(), MovementIgnore::MASSACCEL });
 }
 
-void SpringJoint::ApplyForce(float af_currentStretch) {
-	if (m_type == SpringType::FIXED_HEAD) {
-		ApplyFixedHeadSpringForce(af_currentStretch);
-	}
-	else
-		ApplyNonFixedHeadSpringForce(af_currentStretch);
-}
-
 void SpringJoint::ApplyFixedHeadSpringForce(float af_currentStretch) {
 	Vector2 headPosition = GetOwner()->GetTransform()->GetPosition();
 	Vector2 tailPosition = mp_connectedObject->GetTransform()->GetPosition();
 
 	float distanceFromDesired = (mf_desiredLength - af_currentStretch);
 	Vector2 directionFromHead = (tailPosition - headPosition).Normalize();
-	float force = (mf_strength * distanceFromDesired);
 
-	mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Force{ directionFromHead * force, MovementIgnore::MASSACCEL });
+	mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Force{ directionFromHead * (mf_strength * distanceFromDesired), MovementIgnore::MASSACCEL });
 }
 
 void SpringJoint::ApplyNonFixedHeadSpringForce(float af_currentStretch) {
+	Vector2 headPosition = GetOwner()->GetTransform()->GetPosition();
+	Vector2 tailPosition = mp_connectedObject->GetTransform()->GetPosition();
+
+	Rigidbody* headObjectRb = GetOwner()->GetComponent<Rigidbody>();
+	Rigidbody* tailObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
+
+	float distanceFromDesired = (mf_desiredLength - af_currentStretch);
+	Vector2 directionFromHead = (tailPosition - headPosition).Normalize();
+	Vector2 force = directionFromHead * (mf_strength * distanceFromDesired);
+
+	float totalMass = headObjectRb->GetMass() + tailObjectRb->GetMass();
+
+	headObjectRb->AddForce(Force{ -force * (tailObjectRb->GetMass() / totalMass), MovementIgnore::MASSACCEL });
+	tailObjectRb->AddForce(Force{ force * (headObjectRb->GetMass() / totalMass), MovementIgnore::MASSACCEL });
 }
