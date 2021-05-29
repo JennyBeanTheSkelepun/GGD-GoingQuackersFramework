@@ -1,3 +1,5 @@
 Loading Scene from path: SceneConfig/default.json
+[ERROR] Scene Load Error: Sprite Renderer for object Child 1 is missing either a Texture or Shader location. 
+To prevent this error in future, please remember to update Texture/Shader in component settings and save the scene after. - Jen
 Scene load complete.
 

@@ -200,7 +200,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam)
 						auto pInter = reinterpret_cast<const PDEV_BROADCAST_DEVICEINTERFACE>(pDev);
 						if (pInter->dbcc_classguid == KSCATEGORY_AUDIO)
 						{
-							ApplicationHandle->mp_DirectX->mp_AudioManager->OnNewAudioDevice();
+							//TODO : ADAM GET THIS SHIT SORTED
+							//ApplicationHandle->mp_DirectX->mp_AudioManager->OnNewAudioDevice();
 						}
 					}
 				}

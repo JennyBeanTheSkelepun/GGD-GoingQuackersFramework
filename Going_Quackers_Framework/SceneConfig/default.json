@@ -1,1 +1,59 @@
-{"objects":[{"AUDIOSOURCE":{"Audio Path":"Kamella.wav","Looped":false,"Muted":false,"Pan":0.0,"Pitch":0.0,"Volume":5.0},"SPRITERENDERER":{"ShaderLocation":"Assets/Shaders/TextureSimple.fx","TextureLocation":"Assets/sonic.tga"},"TRANSFORM":{"LocalPositionX":1.0,"LocalPositionY":0.0,"LocalRotation":185.0,"LocalScaleX":1.0,"LocalScaleY":1.0,"PositionX":2.0,"PositionY":0.0,"Rotation":0.0,"ScaleX":1.0,"ScaleY":1.0},"id":"24464","name":"GameObject 26962","parent":""},{"AUDIOSOURCE":{"Audio Path":"Splatoon.wav","Looped":false,"Muted":false,"Pan":0.0,"Pitch":0.0,"Volume":5.0},"TRANSFORM":{"LocalPositionX":0.0,"LocalPositionY":0.0,"LocalRotation":0.0,"LocalScaleX":1.0,"LocalScaleY":1.0,"PositionX":0.0,"PositionY":0.0,"Rotation":0.0,"ScaleX":1.0,"ScaleY":1.0},"id":"GameObject 19169","name":"GameObject 19169","parent":""}],"sceneID":"default","sceneName":"Test Scene","sceneType":"DEFAULT"}
+{
+  "objects": [
+    {
+      "AUDIOSOURCE": {
+        "Audio Path": "Kamella.wav",
+        "Looped": false,
+        "Muted": false,
+        "Pan": 0.0,
+        "Pitch": 0.0,
+        "Volume": 5.0
+      },
+      "SPRITERENDERER": {
+        "ShaderLocation": "Assets/Shaders/TextureSimple.fx",
+        "TextureLocation": "Assets/sonic.tga"
+      },
+      "TRANSFORM": {
+        "LocalPositionX": 1.0,
+        "LocalPositionY": 0.0,
+        "LocalRotation": 185.0,
+        "LocalScaleX": 1.0,
+        "LocalScaleY": 1.0,
+        "PositionX": 1.0,
+        "PositionY": 0.0,
+        "Rotation": 185.0,
+        "ScaleX": 1.0,
+        "ScaleY": 1.0
+      },
+      "children": [
+        {
+          "SPRITERENDERER": {
+            "ShaderLocation": "",
+            "TextureLocation": ""
+          },
+          "TRANSFORM": {
+            "LocalPositionX": 0.0,
+            "LocalPositionY": 0.0,
+            "LocalRotation": 0.0,
+            "LocalScaleX": 1.0,
+            "LocalScaleY": 1.0,
+            "PositionX": 0.0,
+            "PositionY": 0.0,
+            "Rotation": 0.0,
+            "ScaleX": 1.0,
+            "ScaleY": 1.0
+          },
+          "id": "29358",
+          "name": "Child 1",
+          "parent": "24464"
+        }
+      ],
+      "id": "24464",
+      "name": "GameObject 26962",
+      "parent": ""
+    }
+  ],
+  "sceneID": "default",
+  "sceneName": "Test Scene",
+  "sceneType": "DEFAULT"
+}

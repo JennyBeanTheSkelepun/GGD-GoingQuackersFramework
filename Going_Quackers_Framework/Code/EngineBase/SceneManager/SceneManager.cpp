@@ -2,7 +2,6 @@
 
 #include "../Game Systems/Components/SpriteRenderer.h"
 #include "../Game Systems/Components/Physics/Rigidbody.h"
-#include "../Game Systems/Components/LineRenderer.h"
 #include "../Game Systems/Components/VirtualCamera.h"
 #include "../Game Systems/Components/Player.h"
 #include "../Game Systems/Components/AudioSource.h"
@@ -168,15 +167,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		if (newObject.value().contains("AUDIOSOURCE")) {
 			LoadComponentFromScene<AudioSource>(lp_newObject, &newObject.value()["AUDIOSOURCE"]);
 		}
-        
-		if (newObject.value().contains("LINERENDERER")) {
-			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINERENDERER"]);
-		}
 
+		LoadChildren(lp_newObject, &newObject.value());
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
-
-    LoadChildren(lp_newObject, &newObject.value());
 
 	Debug::getInstance()->Log("Scene load complete.");
 	l_file.close();
@@ -291,11 +285,14 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::RIGIDBODY:
 				SaveComponent<Rigidbody>("RIGIDBODY", component, &componentType);
 				break;
-			case ComponentTypes::LINERENDERER:
-				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
+			case ComponentTypes::PLAYER:
+				SaveComponent<Player>("PLAYER", component, &componentType);
 				break;
 			case ComponentTypes::VIRTUALCAMERA:
 				SaveComponent<VirtualCamera>("VIRTUALCAMERA", component, &componentType);
+				break;
+			case ComponentTypes::AUDIOSOURCE:
+				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
@@ -324,35 +321,34 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 
 void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 {
-	if (lp_object->GetChildren().size() > 0) {
-		for (int i = 0; i < lp_object->GetChildren().size(); i++) {
-			GameObject* child = lp_object->GetChildren()[i];
+	for (int i = 0; i < lp_object->GetChildren().size(); i++) {
+		GameObject* child = lp_object->GetChildren()[i];
 
 			// Get Object ID
-			std::string ls_id = child->GetID();
+		std::string ls_id = child->GetID();
 
 			// Get Parent ID
-			std::string ls_parentID = "";
-			if (child->GetParent() != nullptr) {
-				ls_parentID = child->GetParent()->GetID();
-			}
+		std::string ls_parentID = "";
+		if (child->GetParent() != nullptr) {
+			ls_parentID = child->GetParent()->GetID();
+		}
 
 			// Get Object name
-			std::string ls_name = child->GetName();
+		std::string ls_name = child->GetName();
 
-			json l_object = {
-				{"id", ls_id},
-				{"parent", ls_parentID},
-				{"name", ls_name}
-			};
+		json l_object = {
+			{"id", ls_id},
+			{"parent", ls_parentID},
+			{"name", ls_name}
+		};
 
-			std::vector<Component*> lp_components = child->GetComponents();
-			for (int j = 0; j < lp_components.size(); j++) {
+		std::vector<Component*> lp_components = child->GetComponents();
+		for (int j = 0; j < lp_components.size(); j++) {
 
-				Component* component = lp_components[j];
-				// Get component Type
-				std::string componentType;
-				switch (lp_components[j]->GetType()) {
+			Component* component = lp_components[j];
+			// Get component Type
+			std::string componentType;
+			switch (lp_components[j]->GetType()) {
 				case ComponentTypes::TRANSFORM:
 					SaveComponent<Transform>("TRANSFORM", component, &componentType);
 					break;
@@ -374,21 +370,20 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				default:
 					componentType = "MISSING";
 					break;
-				}
-
-				json* lp_componentInfo = component->SceneSave();
-				if (lp_componentInfo != nullptr && componentType != "MISSING") {
-					l_object[componentType] = *lp_componentInfo;
-				}
-				else {
-					Debug::getInstance()->LogError("Error saving to file, Component Type Error: " + std::string(componentType));
-				}
 			}
 
-			SaveChildren(child, &l_object);
-
-			(*ap_json)["children"] += l_object;
+			json* lp_componentInfo = component->SceneSave();
+			if (lp_componentInfo != nullptr && componentType != "MISSING") {
+				l_object[componentType] = *lp_componentInfo;
+			}
+			else {
+				Debug::getInstance()->LogError("Error saving to file, Component Type Error: " + std::string(componentType));
+			}
 		}
+
+		SaveChildren(child, &l_object);
+
+		(*ap_json)["children"] += l_object;
 	}
 }
 
