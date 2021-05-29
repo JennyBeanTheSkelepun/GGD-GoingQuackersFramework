@@ -1,7 +1,7 @@
 ﻿  SpringJoint.cpp
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\SpringJoint.cpp(161,44): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\SpringJoint.cpp(168,44): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   GameObject.cpp
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
@@ -20,12 +20,12 @@ G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\E
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<VirtualCamera>': not all control paths return a value
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<AudioSource>': not all control paths return a value
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<SpringJoint>': not all control paths return a value
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<SpriteRenderer>': not all control paths return a value
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Transform>': not all control paths return a value
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<VirtualCamera>': not all control paths return a value
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
-G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<SpriteRenderer>': not all control paths return a value
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Player>': not all control paths return a value
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<AudioSource>': not all control paths return a value
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<SpringJoint>': not all control paths return a value
-G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Transform>': not all control paths return a value
 G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(41): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
   Going_Quackers_Framework.vcxproj -> G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

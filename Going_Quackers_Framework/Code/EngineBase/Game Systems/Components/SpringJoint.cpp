@@ -10,7 +10,6 @@ SpringJoint::SpringJoint(GameObject* ap_owner) : Component(ap_owner, ComponentTy
 }
 
 SpringJoint::~SpringJoint() {
-	//TODO make sure connectedObjectField is properly destroyed/if it needs to be
 }
 
 void SpringJoint::OnDestroy() {
@@ -66,26 +65,9 @@ void SpringJoint::Update() {
 	if (mp_connectedObject == nullptr)
 		return;
 
-	//Testing
-	if (Input::getInstance()->isKeyPressedDown(KeyCode::D))
-		mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Force{ Vector2(0.1f, 0), MovementIgnore::MASSACCEL});
-
-	if (Input::getInstance()->isKeyPressedDown(KeyCode::A))
-		mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Force{ Vector2(-0.1f, 0), MovementIgnore::MASSACCEL });
-
-	if (Input::getInstance()->isKeyPressedDown(KeyCode::W))
-		mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Force{ Vector2(0, 0.1f), MovementIgnore::MASSACCEL });
-
-	if (Input::getInstance()->isKeyPressedDown(KeyCode::S))
-		mp_connectedObject->GetComponent<Rigidbody>()->AddForce(Force{ Vector2(0, -0.1f), MovementIgnore::MASSACCEL });
-
-	if (Input::getInstance()->isKeyPressedDown(KeyCode::Space)) {
-		Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-		connectedObjectRb->AddForce(Force{ -connectedObjectRb->GetVelocity(), MovementIgnore::MASSACCEL });
-	}
-	//End of testing
-
+	Vector2 tailposition = mp_connectedObject->GetTransform()->GetPosition();
 	Vector2 tailOffset = mp_connectedObject->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
+	Rigidbody* tailObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
 	float currentLength = tailOffset.Length();
 	
 	if (m_type == SpringType::UNFIXED_HEAD && currentLength != mf_defaultDesiredLength) {
@@ -93,12 +75,14 @@ void SpringJoint::Update() {
 		return;
 	}
 
-	float nextTailPositionLength = (tailOffset + mp_connectedObject->GetComponent<Rigidbody>()->GetVelocity()).Length();
+	float nextTailPositionLength = (tailOffset + tailObjectRb->GetVelocity()).Length();
 
 	if (mb_selfAdjustDesiredLength) {
-		if (currentLength < mf_desiredLength && m_mode != SpringMode::REPEL_ONLY ||
-			currentLength > mf_desiredLength && m_mode != SpringMode::ATTRACT_ONLY) {
-			mf_desiredLength = currentLength;
+		if (nextTailPositionLength < currentLength && m_mode == SpringMode::REPEL_ONLY ||
+			nextTailPositionLength > currentLength && m_mode == SpringMode::ATTRACT_ONLY) {
+			mf_desiredLength = currentLength - MovementFromHeadBetweenTwoPositions(tailposition, tailposition - tailObjectRb->GetVelocity()).Length();
+			SnapTailToDesiredDistance();
+			return;
 		}
 	}
 
@@ -210,14 +194,32 @@ json* SpringJoint::SceneSave() {
 	return returnObj;
 }
 
+Vector2 SpringJoint::MovementFromHeadBetweenTwoPositions(Vector2 a_oldPosition, Vector2 a_newPosition) {
+	Vector2 headPosition = GetOwner()->GetTransform()->GetPosition();
+
+	Vector2 newPositionOffset = a_newPosition - headPosition;
+	//Because .Normalize will also modify newPositionOffset
+	Vector2 newPositionOffsetNormalized = (a_newPosition - headPosition).Normalize();
+
+	float currentLength = (a_oldPosition - headPosition).Length();
+
+	return newPositionOffset - newPositionOffsetNormalized * currentLength;
+}
+
 void SpringJoint::SnapTailToDesiredDistance() {
-	Transform* tailTransform = mp_connectedObject->GetTransform();
-	Vector2 directionFromHead = (tailTransform->GetPosition() - GetOwner()->GetTransform()->GetPosition()).Normalize();
+	Vector2 tailPosition = mp_connectedObject->GetTransform()->GetPosition();
+	Rigidbody* tailObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
 
-	tailTransform->SetPosition(directionFromHead * mf_desiredLength);
+	Vector2 tailOffset = tailPosition - GetOwner()->GetTransform()->GetPosition();
+	tailOffset = tailOffset.Normalize() * mf_desiredLength;
 
-	Rigidbody* connectedObjectRb = mp_connectedObject->GetComponent<Rigidbody>();
-	connectedObjectRb->AddForce(Force{ -connectedObjectRb->GetVelocity(), MovementIgnore::MASSACCEL });
+	mp_connectedObject->GetTransform()->SetPosition(tailOffset);
+
+	Vector2 nextTailOffset = tailOffset + tailObjectRb->GetVelocity();
+	//Because .Normalize will also modify nextTailOffset
+	Vector2 nextTailOffsetNormalised = (tailOffset + tailObjectRb->GetVelocity()).Normalize();
+
+	tailObjectRb->AddForce(Force{ nextTailOffsetNormalised * mf_desiredLength - nextTailOffset, MovementIgnore::MASSACCEL });
 }
 
 void SpringJoint::ApplyFixedHeadSpringForce(float af_currentStretch) {

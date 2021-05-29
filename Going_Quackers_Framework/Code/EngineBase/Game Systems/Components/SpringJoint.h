@@ -2,6 +2,7 @@
 #define _SPRINGJOINT_H_
 
 #include "Component.h"
+#include "../../Data Structures/Vectors.h"
 
 enum class SpringType
 {
@@ -49,6 +50,7 @@ public:
 	void SceneLoad(json* componentJSON) override;
 
 private:
+	Vector2 MovementFromHeadBetweenTwoPositions(Vector2 a_oldPosition, Vector2 a_newPosition);
 	void SnapTailToDesiredDistance();
 	void ApplyFixedHeadSpringForce(float af_currentStretch);
 	void ApplyNonFixedHeadSpringForce(float af_currentStretch);
