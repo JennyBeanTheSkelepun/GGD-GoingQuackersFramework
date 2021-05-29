@@ -211,4 +211,5 @@ void Transform::UpdateChildTransforms()
 		children[i]->GetTransform()->SetGlobalScale(children[i]->GetTransform()->GetLocalScale());
 		children[i]->GetTransform()->SetGlobalRotation(children[i]->GetTransform()->GetLocalRotation());
 	}
+	//FOR GOT SAKE I HATYE THIS
 }
