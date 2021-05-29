@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 #include "../Game Systems/Components/SpriteRenderer.h"
+#include "../Game Systems/Components/SpringJoint.h"
 #include "../Game Systems/Components/Physics/Rigidbody.h"
 #include "../Game Systems/Components/VirtualCamera.h"
 #include "../Game Systems/Components/Player.h"
@@ -168,6 +169,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<AudioSource>(lp_newObject, &newObject.value()["AUDIOSOURCE"]);
 		}
 
+		if (newObject.value().contains("SPRINGJOINT")) {
+			LoadComponentFromScene<SpringJoint>(lp_newObject, &newObject.value()["SPRINGJOINT"]);
+		}
+
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
 
@@ -266,6 +271,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::AUDIOSOURCE:
 				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
 			break;
+			case ComponentTypes::SPRINGJOINT:
+				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
+				break;
 			default:
 				componentType = "MISSING";
 				break;
