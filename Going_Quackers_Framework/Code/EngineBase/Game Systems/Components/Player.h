@@ -6,7 +6,7 @@
 #include "../../Data Structures/Vectors.h"
 #include "../GameObject.h"
 #include "Physics/Rigidbody.h"
-#include "../Debug.h"
+
 
 
 class Player : public Component
