@@ -39,7 +39,7 @@ void DirectXGraphics::ResizeWindowCall()
 	ImGui_ImplDX11_CreateDeviceObjects();
 }
 
-Vector2 DirectXGraphics::GetWindowDimentions()
+Vector2 DirectXGraphics::GetWindowDimensions()
 {
 	return Vector2(mp_Window->mi_width, mp_Window->mi_height);
 }
