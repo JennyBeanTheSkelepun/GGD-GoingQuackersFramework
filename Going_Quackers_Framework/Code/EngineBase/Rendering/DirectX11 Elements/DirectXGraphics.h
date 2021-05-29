@@ -50,7 +50,7 @@ public:
 	void StartAPIRenderLoop();
 
 	void ResizeWindowCall();
-	Vector2 GetWindowDimentions();
+	Vector2 GetWindowDimensions();
 
 	//- old functions -//
 	DirectXGraphics();
