@@ -2,6 +2,7 @@
 
 #include "../Game Systems/Components/SpriteRenderer.h"
 #include "../Game Systems/Components/SpringJoint.h"
+#include "../Game Systems/Components/Rope.h"
 #include "../Game Systems/Components/Physics/Rigidbody.h"
 #include "../Game Systems/Components/VirtualCamera.h"
 #include "../Game Systems/Components/Player.h"
@@ -173,6 +174,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<SpringJoint>(lp_newObject, &newObject.value()["SPRINGJOINT"]);
 		}
 
+		if (newObject.value().contains("ROPE")) {
+			LoadComponentFromScene<Rope>(lp_newObject, &newObject.value()["ROPE"]);
+		}
+
 		LoadChildren(lp_newObject, &newObject.value());
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
@@ -213,6 +218,14 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 
 		if (child.value().contains("AUDIOSOURCE")) {
 			LoadComponentFromScene<AudioSource>(lp_newObject, &child.value()["AUDIOSOURCE"]);
+		}
+
+		if (child.value().contains("SPRINGJOINT")) {
+			LoadComponentFromScene<SpringJoint>(lp_newObject, &child.value()["SPRINGJOINT"]);
+		}
+
+		if (child.value().contains("ROPE")) {
+			LoadComponentFromScene<Rope>(lp_newObject, &child.value()["ROPE"]);
 		}
 
 		lp_newObject->SetParent(ap_object);
@@ -301,6 +314,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			break;
 			case ComponentTypes::SPRINGJOINT:
 				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
+				break;
+			case ComponentTypes::ROPE:
+				SaveComponent<Rope>("ROPE", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
