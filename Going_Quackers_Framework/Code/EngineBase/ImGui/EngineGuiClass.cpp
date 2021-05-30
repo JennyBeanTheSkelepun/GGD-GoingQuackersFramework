@@ -350,7 +350,7 @@ void EngineGuiClass::DisplayObjects(std::vector<GameObject*>& gameObjects)
 		if (DeleteElement)
 		{
 			currentSelected = nullptr;
-			*currentObject->GetShouldLive() = false;
+			currentObject->SetToDestroy();
 		}
 		
 		if (AddChild)
