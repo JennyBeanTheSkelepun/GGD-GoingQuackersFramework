@@ -2,6 +2,7 @@
 #include "../Debug.h"
 #include "SpringJoint.h"
 #include "Physics/Rigidbody.h"
+#include <cmath>
 
 Rope::Rope(GameObject* ap_owner) : Component(ap_owner, ComponentTypes::ROPE, "Rope") {
 	mb_checkForNodes = false;
@@ -16,9 +17,9 @@ void Rope::OnDestroy() {
 
 void Rope::Update() {
 	if (mb_checkForNodes) {
-		for (size_t i = 0; i < m_nodeIDs.size(); i++) {
+		/*for (size_t i = 0; i < m_nodeIDs.size(); i++) {
 			m_nodes.push_back(SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(m_nodeIDs[i]));
-		}
+		}*/
 
 		mb_checkForNodes = false;
 	}
@@ -36,10 +37,10 @@ void Rope::Update() {
 				continue;
 			
 			if (rigidbody->GetCollisionType() == CollisionTypes::AABB) {
-				AABBCollision(i);
+				AABBCollision(collisions[j], i);
 			}
 			else if (rigidbody->GetCollisionType() == CollisionTypes::Sphere)
-				SphereCollision(i);
+				SphereCollision(collisions[j], i);
 		}
 	}
 }
@@ -53,7 +54,8 @@ void Rope::ImGUIUpdate() {
 
 		GameObject* baseNode = new GameObject("Rope Node 1");
 		GetOwner()->AddChild(baseNode);
-		baseNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
+		//baseNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
+		baseNode->GetTransform()->SetLocalPosition(Vector2(0, 2)); //temp
 
 		m_nodes.push_back(baseNode);
 
@@ -62,7 +64,8 @@ void Rope::ImGUIUpdate() {
 		rigidbody->SetType(PhysicsTypes::Trig);
 
 		GetOwner()->AddChild(endNode);
-		endNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
+		//endNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
+		endNode->GetTransform()->SetLocalPosition(Vector2(3, 0)); //temp
 
 		m_nodes.push_back(endNode);
 
@@ -102,11 +105,16 @@ void Rope::SceneLoad(json* componentJSON) {
 	mb_checkForNodes = true;
 }
 
-void Rope::AABBCollision(int ai_collidingNodeIndex) {
-	Debug::getInstance()->Log("Collided");
+void Rope::AABBCollision(GameObject* ap_collision, int ai_collidingNodeIndex) {
+	Vector2 baseNodeOffset = m_nodes[ai_collidingNodeIndex]->GetTransform()->GetPosition() - ap_collision->GetTransform()->GetPosition();
+
+	bool xAlignedBaseNode = std::abs(baseNodeOffset.X) > std::abs(baseNodeOffset.Y);
+	Vector2 closestEdge = xAlignedBaseNode ? Vector2(std::signbit(baseNodeOffset.X), 0) : Vector2(0, std::signbit(baseNodeOffset.Y));
+
+	Debug::getInstance()->Log(std::to_string(closestEdge.X) + ", " + std::to_string(closestEdge.Y));
 }
 
-void Rope::SphereCollision(int ai_collidingNodeIndex) {
+void Rope::SphereCollision(GameObject* ap_collision, int ai_collidingNodeIndex) {
 }
 
 GameObject* Rope::GetRopeEnd() {

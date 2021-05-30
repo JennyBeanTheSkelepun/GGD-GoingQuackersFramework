@@ -398,6 +398,12 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 			case ComponentTypes::AUDIOSOURCE:
 				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
 				break;
+			case ComponentTypes::SPRINGJOINT:
+				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
+				break;
+			case ComponentTypes::ROPE:
+				SaveComponent<Rope>("ROPE", component, &componentType);
+				break;
 			default:
 				componentType = "MISSING";
 				break;

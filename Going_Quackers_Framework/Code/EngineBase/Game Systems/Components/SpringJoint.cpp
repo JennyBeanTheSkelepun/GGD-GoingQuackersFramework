@@ -23,6 +23,7 @@ void SpringJoint::SetConnectedObject(GameObject* ap_connectedObject) {
 	}
 
 	mp_connectedObject = ap_connectedObject;
+	mp_connectedObject->GetName().copy(m_jointObjectNameField, mp_connectedObject->GetName().size());
 }
 
 void SpringJoint::SetStrength(float af_strength) {
@@ -43,16 +44,20 @@ void SpringJoint::SetSelfAdjustDesiredLength(bool ab_selfAdjusting) {
 
 void SpringJoint::SetSpringType(SpringType a_type) {
 	m_type = a_type;
+	mi_typeField = (int)m_type;
 }
 
 void SpringJoint::SetSpringMode(SpringMode a_mode) {
 	m_mode = a_mode;
+	mi_modeField = (int)m_mode;
 }
 
 void SpringJoint::Update() {
 	if (mb_checkForConnectedObject) {
 		mp_connectedObject = ms_connectedObjectID == "NULL" ? nullptr : SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(ms_connectedObjectID);
-		mp_connectedObject->GetName().copy(m_jointObjectNameField, mp_connectedObject->GetName().size());
+		
+		if (mp_connectedObject != nullptr)
+			mp_connectedObject->GetName().copy(m_jointObjectNameField, mp_connectedObject->GetName().size());
 
 		mb_checkForConnectedObject = false;
 	}
