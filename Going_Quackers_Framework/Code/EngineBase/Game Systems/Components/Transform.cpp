@@ -10,10 +10,17 @@ Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANS
 
 	m_position = Vector2(0.0f, 0.0f);
 	m_rotation = 0.0f;
-	m_scale = Vector2(1.0f, 1.0f);
+	mf_scale = Vector2(1.0f, 1.0f);
 	m_localPosition = Vector2(0.0f, 0.0f);
 	m_localRotation = 0.0f;
 	m_localScale = Vector2(1.0f, 1.0f);
+
+	m_posImGui = Vector2(0.0f, 0.0f);
+	m_roationImGui = 0.0f;
+	m_scaleImGui = Vector2(1.0f, 1.0f);
+	m_localPositionImGui = Vector2(0.0f, 0.0f);
+	m_localRotationImGui = 0.0f;
+	m_localScaleImGui = Vector2(1.0f, 1.0f);
 }
 
 Transform::~Transform()
@@ -28,42 +35,50 @@ void Transform::OnDestroy()
 
 void Transform::Update()
 {
+	Vector2 temp;
+	m_position = PosToLocalSpace(temp);
 }
 
 void Transform::ImGUIUpdate()
 {
-	if (ImGui::TreeNode("Local"))
+	if (ImGui::TreeNode("Show Settings"))
 	{
-		//Position Set
-		float* position[2] = { &m_localPosition.X, &m_localPosition.Y };
-		ImGui::InputFloat2("Position", position[0]);
-		SetPosition(Vector2(*position[0], *position[1]));
+		ImGui::Checkbox("Show Global Values", &ImGuiShowGlobal);
+		//ImGui::Checkbox("Use Slider Inputs", &ImGuiSliderInput);
+		//ImGui::Checkbox("Use Drag Inputs", &ImGuiDragInput);
+		//ImGui::Checkbox("Use Keyboard Input", &ImGuiTextInput);
 
-		//Rotation Set
-		ImGui::InputDouble("Rotation", &m_localRotation);
+		if (ImGuiShowGlobal)
+		{
+			Vector2 tempPos, tempScale;
+			tempPos = GetPosition();
+			tempScale = GetScale();
 
-		//Scale Set
-		float scale[2] = { m_localScale.X, m_localScale.Y };
-		ImGui::InputFloat2("Scale", scale);
-		SetScale(Vector2(scale[0], scale[1]));
+			std::string Output = "Global Position X " + std::to_string(tempPos.X) + " Y: " + std::to_string(tempPos.Y);
+			ImGui::Text(Output.c_str());
+		}
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Global"))
-	{
-		//Position Set
-		float* position[2] = { &m_position.X, &m_position.Y };
-		ImGui::InputFloat2("Position", position[0]);
-		//SetLocalPosition(Vector2(*position[0], *position[1]));
 
-		//Rotation Set
-		ImGui::InputDouble("Rotation", &m_rotation);
+	ImGui::Separator();
+	//Position Set
+	ImGui::PushID(0);
+	float* position[2] = { &m_localPosition.X, &m_localPosition.Y };
+	ImGui::InputFloat2("Position", position[0]);
+	ImGui::PopID();
 
-		//Scale Set
-		float scale[2] = { m_scale.X, m_scale.Y };
-		ImGui::InputFloat2("Scale", scale);
-		//SetLocalScale(Vector2(scale[0], scale[1]));
-		ImGui::TreePop();
-	}
+	//Rotation Set
+	ImGui::PushID(1);
+	ImGui::InputFloat("Rotation", &m_localRotation);
+	ImGui::PopID();
+
+	//Scale Set
+	ImGui::PushID(2);
+	float* scale[2] = { &m_localScale.X, &m_localScale.Y };
+	ImGui::InputFloat2("Scale", scale[0]);
+	ImGui::PopID();
+
+
 }
 
 json* Transform::SceneSave()
@@ -133,19 +148,20 @@ Vector2 Transform::InverseTransformPoint(Vector2 point)
 		return mp_owner->GetParent()->GetTransform()->GetPosition() + point;
 	else
 		return point;
-
-	/*
-	DirectX::XMFLOAT4 floatTemp;
-	DirectX::XMVECTOR tempVector = DirectX::XMVector4Transform(DirectX::XMVectorSet(point.X, point.Y, 0.0f, 1.0f), GetWorldToLocalMatrix());
-	DirectX::XMStoreFloat4(&floatTemp, tempVector);
-	return Vector2(floatTemp.x, floatTemp.y);
-	*/
 }
 
 DirectX::XMMATRIX Transform::CalculateLocalMatrix()
 {
 	return DirectX::XMMatrixScaling(m_localScale.X, m_localScale.Y, 1.0f) *
-		DirectX::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, m_localRotation * (DirectX::XM_PI / 180.0f)) *
+		DirectX::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, -(m_localRotation * (DirectX::XM_PI / 180.0f))) *
 		DirectX::XMMatrixTranslation(m_localPosition.X, m_localPosition.Y, 0.0f);
 }
 
+Vector2 Transform::PosToLocalSpace(Vector2& point)
+{
+	DirectX::XMFLOAT4X4 temp;
+	DirectX::XMStoreFloat4x4(&temp, localToWorldMatrix);
+	point.X = temp._41;
+	point.Y = temp._42;
+	return point;
+}

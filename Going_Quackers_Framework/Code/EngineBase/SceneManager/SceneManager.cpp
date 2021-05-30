@@ -219,14 +219,11 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 		}
 
 		lp_newObject->SetParent(ap_object);
-		ap_object->AddChild(lp_newObject);
 
 		if (child.value()["children"].size() > 0)
 		{
 			LoadChildren(lp_newObject, &child.value());
 		}
-
-		mp_CurrentScene->AddObject(lp_newObject);
 	}
 }
 

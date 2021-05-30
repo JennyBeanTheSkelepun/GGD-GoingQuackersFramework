@@ -8,6 +8,7 @@
 #include "../../Time.h"
 #include "../../../SceneManager/SceneManager.h"
 #include "../../Debug.h"
+#include "../../../Code/EngineBase/Game Systems/Input.h"
 
 enum class PhysicsTypes
 {
@@ -73,14 +74,26 @@ public:
 	bool GetCollideFlag() { return m_PhysicsChecked; }
 	void ResetCollideFlag() { m_PhysicsChecked = false; }
 
+	void SetAcceleration(Vector2 accel) { m_Acceleration = accel; }
 	Vector2 GetAcceleration() { return m_Acceleration; }
+
+	void SetVelocity(Vector2 velo) { m_Velocity = velo; }
 	Vector2 GetVelocity() { return m_Velocity; }
+
+	void setStatic(bool isStatic) { m_IsStatic = isStatic; }
+	bool getIsStatic() { return m_IsStatic; }
+
+	bool GetCollidingBool() { return m_isColliding; }
+	bool CheckColliding(std::vector<GameObject*>* collidingObjects);
+	bool CheckColliding(GameObject* checkObject, std::vector<GameObject*>* collidingObjects);
 
 	std::vector<GameObject*> GetCollidedObjects() { return m_CollidingObjects; }
 
 private:
 	void PhysicsCollide();
 	
+	bool m_isColliding;
+
 	PhysicsTypes m_PhysicsType = PhysicsTypes::RB;
 
 	Vector2 m_Velocity;
@@ -95,8 +108,8 @@ private:
 
 	bool m_IsStatic = false;
 
-	float m_Radius = 0.0f;
-	Vector2 m_AABBRect = Vector2();
+	float m_Radius = 1.0f;
+	Vector2 m_AABBRect = Vector2(1.0f, 1.0f);
 
 	CollisionTypes m_CollisionType = CollisionTypes::Sphere;
 
