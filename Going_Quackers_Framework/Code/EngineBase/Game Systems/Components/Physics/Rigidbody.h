@@ -107,8 +107,8 @@ private:
 
 	bool m_IsStatic = false;
 
-	float m_Radius = 0.0f;
-	Vector2 m_AABBRect = Vector2();
+	float m_Radius = 1.0f;
+	Vector2 m_AABBRect = Vector2(1.0f, 1.0f);
 
 	CollisionTypes m_CollisionType = CollisionTypes::Sphere;
 
