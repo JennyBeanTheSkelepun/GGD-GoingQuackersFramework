@@ -329,12 +329,14 @@ void Rigidbody::PhysicsCollide()
 	{
 	case PhysicsTypes::GE:
 		mp_GravEmitter->ApplyGravity(GetOwner(), &m_CollidingObjects);
+		CheckColliding(&m_CollidingObjects);
 		break;
 	case PhysicsTypes::RB:
 		RigidbodyCollide(&m_CollidingObjects);
+		CheckColliding(&m_CollidingObjects);
 		break;
 	case PhysicsTypes::Trig:
-		mp_Trigger->CheckColliding(&m_CollidingObjects);
+		CheckColliding(&m_CollidingObjects);
 		break;
 	}
 	
@@ -345,7 +347,7 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 {
 	for (GameObject* obj : *collidingObjects)
 	{
-		Rigidbody* rb = obj->GetComponent<Rigidbody>();
+		/*Rigidbody* rb = obj->GetComponent<Rigidbody>();
 		if (rb->GetCollideFlag())
 		{
 			continue;
@@ -370,6 +372,60 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 		rb->AddForce(appForce);
 
 		appForce.force = -appForce.force;
-		AddForce(appForce);
+		AddForce(appForce);*/
+
+		Rigidbody* rb = obj->GetComponent<Rigidbody>();
+
+		if (rb == nullptr)
+		{
+			continue;
+		}
+
+		Vector2 rV;
+		Vector2 rA;
+		Vector2 dV = rb->GetVelocity();
+		Vector2 dA = rb->GetAcceleration();
+
+		//TODO:: Make it set poss, not sure why?
+		if (rb->GetCollisionType() == CollisionTypes::Sphere)
+		{
+			Vector2 n = (obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition()).Normalize();
+
+			rV = dV - (n * (2 * dV.Dot(n)));
+			rA = dA - (n * (2 * dA.Dot(n)));
+
+			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * GetRadius());
+
+			obj->GetTransform()->SetPosition(newPos);
+		}
+		else if(rb->GetCollisionType() == CollisionTypes::AABB)
+		{
+			Vector2 n = (obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition()).Normalize();
+
+			n.X = std::round(n.X);
+			n.Y = std::round(n.Y);
+
+			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * GetAABBRect());
+			
+			rV = dV - (n * (2 * dV.Dot(n)));
+			rA = dA - (n * (2 * dA.Dot(n)));
+
+			obj->GetTransform()->SetPosition(newPos);
+		}
+
+		SetVelocity(rV);
+		SetAcceleration(rA);
 	}
+}
+
+bool Rigidbody::CheckColliding(std::vector<GameObject*>* collidingObjects)
+{
+	m_isColliding = collidingObjects->size() == 0 ? false : true;
+
+	return m_isColliding;
+}
+
+bool Rigidbody::CheckColliding(GameObject* checkObject, std::vector<GameObject*>* collidingObjects)
+{
+	return std::find(collidingObjects->begin(), collidingObjects->end(), checkObject) == collidingObjects->end() ? false : true;
 }
