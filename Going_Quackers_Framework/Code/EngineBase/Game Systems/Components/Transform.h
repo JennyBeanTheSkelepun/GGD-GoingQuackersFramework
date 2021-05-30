@@ -34,31 +34,38 @@ public:
 	Vector2 InverseTransformPoint(Vector2 point);
 
 	//Setters and Getters
-	void SetPosition(Vector2 position) { this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
+	void SetPosition(Vector2 position) { m_localPositionImGui = this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
 	Vector2 GetPosition() { return m_position; }
-	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; this->m_position = TransformPoint(position); }
+	void SetLocalPosition(Vector2 position) { m_localPositionImGui = this->m_localPosition = position; this->m_position = TransformPoint(position); }
 	Vector2 GetLocalPosition() { return this->m_localPosition; }
 
 	void SetRotation(double rotation) { this->m_rotation = rotation; }
 	double GetRotation() { return m_rotation; }
-	void SetLocalRotation(double rotation) { this->m_localRotation = rotation; }
+	void SetLocalRotation(double rotation) { m_localRotationImGui = this->m_localRotation = rotation; }
 	double GetLocalRotation() { return this->m_localRotation; }
 
-	void SetScale(Vector2 scale) { this->m_scale = scale; }
-	Vector2 GetScale() { return this->m_scale; }
-	void SetLocalScale(Vector2 scale) { this->m_localScale = scale; }
+	void SetScale(Vector2 scale) { this->mf_scale = scale; }
+	Vector2 GetScale() { return this->mf_scale; }
+	void SetLocalScale(Vector2 scale) { m_localScaleImGui = this->m_localScale = scale; }
 	Vector2 GetLocalScale() { return this->m_localScale; }
 
 private:
+	Vector2 PosToLocalSpace(Vector2& point);
+
+	bool ImGuiShowGlobal;
+	bool ImGuiSliderInput;
+	bool ImGuiDragInput;
+	bool ImGuiTextInput;
+
 	//World Positions
-	Vector2 m_position;
-	double m_rotation;
-	Vector2 m_scale;
+	Vector2 m_position, m_posImGui;
+	float m_rotation, m_roationImGui;
+	Vector2 mf_scale, m_scaleImGui;
 
 	//Local Positions
-	Vector2 m_localPosition;
-	double m_localRotation;
-	Vector2 m_localScale;
+	Vector2 m_localPosition, m_localPositionImGui;
+	float m_localRotation, m_localRotationImGui;
+	Vector2 m_localScale, m_localScaleImGui;
 
 	//Transform that converts from local space to world space
 	DirectX::XMMATRIX localToWorldMatrix;

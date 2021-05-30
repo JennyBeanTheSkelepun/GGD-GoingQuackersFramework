@@ -27,6 +27,11 @@ GameObject::GameObject(const char* name, GameObject* parent)
 
 GameObject::~GameObject()
 {
+	for (int i = 0; i < m_children.size(); i++)
+	{
+		delete m_children[i];
+	}
+
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		m_components[i]->OnDestroy();
@@ -62,6 +67,7 @@ void GameObject::Update()
 	{
 		if (m_children[i]->ShouldDestroy())
 		{
+			delete m_children[i];
 			m_children.erase(m_children.begin() + i);
 			break;
 		}
