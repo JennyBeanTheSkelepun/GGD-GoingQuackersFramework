@@ -1,5 +1,0 @@
-Loading Scene from path: SceneConfig/default.json
-Scene load complete.
-Loading Scene from path: SceneConfig/1.json
-Scene Saved: 1
-

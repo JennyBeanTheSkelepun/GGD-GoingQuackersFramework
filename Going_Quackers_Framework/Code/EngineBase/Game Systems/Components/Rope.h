@@ -17,7 +17,12 @@ public:
 	void SceneLoad(json* componentJSON) override;
 
 private:
+	void AABBCollision(int ai_collidingNodeIndex);
+	void SphereCollision(int ai_collidingNodeIndex);
+
 	std::vector<GameObject*> m_nodes;
+	std::vector<std::string> m_nodeIDs;
+	bool mb_checkForNodes;
 };
 
 #endif

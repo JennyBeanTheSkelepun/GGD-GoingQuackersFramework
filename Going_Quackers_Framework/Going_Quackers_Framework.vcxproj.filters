@@ -441,7 +441,7 @@
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Rope.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
