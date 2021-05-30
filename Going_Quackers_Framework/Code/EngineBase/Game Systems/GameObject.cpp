@@ -11,14 +11,14 @@
 
 GameObject::GameObject(const char* name, GameObject* parent)
 {
-	this->m_name = name;
-	this->mp_parent = parent;
-	this->m_id = std::to_string(rand());
+	m_name = name;
+	mp_parent = parent;
+	m_id = std::to_string(rand());
 
 	m_components = std::vector<Component*>();
 	m_children = std::vector<GameObject*>();
 
-	this->m_shouldLive = true;
+	m_shouldLive = true;
 
 	mp_transform = AddComponent<Transform>();
 	m_active = true;
@@ -26,6 +26,11 @@ GameObject::GameObject(const char* name, GameObject* parent)
 
 GameObject::~GameObject()
 {
+	for (size_t i = 0; i < m_children.size(); i++)
+	{
+		delete m_children[i];
+	}
+
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		m_components[i]->OnDestroy();

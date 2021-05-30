@@ -39,12 +39,22 @@ public:
 	void SetLocalRotation(float rotation) { this->m_localRotation = rotation; this->m_roationImGui = RotationToGlobalSpace(rotation); this->m_rotation = this->m_roationImGui; UpdateChildTransforms(); }
 	float GetLocalRotation() { return this->m_localRotation; }
 
-	void SetGlobalScale(Vector2 scale) { this->mf_scale = scale;  this->m_localScale = this->m_localScaleImGui = ScaleToLocalSpace(scale); UpdateChildTransforms(); }
-	Vector2 GetGlobalScale() { return this->mf_scale; }
-	void SetLocalScale(Vector2 scale) { this->m_localScale = scale; this->mf_scale = this->m_scaleImGui = ScaleToGlobalSpace(scale); UpdateChildTransforms(); }
+	void SetScale(Vector2 scale) { this->mf_scale = scale; }
+	Vector2 GetScale() { return this->mf_scale; }
+	void SetLocalScale(Vector2 scale) { this->m_localScale = scale; }
 	Vector2 GetLocalScale() { return this->m_localScale; }
 
 private:
+
+	//Creates a Matrix that converts from local space to the coordinate space of the parent transform (If there is one)
+	DirectX::XMMATRIX CalculateLocalMatrix();
+	Vector2 PosToLocalSpace(Vector2& point);
+
+	bool ImGuiShowGlobal;
+	bool ImGuiSliderInput;
+	bool ImGuiDragInput;
+	bool ImGuiTextInput;
+
 	//World Positions
 	Vector2 m_position, m_posImGui;
 	float m_rotation, m_roationImGui;
@@ -55,7 +65,11 @@ private:
 	float m_localRotation, m_localRotationImGui;
 	Vector2 m_localScale, m_localScaleImGui;
 
-	void UpdateChildTransforms();
+	//Transform that converts from local space to world space
+	DirectX::XMMATRIX localToWorldMatrix;
+
+	//Transform that converts from world space to local space
+	DirectX::XMMATRIX worldToLocalMatrix;
 };
 
 #endif

@@ -139,7 +139,7 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 	// Load objects
 	for (const auto& newObject : l_SceneConfig["objects"].items()) {
 		// Create Object
-		GameObject* lp_newObject = new GameObject();
+		GameObject* lp_newObject = new GameObject("", nullptr);
 
 		// Assign ID
 		lp_newObject->SetID(newObject.value()["id"]);
@@ -181,7 +181,7 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 {
 	for (const auto& child : (*ap_json)["children"].items()) {
 		// Create Object
-		GameObject* lp_newObject = new GameObject();
+		GameObject* lp_newObject = new GameObject("", nullptr);
 
 		// Assign ID
 		lp_newObject->SetID(child.value()["id"]);
@@ -213,9 +213,10 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 		lp_newObject->SetParent(ap_object);
 		ap_object->AddChild(lp_newObject);
 
-		LoadChildren(lp_newObject, &child.value());
-
-		mp_CurrentScene->AddObject(lp_newObject);
+		if (child.value()["children"].size() > 0)
+		{
+			LoadChildren(lp_newObject, &child.value());
+		}
 	}
 }
 

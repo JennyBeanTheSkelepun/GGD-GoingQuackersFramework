@@ -1,6 +1,7 @@
 #include "Transform.h"
 #include <DirectXMath.h>
 #include "../GameObject.h"
+#include <string>
 #include <math.h>
 
 Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANSFORM, "Transform")
@@ -32,82 +33,66 @@ void Transform::OnDestroy()
 
 void Transform::Update()
 {
+	Vector2 temp;
+	m_position = PosToLocalSpace(temp);
 }
 
 void Transform::ImGUIUpdate()
 {
-	if (ImGui::TreeNode("Local"))
+	if (ImGui::TreeNode("Show Settings"))
 	{
-		//Position Set
-		ImGui::PushID(0);
-		float* position[2] = { &m_localPositionImGui.X, &m_localPositionImGui.Y };
-		ImGui::InputFloat2("Position", position[0]);
-		ImGui::SameLine();
-		if (ImGui::Button("Apply Changes"))
-		{
-			SetLocalPosition(m_localPositionImGui);
-		}
-		ImGui::PopID();
+		ImGui::Checkbox("Show Global Values", &ImGuiShowGlobal);
+		//ImGui::Checkbox("Use Slider Inputs", &ImGuiSliderInput);
+		//ImGui::Checkbox("Use Drag Inputs", &ImGuiDragInput);
+		//ImGui::Checkbox("Use Keyboard Input", &ImGuiTextInput);
 
-		//Rotation Set
-		ImGui::PushID(1);
-		ImGui::InputFloat("Rotation", &m_localRotationImGui);
-		ImGui::SameLine();
-		if (ImGui::Button("Apply Changes"))
+		if (ImGuiShowGlobal)
 		{
-			SetLocalRotation(m_localRotationImGui);
-		}
-		ImGui::PopID();
+			Vector2 tempPos, tempScale;
+			tempPos = GetPosition();
+			tempScale = GetScale();
 
-		//Scale Set
-		ImGui::PushID(2);
-		float* scale[2] = { &m_localScaleImGui.X, &m_localScaleImGui.Y };
-		ImGui::InputFloat2("Scale", scale[0]);
-		ImGui::SameLine();
-		if (ImGui::Button("Apply Changes"))
-		{
-			SetLocalScale(m_localScaleImGui);
+			std::string Output = "Global Position X " + std::to_string(tempPos.X) + " Y: " + std::to_string(tempPos.Y);
+			ImGui::Text(Output.c_str());
 		}
-		ImGui::PopID();
-
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Global"))
+
+	ImGui::Separator();
+	//Position Set
+	ImGui::PushID(0);
+	float* position[2] = { &m_localPositionImGui.X, &m_localPositionImGui.Y };
+	ImGui::InputFloat2("Position", position[0]);
+	ImGui::SameLine();
+	if (ImGui::Button("Apply Changes"))
 	{
-		//Position Set
-		ImGui::PushID(0);
-		float* position[2] = { &m_posImGui.X, &m_posImGui.Y };
-		ImGui::InputFloat2("Position", position[0]);
-		ImGui::SameLine();
-		if (ImGui::Button("Apply Changes"))
-		{
-			SetGlobalPosition(m_posImGui);
-		}
-		ImGui::PopID();
-
-		//Rotation Set
-		ImGui::PushID(1);
-		ImGui::InputFloat("Rotation", &m_roationImGui);
-		ImGui::SameLine();
-		if (ImGui::Button("Apply Changes"))
-		{
-			SetGlobalRotation(m_roationImGui);
-		}
-		ImGui::PopID();
-
-		//Scale Set
-		ImGui::PushID(2);
-		float* scale[2] = { &m_scaleImGui.X, &m_scaleImGui.Y };
-		ImGui::InputFloat2("Scale", scale[0]);
-		ImGui::SameLine();
-		if (ImGui::Button("Apply Changes"))
-		{
-			SetGlobalScale(m_scaleImGui);
-		}
-		ImGui::PopID();
-
-		ImGui::TreePop();
+		SetLocalPosition(m_localPositionImGui);
 	}
+	ImGui::PopID();
+
+	//Rotation Set
+	ImGui::PushID(1);
+	ImGui::InputFloat("Rotation", &m_localRotationImGui);
+	ImGui::SameLine();
+	if (ImGui::Button("Apply Changes"))
+	{
+		SetLocalRotation(m_localRotationImGui);
+	}
+	ImGui::PopID();
+
+	//Scale Set
+	ImGui::PushID(2);
+	float* scale[2] = { &m_localScaleImGui.X, &m_localScaleImGui.Y };
+	ImGui::InputFloat2("Scale", scale[0]);
+	ImGui::SameLine();
+	if (ImGui::Button("Apply Changes"))
+	{
+		SetLocalScale(m_localScaleImGui);
+	}
+	ImGui::PopID();
+
+
+
 }
 
 json* Transform::SceneSave()
@@ -201,15 +186,19 @@ float Transform::RotationToGlobalSpace(float& point)
 	return point;
 }
 
-void Transform::UpdateChildTransforms()
+
+
+
+
+Vector2 Transform::PosToLocalSpace(Vector2& point)
 {
-	std::vector<GameObject*> children = GetOwner()->GetChildren();
-	for (int i = 0; i < children.size(); i++)
+
+	if (this->GetOwner()->GetParent() != nullptr)
 	{
-		children[i]->GetTransform()->SetGlobalPosition(children[i]->GetTransform()->GetLocalPosition());
-		children[i]->GetTransform()->SetGlobalScale(Vector2(1.0f, 1.0f));
-		children[i]->GetTransform()->SetGlobalScale(children[i]->GetTransform()->GetLocalScale());
-		children[i]->GetTransform()->SetGlobalRotation(children[i]->GetTransform()->GetLocalRotation());
+		DirectX::XMFLOAT4X4 temp;
+		DirectX::XMStoreFloat4x4(&temp, localToWorldMatrix);
+		point.X = temp._41;
+		point.Y = temp._42;
 	}
-	//FOR GOT SAKE I HATYE THIS
+	return point;
 }
