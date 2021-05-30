@@ -73,6 +73,8 @@ private:
 	char* NewSceneID;
 	char* NewSceneName;
 	char* NewSceneType;
+	char* ChangeSceneName;
+	char* ChangeSceneType;
 	std::vector<LayoutSettings> WindowPositions;
 	std::vector<int> WindowPosToDelete;
 	LayoutSettings CurrentWindowPosition;
