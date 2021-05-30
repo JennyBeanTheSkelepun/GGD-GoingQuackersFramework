@@ -1,7 +1,3 @@
 Loading Scene from path: SceneConfig/default.json
-[ERROR] Scene Load Error: Sprite Renderer for object GameObject 28145 is missing either a Texture or Shader location. 
-To prevent this error in future, please remember to update Texture/Shader in component settings and save the scene after. - Jen
 Scene load complete.
-Obj GameObject 11478 Collided with Obj 24464
-Obj 24464 Collided with Obj GameObject 11478
 

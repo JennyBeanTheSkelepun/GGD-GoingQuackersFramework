@@ -38,7 +38,6 @@ void Transform::ImGUIUpdate()
 	{
 		ImGui::Checkbox("Show Global Values", &ImGuiShowGlobal);
 		ImGui::Checkbox("Use Drag Inputs", &ImGuiDragInput);
-		ImGui::Checkbox("Use Keyboard Input", &ImGuiTextInput);
 
 		if (ImGuiShowGlobal)
 		{
@@ -52,27 +51,24 @@ void Transform::ImGUIUpdate()
 		ImGui::TreePop();
 	}
 
-	if (ImGuiTextInput)
-	{
-		ImGui::Separator();
-		//Position Set
-		ImGui::PushID(0);
-		float* position[2] = { &m_localPosition.X, &m_localPosition.Y };
-		ImGui::InputFloat2("Position", position[0]);
-		ImGui::PopID();
+	ImGui::Separator();
+	//Position Set
+	ImGui::PushID(0);
+	float* position[2] = { &m_localPosition.X, &m_localPosition.Y };
+	ImGui::InputFloat2("Position", position[0]);
+	ImGui::PopID();
 
-		//Rotation Set
-		ImGui::PushID(1);
-		ImGui::InputFloat("Rotation", &m_localRotation);
-		ImGui::PopID();
+	//Rotation Set
+	ImGui::PushID(1);
+	ImGui::InputFloat("Rotation", &m_localRotation);
+	ImGui::PopID();
 
-		//Scale Set
-		ImGui::PushID(2);
-		float* scale[2] = { &m_localScale.X, &m_localScale.Y };
-		ImGui::InputFloat2("Scale", scale[0]);
-		ImGui::PopID();
-	}
-	
+	//Scale Set
+	ImGui::PushID(2);
+	float* scale[2] = { &m_localScale.X, &m_localScale.Y };
+	ImGui::InputFloat2("Scale", scale[0]);
+	ImGui::PopID();
+		
 	if (ImGuiDragInput)
 	{
 		ImGui::Separator();
