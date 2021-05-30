@@ -22,11 +22,10 @@ void Rigidbody::OnDestroy()
 //- Update Render Functions -//
 void Rigidbody::Update()
 {
-	for(GameObject* obj : Collision::getInstance()->Raycast(Vector2(0.1, 0), Vector2()))
+	if (Input::getInstance()->isKeyPressedDown(KeyCode::H))
 	{
-		Debug::getInstance()->Log("Ray hit " + obj->GetName());
 		Force newForce;
-		newForce.force = Vector2(-0.1f, 0);
+		newForce.force = -GetOwner()->GetTransform()->GetPosition() / 10.0f;
 		AddForce(newForce);
 	}
 
@@ -397,7 +396,7 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 			rV = dV - (n * (2 * dV.Dot(n)));
 			rA = dA - (n * (2 * dA.Dot(n)));
 
-			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * GetRadius());
+			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * (GetRadius() + rb->GetRadius()));
 
 			obj->GetTransform()->SetPosition(newPos);
 		}
@@ -408,7 +407,9 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 			n.X = std::round(n.X);
 			n.Y = std::round(n.Y);
 
-			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * GetAABBRect());
+			Debug::getInstance()->Log(n);
+
+			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * ((GetAABBRect() / 2.0f) + (rb->GetAABBRect() / 2.0f)));
 			
 			rV = dV - (n * (2 * dV.Dot(n)));
 			rA = dA - (n * (2 * dA.Dot(n)));
@@ -416,8 +417,23 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 			obj->GetTransform()->SetPosition(newPos);
 		}
 
-		SetVelocity(rV);
-		SetAcceleration(rA);
+		if (rV != Vector2())
+		{
+			SetVelocity(rV);
+		}
+		else
+		{
+			SetVelocity(-GetVelocity());
+		}
+
+		if (rA != Vector2())
+		{
+			SetAcceleration(rA);
+		}
+		else
+		{
+			SetAcceleration(-GetAcceleration());
+		}
 	}
 }
 
