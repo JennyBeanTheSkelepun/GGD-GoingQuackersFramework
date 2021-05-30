@@ -122,7 +122,8 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 	struct stat buffer;
 	if (stat(as_Path.c_str(), &buffer) != 0) {
 		Debug::getInstance()->LogError("Could not find SceneConfig File. Please make sure you save your scenes.");
-		return nullptr;
+		Debug::getInstance()->LogWarning("Load Failed, returning to default scene...");
+		return LoadScene("SceneConfig/default.json");
 	}
 
 	// Load Config from JSON file
