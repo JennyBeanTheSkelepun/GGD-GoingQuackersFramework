@@ -42,19 +42,25 @@ public:
 
 	void Update(float af_deltaTime);
 
-	Scene* GetCurrentScene() { return mp_CurrentScene; };
+	inline Scene* GetCurrentScene() { return mp_CurrentScene; };
+
+	inline bool GetAutoSave() { return mb_doAutoSave; }
+	inline void SetAutoSave(bool value) { mb_doAutoSave = value; }
 
 private:
+	Scene* mp_CurrentScene;
+	bool mb_doAutoSave;
+
 	Scene* LoadScene(std::string as_Path);
+	void LoadChildren(GameObject* ap_object, json* ap_json);
 	void UnloadScene(bool as_SaveToJSON);
 
-	Scene* mp_CurrentScene;
-
 	void SaveToJSON(Scene* ap_Scene);
+	void SaveChildren(GameObject* lp_object, json* ap_json);
 	std::wstring stringToWString(std::string as_string);
 
 	template<typename T>
-	void LoadComponentFromScene(std::string as_ComponentName, GameObject* ap_object, json* ap_json) {
+	void LoadComponentFromScene(GameObject* ap_object, json* ap_json) {
 		ap_object->AddComponent<T>();
 		ap_object->GetComponent<T>()->SceneLoad(ap_json);
 	}
@@ -65,20 +71,5 @@ private:
 		ap_component = static_cast<T*>(ap_component);
 	}
 };
-
-//template<typename T>
-//void SceneManager::LoadComponentFromScene(std::string as_ComponentName, GameObject* ap_object, json* ap_json) {
-//	// If it has a matching component, load it
-//	if (ap_json->contains(as_ComponentName)) {
-//		ap_object->AddComponent<T>();
-//		ap_object->GetComponent<T>()->SceneLoad(ap_json);
-//	}
-//}
-//
-//template<typename T>
-//void SceneManager::SaveComponent(std::string as_componentName, Component* ap_component, std::string* ap_componentType) {
-//	*ap_componentType = as_componentName;
-//	ap_component = static_cast<Rigidbody*>(ap_component);
-//}
 
 #endif /*_SCENEMANAGER_H_*/

@@ -21,6 +21,7 @@ struct Vector2
 	Vector2& Normalize()
 	{
 		float xxyy = X * X + Y * Y;
+		if (xxyy == 0) xxyy = 1;
 
 		float invLength = 1.0f / sqrtf(xxyy);
 		X *= invLength;
