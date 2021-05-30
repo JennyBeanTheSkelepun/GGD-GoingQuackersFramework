@@ -34,19 +34,19 @@ public:
 	Vector2 InverseTransformPoint(Vector2 point);
 
 	//Setters and Getters
-	void SetPosition(Vector2 position) { this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
+	void SetPosition(Vector2 position) { m_localPositionImGui = this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
 	Vector2 GetPosition() { return m_position; }
-	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; this->m_position = TransformPoint(position); }
+	void SetLocalPosition(Vector2 position) { m_localPositionImGui = this->m_localPosition = position; this->m_position = TransformPoint(position); }
 	Vector2 GetLocalPosition() { return this->m_localPosition; }
 
 	void SetRotation(double rotation) { this->m_rotation = rotation; }
 	double GetRotation() { return m_rotation; }
-	void SetLocalRotation(double rotation) { this->m_localRotation = rotation; }
+	void SetLocalRotation(double rotation) { m_localRotationImGui = this->m_localRotation = rotation; }
 	double GetLocalRotation() { return this->m_localRotation; }
 
 	void SetScale(Vector2 scale) { this->mf_scale = scale; }
 	Vector2 GetScale() { return this->mf_scale; }
-	void SetLocalScale(Vector2 scale) { this->m_localScale = scale; }
+	void SetLocalScale(Vector2 scale) { m_localScaleImGui = this->m_localScale = scale; }
 	Vector2 GetLocalScale() { return this->m_localScale; }
 
 private:

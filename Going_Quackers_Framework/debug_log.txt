@@ -1,5 +1,3 @@
 Loading Scene from path: SceneConfig/default.json
 Scene load complete.
-Child Saved: 29358
-Scene Saved: Test Scene
 
