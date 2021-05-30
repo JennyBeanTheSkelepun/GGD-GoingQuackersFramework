@@ -14,8 +14,6 @@ Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANS
 	m_localPosition = Vector2(0.0f, 0.0f);
 	m_localRotation = 0.0f;
 	m_localScale = Vector2(1.0f, 1.0f);
-	
-
 }
 
 Transform::~Transform()
@@ -175,6 +173,7 @@ Vector2 Transform::PosToLocalSpace()
 	DirectX::XMFLOAT4X4 temp;
 	Vector2 point;
 	DirectX::XMStoreFloat4x4(&temp, localToWorldMatrix);
+	Vector2 point;
 	point.X = temp._41;
 	point.Y = temp._42;
 	return point;

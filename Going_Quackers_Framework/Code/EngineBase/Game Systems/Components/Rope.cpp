@@ -17,9 +17,9 @@ void Rope::OnDestroy() {
 
 void Rope::Update() {
 	if (mb_checkForNodes) {
-		/*for (size_t i = 0; i < m_nodeIDs.size(); i++) {
+		for (size_t i = 0; i < m_nodeIDs.size(); i++) {
 			m_nodes.push_back(SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(m_nodeIDs[i]));
-		}*/
+		}
 
 		mb_checkForNodes = false;
 	}
@@ -29,7 +29,7 @@ void Rope::Update() {
 
 	for (size_t i = 0; i < m_nodes.size() - 1; i++)	{
 		Vector2 ray = m_nodes[i + 1]->GetTransform()->GetPosition() - m_nodes[i]->GetTransform()->GetPosition();
-		std::vector<GameObject*> collisions = Collision::getInstance()->Raycast(ray, m_nodes[i + 1]->GetTransform()->GetPosition());
+		std::vector<GameObject*> collisions = Collision::getInstance()->Raycast(ray, m_nodes[i]->GetTransform()->GetPosition());
 
 		for (size_t j = 0; j < collisions.size(); j++) {
 			Rigidbody* rigidbody = collisions[j]->GetComponent<Rigidbody>();
@@ -43,6 +43,9 @@ void Rope::Update() {
 				SphereCollision(collisions[j], i);
 		}
 	}
+
+	for (size_t i = 0; i < m_nodePreviousPositions.size(); i++)
+		m_nodePreviousPositions[i] = m_nodes[i]->GetTransform()->GetPosition();
 }
 
 void Rope::ImGUIUpdate() {
@@ -54,8 +57,7 @@ void Rope::ImGUIUpdate() {
 
 		GameObject* baseNode = new GameObject("Rope Node 1");
 		GetOwner()->AddChild(baseNode);
-		//baseNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
-		baseNode->GetTransform()->SetLocalPosition(Vector2(0, 2)); //temp
+		baseNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
 
 		m_nodes.push_back(baseNode);
 
@@ -64,8 +66,7 @@ void Rope::ImGUIUpdate() {
 		rigidbody->SetType(PhysicsTypes::Trig);
 
 		GetOwner()->AddChild(endNode);
-		//endNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
-		endNode->GetTransform()->SetLocalPosition(Vector2(3, 0)); //temp
+		endNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
 
 		m_nodes.push_back(endNode);
 
@@ -106,17 +107,51 @@ void Rope::SceneLoad(json* componentJSON) {
 }
 
 void Rope::AABBCollision(GameObject* ap_collision, int ai_collidingNodeIndex) {
-	Vector2 baseNodeOffset = m_nodes[ai_collidingNodeIndex]->GetTransform()->GetPosition() - ap_collision->GetTransform()->GetPosition();
+	Vector2 colliderPosition = ap_collision->GetTransform()->GetPosition();
+	Rigidbody* colliderRb = ap_collision->GetComponent<Rigidbody>();
 
-	bool xAlignedBaseNode = std::abs(baseNodeOffset.X) > std::abs(baseNodeOffset.Y);
-	Vector2 closestEdge = xAlignedBaseNode ? Vector2(std::signbit(baseNodeOffset.X), 0) : Vector2(0, std::signbit(baseNodeOffset.Y));
+	Vector2 baseNodeOffset = m_nodePreviousPositions[ai_collidingNodeIndex] - colliderPosition;
+	Vector2 endNodeOffset = m_nodePreviousPositions[ai_collidingNodeIndex + 1] - colliderPosition;
 
-	Debug::getInstance()->Log(std::to_string(closestEdge.X) + ", " + std::to_string(closestEdge.Y));
+	//Get closest corner to base node
+	Vector2 collidedCorner = Vector2(0, 0);
+	collidedCorner += Vector2(std::signbit(baseNodeOffset.X), std::signbit(baseNodeOffset.Y));
+
+	Vector2 closestEndNodeCorner = Vector2(std::signbit(endNodeOffset.X), std::signbit(endNodeOffset.Y));
+
+	if (collidedCorner != closestEndNodeCorner) {
+		//If the two options are veritcally aligned
+		if (collidedCorner.X == closestEndNodeCorner.X) {
+			if (std::abs(baseNodeOffset.X) > std::abs(endNodeOffset.X))
+				collidedCorner = closestEndNodeCorner;
+		}
+		else {
+			if (std::abs(baseNodeOffset.Y) > std::abs(endNodeOffset.Y))
+				collidedCorner = closestEndNodeCorner;
+		}
+	}
+
+	//Adjust to collider
+	collidedCorner *= colliderRb->GetAABBRect();
+	collidedCorner /= 2;
+	collidedCorner += colliderPosition;
+
+	Debug::getInstance()->Log(std::to_string(collidedCorner.X) + ", " + std::to_string(collidedCorner.Y));
 }
 
 void Rope::SphereCollision(GameObject* ap_collision, int ai_collidingNodeIndex) {
 }
 
+GameObject* Rope::GetRopeBase() {
+	if (m_nodes.size() == 0)
+		return nullptr;
+
+	return m_nodes[0];
+}
+
 GameObject* Rope::GetRopeEnd() {
-	return nullptr;
+	if (m_nodes.size() == 0)
+		return nullptr;
+
+	return m_nodes[m_nodes.size() - 1];
 }

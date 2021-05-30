@@ -2,12 +2,14 @@
 #define _ROPE_H_
 
 #include "Component.h"
+#include "../../Data Structures/Vectors.h"
 
 class Rope : public Component {
 public:
 	Rope(GameObject* ap_owner);
 	~Rope();
 
+	GameObject* GetRopeBase();
 	GameObject* GetRopeEnd();
 
 	void OnDestroy() override;
@@ -22,6 +24,7 @@ private:
 
 	std::vector<GameObject*> m_nodes;
 	std::vector<std::string> m_nodeIDs;
+	std::vector<Vector2> m_nodePreviousPositions;
 	bool mb_checkForNodes;
 };
 
