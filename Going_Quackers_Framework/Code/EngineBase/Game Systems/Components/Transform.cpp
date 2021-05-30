@@ -14,13 +14,8 @@ Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANS
 	m_localPosition = Vector2(0.0f, 0.0f);
 	m_localRotation = 0.0f;
 	m_localScale = Vector2(1.0f, 1.0f);
+	
 
-	m_posImGui = Vector2(0.0f, 0.0f);
-	m_roationImGui = 0.0f;
-	m_scaleImGui = Vector2(1.0f, 1.0f);
-	m_localPositionImGui = Vector2(0.0f, 0.0f);
-	m_localRotationImGui = 0.0f;
-	m_localScaleImGui = Vector2(1.0f, 1.0f);
 }
 
 Transform::~Transform()
@@ -35,8 +30,6 @@ void Transform::OnDestroy()
 
 void Transform::Update()
 {
-	Vector2 temp;
-	m_position = PosToLocalSpace(temp);
 }
 
 void Transform::ImGUIUpdate()
@@ -44,9 +37,8 @@ void Transform::ImGUIUpdate()
 	if (ImGui::TreeNode("Show Settings"))
 	{
 		ImGui::Checkbox("Show Global Values", &ImGuiShowGlobal);
-		//ImGui::Checkbox("Use Slider Inputs", &ImGuiSliderInput);
-		//ImGui::Checkbox("Use Drag Inputs", &ImGuiDragInput);
-		//ImGui::Checkbox("Use Keyboard Input", &ImGuiTextInput);
+		ImGui::Checkbox("Use Drag Inputs", &ImGuiDragInput);
+		ImGui::Checkbox("Use Keyboard Input", &ImGuiTextInput);
 
 		if (ImGuiShowGlobal)
 		{
@@ -60,24 +52,47 @@ void Transform::ImGUIUpdate()
 		ImGui::TreePop();
 	}
 
-	ImGui::Separator();
-	//Position Set
-	ImGui::PushID(0);
-	float* position[2] = { &m_localPosition.X, &m_localPosition.Y };
-	ImGui::InputFloat2("Position", position[0]);
-	ImGui::PopID();
+	if (ImGuiTextInput)
+	{
+		ImGui::Separator();
+		//Position Set
+		ImGui::PushID(0);
+		float* position[2] = { &m_localPosition.X, &m_localPosition.Y };
+		ImGui::InputFloat2("Position", position[0]);
+		ImGui::PopID();
 
-	//Rotation Set
-	ImGui::PushID(1);
-	ImGui::InputFloat("Rotation", &m_localRotation);
-	ImGui::PopID();
+		//Rotation Set
+		ImGui::PushID(1);
+		ImGui::InputFloat("Rotation", &m_localRotation);
+		ImGui::PopID();
 
-	//Scale Set
-	ImGui::PushID(2);
-	float* scale[2] = { &m_localScale.X, &m_localScale.Y };
-	ImGui::InputFloat2("Scale", scale[0]);
-	ImGui::PopID();
+		//Scale Set
+		ImGui::PushID(2);
+		float* scale[2] = { &m_localScale.X, &m_localScale.Y };
+		ImGui::InputFloat2("Scale", scale[0]);
+		ImGui::PopID();
+	}
+	
+	if (ImGuiDragInput)
+	{
+		ImGui::Separator();
+		//Position Set
+		ImGui::PushID(4);
+		float* position[2] = { &m_localPosition.X, &m_localPosition.Y };
+		ImGui::DragFloat2("Position", position[0]);
+		ImGui::PopID();
 
+		//Rotation Set
+		ImGui::PushID(5);
+		ImGui::DragFloat("Rotation", &m_localRotation);
+		ImGui::PopID();
+
+		//Scale Set
+		ImGui::PushID(6);
+		float* scale[2] = { &m_localScale.X, &m_localScale.Y };
+		ImGui::DragFloat2("Scale", scale[0]);
+		ImGui::PopID();
+	}
 
 }
 
@@ -125,6 +140,8 @@ DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
 		localToWorldMatrix = CalculateLocalMatrix() * parent->GetTransform()->GetLocalToWorldMatrix();
 	}
 
+	m_position = PosToLocalSpace();
+
 	return localToWorldMatrix;
 }
 
@@ -157,9 +174,10 @@ DirectX::XMMATRIX Transform::CalculateLocalMatrix()
 		DirectX::XMMatrixTranslation(m_localPosition.X, m_localPosition.Y, 0.0f);
 }
 
-Vector2 Transform::PosToLocalSpace(Vector2& point)
+Vector2 Transform::PosToLocalSpace()
 {
 	DirectX::XMFLOAT4X4 temp;
+	Vector2 point;
 	DirectX::XMStoreFloat4x4(&temp, localToWorldMatrix);
 	point.X = temp._41;
 	point.Y = temp._42;
