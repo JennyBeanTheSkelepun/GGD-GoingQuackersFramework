@@ -32,7 +32,7 @@ public:
 	virtual void StartAPIRenderLoop() = 0;
 
 	virtual void ResizeWindowCall() = 0;
-	virtual Vector2 GetWindowDimensions() = 0;
+	virtual Vector2 GetWindowDimentions() = 0;
 
 	virtual void SetNewActiveCamera(VirtualCamera* vCam) = 0;
 	virtual VirtualCamera* GetActiveCamera() = 0;

@@ -22,9 +22,9 @@ void Rigidbody::OnDestroy()
 //- Update Render Functions -//
 void Rigidbody::Update()
 {
-	for(GameObject* obj : Collision::getInstance()->Raycast(Vector2(3, 0), Vector2()))
+	if (Collision::getInstance()->RaycastAABB(Vector2(3, 0), Vector2(), GetOwner()))
 	{
-		Debug::getInstance()->Log("Ray hit " + obj->GetName());
+		Debug::getInstance()->Log("Ray hit " + GetOwner()->GetName());
 	}
 
 	if (EngineGuiClass::getInstance()->IsInPlayMode())

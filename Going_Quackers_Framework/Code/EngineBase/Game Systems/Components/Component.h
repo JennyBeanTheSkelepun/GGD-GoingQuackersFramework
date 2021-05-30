@@ -24,13 +24,13 @@ class Component
 public:
 	Component(GameObject* owner, ComponentTypes a_type, std::string typeName);
 	~Component();
-	
+
 	virtual void OnDestroy() = 0;
 	virtual void Update() = 0;
 	virtual void ImGUIUpdate() = 0;
 	virtual json* SceneSave() = 0;
 	virtual void SceneLoad(json* componentJSON) = 0;
-	
+
 	void ImGUIDisplay();
 	GameObject* GetOwner();
 	ComponentTypes GetType();

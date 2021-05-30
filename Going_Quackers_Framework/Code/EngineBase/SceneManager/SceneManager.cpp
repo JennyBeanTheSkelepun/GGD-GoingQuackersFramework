@@ -4,7 +4,6 @@
 #include "../Game Systems/Components/Physics/Rigidbody.h"
 #include "../Game Systems/Components/VirtualCamera.h"
 #include "../Game Systems/Components/Player.h"
-#include "../Game Systems/Components/AudioSource.h"
 
 #include "../Game Systems/Debug.h"
 
@@ -307,8 +306,6 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			else {
 				Debug::getInstance()->LogError("Error saving to file, Component Type Error: " + std::string(componentType));
 			}
-
-			SaveChildren(ap_Scene->GetObjectByIndex(i), &l_object);
 		}
 
 		l_outfile["objects"] += l_object;

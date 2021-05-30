@@ -8,7 +8,6 @@ DirectXGraphics::DirectXGraphics() : GraphicsInterface() //<-------------- TODO 
 	mp_ImGui = nullptr;
 	mp_ShaderManager = nullptr;
 	mp_TextureManager = nullptr;
-	mp_AudioManager = nullptr;
 	mp_Window = nullptr;
 }
 
@@ -39,7 +38,7 @@ void DirectXGraphics::ResizeWindowCall()
 	ImGui_ImplDX11_CreateDeviceObjects();
 }
 
-Vector2 DirectXGraphics::GetWindowDimensions()
+Vector2 DirectXGraphics::GetWindowDimentions()
 {
 	return Vector2(mp_Window->mi_width, mp_Window->mi_height);
 }
@@ -179,12 +178,6 @@ bool DirectXGraphics::Initialize()
 		return false;
 	}
 
-	mp_AudioManager = AudioManager::GetInstance();
-	if (!mp_AudioManager)
-	{
-		MessageBox(mp_Window->m_hwnd, L"Could not Initalize the Audio Manager", L"Error", MB_OK);
-	}
-
 	mp_DirectXRenderLoop = new DirectXRenderLoop(mp_DirectX);
 
 	return true;
@@ -194,5 +187,4 @@ void DirectXGraphics::Update()
 {
 	mp_Camera->Update();
 	mp_ImGui->Update(mp_DirectX->mp_renderTextureResourceView, mp_Window->mi_width, mp_Window->mi_height);
-	mp_AudioManager->Update();
 }

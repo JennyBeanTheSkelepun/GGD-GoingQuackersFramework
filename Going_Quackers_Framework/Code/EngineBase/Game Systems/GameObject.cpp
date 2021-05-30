@@ -5,7 +5,6 @@
 #include "Components/Physics/Rigidbody.h"
 #include "Components/VirtualCamera.h"
 #include "Components/Player.h"
-#include "Components/AudioSource.h"
 #include "Debug.h"
 #include "Components/LineRenderer.h"
 
@@ -49,7 +48,7 @@ void GameObject::Update()
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		Component* component = m_components[i];
-		
+
 		if (!component->ShouldDestroy())
 			component->Update();
 
@@ -98,6 +97,9 @@ void GameObject::ImGUIUpdate()
 					break;
 				case 3:
 					AddComponent<Player>();
+					break;
+				case 4:
+					AddComponent<LineRenderer>();
 					break;
 				default:
 					Debug::getInstance()->LogError("Component Type Not Recognized");

@@ -48,15 +48,14 @@ public:
 	inline void SetAutoSave(bool value) { mb_doAutoSave = value; }
 
 private:
-	Scene* mp_CurrentScene;
-	bool mb_doAutoSave;
-
 	Scene* LoadScene(std::string as_Path);
-	void LoadChildren(GameObject* ap_object, json* ap_json);
 	void UnloadScene(bool as_SaveToJSON);
 
+	Scene* mp_CurrentScene;
+
+	bool mb_doAutoSave;
+
 	void SaveToJSON(Scene* ap_Scene);
-	void SaveChildren(GameObject* lp_object, json* ap_json);
 	std::wstring stringToWString(std::string as_string);
 
 	template<typename T>
