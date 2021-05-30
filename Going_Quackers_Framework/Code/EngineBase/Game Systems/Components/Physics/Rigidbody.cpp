@@ -26,7 +26,7 @@ void Rigidbody::Update()
 	{
 		Debug::getInstance()->Log("Ray hit " + obj->GetName());
 		Force newForce;
-		newForce.force = Vector2(0.1f, 0);
+		newForce.force = Vector2(-0.1f, 0);
 		AddForce(newForce);
 	}
 

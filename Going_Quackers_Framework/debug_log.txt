@@ -1,5 +1,7 @@
 Loading Scene from path: SceneConfig/default.json
 Scene load complete.
-Ray hit GameObject 29358
 Ray hit GameObject 26962
+Ray hit GameObject 11478
+Obj 24464 Collided with Obj GameObject 11478
+Obj GameObject 11478 Collided with Obj 24464
 
