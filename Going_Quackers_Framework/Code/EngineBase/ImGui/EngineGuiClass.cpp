@@ -23,6 +23,8 @@ EngineGuiClass::EngineGuiClass()
 	NewSceneID = new char[100]();
 	NewSceneType = new char[100]();
 	NewSceneName = new char[100]();
+	ChangeSceneType = new char[100]();
+	ChangeSceneName = new char[100]();
 	LoadWindowPositions();
 }
 
@@ -85,8 +87,26 @@ void EngineGuiClass::EditorUpdate()
 					ClearInspector();
 					SceneManager::GetInstance()->NewScene(NewSceneID, NewSceneName, NewSceneType, SceneManager::GetInstance()->GetAutoSave());
 				}
+				else if (std::string(NewSceneID) != "") {
+					ClearInspector();
+					SceneManager::GetInstance()->NewScene(NewSceneID, "New Scene", "DEBUG", SceneManager::GetInstance()->GetAutoSave());
+				}
 				else {
-					Debug::getInstance()->LogWarning("Please fill in the three boxes");
+					Debug::getInstance()->LogWarning("Please fill in the scene ID box");
+				}
+			}
+			ImGui::Separator();
+			ImGui::Text("Current Scene ID: ");
+			ImGui::SameLine();
+			ImGui::Text(SceneManager::GetInstance()->GetCurrentScene()->GetSceneID().c_str());
+			ImGui::InputText(":Change Scene Display Name", ChangeSceneName, 100);
+			ImGui::InputText(":Change Scene Scene Type", NewSceneType, 100);
+			if (ImGui::MenuItem("Update Scene Information")) {
+				if (std::string(ChangeSceneName) != "") {
+					SceneManager::GetInstance()->GetCurrentScene()->SetSceneDisplayName(ChangeSceneName);
+				}
+				if (std::string(ChangeSceneType) != "") {
+					SceneManager::GetInstance()->GetCurrentScene()->SetSceneType(ChangeSceneType);
 				}
 			}
 			ImGui::Separator();
