@@ -42,7 +42,7 @@ private:
 
 	std::vector<GameObject*> mp_SceneObjects;
 
-	GameObject* GetChildObjectByName(std::string as_id, GameObject* ap_parent);
+	GameObject* GetChildObjectByName(std::string as_name, GameObject* ap_parent);
 	GameObject* GetChildObjectByID(std::string as_id, GameObject* ap_parent);
 };
 
