@@ -235,7 +235,6 @@ void Player::GrabWall()
 	else
 	{
 		//for testing
-		Debug::getInstance()->Log(playerObj->GetComponent<Rigidbody>()->GetCollideFlag());
 		Debug::getInstance()->Log("wall not grabbed");
 	}
 
