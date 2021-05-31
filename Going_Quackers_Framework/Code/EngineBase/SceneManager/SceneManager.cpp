@@ -121,7 +121,8 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 	struct stat buffer;
 	if (stat(as_Path.c_str(), &buffer) != 0) {
 		Debug::getInstance()->LogError("Could not find SceneConfig File. Please make sure you save your scenes.");
-		return nullptr;
+		Debug::getInstance()->LogWarning("Load Failed, returning to default scene...");
+		return LoadScene("SceneConfig/default.json");
 	}
 
 	// Load Config from JSON file
@@ -219,14 +220,11 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 		}
 
 		lp_newObject->SetParent(ap_object);
-		ap_object->AddChild(lp_newObject);
 
 		if (child.value()["children"].size() > 0)
 		{
 			LoadChildren(lp_newObject, &child.value());
 		}
-
-		mp_CurrentScene->AddObject(lp_newObject);
 	}
 }
 

@@ -34,9 +34,9 @@ public:
 	Vector2 InverseTransformPoint(Vector2 point);
 
 	//Setters and Getters
-	void SetPosition(Vector2 position) { this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
+	void SetPosition(Vector2 position) {  this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
 	Vector2 GetPosition() { return m_position; }
-	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; this->m_position = TransformPoint(position); }
+	void SetLocalPosition(Vector2 position) {  this->m_localPosition = position; this->m_position = PosToLocalSpace(); }
 	Vector2 GetLocalPosition() { return this->m_localPosition; }
 
 	void SetRotation(double rotation) { this->m_rotation = rotation; }
@@ -44,20 +44,27 @@ public:
 	void SetLocalRotation(double rotation) { this->m_localRotation = rotation; }
 	double GetLocalRotation() { return this->m_localRotation; }
 
-	void SetScale(Vector2 scale) { this->m_scale = scale; }
-	Vector2 GetScale() { return this->m_scale; }
+	void SetScale(Vector2 scale) { this->mf_scale = scale; }
+	Vector2 GetScale() { return this->mf_scale; }
 	void SetLocalScale(Vector2 scale) { this->m_localScale = scale; }
 	Vector2 GetLocalScale() { return this->m_localScale; }
 
 private:
+	Vector2 PosToLocalSpace();
+
+	bool ImGuiShowGlobal;
+	bool ImGuiSliderInput;
+	bool ImGuiDragInput;
+	bool ImGuiTextInput;
+
 	//World Positions
 	Vector2 m_position;
-	double m_rotation;
-	Vector2 m_scale;
+	float m_rotation;
+	Vector2 mf_scale;
 
 	//Local Positions
 	Vector2 m_localPosition;
-	double m_localRotation;
+	float m_localRotation;
 	Vector2 m_localScale;
 
 	//Transform that converts from local space to world space
