@@ -89,8 +89,7 @@ public:
 
 	std::vector<GameObject*> GetCollidedObjects() { return m_CollidingObjects; }
 
-	//todo move back to private when main updated
-	bool m_IsStatic = false;
+
 
 private:
 	void PhysicsCollide();
@@ -109,7 +108,7 @@ private:
 	Trigger* mp_Trigger;
 	GravityEmitter* mp_GravEmitter;
 
-
+	bool m_IsStatic = false;
 
 	float m_Radius = 1.0f;
 	Vector2 m_AABBRect = Vector2(1.0f, 1.0f);

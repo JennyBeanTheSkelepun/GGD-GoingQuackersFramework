@@ -204,7 +204,7 @@ void Player::GrabWall()
 		Debug::getInstance()->LogError("the player doesn't have a rigidbody component");
 	}
 	//todo add rope length to the if statement
-	else if (m_grappleState == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerObj->GetComponent<Rigidbody>()->GetCollideFlag() == true)
+	else if (m_grappleState == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true)
 	{
 
 		wallGrabbed = true;
@@ -215,6 +215,14 @@ void Player::GrabWall()
 		Debug::getInstance()->Log(wallGrabbed);
 		Debug::getInstance()->Log("wall grabbed");
 
+	}
+	else if (playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true  && m_grappleState == GRAPPLE_STATE::RETURNING /*&& rope length is less than 1*/ )
+	{
+		wallGrabbed = true;
+
+		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
+		Debug::getInstance()->Log(wallGrabbed);
+		Debug::getInstance()->Log("wall grabbed");
 	}
 	else
 	{
@@ -247,9 +255,9 @@ void Player::GrabWall()
 			playerRigidbody->AddForce(realForce);
 			if (vectorBetweenPlayerAndWall.Length()<=1)
 			{
-				//todo replace with the actual function when pushed to main
-				playerRigidbody->m_IsStatic = true;
+				playerRigidbody->setStatic(true);
 				Debug::getInstance()->Log("attached");
+				// play wall grab audio
 			}
 		}
 
