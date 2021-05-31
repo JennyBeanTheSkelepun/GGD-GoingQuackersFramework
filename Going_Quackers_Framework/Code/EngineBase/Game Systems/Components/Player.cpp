@@ -199,6 +199,14 @@ void Player::WallPush()
 
 void Player::GrabWall()
 {
+	if (wallGrabbed == false)
+	{
+		if (playerObj->GetComponent<AudioSource>() != nullptr)
+		{
+			playerObj->GetComponent<AudioSource>()->Stop();
+		}
+		
+	}
 	if (playerObj->GetComponent<Rigidbody>() == nullptr)
 	{
 		Debug::getInstance()->LogError("the player doesn't have a rigidbody component");
@@ -216,7 +224,7 @@ void Player::GrabWall()
 		Debug::getInstance()->Log("wall grabbed");
 
 	}
-	else if (playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true  && m_grappleState == GRAPPLE_STATE::RETURNING /*&& rope length is less than 1*/ )
+	else if (playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true /* && m_grappleState == GRAPPLE_STATE::RETURNING*/ /*&& rope length is less than 1*/ )
 	{
 		wallGrabbed = true;
 
@@ -257,7 +265,14 @@ void Player::GrabWall()
 			{
 				playerRigidbody->setStatic(true);
 				Debug::getInstance()->Log("attached");
-				// play wall grab audio
+				if (playerObj->GetComponent<AudioSource>() == nullptr)
+				{
+					Debug::getInstance()->LogError("the player doesn't have a audio source component");
+				}
+				else
+				{
+					playerObj->GetComponent<AudioSource>()->Play();
+				}
 			}
 		}
 
