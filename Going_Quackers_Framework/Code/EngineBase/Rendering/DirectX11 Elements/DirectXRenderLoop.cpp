@@ -79,7 +79,7 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 
 		GameObject* tempGameObject = m_linesToRender[i]->GetOwner();
 
-		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, tempGameObject->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
+		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, m_linesToRender[i]->GetLocalTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
 		if (!result)
 		{
 			return false;
@@ -179,7 +179,11 @@ int DirectXRenderLoop::SetObjectToRender(SpriteRenderer* ap_ObjToRender)
 
 int DirectXRenderLoop::RemoveObjectToRenderLoop(int ai_index)
 {
-	m_gameObjectsToRender.erase(m_gameObjectsToRender.begin() + ai_index);
+	for (int i = 0; i < m_gameObjectsToRender.size(); i++)
+	{
+		if (m_gameObjectsToRender[i]->GetRenderLoopID() == ai_index)
+			m_gameObjectsToRender.erase(m_gameObjectsToRender.begin() + i);
+	}
 	return -1;
 }
 

@@ -176,7 +176,7 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 		}
 
 		if (newObject.value().contains("LINERENDERER")) {
-			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINEREDERER"]);
+			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINERENDERER"]);
 		}
 
 		if (newObject.value()["children"].size() > 0)
@@ -225,7 +225,7 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 		}
 
 		if (child.value().contains("LINERENDERER")) {
-			LoadComponentFromScene<LineRenderer>(lp_newObject, &child.value()["LINEREDERER"]);
+			LoadComponentFromScene<LineRenderer>(lp_newObject, &child.value()["LINERENDERER"]);
 		}
 
 		lp_newObject->SetParent(ap_object);

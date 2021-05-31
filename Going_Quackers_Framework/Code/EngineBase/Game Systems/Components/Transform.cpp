@@ -123,7 +123,10 @@ void Transform::SceneLoad(json* componentJSON)
 
 DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
 {
-	GameObject* parent = mp_owner->GetParent();
+	GameObject* parent = nullptr;
+
+	if (mp_owner != nullptr)
+		parent = mp_owner->GetParent();
 
 	if (parent == nullptr || parent == mp_owner)
 	{

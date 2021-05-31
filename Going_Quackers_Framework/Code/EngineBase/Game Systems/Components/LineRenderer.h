@@ -33,6 +33,8 @@ public:
 	void SetEndPos(Vector2 a_endPos) { m_endPos = a_endPos; };
 	void SetWidth(float af_width) { mf_width = af_width; };
 
+	Transform* GetLocalTransform();
+
 private:
 	Vector2 m_startPos;
 	Vector2 m_endPos;
@@ -42,6 +44,10 @@ private:
 	char* ShaderSelectionInput;
 	int mi_Texture, mi_Shader;
 	std::string m_TextureLocation, m_ShaderLocation;
+
+	Transform* LocalTransform;
+	void CalculateRequiredPositionRoatationScale();
+
 };
 
 #endif //- _LINE_RENDERER_H_ -//

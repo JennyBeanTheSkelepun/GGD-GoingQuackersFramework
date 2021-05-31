@@ -11,10 +11,16 @@ LineRenderer::LineRenderer(GameObject* owner) : Component(owner, ComponentTypes:
 
 	TextureSelectionInput = new char[100]{ "Assets/stone.tga" };
 	ShaderSelectionInput = new char[100]{ "Assets/Shaders/TextureSimple.fx" };
+
+	LocalTransform = new Transform(nullptr);
+	CalculateRequiredPositionRoatationScale();
 }
 
 LineRenderer::~LineRenderer()
 {
+	//delete LocalTransform;
+	//LocalTransform = nullptr;
+
 	Graphics::getInstance()->RemoveLineRenderer(this);
 }
 
@@ -25,6 +31,8 @@ void LineRenderer::OnDestroy()
 
 void LineRenderer::Update()
 {
+	LocalTransform->Update();
+	CalculateRequiredPositionRoatationScale();
 }
 
 void LineRenderer::ImGUIUpdate()
@@ -77,12 +85,69 @@ void LineRenderer::ImGUIUpdate()
 //- Scene Save / Load -//
 void LineRenderer::SceneLoad(json* componentJSON)
 {
-	m_startPos.X = ((float)(*componentJSON)["StartX"]);
-	m_startPos.Y = ((float)(*componentJSON)["StartY"]);
-	m_endPos.X = ((float)(*componentJSON)["EndX"]);
-	m_endPos.Y = ((float)(*componentJSON)["EndY"]);
-	mf_width = ((float)(*componentJSON)["Width"]);
+	m_startPos.X = (*componentJSON)["StartX"];
+	m_startPos.Y = (*componentJSON)["StartY"];
+	m_endPos.X = (*componentJSON)["EndX"];
+	m_endPos.Y = (*componentJSON)["EndY"];
+	mf_width = (*componentJSON)["Width"];
 	m_TextureLocation = (*componentJSON)["TextureLocation"];
+	
+	CalculateRequiredPositionRoatationScale();
+}
+
+Transform* LineRenderer::GetLocalTransform()
+{
+	return LocalTransform;
+}
+
+void LineRenderer::CalculateRequiredPositionRoatationScale()
+{
+	//- Var Decliration -//
+	Vector2 Pos, Scale, start = m_startPos, end = m_endPos;
+	float roatation, angleOffset = 90;
+
+	//if (m_startPos.X < m_endPos.X && m_startPos.Y < m_endPos.Y)
+	//{
+	//	start = m_endPos;
+	//	end = m_startPos;
+	//	angleOffset = -27;
+	//}
+
+	//- Position -//
+	Vector2 DirectionOfTravel;
+	DirectionOfTravel = start + end;
+	DirectionOfTravel /= 2;
+	Pos = DirectionOfTravel;
+
+	//- Rotation -//
+	Vector2 LocalisedEndPos = start - end;
+	Vector2 Up = Vector2(start.X, start.Y + 1);
+	float LocalEndPosLength = LocalisedEndPos.Length();
+	float UpLength = Up.Length();
+
+	if (LocalEndPosLength != 0 && UpLength != 0)
+	{
+		LocalisedEndPos.Normalize();
+		Up.Normalize();
+		float dot = Up.Dot(LocalisedEndPos);
+		float determinant = Up.X * LocalisedEndPos.Y - Up.Y * LocalisedEndPos.X;
+		float angle = std::atan2f(dot, determinant);
+		angle *= 180 / 3.1415;
+
+		roatation = angle;
+	}
+	else
+	{
+		roatation = 0;
+	}
+
+	//- Scale -//
+	Scale.X = m_startPos.Distance(m_endPos);
+	Scale.Y = mf_width;
+
+	LocalTransform->SetLocalPosition(Pos);
+	LocalTransform->SetLocalRotation(roatation);
+	LocalTransform->SetLocalScale(Scale);
 }
 
 json* LineRenderer::SceneSave()

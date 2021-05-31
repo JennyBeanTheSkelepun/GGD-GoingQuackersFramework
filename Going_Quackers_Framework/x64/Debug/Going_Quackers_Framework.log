@@ -1,7 +1,59 @@
-﻿  DirectXRenderLoop.cpp
+﻿  LineRenderer.cpp
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(42,57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(44,67): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(177,41): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXRenderLoop.cpp(108): warning C4715: 'DirectXRenderLoop::EditorRender': not all control paths return a value
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\LineRenderer.cpp(143,24): warning C4305: '*=': truncation from 'double' to 'float'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xstring(2468,23): warning C4244: 'argument': conversion from '_Elem' to 'const _Elem', possible loss of data
+          with
+          [
+              _Elem=wchar_t
+          ]
+          and
+          [
+              _Elem=char
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xstring(2479): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<_Iter>(_Iter,const _Iter,std::input_iterator_tag)' being compiled
+          with
+          [
+              _Iter=wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xstring(2479): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<_Iter>(_Iter,const _Iter,std::input_iterator_tag)' being compiled
+          with
+          [
+              _Iter=wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xstring(2459): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<_Iter>(const _Iter,const _Iter,std::forward_iterator_tag)' being compiled
+          with
+          [
+              _Iter=wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xstring(2459): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<_Iter>(const _Iter,const _Iter,std::forward_iterator_tag)' being compiled
+          with
+          [
+              _Iter=wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xstring(3092): message : see reference to function template instantiation 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<wchar_t*,0>(_Iter,_Iter,const _Alloc &)' being compiled
+          with
+          [
+              _Iter=wchar_t *,
+              _Alloc=std::allocator<char>
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xstring(3092): message : see reference to function template instantiation 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<wchar_t*,0>(_Iter,_Iter,const _Alloc &)' being compiled
+          with
+          [
+              _Iter=wchar_t *,
+              _Alloc=std::allocator<char>
+          ]
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\LineRenderer.cpp(57): message : see reference to function template instantiation 'std::basic_string<char,std::char_traits<char>,std::allocator<char>> &std::basic_string<char,std::char_traits<char>,std::allocator<char>>::assign<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(const _Iter,const _Iter)' being compiled
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>
+          ]
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\LineRenderer.cpp(57): message : see reference to function template instantiation 'std::basic_string<char,std::char_traits<char>,std::allocator<char>> &std::basic_string<char,std::char_traits<char>,std::allocator<char>>::assign<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(const _Iter,const _Iter)' being compiled
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>
+          ]
   Going_Quackers_Framework.vcxproj -> C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
