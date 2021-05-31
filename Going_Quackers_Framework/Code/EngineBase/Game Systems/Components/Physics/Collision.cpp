@@ -137,6 +137,15 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 	collide = DoIntersect(corner3, corner1, RayOrigin, rayEnd);
 
 	return collide;
+
+	Vector2 RayEnd = RayOrigin + Ray;
+
+	float a = RayEnd.Y - RayOrigin.Y;
+	float b = RayOrigin.X - RayEnd.X;
+	float c = a * RayOrigin.X + b * RayOrigin.Y;
+	c = -c;
+
+	//TODO:: Build AABB with 4 line line intersects and check the points of intersect between the corners
 }
 
 std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin)
