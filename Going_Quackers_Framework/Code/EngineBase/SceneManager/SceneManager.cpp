@@ -6,6 +6,7 @@
 #include "../Game Systems/Components/VirtualCamera.h"
 #include "../Game Systems/Components/Player.h"
 #include "../Game Systems/Components/AudioSource.h"
+#include "../Game Systems/Components/LineRenderer.h"
 
 #include "../Game Systems/Debug.h"
 
@@ -174,6 +175,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<SpringJoint>(lp_newObject, &newObject.value()["SPRINGJOINT"]);
 		}
 
+		if (newObject.value().contains("LINERENDERER")) {
+			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINEREDERER"]);
+		}
+
 		if (newObject.value()["children"].size() > 0)
 		{
 			LoadChildren(lp_newObject, &newObject.value());
@@ -217,6 +222,10 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 
 		if (child.value().contains("AUDIOSOURCE")) {
 			LoadComponentFromScene<AudioSource>(lp_newObject, &child.value()["AUDIOSOURCE"]);
+		}
+
+		if (child.value().contains("LINERENDERER")) {
+			LoadComponentFromScene<LineRenderer>(lp_newObject, &child.value()["LINEREDERER"]);
 		}
 
 		lp_newObject->SetParent(ap_object);
@@ -302,9 +311,12 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				break;
 			case ComponentTypes::AUDIOSOURCE:
 				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
-			break;
+				break;
 			case ComponentTypes::SPRINGJOINT:
 				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
+				break;
+			case ComponentTypes::LINERENDERER:
+				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
@@ -381,6 +393,9 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				break;
 			case ComponentTypes::AUDIOSOURCE:
 				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
+				break;
+			case ComponentTypes::LINERENDERER:
+				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";

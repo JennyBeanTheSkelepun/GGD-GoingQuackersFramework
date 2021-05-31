@@ -142,6 +142,7 @@
     <ClCompile Include="Code\EngineBase\EngineMain.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\AudioSource.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\LineRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Collision.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Code\EngineBase\EngineMain.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\AudioSource.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\LineRenderer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Collision.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h" />

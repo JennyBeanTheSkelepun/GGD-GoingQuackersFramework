@@ -14,8 +14,6 @@ Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANS
 	m_localPosition = Vector2(0.0f, 0.0f);
 	m_localRotation = 0.0f;
 	m_localScale = Vector2(1.0f, 1.0f);
-	
-
 }
 
 Transform::~Transform()

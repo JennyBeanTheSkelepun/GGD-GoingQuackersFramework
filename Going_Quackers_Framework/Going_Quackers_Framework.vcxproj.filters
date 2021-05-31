@@ -288,6 +288,9 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpringJoint.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\LineRenderer.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -437,11 +440,8 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpringJoint.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpringJoint.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\LineRenderer.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
