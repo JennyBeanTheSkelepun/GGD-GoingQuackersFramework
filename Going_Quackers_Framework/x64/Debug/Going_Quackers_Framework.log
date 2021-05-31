@@ -1,6 +1,10 @@
-﻿  Rigidbody.cpp
+﻿  Collision.cpp
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(42,57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(44,90): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(23,142): warning C4390: ';': empty controlled statement found; is this the intent?
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(41,143): warning C4390: ';': empty controlled statement found; is this the intent?
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(81,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(200,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   Going_Quackers_Framework.vcxproj -> G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

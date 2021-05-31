@@ -1,5 +1,5 @@
 Loading Scene from path: SceneConfig/default.json
 Scene load complete.
-Obj GameObject 11478 Collided with Obj 24464
-Obj 24464 Collided with Obj GameObject 11478
+0
+3.14159
 

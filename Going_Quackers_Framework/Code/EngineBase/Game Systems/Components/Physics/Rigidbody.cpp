@@ -22,15 +22,16 @@ void Rigidbody::OnDestroy()
 //- Update Render Functions -//
 void Rigidbody::Update()
 {
-	if (Input::getInstance()->isKeyPressedDown(KeyCode::H))
-	{
-		Force newForce;
-		newForce.force = -GetOwner()->GetTransform()->GetPosition() / 10.0f;
-		AddForce(newForce);
-	}
 
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
+		if (Collision::getInstance()->Raycast(Vector2(1.0f, 0.0f), Vector2(0.0f, 0.0f), GetOwner()))
+		{
+			Force newForce;
+			newForce.force = -GetOwner()->GetTransform()->GetPosition() / 10.0f;
+			AddForce(newForce);
+		}
+
 		PhysicsCollide();
 
 		if (m_PhysicsType == PhysicsTypes::RB && !m_IsStatic)
@@ -349,33 +350,6 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 {
 	for (GameObject* obj : *collidingObjects)
 	{
-		/*Rigidbody* rb = obj->GetComponent<Rigidbody>();
-		if (rb->GetCollideFlag())
-		{
-			continue;
-		}
-
-		Vector2 vectorBetweenObjs = obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
-		float distance = vectorBetweenObjs.Length();
-
-		Vector2 forceDirection = vectorBetweenObjs.Normalize();
-
-		if (distance == 0)
-		{
-			continue;
-		}
-
-		Vector2 force = forceDirection * (distance / 2.0f);
-
-		Force appForce;
-		appForce.force = force;
-		appForce.moveIgnore = MovementIgnore::NONE;
-
-		rb->AddForce(appForce);
-
-		appForce.force = -appForce.force;
-		AddForce(appForce);*/
-
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();
 
 		if (rb == nullptr)
