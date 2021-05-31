@@ -47,6 +47,7 @@ private:
 
 	void GrabWall();
 	GameObject* playerObj;
+	std::vector<GameObject*> wallObj;
 };
 
 #endif // !PLAYER_H

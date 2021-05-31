@@ -40,6 +40,8 @@ void Player::Update()
 		{
 			wallPushCollided = true;
 			wallPushCollideTimer = wallPushTimerMax;
+			if (!wallGrabbed)
+				wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
 		}
 		if (wallPushPressed && wallPushCollided)
 		{
@@ -107,10 +109,10 @@ void Player::HandleInput()
 	if (mouseMagnitude != 0 && upMagnitude != 0)
 	{
 		// use dot product and determinant
-		Vector2 mouseNormal = mouseVector.Normalize();
-		Vector2 upNormal = upVector.Normalize();
-		float dot = mouseNormal.Dot(upNormal);
-		float determinant = mouseNormal.X * upNormal.Y - mouseNormal.Y * upNormal.X;
+		mouseVector.Normalize();
+		upVector.Normalize();
+		float dot = mouseVector.Dot(upVector);
+		float determinant = mouseVector.X * upVector.Y - mouseVector.Y * upVector.X;
 		float angle = std::atan2f(determinant, dot);
 		// radians to degrees
 		angle *= 180 / 3.1415;
@@ -160,10 +162,8 @@ void Player::HandleInput()
 	if (wallPushPressed)
 	{
 		wallPushPressTimer -= Time::GetDeltaTime() * 1000;
-		if (wallPushPressTimer < 0) {
+		if (wallPushPressTimer < 0)
 			wallPushPressed = false;
-			Debug::getInstance()->Log("keypress ran out!");
-		}
 	}
 	if (wallPushCollided)
 	{
@@ -228,13 +228,46 @@ void Player::GrappleRetract()
 
 void Player::WallPush()
 {
-	wallGrabbed = false;
-	playerObj->GetComponent<Rigidbody>()->setStatic(false);
+	Rigidbody* playerRB = playerObj->GetComponent<Rigidbody>();
+	Force pushForce;
+
+	// average of collided objects' positions
+	Vector2 collPos = Vector2(0, 0);
+	if (wallObj.size() > 0) // should always be at least one, but just in case
+	{
+		for (int i = 0; i < wallObj.size(); i++)
+		{
+			collPos += wallObj[i]->GetTransform()->GetPosition();
+		}
+		collPos /= wallObj.size();
+	}
+
+	// pushing off a wall from a standstill
+	if (wallGrabbed)
+	{
+		wallGrabbed = false;
+		playerRB->setStatic(false);
+		// reflect (not perpendicular) vector between player and collided position
+		Vector2 playerToWall = collPos - playerObj->GetTransform()->GetPosition();
+		pushForce.force = playerToWall * -1;
+		pushForce.force.Normalize();
+	}
+	else // pushing off a wall while moving
+	{
+		// calculate midpoint between current velocity and collided position 
+		Vector2 vel = playerObj->GetComponent<Rigidbody>()->GetVelocity();
+		Vector2 midpoint = (vel + collPos) / 2;
+		pushForce.force = midpoint;
+	}
 
 	// move player away
+	playerRB->AddForce(pushForce);
 	
+	// cleanup
 	wallPushPressed = false;
 	wallPushCollided = false;
+	wallObj.clear();
+	playerRB = nullptr;
 }
 
 void Player::GrabWall()
