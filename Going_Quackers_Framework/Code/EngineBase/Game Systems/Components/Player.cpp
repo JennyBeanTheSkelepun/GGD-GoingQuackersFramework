@@ -33,9 +33,10 @@ void Player::Update()
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
 		HandleInput();
+		GrabWall();
 
 		// check collision for pushing off a wall
-		if (playerObj->GetComponent<Rigidbody>()) //.GetCollidingBool()
+		if (playerObj->GetComponent<Rigidbody>()->GetCollidingBool())
 		{
 			wallPushCollided = true;
 			wallPushCollideTimer = wallPushTimerMax;
@@ -108,8 +109,8 @@ void Player::HandleInput()
 		// use dot product and determinant
 		Vector2 mouseNormal = mouseVector.Normalize();
 		Vector2 upNormal = upVector.Normalize();
-		float dot = upNormal.Dot(mouseNormal);
-		float determinant = upNormal.X * mouseNormal.Y - upNormal.Y * mouseNormal.X;
+		float dot = mouseNormal.Dot(upNormal);
+		float determinant = mouseNormal.X * upNormal.Y - mouseNormal.Y * upNormal.X;
 		float angle = std::atan2f(determinant, dot);
 		// radians to degrees
 		angle *= 180 / 3.1415;
@@ -158,9 +159,11 @@ void Player::HandleInput()
 	// count down wall-pushing input buffer timers
 	if (wallPushPressed)
 	{
-		wallPushPressTimer -= Time::GetDeltaTime()*1000;
-		if (wallPushPressTimer < 0)
+		wallPushPressTimer -= Time::GetDeltaTime() * 1000;
+		if (wallPushPressTimer < 0) {
 			wallPushPressed = false;
+			Debug::getInstance()->Log("keypress ran out!");
+		}
 	}
 	if (wallPushCollided)
 	{
@@ -226,9 +229,10 @@ void Player::GrappleRetract()
 void Player::WallPush()
 {
 	wallGrabbed = false;
+	playerObj->GetComponent<Rigidbody>()->setStatic(false);
+
 	// move player away
 	
-	// rigidbody setStatic(false)
 	wallPushPressed = false;
 	wallPushCollided = false;
 }
