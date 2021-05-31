@@ -224,7 +224,7 @@ void Player::GrabWall()
 		Debug::getInstance()->Log("wall grabbed");
 
 	}
-	else if (playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true /* && m_grappleState == GRAPPLE_STATE::RETURNING*/ /*&& rope length is less than 1*/ )
+	else if (playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true  && m_grappleState == GRAPPLE_STATE::RETURNING /*&& rope length is less than 1*/ )
 	{
 		wallGrabbed = true;
 
