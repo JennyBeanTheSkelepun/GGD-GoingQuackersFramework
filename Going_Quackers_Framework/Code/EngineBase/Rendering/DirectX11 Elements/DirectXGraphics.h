@@ -18,6 +18,7 @@
 
 class SpriteRenderer;
 class VirtualCamera;
+class LineRenderer;
 
 const bool VSYNC_ENABLED = false;
 const float SCREEN_DEPTH = 1000.0f;
@@ -30,6 +31,7 @@ public:
 	bool InitalizeGraphicalApi();
 	void SetNewActiveCamera(VirtualCamera* vCam) override;
 	VirtualCamera* GetActiveCamera() override;
+	void NullVirtualCamera();
 
 	int AddObjectToRenderLoop(SpriteRenderer* ar_component);
 	int RemoveObjectFromRenderLoop(int index);
@@ -51,6 +53,9 @@ public:
 
 	void ResizeWindowCall();
 	Vector2 GetWindowDimensions();
+
+	LineRenderer* AddLineRenderer(LineRenderer* toAdd);
+	LineRenderer* RemoveLineRenderer(LineRenderer* toRemove);
 
 	//- old functions -//
 	DirectXGraphics();

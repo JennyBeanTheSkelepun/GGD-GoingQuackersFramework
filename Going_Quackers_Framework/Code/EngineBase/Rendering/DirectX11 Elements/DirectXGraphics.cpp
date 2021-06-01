@@ -44,6 +44,18 @@ Vector2 DirectXGraphics::GetWindowDimensions()
 	return Vector2(mp_Window->mi_width, mp_Window->mi_height);
 }
 
+LineRenderer* DirectXGraphics::AddLineRenderer(LineRenderer* toAdd)
+{
+	mp_DirectXRenderLoop->AddLineRenderer(toAdd);
+	return nullptr;
+}
+
+LineRenderer* DirectXGraphics::RemoveLineRenderer(LineRenderer* toRemove)
+{
+	mp_DirectXRenderLoop->RemoveLineRenderer(toRemove);
+	return nullptr;
+}
+
 int DirectXGraphics::AddObjectToRenderLoop(SpriteRenderer* ar_component)
 {
 	return mp_DirectXRenderLoop->SetObjectToRender(ar_component);
@@ -67,6 +79,11 @@ void DirectXGraphics::SetNewActiveCamera(VirtualCamera* NextActiveCamera)
 VirtualCamera* DirectXGraphics::GetActiveCamera()
 {
 	return mp_Camera->GetVirtualCamera();
+}
+
+void DirectXGraphics::NullVirtualCamera()
+{
+	mp_Camera->NullVirtualCamera();
 }
 
 int DirectXGraphics::LoadTexture(std::string TextureLocation)
