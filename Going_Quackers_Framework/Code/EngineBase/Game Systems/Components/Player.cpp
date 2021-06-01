@@ -217,7 +217,7 @@ void Player::GrabWall()
 
 		wallGrabbed = true;
 
-		//this gets the object the player is coolliding with and puts it into a variable to use 
+		//this gets the object the player is colliding with and puts it into a variable to use 
 		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
 
 		Debug::getInstance()->Log(wallGrabbed);
