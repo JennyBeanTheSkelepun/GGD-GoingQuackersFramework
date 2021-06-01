@@ -14,7 +14,8 @@ enum class SpringMode
 {
 	ATTRACT_AND_REPEL = 0,
 	ATTRACT_ONLY = 1,
-	REPEL_ONLY = 2
+	REPEL_ONLY = 2,
+	NEITHER = 3
 };
 
 class SpringJoint : public Component {
