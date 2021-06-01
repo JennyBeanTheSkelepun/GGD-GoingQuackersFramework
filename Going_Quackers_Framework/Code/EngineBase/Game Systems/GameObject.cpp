@@ -7,6 +7,7 @@
 #include "Components/Player.h"
 #include "Components/AudioSource.h"
 #include "Components/SpringJoint.h"
+#include "Components/LineRenderer.h"
 #include "Components/Pickup.h"
 #include "Debug.h"
 
@@ -50,7 +51,7 @@ void GameObject::Update()
 	for (size_t i = 0; i < m_components.size(); i++)
 	{
 		Component* component = m_components[i];
-		
+
 		if (!component->ShouldDestroy())
 			component->Update();
 
@@ -78,7 +79,7 @@ void GameObject::Update()
 
 void GameObject::ImGUIUpdate()
 {
-	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint", "Pickup"};
+	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint", "Line Renderer", "Pickup"};
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{
@@ -86,7 +87,6 @@ void GameObject::ImGUIUpdate()
 		{
 			if (ImGui::Selectable(components[i]))
 			{
-				//- This should be the only hardcoded connection stating type of component -//
 				switch (i)
 				{
 				case 0:
@@ -108,8 +108,12 @@ void GameObject::ImGUIUpdate()
 					AddComponent<SpringJoint>();
 					break;
 				case 6:
+					AddComponent<LineRenderer>();
+					break;
+				case 7:
 					AddComponent<Pickup>();
 					break;
+		
 				default:
 						Debug::getInstance()->LogError("Component Type Not Recognized");
 					break;

@@ -1,7 +1,8 @@
 Loading Scene from path: SceneConfig/default.json
+0
+-146.314
 Scene load complete.
-Loading Scene from path: SceneConfig/122.json
-Obj GameObject 24464 Collided with Obj GameObject 2995
-Obj GameObject 2995 Collided with Obj GameObject 24464
-picking up scrap
 
+-146.314
+[ERROR] ERROR Cant Find Texture File
+-146.314

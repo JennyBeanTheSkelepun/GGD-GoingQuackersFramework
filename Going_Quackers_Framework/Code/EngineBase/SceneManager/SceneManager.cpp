@@ -6,6 +6,7 @@
 #include "../Game Systems/Components/VirtualCamera.h"
 #include "../Game Systems/Components/Player.h"
 #include "../Game Systems/Components/AudioSource.h"
+#include "../Game Systems/Components/LineRenderer.h"
 #include "../Game Systems/Components/Pickup.h"
 
 #include "../Game Systems/Debug.h"
@@ -65,7 +66,7 @@ void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
 	UnloadScene(as_SaveToJSON);
 	// Get path to JSON scene config
 	std::string ls_SceneConfigPath = "SceneConfig/" + as_SceneID + ".json";
-	
+
 	// Load new Scene
 	Scene* scene = LoadScene(ls_SceneConfigPath);
 
@@ -179,6 +180,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<SpringJoint>(lp_newObject, &newObject.value()["SPRINGJOINT"]);
 		}
 
+		if (newObject.value().contains("LINERENDERER")) {
+			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINERENDERER"]);
+		}
+
 		if (newObject.value()["children"].size() > 0)
 		{
 			LoadChildren(lp_newObject, &newObject.value());
@@ -222,6 +227,10 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 
 		if (child.value().contains("AUDIOSOURCE")) {
 			LoadComponentFromScene<AudioSource>(lp_newObject, &child.value()["AUDIOSOURCE"]);
+		}
+
+		if (child.value().contains("LINERENDERER")) {
+			LoadComponentFromScene<LineRenderer>(lp_newObject, &child.value()["LINERENDERER"]);
 		}
 
 		if (child.value().contains("PICKUP")) {
@@ -319,6 +328,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::SPRINGJOINT:
 				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
 				break;
+			case ComponentTypes::LINERENDERER:
+				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
+				break;
 			default:
 				componentType = "MISSING";
 				break;
@@ -394,6 +406,12 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				break;
 			case ComponentTypes::AUDIOSOURCE:
 				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
+				break;
+			case ComponentTypes::LINERENDERER:
+				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
+				break;
+			case ComponentTypes::PICKUP:
+				SaveComponent<Pickup>("PICKUP", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";

@@ -14,8 +14,6 @@ Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANS
 	m_localPosition = Vector2(0.0f, 0.0f);
 	m_localRotation = 0.0f;
 	m_localScale = Vector2(1.0f, 1.0f);
-	
-
 }
 
 Transform::~Transform()
@@ -125,7 +123,10 @@ void Transform::SceneLoad(json* componentJSON)
 
 DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
 {
-	GameObject* parent = mp_owner->GetParent();
+	GameObject* parent = nullptr;
+
+	if (mp_owner != nullptr)
+		parent = mp_owner->GetParent();
 
 	if (parent == nullptr || parent == mp_owner)
 	{
