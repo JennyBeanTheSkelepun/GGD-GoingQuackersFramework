@@ -18,8 +18,8 @@ LineRenderer::LineRenderer(GameObject* owner) : Component(owner, ComponentTypes:
 
 LineRenderer::~LineRenderer()
 {
-	//delete LocalTransform;
-	//LocalTransform = nullptr;
+	delete LocalTransform;
+	LocalTransform = nullptr;
 
 	Graphics::getInstance()->RemoveLineRenderer(this);
 }
@@ -104,20 +104,12 @@ void LineRenderer::CalculateRequiredPositionRoatationScale()
 {
 	//- Var Decliration -//
 	Vector2 Pos, Scale, start = m_startPos, end = m_endPos;
-	float roatation, angleOffset = 90;
+	float roatation = 0, angleOffset = 90;
 
-	//if (m_startPos.X < m_endPos.X && m_startPos.Y < m_endPos.Y)
-	//{
-	//	start = m_endPos;
-	//	end = m_startPos;
-	//	angleOffset = -27;
-	//}
+	
 
 	//- Position -//
-	Vector2 DirectionOfTravel;
-	DirectionOfTravel = start + end;
-	DirectionOfTravel /= 2;
-	Pos = DirectionOfTravel;
+	Pos = start;
 
 	//- Rotation -//
 	Vector2 LocalisedEndPos = start - end;
@@ -134,7 +126,7 @@ void LineRenderer::CalculateRequiredPositionRoatationScale()
 		float angle = std::atan2f(dot, determinant);
 		angle *= 180 / 3.1415;
 
-		roatation = angle;
+		roatation = angle - 76;
 	}
 	else
 	{

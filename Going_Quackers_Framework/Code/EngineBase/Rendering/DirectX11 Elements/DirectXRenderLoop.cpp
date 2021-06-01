@@ -77,9 +77,8 @@ bool DirectXRenderLoop::EditorRender(DirectXClass& ar_DirectX, DirectXCamera& ar
 		DirectXShader* tempShader = ar_Shader.GetShader(m_linesToRender[i]->GetShader());
 		Texture2D* tempTexture = ar_texture.GetTexture(m_linesToRender[i]->GetTexture());
 
-		GameObject* tempGameObject = m_linesToRender[i]->GetOwner();
-
 		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, m_linesToRender[i]->GetLocalTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
+	
 		if (!result)
 		{
 			return false;
