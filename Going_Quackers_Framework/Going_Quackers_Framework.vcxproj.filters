@@ -285,6 +285,9 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\AudioSource.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Pickup.cpp">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\EngineBase\ImGui\ImGui SourceCode\imconfig.h">
@@ -432,6 +435,9 @@
       <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Audio</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\AudioSource.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Pickup.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
   </ItemGroup>

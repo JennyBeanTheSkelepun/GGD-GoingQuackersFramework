@@ -5,6 +5,7 @@
 #include "../Game Systems/Components/VirtualCamera.h"
 #include "../Game Systems/Components/Player.h"
 #include "../Game Systems/Components/AudioSource.h"
+#include "../Game Systems/Components/Pickup.h"
 
 #include "../Game Systems/Debug.h"
 
@@ -168,6 +169,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<AudioSource>(lp_newObject, &newObject.value()["AUDIOSOURCE"]);
 		}
 
+		if (newObject.value().contains("PICKUP")) {
+			LoadComponentFromScene<Pickup>(lp_newObject, &newObject.value()["PICKUP"]);
+		}
+
 		mp_CurrentScene->AddObject(lp_newObject);
 	}
 
@@ -265,7 +270,10 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				break;
 			case ComponentTypes::AUDIOSOURCE:
 				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
-			break;
+				break;
+			case ComponentTypes::PICKUP:
+				SaveComponent<Pickup>("PICKUP", component, &componentType);
+				break;
 			default:
 				componentType = "MISSING";
 				break;
