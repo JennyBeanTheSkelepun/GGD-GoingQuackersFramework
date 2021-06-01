@@ -18,7 +18,7 @@ void SpringJoint::OnDestroy() {
 
 void SpringJoint::SetConnectedObject(GameObject* ap_connectedObject) {
 	if (ap_connectedObject != nullptr && ap_connectedObject->GetComponent<Rigidbody>() == nullptr) {
-		Debug::getInstance()->LogWarning("Cannot add \"" + ap_connectedObject->GetName() + "\" to " + GetOwner()->GetName() + "as a spring joint without a RigidBody.");
+		Debug::getInstance()->LogWarning("Cannot add \"" + ap_connectedObject->GetName() + "\" to " + GetOwner()->GetName() + " as a spring joint without a RigidBody.");
 		return;
 	}
 

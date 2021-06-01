@@ -1,10 +1,10 @@
 #include "Transform.h"
 #include <DirectXMath.h>
 #include "../GameObject.h"
+#include "SpriteRenderer.h"
 #include <math.h>
 
-Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANSFORM, "Transform")
-{
+Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANSFORM, "Transform") {
 	localToWorldMatrix = DirectX::XMMatrixIdentity();
 	worldToLocalMatrix = DirectX::XMMatrixIdentity();
 
@@ -16,29 +16,25 @@ Transform::Transform(GameObject* owner) : Component(owner, ComponentTypes::TRANS
 	m_localScale = Vector2(1.0f, 1.0f);
 }
 
-Transform::~Transform()
-{
+Transform::~Transform() {
 
 }
 
-void Transform::OnDestroy()
-{
+void Transform::OnDestroy() {
 	this->~Transform();
 }
 
-void Transform::Update()
-{
+void Transform::Update() {
+	if (GetOwner()->GetComponent<SpriteRenderer>() == nullptr)
+		GetLocalToWorldMatrix();
 }
 
-void Transform::ImGUIUpdate()
-{
-	if (ImGui::TreeNode("Show Settings"))
-	{
+void Transform::ImGUIUpdate() {
+	if (ImGui::TreeNode("Show Settings")) {
 		ImGui::Checkbox("Show Global Values", &ImGuiShowGlobal);
 		ImGui::Checkbox("Use Drag Inputs", &ImGuiDragInput);
 
-		if (ImGuiShowGlobal)
-		{
+		if (ImGuiShowGlobal) {
 			Vector2 tempPos, tempScale;
 			tempPos = GetPosition();
 			tempScale = GetScale();
@@ -66,9 +62,8 @@ void Transform::ImGUIUpdate()
 	float* scale[2] = { &m_localScale.X, &m_localScale.Y };
 	ImGui::InputFloat2("Scale", scale[0]);
 	ImGui::PopID();
-		
-	if (ImGuiDragInput)
-	{
+
+	if (ImGuiDragInput) {
 		ImGui::Separator();
 		//Position Set
 		ImGui::PushID(4);
@@ -90,28 +85,26 @@ void Transform::ImGUIUpdate()
 
 }
 
-json* Transform::SceneSave()
-{
+json* Transform::SceneSave() {
 	json* returnObj = new json(
-	{
-		{"PositionX", GetPosition().X},
-		{"PositionY", GetPosition().Y},
-		{"Rotation", GetRotation()},
-		{"ScaleX", GetScale().X},
-		{"ScaleY", GetScale().Y},
+		{
+			{"PositionX", GetPosition().X},
+			{"PositionY", GetPosition().Y},
+			{"Rotation", GetRotation()},
+			{"ScaleX", GetScale().X},
+			{"ScaleY", GetScale().Y},
 
-		{"LocalPositionX", GetLocalPosition().X},
-		{"LocalPositionY", GetLocalPosition().Y},
-		{"LocalRotation", GetLocalRotation()},
-		{"LocalScaleX", GetLocalScale().X},
-		{"LocalScaleY", GetLocalScale().Y},
-	});
+			{"LocalPositionX", GetLocalPosition().X},
+			{"LocalPositionY", GetLocalPosition().Y},
+			{"LocalRotation", GetLocalRotation()},
+			{"LocalScaleX", GetLocalScale().X},
+			{"LocalScaleY", GetLocalScale().Y},
+		});
 
 	return returnObj;
 }
 
-void Transform::SceneLoad(json* componentJSON)
-{
+void Transform::SceneLoad(json* componentJSON) {
 	SetPosition(Vector2((*componentJSON)["PositionX"], (*componentJSON)["PositionY"]));
 	SetRotation((*componentJSON)["Rotation"]);
 	SetScale(Vector2((*componentJSON)["ScaleX"], (*componentJSON)["ScaleY"]));
@@ -121,16 +114,13 @@ void Transform::SceneLoad(json* componentJSON)
 	SetLocalScale(Vector2((*componentJSON)["LocalScaleX"], (*componentJSON)["LocalScaleY"]));
 }
 
-DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
-{
+DirectX::XMMATRIX Transform::GetLocalToWorldMatrix() {
 	GameObject* parent = mp_owner->GetParent();
 
-	if (parent == nullptr || parent == mp_owner)
-	{
+	if (parent == nullptr || parent == mp_owner) {
 		localToWorldMatrix = CalculateLocalMatrix();
 	}
-	else
-	{
+	else {
 		localToWorldMatrix = CalculateLocalMatrix() * parent->GetTransform()->GetLocalToWorldMatrix();
 	}
 
@@ -139,39 +129,33 @@ DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
 	return localToWorldMatrix;
 }
 
-DirectX::XMMATRIX Transform::GetWorldToLocalMatrix()
-{
+DirectX::XMMATRIX Transform::GetWorldToLocalMatrix() {
 	worldToLocalMatrix = DirectX::XMMatrixInverse(nullptr, GetLocalToWorldMatrix());
 	return worldToLocalMatrix;
 }
 
-Vector2 Transform::TransformPoint(Vector2 point)
-{
+Vector2 Transform::TransformPoint(Vector2 point) {
 	DirectX::XMFLOAT4 floatTemp;
 	DirectX::XMVECTOR tempVector = DirectX::XMVector4Transform(DirectX::XMVectorSet(point.X, point.Y, 0.0f, 1.0f), GetLocalToWorldMatrix());
 	DirectX::XMStoreFloat4(&floatTemp, tempVector);
 	return Vector2(floatTemp.x, floatTemp.y);
 }
 
-Vector2 Transform::InverseTransformPoint(Vector2 point)
-{
+Vector2 Transform::InverseTransformPoint(Vector2 point) {
 	if (mp_owner->GetParent() != nullptr)
 		return mp_owner->GetParent()->GetTransform()->GetPosition() + point;
 	else
 		return point;
 }
 
-DirectX::XMMATRIX Transform::CalculateLocalMatrix()
-{
+DirectX::XMMATRIX Transform::CalculateLocalMatrix() {
 	return DirectX::XMMatrixScaling(m_localScale.X, m_localScale.Y, 1.0f) *
 		DirectX::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, -(m_localRotation * (DirectX::XM_PI / 180.0f))) *
 		DirectX::XMMatrixTranslation(m_localPosition.X, m_localPosition.Y, 0.0f);
 }
 
-Vector2 Transform::PosToLocalSpace()
-{
+Vector2 Transform::PosToLocalSpace() {
 	DirectX::XMFLOAT4X4 temp;
-	Vector2 point;
 	DirectX::XMStoreFloat4x4(&temp, localToWorldMatrix);
 	Vector2 point;
 	point.X = temp._41;

@@ -22,6 +22,9 @@ private:
 	void AABBCollision(GameObject* ap_collision, int ai_collidingNodeIndex);
 	void SphereCollision(GameObject* ap_collision, int ai_collidingNodeIndex);
 
+	void SplitSection(int ai_nodeIndex, Vector2 a_newNodePos);
+	void JoinSection(int ai_nodeIndex);
+
 	std::vector<GameObject*> m_nodes;
 	std::vector<std::string> m_nodeIDs;
 	std::vector<Vector2> m_nodePreviousPositions;

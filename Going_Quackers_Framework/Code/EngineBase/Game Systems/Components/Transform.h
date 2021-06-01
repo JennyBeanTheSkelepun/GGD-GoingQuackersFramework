@@ -6,8 +6,7 @@
 
 #include <DirectXMath.h>
 
-class Transform : public Component
-{
+class Transform : public Component {
 public:
 	Transform(GameObject* owner);
 	~Transform();
@@ -34,9 +33,9 @@ public:
 	Vector2 InverseTransformPoint(Vector2 point);
 
 	//Setters and Getters
-	void SetPosition(Vector2 position) {  this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
+	void SetPosition(Vector2 position) { this->m_localPosition = InverseTransformPoint(position); this->m_position = position; }
 	Vector2 GetPosition() { return m_position; }
-	void SetLocalPosition(Vector2 position) {  this->m_localPosition = position; this->m_position = PosToLocalSpace(); }
+	void SetLocalPosition(Vector2 position) { this->m_localPosition = position; this->m_position = PosToLocalSpace(); }
 	Vector2 GetLocalPosition() { return this->m_localPosition; }
 
 	void SetRotation(double rotation) { this->m_rotation = rotation; }

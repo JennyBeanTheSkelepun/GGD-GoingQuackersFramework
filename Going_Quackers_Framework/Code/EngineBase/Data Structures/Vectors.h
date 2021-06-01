@@ -43,7 +43,7 @@ struct Vector2
 	Vector2 operator/(const float scale) const { return Vector2(X / scale, Y / scale); }
 	Vector2& operator/=(const float scale) { X /= scale; Y /= scale; return *this; }
 	bool operator==(const Vector2& rhs) const { return (X == rhs.X) && (Y == rhs.Y); }
-	bool operator!=(const Vector2& rhs) const { return (X != rhs.X) && (Y != rhs.Y); }
+	bool operator!=(const Vector2& rhs) const { return (X != rhs.X) || (Y != rhs.Y); }
 
 
 	friend std::ostream& operator<<(std::ostream& os, const Vector2& vec) { os << "(" << vec.X << ", " << vec.Y << ")"; return os; }
