@@ -35,6 +35,7 @@ public:
 
 	virtual void SetNewActiveCamera(VirtualCamera* vCam) = 0;
 	virtual VirtualCamera* GetActiveCamera() = 0;
+	virtual void NullVirtualCamera() = 0;
 };
 
 #endif /* _GRAPHICS_API_INTERFACE_H_ */
