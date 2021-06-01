@@ -31,6 +31,7 @@ public:
 	bool InitalizeGraphicalApi();
 	void SetNewActiveCamera(VirtualCamera* vCam) override;
 	VirtualCamera* GetActiveCamera() override;
+	void NullVirtualCamera();
 
 	int AddObjectToRenderLoop(SpriteRenderer* ar_component);
 	int RemoveObjectFromRenderLoop(int index);

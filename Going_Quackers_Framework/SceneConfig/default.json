@@ -1,1 +1,83 @@
-{"objects":[{"LINERENDERER":{"EndX":-3.0,"EndY":3.0,"StartX":3.0,"StartY":-1.0,"TextureLocation":"","Width":0.10000000149011612},"TRANSFORM":{"LocalPositionX":0.0,"LocalPositionY":0.0,"LocalRotation":0.0,"LocalScaleX":0.5,"LocalScaleY":0.5,"PositionX":0.0,"PositionY":0.0,"Rotation":0.0,"ScaleX":1.0,"ScaleY":1.0},"VIRTUALCAMERA":{"Position":{"X":0.0,"Y":0.0,"Z":-10.0},"Rotation":{"X":0.0,"Y":0.0,"Z":0.0}},"id":"GameObject 26962","name":"Line Renderer\u0000\u0000\u0000","parent":""},{"SPRITERENDERER":{"ShaderLocation":"Assets/Shaders/TextureSimple.fx","TextureLocation":"Assets/stone.tga"},"TRANSFORM":{"LocalPositionX":3.0,"LocalPositionY":-1.0,"LocalRotation":0.0,"LocalScaleX":0.10000000149011612,"LocalScaleY":0.10000000149011612,"PositionX":3.0,"PositionY":-1.0,"Rotation":0.0,"ScaleX":1.0,"ScaleY":1.0},"id":"GameObject 28145","name":"00\u0000eObject 28145","parent":""},{"SPRITERENDERER":{"ShaderLocation":"Assets/Shaders/TextureSimple.fx","TextureLocation":"Assets/stone.tga"},"TRANSFORM":{"LocalPositionX":-3.0,"LocalPositionY":3.0,"LocalRotation":0.0,"LocalScaleX":0.10000000149011612,"LocalScaleY":0.10000000149011612,"PositionX":-3.0,"PositionY":3.0,"Rotation":0.0,"ScaleX":1.0,"ScaleY":1.0},"id":"GameObject 9961","name":"01\u00001\u0000bject 9961","parent":""}],"sceneID":"default","sceneName":"Test Scene","sceneType":"DEFAULT"}
+{
+    "objects": [
+        {
+            "SPRITERENDERER": {
+                "ShaderLocation": "Assets/Shaders/TextureSimple.fx",
+                "TextureLocation": "Assets/sonic.tga"
+            },
+            "TRANSFORM": {
+                "LocalPositionX": 0.0,
+                "LocalPositionY": 0.0,
+                "LocalRotation": 180.0,
+                "LocalScaleX": 1.0,
+                "LocalScaleY": 1.0,
+                "PositionX": 0.0,
+                "PositionY": 0.0,
+                "Rotation": 0.0,
+                "ScaleX": 1.0,
+                "ScaleY": 1.0
+            },
+            "VIRTUALCAMERA": {
+                "FollowID": "GameObject 29358",
+                "Position": {
+                    "X": 0.0,
+                    "Y": 0.0,
+                    "Z": -5.0
+                },
+                "Rotation": {
+                    "X": 0.0,
+                    "Y": 0.0,
+                    "Z": 0.0
+                },
+                "isActive": true,
+                "isFollowing": true
+            },
+            "children": [
+                {
+                    "SPRITERENDERER": {
+                        "ShaderLocation": "Assets/Shaders/TextureSimple.fx",
+                        "TextureLocation": "Assets/stone.tga"
+                    },
+                    "TRANSFORM": {
+                        "LocalPositionX": 2.0,
+                        "LocalPositionY": 2.0,
+                        "LocalRotation": 0.0,
+                        "LocalScaleX": 0.5,
+                        "LocalScaleY": 0.5,
+                        "PositionX": -1.9999995231628418,
+                        "PositionY": -1.9999985694885254,
+                        "Rotation": 0.0,
+                        "ScaleX": 1.0,
+                        "ScaleY": 1.0
+                    },
+                    "id": "24464",
+                    "name": "Child 1",
+                    "parent": "GameObject 26962"
+                }
+            ],
+            "id": "GameObject 26962",
+            "name": "GameObject 26962",
+            "parent": ""
+        },
+        {
+            "TRANSFORM": {
+                "LocalPositionX": 0.0,
+                "LocalPositionY": 0.0,
+                "LocalRotation": 0.0,
+                "LocalScaleX": 1.0,
+                "LocalScaleY": 1.0,
+                "PositionX": 0.0,
+                "PositionY": 0.0,
+                "Rotation": 0.0,
+                "ScaleX": 1.0,
+                "ScaleY": 1.0
+            },
+            "id": "GameObject 29358",
+            "name": "GameObject 29358",
+            "parent": ""
+        }
+    ],
+    "sceneID": "default",
+    "sceneName": "Test Scene",
+    "sceneType": "DEFAULT"
+}

@@ -12,7 +12,7 @@ class GraphicsInterface
 {
 public:
 	virtual bool InitalizeGraphicalApi() = 0;
-	
+
 	virtual int AddObjectToRenderLoop(SpriteRenderer* ar_component) = 0;
 	virtual int RemoveObjectFromRenderLoop(int index) = 0;
 
@@ -36,6 +36,7 @@ public:
 
 	virtual void SetNewActiveCamera(VirtualCamera* vCam) = 0;
 	virtual VirtualCamera* GetActiveCamera() = 0;
+	virtual void NullVirtualCamera() = 0;
 
 	virtual LineRenderer* AddLineRenderer(LineRenderer* toAdd) = 0;
 	virtual LineRenderer* RemoveLineRenderer(LineRenderer* toRemove) = 0;

@@ -73,7 +73,7 @@ GameObject* Scene::GetObjectByName(std::string as_name)
 	// Search for object with ID
 	for (int i = 0; i < mp_SceneObjects.size(); i++) {
 		// Return if ID matches
-		if (mp_SceneObjects[i]->GetID() == as_name) {
+		if (mp_SceneObjects[i]->GetName() == as_name) {
 			return mp_SceneObjects[i];
 		}
 		else {
@@ -110,7 +110,7 @@ GameObject* Scene::GetChildObjectByName(std::string as_name, GameObject* ap_pare
 	// Search for object with ID
 	for (int i = 0; i < ap_parent->GetChildren().size(); i++) {
 		// Return if ID matches
-		if (ap_parent->GetChildren()[i]->GetID() == as_name) {
+		if (ap_parent->GetChildren()[i]->GetName() == as_name) {
 			return ap_parent->GetChildren()[i];
 		}
 		else {

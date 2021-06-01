@@ -41,6 +41,7 @@ public:
 	  
 	void SetNewActiveCamera(VirtualCamera* NextActiveCamera);
 	VirtualCamera* GetActiveCamera();
+	void NullVirtualCamera();
 	  
 	int LoadTexture(std::string TextureLocation);  
 	int RemoveTexture(int index);

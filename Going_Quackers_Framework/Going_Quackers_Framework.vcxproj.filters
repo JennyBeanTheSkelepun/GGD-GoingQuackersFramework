@@ -288,8 +288,8 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpringJoint.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Game Systems\Components\LineRenderer.cpp">
-      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\Pickup.cpp">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -440,7 +440,19 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpringJoint.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Game Systems\Components\LineRenderer.h">
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringJoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXAudio.h">
+      <Filter>Header Files\Engine\Rendering\DirectX11 Element\DirectX Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\AudioSource.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\Pickup.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
   </ItemGroup>
