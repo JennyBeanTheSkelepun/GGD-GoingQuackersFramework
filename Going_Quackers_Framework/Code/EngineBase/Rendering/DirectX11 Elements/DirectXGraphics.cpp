@@ -69,6 +69,11 @@ VirtualCamera* DirectXGraphics::GetActiveCamera()
 	return mp_Camera->GetVirtualCamera();
 }
 
+void DirectXGraphics::NullVirtualCamera()
+{
+	mp_Camera->NullVirtualCamera();
+}
+
 int DirectXGraphics::LoadTexture(std::string TextureLocation)
 {
 	return mp_TextureManager->CreateTexture(*mp_DirectX, TextureLocation);
