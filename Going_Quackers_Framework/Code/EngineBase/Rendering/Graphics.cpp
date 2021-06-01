@@ -115,6 +115,15 @@ VirtualCamera* Graphics::GetActiveCamera()
 	return nullptr;
 }
 
+void Graphics::NullVirtualCamera()
+{
+	switch (CurrentApi) {
+	case API_TYPE::DIRECT_X_11:
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->NullVirtualCamera();
+		break;
+	}
+}
+
 int Graphics::LoadTexture(std::string TextureLocation)
 {
 	switch (CurrentApi) {
