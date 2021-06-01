@@ -8,6 +8,7 @@
 //- Need to forward declare Interface as its included in DirectXGraphics -//
 class SpriteRenderer;
 class VirtualCamera;
+class LineRenderer;
 
 enum API_TYPE {
 	DIRECT_X_11 = 0
@@ -52,6 +53,9 @@ public:
 	int RemoveShader(int index);
 
 	Vector2 GetWindowDimensions();
+
+	LineRenderer* AddLineRenderer(LineRenderer* toAdd);
+	LineRenderer* RemoveLineRenderer(LineRenderer* toRemove);
 
 	API_TYPE CurrentApi = API_TYPE::DIRECT_X_11;
 

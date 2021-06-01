@@ -114,10 +114,15 @@ void Transform::SceneLoad(json* componentJSON) {
 	SetLocalScale(Vector2((*componentJSON)["LocalScaleX"], (*componentJSON)["LocalScaleY"]));
 }
 
-DirectX::XMMATRIX Transform::GetLocalToWorldMatrix() {
-	GameObject* parent = mp_owner->GetParent();
+DirectX::XMMATRIX Transform::GetLocalToWorldMatrix()
+{
+	GameObject* parent = nullptr;
 
-	if (parent == nullptr || parent == mp_owner) {
+	if (mp_owner != nullptr)
+		parent = mp_owner->GetParent();
+
+	if (parent == nullptr || parent == mp_owner)
+	{
 		localToWorldMatrix = CalculateLocalMatrix();
 	}
 	else {
