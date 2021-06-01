@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "../Input.h"
 #include "Transform.h"
-#include "Physics/Rigidbody.h"
 #include "../Debug.h"
 #include "../Time.h"
 
@@ -15,6 +14,7 @@ Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Pl
 	wallPushPressTimer = 0.f;
 	wallPushCollideTimer = 0.f;
 	playerObj = this->GetOwner();
+	playerRB = playerObj->GetComponent<Rigidbody>();
 }
 
 Player::~Player()
@@ -29,26 +29,42 @@ void Player::OnDestroy()
 
 void Player::Update()
 {
-	// ignore input in editor mode
+	// don't do anything in editor mode
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
 		HandleInput();
 		GrabWall();
 
 		// check collision for pushing off a wall
-		if (playerObj->GetComponent<Rigidbody>()->GetCollidingBool())
+		if (playerRB->GetCollidingBool())
 		{
 			wallPushCollided = true;
 			wallPushCollideTimer = wallPushTimerMax;
 			if (!wallGrabbed)
-				wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
+				wallObj = playerRB->GetCollidedObjects();
 		}
 		if (wallPushPressed && wallPushCollided)
 		{
 			WallPush();
 		}
-	}
 
+		// minimum speed; todo determine value
+		Vector2 velocity = playerRB->GetVelocity();
+		if (!wallGrabbed && (velocity.Length() < 0.001))
+		{
+			if (velocity.Length() != 0)
+			{
+				velocity *= (0.001 / velocity.Length());
+				playerRB->SetVelocity(velocity);
+			}
+			else
+			{
+				Force startForce;
+				startForce.force = Vector2(0.005, 0.005);
+				playerRB->AddForce(startForce);
+			}
+		}
+	}
 }
 
 void Player::ImGUIUpdate()
@@ -99,9 +115,9 @@ void Player::HandleInput()
 	Vector3 mousePos = Input::getInstance()->GetWorldSpaceMousePos();
 	Vector2 playerPos = playerTransform->GetPosition();
 
-	// calculate vectors, centered on the centre of the player
+	// calculate vectors, relative to the player
 	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - playerPos;
-	Vector2 upVector = Vector2(playerPos.X, playerPos.Y + 1);
+	Vector2 upVector = Vector2(0, 1);
 	float mouseMagnitude = mouseVector.Length();
 	float upMagnitude = upVector.Length();
 
@@ -228,7 +244,6 @@ void Player::GrappleRetract()
 
 void Player::WallPush()
 {
-	Rigidbody* playerRB = playerObj->GetComponent<Rigidbody>();
 	Force pushForce;
 
 	// average of collided objects' positions
@@ -267,7 +282,6 @@ void Player::WallPush()
 	wallPushPressed = false;
 	wallPushCollided = false;
 	wallObj.clear();
-	playerRB = nullptr;
 }
 
 void Player::GrabWall()

@@ -5,6 +5,7 @@
 #include "Component.h"
 #include "../../Data Structures/Vectors.h"
 #include "../GameObject.h"
+#include "Physics/Rigidbody.h"
 
 class Player : public Component
 {
@@ -48,6 +49,7 @@ private:
 	void GrabWall();
 	GameObject* playerObj;
 	std::vector<GameObject*> wallObj;
+	Rigidbody* playerRB;
 };
 
 #endif // !PLAYER_H
