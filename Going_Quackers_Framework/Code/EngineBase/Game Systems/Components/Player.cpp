@@ -8,11 +8,14 @@
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
 {
 	m_grappleState = GRAPPLE_STATE::INACTIVE;
-	wallGrabbed = false;
+
+	wallGrabbed = true;
+
 	wallPushPressed = false;
 	wallPushCollided = false;
 	wallPushPressTimer = 0.f;
 	wallPushCollideTimer = 0.f;
+
 	playerObj = this->GetOwner();
 	playerRB = playerObj->GetComponent<Rigidbody>();
 }
@@ -36,11 +39,11 @@ void Player::Update()
 		GrabWall();
 
 		// check collision for pushing off a wall
-		if (playerRB->GetCollidingBool())
+		if (playerRB->GetCollidingBool() && !wallPushCollided)
 		{
 			wallPushCollided = true;
 			wallPushCollideTimer = wallPushTimerMax;
-			if (!wallGrabbed)
+			if (wallObj.size() == 0)
 				wallObj = playerRB->GetCollidedObjects();
 		}
 		if (wallPushPressed && wallPushCollided)
@@ -48,21 +51,12 @@ void Player::Update()
 			WallPush();
 		}
 
-		// minimum speed; todo determine value
+		// minimum speed; todo adjust value
 		Vector2 velocity = playerRB->GetVelocity();
-		if (!wallGrabbed && (velocity.Length() < 0.001))
+		if (!wallGrabbed && velocity.Length() < 0.001 && velocity.Length() != 0)
 		{
-			if (velocity.Length() != 0)
-			{
-				velocity *= (0.001 / velocity.Length());
-				playerRB->SetVelocity(velocity);
-			}
-			else
-			{
-				Force startForce;
-				startForce.force = Vector2(0.005, 0.005);
-				playerRB->AddForce(startForce);
-			}
+			velocity *= (0.001 / velocity.Length());
+			playerRB->SetVelocity(velocity);
 		}
 	}
 }
@@ -117,12 +111,11 @@ void Player::HandleInput()
 
 	// calculate vectors, relative to the player
 	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - playerPos;
-	Vector2 upVector = Vector2(0, 1);
+	Vector2 upVector = Vector2(0, 1); // magnitude is always 1
 	float mouseMagnitude = mouseVector.Length();
-	float upMagnitude = upVector.Length();
 
 	// just don't change the angle if it would divide by zero
-	if (mouseMagnitude != 0 && upMagnitude != 0)
+	if (mouseMagnitude != 0)
 	{
 		// use dot product and determinant
 		mouseVector.Normalize();
