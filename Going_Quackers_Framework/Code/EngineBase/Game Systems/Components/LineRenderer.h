@@ -38,7 +38,7 @@ public:
 private:
 	Vector2 m_startPos;
 	Vector2 m_endPos;
-	float mf_width, m_roationOffset;
+	float mf_width;
 
 	char* TextureSelectionInput;
 	char* ShaderSelectionInput;

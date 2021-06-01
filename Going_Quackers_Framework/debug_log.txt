@@ -1,16 +1,8 @@
 Loading Scene from path: SceneConfig/default.json
 0
-135.004
-Scene load complete.
-90.0027
-45.0013
--45.0013
--90.0027
--153.439
--161.57
 -146.314
-Scene Saved: Test Scene
+Scene load complete.
 
 -146.314
-Scene Saved: Test Scene
-135.004
+[ERROR] ERROR Cant Find Texture File
+-146.314

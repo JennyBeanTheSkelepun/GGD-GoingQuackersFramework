@@ -37,6 +37,7 @@ void LineRenderer::Update()
 
 void LineRenderer::ImGUIUpdate()
 {
+	ImGui::PushID(6942069);
 	ImGui::InputText("Enter Texture Location", TextureSelectionInput, 128);
 	if (ImGui::Button("Update Texture"))
 	{
@@ -71,6 +72,7 @@ void LineRenderer::ImGUIUpdate()
 		m_TextureLocation = std::string(TextureSelectionInput);
 		m_ShaderLocation = std::string(ShaderSelectionInput);
 	}
+	ImGui::PopID();
 
 	ImGui::Text("Line Points");
 	float* PosOne[2] = { &m_startPos.X, &m_startPos.Y };
@@ -80,8 +82,6 @@ void LineRenderer::ImGUIUpdate()
 	ImGui::InputFloat2("End Pos", PosTwo[0]);
 
 	ImGui::InputFloat("Width", &mf_width);
-
-	ImGui::DragFloat("RotationOffset", &m_roationOffset);
 }
 
 //- Scene Save / Load -//
@@ -118,7 +118,7 @@ void LineRenderer::CalculateRequiredPositionRoatationScale()
 	float angle = std::atan2f(determinant, dot);
 	angle *= 180 / 3.1415;
 	
-	roatation = angle + m_roationOffset;
+	roatation = angle;
 
 	Debug::getInstance()->Log(roatation);
 
