@@ -123,27 +123,63 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 
 	Vector2 rect = rb->GetAABBRect();
 	Vector2 pos = checkObject->GetTransform()->GetPosition();
-
-	Vector2 corner1 = pos  - (rect / 2.0f);
-	Vector2 corner2 = Vector2(pos.X + (rect.X / 2.0f), pos.Y - (rect.Y / 2.0f));
-	Vector2 corner3 = Vector2(pos.X - (rect.X / 2.0f), pos.Y + (rect.Y / 2.0f));
-	Vector2 corner4 = pos + (rect / 2.0f);
-
-	bool collide = false;
-
-	collide = DoIntersect(corner1, corner2, RayOrigin, rayEnd);
-	collide = DoIntersect(corner2, corner3, RayOrigin, rayEnd);
-	collide = DoIntersect(corner4, corner3, RayOrigin, rayEnd);
-	collide = DoIntersect(corner3, corner1, RayOrigin, rayEnd);
-
-	return collide;
-
 	Vector2 RayEnd = RayOrigin + Ray;
 
-	float a = RayEnd.Y - RayOrigin.Y;
-	float b = RayOrigin.X - RayEnd.X;
-	float c = a * RayOrigin.X + b * RayOrigin.Y;
-	c = -c;
+	Vector2 OrigToCheck = pos - RayOrigin;
+
+	float angleBetweenRayAndObj = acos(Ray.Dot(OrigToCheck) / (Ray.Length() * OrigToCheck.Length()));
+
+	Debug::getInstance()->Log(angleBetweenRayAndObj);
+
+	if (angleBetweenRayAndObj > 1.5708f && angleBetweenRayAndObj < 4.71239f) return false;
+
+	if (Ray.Y == 0.0f)
+	{
+		if ((pos.Y + (rect.Y / 2.0f)) > RayOrigin.Y > (pos.Y - (rect.Y / 2.0f)))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	if (Ray.X == 0.0f)
+	{
+		if ((pos.X + (rect.X / 2.0f)) > RayOrigin.X > (pos.X - (rect.X / 2.0f)))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	float m = Ray.Y / Ray.X;
+	float c = RayOrigin.Y - m * RayOrigin.X;
+
+	float topIntercept = ((pos.Y + (rect.Y / 2.0f)) - c) / m;
+	float botIntercept = ((pos.Y - (rect.Y / 2.0f)) - c) / m;
+	float leftIntercept = m * (pos.X - (rect.X / 2.0f)) + c;
+	float rightIntercept = m * (pos.X + (rect.X / 2.0f)) + c;
+
+	if ((pos.X + (rect.X / 2.0f)) > topIntercept > (pos.X - (rect.X / 2.0f)))
+	{
+		return true;
+	}
+
+	if ((pos.X + (rect.X / 2.0f)) > botIntercept > (pos.X - (rect.X / 2.0f)))
+	{
+		return true;
+	}
+
+	if ((pos.Y + (rect.Y / 2.0f)) > leftIntercept > (pos.Y - (rect.Y / 2.0f)))
+	{
+		return true;
+	}
+
+	if ((pos.Y + (rect.Y / 2.0f)) > rightIntercept > (pos.Y - (rect.Y / 2.0f)))
+	{
+		return true;
+	}
 
 	//TODO:: Build AABB with 4 line line intersects and check the points of intersect between the corners
 }
