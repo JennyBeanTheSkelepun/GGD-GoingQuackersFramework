@@ -23,6 +23,8 @@ EngineGuiClass::EngineGuiClass()
 	NewSceneID = new char[100]();
 	NewSceneType = new char[100]();
 	NewSceneName = new char[100]();
+	ChangeSceneType = new char[100]();
+	ChangeSceneName = new char[100]();
 	LoadWindowPositions();
 }
 
@@ -85,8 +87,26 @@ void EngineGuiClass::EditorUpdate()
 					ClearInspector();
 					SceneManager::GetInstance()->NewScene(NewSceneID, NewSceneName, NewSceneType, SceneManager::GetInstance()->GetAutoSave());
 				}
+				else if (std::string(NewSceneID) != "") {
+					ClearInspector();
+					SceneManager::GetInstance()->NewScene(NewSceneID, "New Scene", "DEBUG", SceneManager::GetInstance()->GetAutoSave());
+				}
 				else {
-					Debug::getInstance()->LogWarning("Please fill in the three boxes");
+					Debug::getInstance()->LogWarning("Please fill in the scene ID box");
+				}
+			}
+			ImGui::Separator();
+			ImGui::Text("Current Scene ID: ");
+			ImGui::SameLine();
+			ImGui::Text(SceneManager::GetInstance()->GetCurrentScene()->GetSceneID().c_str());
+			ImGui::InputText(":Change Scene Display Name", ChangeSceneName, 100);
+			ImGui::InputText(":Change Scene Scene Type", NewSceneType, 100);
+			if (ImGui::MenuItem("Update Scene Information")) {
+				if (std::string(ChangeSceneName) != "") {
+					SceneManager::GetInstance()->GetCurrentScene()->SetSceneDisplayName(ChangeSceneName);
+				}
+				if (std::string(ChangeSceneType) != "") {
+					SceneManager::GetInstance()->GetCurrentScene()->SetSceneType(ChangeSceneType);
 				}
 			}
 			ImGui::Separator();
@@ -151,7 +171,7 @@ void EngineGuiClass::EditorUpdate()
 				if (SelectOption)
 				{
 					CurrentWindowPosition.name = WindowPositions[i].name;
-					CurrentWindowPosition.dimentions = WindowPositions[i].dimentions;
+					CurrentWindowPosition.dimensions = WindowPositions[i].dimensions;
 					CurrentWindowPosition.positions = WindowPositions[i].positions;
 				}
 
@@ -180,7 +200,7 @@ void EngineGuiClass::EditorUpdate()
 	if (isRecording())
 	{
 		ImGui::SetNextWindowPos(CurrentWindowPosition.positions[0]);
-		ImGui::SetNextWindowSize(CurrentWindowPosition.dimentions[0]);
+		ImGui::SetNextWindowSize(CurrentWindowPosition.dimensions[0]);
 	}
 	ImGui::Begin("Scene Hierarchy");
 	
@@ -203,8 +223,8 @@ void EngineGuiClass::EditorUpdate()
 
 	CurrentWindowPosition.positions[0].x = ImGui::GetWindowPos().x;
 	CurrentWindowPosition.positions[0].y = ImGui::GetWindowPos().y;
-	CurrentWindowPosition.dimentions[0].x = ImGui::GetWindowWidth();
-	CurrentWindowPosition.dimentions[0].y = ImGui::GetWindowHeight();
+	CurrentWindowPosition.dimensions[0].x = ImGui::GetWindowWidth();
+	CurrentWindowPosition.dimensions[0].y = ImGui::GetWindowHeight();
 
 	ImGui::End();
 
@@ -212,7 +232,7 @@ void EngineGuiClass::EditorUpdate()
 	{
 		//- Inspector -//
 		ImGui::SetNextWindowPos(CurrentWindowPosition.positions[1]);
-		ImGui::SetNextWindowSize(CurrentWindowPosition.dimentions[1]);
+		ImGui::SetNextWindowSize(CurrentWindowPosition.dimensions[1]);
 	}
 	ImGui::Begin("Inspector");
 	if (currentSelected != nullptr)
@@ -220,8 +240,8 @@ void EngineGuiClass::EditorUpdate()
 
 	CurrentWindowPosition.positions[1].x = ImGui::GetWindowPos().x;
 	CurrentWindowPosition.positions[1].y = ImGui::GetWindowPos().y;
-	CurrentWindowPosition.dimentions[1].x = ImGui::GetWindowWidth();
-	CurrentWindowPosition.dimentions[1].y = ImGui::GetWindowHeight();
+	CurrentWindowPosition.dimensions[1].x = ImGui::GetWindowWidth();
+	CurrentWindowPosition.dimensions[1].y = ImGui::GetWindowHeight();
 
 	ImGui::End();
 
@@ -229,15 +249,15 @@ void EngineGuiClass::EditorUpdate()
 	{
 		//- Output Log -//
 		ImGui::SetNextWindowPos(CurrentWindowPosition.positions[3]);
-		ImGui::SetNextWindowSize(CurrentWindowPosition.dimentions[3]);
+		ImGui::SetNextWindowSize(CurrentWindowPosition.dimensions[3]);
 	}
 	ImGui::Begin("OutputLog");
 	Debug::getInstance()->ReadLog();
 
 	CurrentWindowPosition.positions[3].x = ImGui::GetWindowPos().x;
 	CurrentWindowPosition.positions[3].y = ImGui::GetWindowPos().y;
-	CurrentWindowPosition.dimentions[3].x = ImGui::GetWindowWidth();
-	CurrentWindowPosition.dimentions[3].y = ImGui::GetWindowHeight();
+	CurrentWindowPosition.dimensions[3].x = ImGui::GetWindowWidth();
+	CurrentWindowPosition.dimensions[3].y = ImGui::GetWindowHeight();
 
 	ImGui::End();
 }
@@ -350,7 +370,7 @@ void EngineGuiClass::DisplayObjects(std::vector<GameObject*>& gameObjects)
 		if (DeleteElement)
 		{
 			currentSelected = nullptr;
-			*currentObject->GetShouldLive() = false;
+			currentObject->SetToDestroy();
 		}
 		
 		if (AddChild)
@@ -396,7 +416,7 @@ void EngineGuiClass::LoadWindowPositions()
 {
 	WindowPositions.clear();
 	CurrentWindowPosition.positions.clear();
-	CurrentWindowPosition.dimentions.clear();
+	CurrentWindowPosition.dimensions.clear();
 	CurrentWindowPosition.name = "";
 
 	json fileIn;
@@ -414,11 +434,11 @@ void EngineGuiClass::LoadWindowPositions()
 			temp.positions.push_back(ImVec2(fileIn[i - 1]["Positions"][j]["X"], fileIn[i - 1]["Positions"][j]["Y"]));
 		
 		for (int k = 0; k < 4; k++)
-			temp.dimentions.push_back(ImVec2(fileIn[i - 1]["Dimentions"][k]["X"], fileIn[i - 1]["Dimentions"][k]["Y"]));
+			temp.dimensions.push_back(ImVec2(fileIn[i - 1]["Dimensions"][k]["X"], fileIn[i - 1]["Dimensions"][k]["Y"]));
 		
 		WindowPositions.push_back(temp);
 		
-		temp.dimentions.clear();
+		temp.dimensions.clear();
 		temp.positions.clear();
 		temp.name = "";
 	}
@@ -443,8 +463,8 @@ void EngineGuiClass::SaveWindowPositionsToFile()
 
 		for (int k = 0; k < 4; k++)
 		{
-			outFile[i - 1]["Dimentions"][k]["X"] = WindowPositions[i - 1].dimentions[k].x;
-			outFile[i - 1]["Dimentions"][k]["Y"] = WindowPositions[i - 1].dimentions[k].y;
+			outFile[i - 1]["Dimensions"][k]["X"] = WindowPositions[i - 1].dimensions[k].x;
+			outFile[i - 1]["Dimensions"][k]["Y"] = WindowPositions[i - 1].dimensions[k].y;
 		}
 	}
 	file << outFile;

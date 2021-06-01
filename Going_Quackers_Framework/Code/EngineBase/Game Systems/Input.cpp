@@ -46,15 +46,15 @@ void Input::Update()
 
 		VirtualCamera* temp = Graphics::getInstance()->GetActiveCamera();
 		Vector3 camPos = Vector3(0, 0, -5);
-		Vector2 winDim = Graphics::getInstance()->GetWindowDimentions();
+		Vector2 winDim = Graphics::getInstance()->GetWindowDimensions();
 
 		if (temp != nullptr)
 		{
 			camPos = temp->GetPosition();
 		}
 
-		worldMousePos.X = camPos.X + ((winDim.X / 2) * (2 * screenMousePos.X - 2 * camPos.X - winDim.X) / winDim.X);
-		worldMousePos.Y = camPos.Y + ((winDim.Y / 2) * (-2 * screenMousePos.Y + 2 * camPos.Y + winDim.Y) / winDim.Y);
+		worldMousePos.X = camPos.X + ((screenMousePos.X - (winDim.X / 2)) / winDim.X);
+		worldMousePos.Y = camPos.Y + ((-screenMousePos.Y + (winDim.Y / 2)) / winDim.Y);
 		worldMousePos.Z = -5;
 
 		//Debug::getInstance()->Log(worldMousePos);

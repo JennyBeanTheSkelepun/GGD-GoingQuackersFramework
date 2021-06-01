@@ -16,6 +16,16 @@ Pickup::Pickup(GameObject* owner) : Component(owner, ComponentTypes::PICKUP, "Pi
     {
         rb = parentObj->GetComponent<Rigidbody>();
     }
+
+    if (parentObj->GetComponent<AudioSource>() == NULL)
+    {
+        audioSource = parentObj->AddComponent<AudioSource>();
+    }
+    else
+    {
+        audioSource = parentObj->GetComponent<AudioSource>();
+    }
+
 }
 
 //- Deconstructors -//
@@ -34,6 +44,8 @@ void Pickup::Update()
 {
     if (rb->GetCollidedObjects().size() > 0)
     {
+        audioSource->Play();
+        parentObj->SetToDestroy();
         Debug::getInstance()->Log("picking up scrap");
     }
 }

@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 #include "../Game Systems/Components/SpriteRenderer.h"
+#include "../Game Systems/Components/SpringJoint.h"
 #include "../Game Systems/Components/Physics/Rigidbody.h"
 #include "../Game Systems/Components/VirtualCamera.h"
 #include "../Game Systems/Components/Player.h"
@@ -8,6 +9,7 @@
 #include "../Game Systems/Components/Pickup.h"
 
 #include "../Game Systems/Debug.h"
+#include "../Rendering/Graphics.h"
 
 #include <ostream>
 #include <fstream>
@@ -61,7 +63,6 @@ void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
 {
 	// Unload current Scene
 	UnloadScene(as_SaveToJSON);
-
 	// Get path to JSON scene config
 	std::string ls_SceneConfigPath = "SceneConfig/" + as_SceneID + ".json";
 	
@@ -121,7 +122,8 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 	struct stat buffer;
 	if (stat(as_Path.c_str(), &buffer) != 0) {
 		Debug::getInstance()->LogError("Could not find SceneConfig File. Please make sure you save your scenes.");
-		return nullptr;
+		Debug::getInstance()->LogWarning("Load Failed, returning to default scene...");
+		return LoadScene("SceneConfig/default.json");
 	}
 
 	// Load Config from JSON file
@@ -173,27 +175,66 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<Pickup>(lp_newObject, &newObject.value()["PICKUP"]);
 		}
 
-		mp_CurrentScene->AddObject(lp_newObject);
-	}
-
-	// Go back and assign parent/child hierarchy
-	for (const auto& object : l_SceneConfig["objects"].items()) {
-		GameObject* lp_currentObject = mp_CurrentScene->GetObjectByID(object.value()["id"]);
-		if (object.value()["parent"] != "") {
-			GameObject* lp_parentObject = mp_CurrentScene->GetObjectByID(object.value()["parent"]);
-			if (lp_parentObject != nullptr) {
-				lp_parentObject->AddChild(lp_currentObject);
-				lp_currentObject->SetParent(lp_parentObject);
-			}
-			else {
-				Debug::getInstance()->LogError("Error: Could not find object parent for: " + lp_currentObject->GetID());
-			}
+		if (newObject.value().contains("SPRINGJOINT")) {
+			LoadComponentFromScene<SpringJoint>(lp_newObject, &newObject.value()["SPRINGJOINT"]);
 		}
+
+		if (newObject.value()["children"].size() > 0)
+		{
+			LoadChildren(lp_newObject, &newObject.value());
+		}
+		mp_CurrentScene->AddObject(lp_newObject);
 	}
 
 	Debug::getInstance()->Log("Scene load complete.");
 	l_file.close();
 	return lp_NewScene;
+}
+
+void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
+{
+	for (const auto& child : (*ap_json)["children"].items()) {
+		// Create Object
+		GameObject* lp_newObject = new GameObject();
+
+		// Assign ID
+		lp_newObject->SetID(child.value()["id"]);
+		// Assign Name
+		lp_newObject->SetName(child.value()["name"]);
+
+		lp_newObject->GetTransform()->SceneLoad(&child.value()["TRANSFORM"]);
+
+		if (child.value().contains("SPRITERENDERER")) {
+			LoadComponentFromScene<SpriteRenderer>(lp_newObject, &child.value()["SPRITERENDERER"]);
+		}
+
+		if (child.value().contains("RIGIDBODY")) {
+			LoadComponentFromScene<Rigidbody>(lp_newObject, &child.value()["RIGIDBODY"]);
+		}
+
+		if (child.value().contains("PLAYER")) {
+			LoadComponentFromScene<Player>(lp_newObject, &child.value()["PLAYER"]);
+		}
+
+		if (child.value().contains("VIRTUALCAMERA")) {
+			LoadComponentFromScene<VirtualCamera>(lp_newObject, &child.value()["VIRTUALCAMERA"]);
+		}
+
+		if (child.value().contains("AUDIOSOURCE")) {
+			LoadComponentFromScene<AudioSource>(lp_newObject, &child.value()["AUDIOSOURCE"]);
+		}
+
+		if (child.value().contains("PICKUP")) {
+			LoadComponentFromScene<Pickup>(lp_newObject, &child.value()["PICKUP"]);
+		}
+
+		lp_newObject->SetParent(ap_object);
+
+		if (child.value()["children"].size() > 0)
+		{
+			LoadChildren(lp_newObject, &child.value());
+		}
+	}
 }
 
 
@@ -207,6 +248,7 @@ void SceneManager::UnloadScene(bool as_SaveToJSON)
 		SaveToJSON(mp_CurrentScene);
 	}
 
+	Graphics::getInstance()->NullVirtualCamera();
 	delete mp_CurrentScene;
 }
 
@@ -273,6 +315,85 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				break;
 			case ComponentTypes::PICKUP:
 				SaveComponent<Pickup>("PICKUP", component, &componentType);
+			break;
+			case ComponentTypes::SPRINGJOINT:
+				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
+				break;
+			default:
+				componentType = "MISSING";
+				break;
+			}
+
+			json* lp_componentInfo = component->SceneSave();
+			if (lp_componentInfo != nullptr && componentType != "MISSING") {
+				l_object[componentType] = *lp_componentInfo;
+			}
+			else {
+				Debug::getInstance()->LogError("Error saving to file, Component Type Error: " + std::string(componentType));
+			}
+
+		}
+
+		if (ap_Scene->GetObjectByIndex(i)->HasChildren()) {
+			SaveChildren(ap_Scene->GetObjectByIndex(i), &l_object);
+		}
+		l_outfile["objects"] += l_object;
+	}
+
+	std::ofstream file(l_outfilePath);
+	file << l_outfile;
+	file.close();
+	Debug::getInstance()->Log("Scene Saved: " + ap_Scene->GetSceneDisplayName());
+}
+
+void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
+{
+
+	for (int i = 0; i < lp_object->GetChildren().size(); i++) {
+		GameObject* child = lp_object->GetChildren()[i];
+
+		// Get Object ID
+		std::string ls_id = child->GetID();
+
+		// Get Parent ID
+		std::string ls_parentID = "";
+		if (child->GetParent() != nullptr) {
+			ls_parentID = child->GetParent()->GetID();
+		}
+
+		// Get Object name
+		std::string ls_name = child->GetName();
+
+		json l_object = {
+			{"id", ls_id},
+			{"parent", ls_parentID},
+			{"name", ls_name}
+		};
+
+		std::vector<Component*> lp_components = child->GetComponents();
+		for (int j = 0; j < lp_components.size(); j++) {
+
+			Component* component = lp_components[j];
+			// Get component Type
+			std::string componentType;
+			switch (lp_components[j]->GetType()) {
+			case ComponentTypes::TRANSFORM:
+				SaveComponent<Transform>("TRANSFORM", component, &componentType);
+				break;
+			case ComponentTypes::SPRITERENDERER:
+				SaveComponent<SpriteRenderer>("SPRITERENDERER", component, &componentType);
+				break;
+			case ComponentTypes::RIGIDBODY:
+				SaveComponent<Rigidbody>("RIGIDBODY", component, &componentType);
+				break;
+			case ComponentTypes::PLAYER:
+				SaveComponent<Player>("PLAYER", component, &componentType);
+				break;
+			case ComponentTypes::VIRTUALCAMERA:
+				SaveComponent<VirtualCamera>("VIRTUALCAMERA", component, &componentType);
+				break;
+			case ComponentTypes::AUDIOSOURCE:
+				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
@@ -287,14 +408,14 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				Debug::getInstance()->LogError("Error saving to file, Component Type Error: " + std::string(componentType));
 			}
 		}
-		
-		l_outfile["objects"] += l_object;
-	}
 
-	std::ofstream file(l_outfilePath);
-	file << l_outfile;
-	file.close();
-	Debug::getInstance()->Log("Scene Saved: " + ap_Scene->GetSceneDisplayName());
+		Debug::getInstance()->Log("Child Saved: " + ls_id);
+		if (child->HasChildren()) {
+			SaveChildren(child, &l_object);
+		}
+
+		(*ap_json)["children"] += l_object;
+	}
 }
 
 

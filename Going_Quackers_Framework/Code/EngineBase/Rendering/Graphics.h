@@ -40,6 +40,7 @@ public:
 	  
 	void SetNewActiveCamera(VirtualCamera* NextActiveCamera);
 	VirtualCamera* GetActiveCamera();
+	void NullVirtualCamera();
 	  
 	int LoadTexture(std::string TextureLocation);  
 	int RemoveTexture(int index);
@@ -50,7 +51,7 @@ public:
 	int LoadShader(std::wstring ShaderLocation);
 	int RemoveShader(int index);
 
-	Vector2 GetWindowDimentions();
+	Vector2 GetWindowDimensions();
 
 	API_TYPE CurrentApi = API_TYPE::DIRECT_X_11;
 

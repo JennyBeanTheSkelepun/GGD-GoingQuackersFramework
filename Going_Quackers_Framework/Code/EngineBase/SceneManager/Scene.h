@@ -32,6 +32,7 @@ public:
 	std::vector<GameObject*>* GetSceneObjectsList() { return &mp_SceneObjects; };
 	GameObject* GetObjectByIndex(int ai_index) { return mp_SceneObjects[ai_index]; };
 	GameObject* GetObjectByID(std::string as_id);
+	GameObject* GetObjectByName(std::string as_name);
 	int GetObjectIndexByID(std::string as_id);
 
 private:
@@ -40,6 +41,9 @@ private:
 	std::string ms_SceneType;
 
 	std::vector<GameObject*> mp_SceneObjects;
+
+	GameObject* GetChildObjectByName(std::string as_name, GameObject* ap_parent);
+	GameObject* GetChildObjectByID(std::string as_id, GameObject* ap_parent);
 };
 
 #endif /*SCENE*/

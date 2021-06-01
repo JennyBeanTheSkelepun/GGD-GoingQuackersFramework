@@ -20,3 +20,17 @@ E:\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quack
 E:\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xapobaseredist.pdb
 E:\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.pdb
 E:\git\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.dll
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.vcxproj.CopyComplete
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xapobaseredist.pdb
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.pdb
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.dll
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.vcxproj.CopyComplete
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xapobaseredist.pdb
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.pdb
+C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.dll
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.vcxproj.CopyComplete
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xapobaseredist.pdb
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.pdb
+G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.dll

@@ -6,6 +6,7 @@
 #include "../../Data Structures/Vectors.h"
 #include "../GameObject.h"
 #include "./Physics/Rigidbody.h"
+#include "AudioSource.h"
 
 //typedef nlohmann::json json;
 
@@ -32,5 +33,6 @@ private:
 
     GameObject* parentObj;
     Rigidbody* rb;
+    AudioSource* audioSource;
 };
 #endif
