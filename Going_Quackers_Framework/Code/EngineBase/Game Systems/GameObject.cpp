@@ -128,6 +128,9 @@ void GameObject::ImGUIUpdate()
 	ImGui::SetNextItemWidth(175);
 	ImGui::InputText("", (char*)m_name.c_str(), 50); ImGui::SameLine();
 	ImGui::Checkbox("Active", &m_active);
+	ImGui::Text("Object ID: ");
+	ImGui::SameLine();
+	ImGui::Text(m_id.c_str());
 
 	if (ImGui::Button("Create Component"))
 		ImGui::OpenPopup("Component List");
