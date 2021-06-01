@@ -9,6 +9,7 @@
 #include "../Game Systems/Components/AudioSource.h"
 
 #include "../Game Systems/Debug.h"
+#include "../Rendering/Graphics.h"
 
 #include <ostream>
 #include <fstream>
@@ -62,7 +63,6 @@ void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
 {
 	// Unload current Scene
 	UnloadScene(as_SaveToJSON);
-
 	// Get path to JSON scene config
 	std::string ls_SceneConfigPath = "SceneConfig/" + as_SceneID + ".json";
 	
@@ -253,6 +253,7 @@ void SceneManager::UnloadScene(bool as_SaveToJSON)
 		SaveToJSON(mp_CurrentScene);
 	}
 
+	Graphics::getInstance()->NullVirtualCamera();
 	delete mp_CurrentScene;
 }
 

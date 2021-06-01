@@ -1,7 +1,7 @@
 #include "SpringJoint.h"
-#include "../Input.h"
 #include "../Debug.h"
 #include "Physics/Rigidbody.h"
+#include <algorithm>
 
 SpringJoint::SpringJoint(GameObject* ap_owner) : Component(ap_owner, ComponentTypes::SPRINGJOINT, "Spring Joint") {
 	mf_defaultDesiredLength = 1;
@@ -23,11 +23,17 @@ void SpringJoint::SetConnectedObject(GameObject* ap_connectedObject) {
 	}
 
 	mp_connectedObject = ap_connectedObject;
-	mp_connectedObject->GetName().copy(m_jointObjectNameField, mp_connectedObject->GetName().size());
+
+	if (mp_connectedObject != nullptr) {
+		mp_connectedObject->GetName().copy(m_jointObjectNameField, mp_connectedObject->GetName().size());
+	}
+	else
+		std::fill(std::begin(m_jointObjectNameField), std::end(m_jointObjectNameField), '\0');
 }
 
 void SpringJoint::SetStrength(float af_strength) {
 	mf_strength = af_strength;
+	mi_typeField = (int)m_type;
 }
 
 void SpringJoint::SetDefaultDesiredLength(float af_desiredLength) {
@@ -55,7 +61,7 @@ void SpringJoint::SetSpringMode(SpringMode a_mode) {
 void SpringJoint::Update() {
 	if (mb_checkForConnectedObject) {
 		mp_connectedObject = ms_connectedObjectID == "NULL" ? nullptr : SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(ms_connectedObjectID);
-		
+
 		if (mp_connectedObject != nullptr)
 			mp_connectedObject->GetName().copy(m_jointObjectNameField, mp_connectedObject->GetName().size());
 
@@ -77,6 +83,11 @@ void SpringJoint::Update() {
 	
 	if (m_type == SpringType::UNFIXED_HEAD && currentLength != mf_defaultDesiredLength) {
 		ApplyNonFixedHeadSpringForce(currentLength);
+		return;
+	}
+
+	if (m_mode == SpringMode::NEITHER && currentLength != mf_desiredLength) {
+		SnapTailToDesiredDistance();
 		return;
 	}
 
@@ -110,13 +121,13 @@ void SpringJoint::Update() {
 void SpringJoint::ImGUIUpdate() {
 	ImGui::InputText("Enter joint object name", m_jointObjectNameField, IM_ARRAYSIZE(m_jointObjectNameField));
 	ImGui::Spacing();
-	ImGui::InputFloat("Enter desired length", &mf_defaultDesiredLength, IM_ARRAYSIZE(&mf_defaultDesiredLength));
-	ImGui::InputFloat("Enter strength", &mf_strength, IM_ARRAYSIZE(&mf_strength), 0.1f);
+	ImGui::InputFloat("Enter desired length", &mf_defaultDesiredLength);
+	ImGui::InputFloat("Enter strength", &mf_strength, 0.1f);
 	ImGui::Spacing();
 	ImGui::Combo("Joint type", &mi_typeField, "Fixed\0Non fixed\0\0");
 
 	if (m_type == SpringType::FIXED_HEAD)
-		ImGui::Combo("Mode type", &mi_modeField, "Attract & Repel\0Attract\0Repel\0\0");
+		ImGui::Combo("Mode type", &mi_modeField, "Attract & Repel\0Attract\0Repel\0Neither\0\0");
 	
 	ImGui::Spacing();
 	ImGui::Checkbox("Self adjust desired distance", &mb_selfAdjustDesiredLength);
