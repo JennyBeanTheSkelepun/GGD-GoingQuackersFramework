@@ -7,6 +7,7 @@
 #include "Components/Player.h"
 #include "Components/AudioSource.h"
 #include "Components/SpringJoint.h"
+#include "Components/Pickup.h"
 #include "Debug.h"
 
 GameObject::GameObject(const char* name, GameObject* parent)
@@ -77,7 +78,7 @@ void GameObject::Update()
 
 void GameObject::ImGUIUpdate()
 {
-	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint"};
+	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint", "Pickup"};
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{
@@ -105,6 +106,9 @@ void GameObject::ImGUIUpdate()
 					break;
 				case 5:
 					AddComponent<SpringJoint>();
+					break;
+				case 6:
+					AddComponent<Pickup>();
 					break;
 				default:
 						Debug::getInstance()->LogError("Component Type Not Recognized");

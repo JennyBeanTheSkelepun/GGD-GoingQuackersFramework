@@ -6,6 +6,7 @@
 #include "../Game Systems/Components/VirtualCamera.h"
 #include "../Game Systems/Components/Player.h"
 #include "../Game Systems/Components/AudioSource.h"
+#include "../Game Systems/Components/Pickup.h"
 
 #include "../Game Systems/Debug.h"
 #include "../Rendering/Graphics.h"
@@ -170,6 +171,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<AudioSource>(lp_newObject, &newObject.value()["AUDIOSOURCE"]);
 		}
 
+		if (newObject.value().contains("PICKUP")) {
+			LoadComponentFromScene<Pickup>(lp_newObject, &newObject.value()["PICKUP"]);
+		}
+
 		if (newObject.value().contains("SPRINGJOINT")) {
 			LoadComponentFromScene<SpringJoint>(lp_newObject, &newObject.value()["SPRINGJOINT"]);
 		}
@@ -217,6 +222,10 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 
 		if (child.value().contains("AUDIOSOURCE")) {
 			LoadComponentFromScene<AudioSource>(lp_newObject, &child.value()["AUDIOSOURCE"]);
+		}
+
+		if (child.value().contains("PICKUP")) {
+			LoadComponentFromScene<Pickup>(lp_newObject, &child.value()["PICKUP"]);
 		}
 
 		lp_newObject->SetParent(ap_object);
@@ -303,6 +312,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				break;
 			case ComponentTypes::AUDIOSOURCE:
 				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
+				break;
+			case ComponentTypes::PICKUP:
+				SaveComponent<Pickup>("PICKUP", component, &componentType);
 			break;
 			case ComponentTypes::SPRINGJOINT:
 				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
