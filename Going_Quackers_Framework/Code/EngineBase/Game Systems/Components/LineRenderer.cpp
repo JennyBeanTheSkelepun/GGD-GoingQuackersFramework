@@ -80,6 +80,8 @@ void LineRenderer::ImGUIUpdate()
 	ImGui::InputFloat2("End Pos", PosTwo[0]);
 
 	ImGui::InputFloat("Width", &mf_width);
+
+	ImGui::DragFloat("RotationOffset", &m_roationOffset);
 }
 
 //- Scene Save / Load -//
@@ -104,34 +106,21 @@ void LineRenderer::CalculateRequiredPositionRoatationScale()
 {
 	//- Var Decliration -//
 	Vector2 Pos, Scale, start = m_startPos, end = m_endPos;
-	float roatation = 0, angleOffset = 90;
-
-	
+	float roatation = 0;
 
 	//- Position -//
 	Pos = start;
 
 	//- Rotation -//
-	Vector2 LocalisedEndPos = start - end;
-	Vector2 Up = Vector2(start.X, start.Y + 1);
-	float LocalEndPosLength = LocalisedEndPos.Length();
-	float UpLength = Up.Length();
+	Vector2 startTemp = Vector2(1,0) , Endtemp = m_endPos - m_startPos;
+	float dot = startTemp.Dot(Endtemp);
+	float determinant = startTemp.Y * Endtemp.X - startTemp.X * Endtemp.Y;
+	float angle = std::atan2f(determinant, dot);
+	angle *= 180 / 3.1415;
+	
+	roatation = angle + m_roationOffset;
 
-	if (LocalEndPosLength != 0 && UpLength != 0)
-	{
-		LocalisedEndPos.Normalize();
-		Up.Normalize();
-		float dot = Up.Dot(LocalisedEndPos);
-		float determinant = Up.X * LocalisedEndPos.Y - Up.Y * LocalisedEndPos.X;
-		float angle = std::atan2f(dot, determinant);
-		angle *= 180 / 3.1415;
-
-		roatation = angle - 76;
-	}
-	else
-	{
-		roatation = 0;
-	}
+	Debug::getInstance()->Log(roatation);
 
 	//- Scale -//
 	Scale.X = m_startPos.Distance(m_endPos);
