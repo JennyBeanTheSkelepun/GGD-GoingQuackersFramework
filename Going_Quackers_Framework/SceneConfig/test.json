@@ -1,1 +1,62 @@
-{"objects":[{"TRANSFORM":{"LocalPositionX":0.0,"LocalPositionY":0.0,"LocalRotation":0.0,"LocalScaleX":1.0,"LocalScaleY":1.0,"PositionX":0.0,"PositionY":0.0,"Rotation":0.0,"ScaleX":1.0,"ScaleY":1.0},"id":"GameObject 24464","name":"GameObject 24465","parent":""},{"TRANSFORM":{"LocalPositionX":0.0,"LocalPositionY":0.0,"LocalRotation":0.0,"LocalScaleX":1.0,"LocalScaleY":1.0,"PositionX":0.0,"PositionY":0.0,"Rotation":0.0,"ScaleX":1.0,"ScaleY":1.0},"id":"GameObject 28145","name":"GameObject 28145","parent":""},{"TRANSFORM":{"LocalPositionX":0.0,"LocalPositionY":0.0,"LocalRotation":0.0,"LocalScaleX":1.0,"LocalScaleY":1.0,"PositionX":0.0,"PositionY":0.0,"Rotation":0.0,"ScaleX":1.0,"ScaleY":1.0},"id":"GameObject 16827","name":"GameObject 16827","parent":""}],"sceneID":"Test","sceneName":"Test","sceneType":"TEST"}
+{
+    "objects": [
+        {
+            "TRANSFORM": {
+                "LocalPositionX": 0.0,
+                "LocalPositionY": 0.0,
+                "LocalRotation": 0.0,
+                "LocalScaleX": 1.0,
+                "LocalScaleY": 1.0,
+                "PositionX": 0.0,
+                "PositionY": 0.0,
+                "Rotation": 0.0,
+                "ScaleX": 1.0,
+                "ScaleY": 1.0
+            },
+            "id": "GameObject 24464",
+            "name": "GameObject 24465",
+            "parent": ""
+        },
+        {
+            "SPRITERENDERER": {
+                "ShaderLocation": "Assets/Shaders/TextureSimple.fx",
+                "TextureLocation": "Assets/sonic.tga"
+            },
+            "TRANSFORM": {
+                "LocalPositionX": -1.0,
+                "LocalPositionY": 1.0,
+                "LocalRotation": 180.0,
+                "LocalScaleX": 1.0,
+                "LocalScaleY": 1.0,
+                "PositionX": -2.0,
+                "PositionY": 2.0,
+                "Rotation": 0.0,
+                "ScaleX": 1.0,
+                "ScaleY": 1.0
+            },
+            "id": "GameObject 28145",
+            "name": "GameObject 28145",
+            "parent": ""
+        },
+        {
+            "TRANSFORM": {
+                "LocalPositionX": 0.0,
+                "LocalPositionY": 0.0,
+                "LocalRotation": 0.0,
+                "LocalScaleX": 1.0,
+                "LocalScaleY": 1.0,
+                "PositionX": 0.0,
+                "PositionY": 0.0,
+                "Rotation": 0.0,
+                "ScaleX": 1.0,
+                "ScaleY": 1.0
+            },
+            "id": "GameObject 16827",
+            "name": "GameObject 16827",
+            "parent": ""
+        }
+    ],
+    "sceneID": "Test",
+    "sceneName": "Test",
+    "sceneType": "TEST"
+}

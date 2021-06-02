@@ -20,6 +20,7 @@ public:
 
 	void InitialzeTextureShader(std::string TextureLocation, std::wstring ShaderLocation);
 
+	inline int GetRenderLoopID() { return mi_ID; };
 	inline int GetTexture() { return mi_Texture; };
 	inline int GetShader() { return mi_Shader; };
 

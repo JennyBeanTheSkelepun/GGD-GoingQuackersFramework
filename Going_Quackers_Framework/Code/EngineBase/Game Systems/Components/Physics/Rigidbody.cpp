@@ -22,9 +22,11 @@ void Rigidbody::OnDestroy()
 //- Update Render Functions -//
 void Rigidbody::Update()
 {
-	if (Collision::getInstance()->RaycastSphere(Vector2(3, 0), Vector2(), GetOwner()))
+	if (Input::getInstance()->isKeyPressedDown(KeyCode::H))
 	{
-		Debug::getInstance()->Log("Ray hit " + GetOwner()->GetName());
+		Force newForce;
+		newForce.force = -GetOwner()->GetTransform()->GetPosition() / 10.0f;
+		AddForce(newForce);
 	}
 
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
@@ -41,6 +43,11 @@ void Rigidbody::Update()
 			m_Velocity = Vector2();
 			m_Acceleration = Vector2();
 		}
+	}
+	else
+	{
+		m_Velocity = Vector2();
+		m_Acceleration = Vector2();
 	}
 
 	m_Forces.clear();
@@ -81,6 +88,13 @@ void Rigidbody::ImGUIUpdate()
 
 		ImGui::EndCombo();
 	}
+
+	ImGui::Spacing();
+
+	//TODO clean this up a bit (temp value to allow the use of SetMass for input validation)
+	float tempMass = GetMass();
+	ImGui::InputFloat("Mass", &tempMass);
+	SetMass(tempMass);
 
 	ImGui::Spacing();
 
@@ -198,36 +212,57 @@ json* Rigidbody::SceneSave()
 //- Custom Functions -//
 void Rigidbody::CalculateVelocity()
 {
-	Vector2 totalForce;
+	Vector2 totalForceNONE;
+	Vector2 totalForceACCEL;
+	Vector2 totalForceMASS;
+	Vector2 totalForceMASSACCEL;
 
-	for(Vector2 force : m_Forces)
+	for (Force forcek : m_Forces)
 	{
-		totalForce += force;
+		if (forcek.moveIgnore == MovementIgnore::NONE)
+		{
+			totalForceNONE += forcek.force;
+		}
+		else if (forcek.moveIgnore == MovementIgnore::ACCEL)
+		{
+			totalForceACCEL += forcek.force;
+		}
+		else if (forcek.moveIgnore == MovementIgnore::MASS)
+		{
+			totalForceMASS += forcek.force;
+		}
+		else if (forcek.moveIgnore == MovementIgnore::MASSACCEL)
+		{
+			totalForceMASSACCEL += forcek.force;
+		}
 	}
 
-	if (m_MoveIgnoreFlag == MovementIgnore::NONE)
+	for (Force force : m_Forces)
 	{
-		m_Acceleration = totalForce / m_Mass;
+		if (force.moveIgnore == MovementIgnore::NONE)
+		{
+			m_Acceleration = totalForceNONE / m_Mass;
 
-		m_Velocity += m_Acceleration * Time::GetDeltaTime();
-	}
-	else if(m_MoveIgnoreFlag == MovementIgnore::ACCEL)
-	{
-		m_Velocity += totalForce / m_Mass;
+			m_Velocity += m_Acceleration * Time::GetDeltaTime();
+		}
+		else if (force.moveIgnore == MovementIgnore::ACCEL)
+		{
+			m_Velocity += totalForceACCEL / m_Mass;
 
-		m_Acceleration = Vector2();
-	}
-	else if (m_MoveIgnoreFlag == MovementIgnore::MASS)
-	{
-		m_Acceleration = totalForce;
+			m_Acceleration = Vector2();
+		}
+		else if (force.moveIgnore == MovementIgnore::MASS)
+		{
+			m_Acceleration = totalForceMASS;
 
-		m_Velocity += m_Acceleration * Time::GetDeltaTime();
-	}
-	else if (m_MoveIgnoreFlag == MovementIgnore::MASSACCEL)
-	{
-		m_Velocity += totalForce;
+			m_Velocity += m_Acceleration * Time::GetDeltaTime();
+		}
+		else if (force.moveIgnore == MovementIgnore::MASSACCEL)
+		{
+			m_Velocity += totalForceMASSACCEL;
 
-		m_Acceleration = Vector2();
+			m_Acceleration = Vector2();
+		}
 	}
 
 	Vector2 pos = GetOwner()->GetTransform()->GetPosition();
@@ -296,12 +331,14 @@ void Rigidbody::PhysicsCollide()
 	{
 	case PhysicsTypes::GE:
 		mp_GravEmitter->ApplyGravity(GetOwner(), &m_CollidingObjects);
+		CheckColliding(&m_CollidingObjects);
 		break;
 	case PhysicsTypes::RB:
 		RigidbodyCollide(&m_CollidingObjects);
+		CheckColliding(&m_CollidingObjects);
 		break;
 	case PhysicsTypes::Trig:
-		mp_Trigger->CheckColliding(&m_CollidingObjects);
+		CheckColliding(&m_CollidingObjects);
 		break;
 	}
 	
@@ -312,7 +349,7 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 {
 	for (GameObject* obj : *collidingObjects)
 	{
-		Rigidbody* rb = obj->GetComponent<Rigidbody>();
+		/*Rigidbody* rb = obj->GetComponent<Rigidbody>();
 		if (rb->GetCollideFlag())
 		{
 			continue;
@@ -330,7 +367,84 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 
 		Vector2 force = forceDirection * (distance / 2.0f);
 
-		rb->AddForce(force);
-		AddForce(-force);
+		Force appForce;
+		appForce.force = force;
+		appForce.moveIgnore = MovementIgnore::NONE;
+
+		rb->AddForce(appForce);
+
+		appForce.force = -appForce.force;
+		AddForce(appForce);*/
+
+		Rigidbody* rb = obj->GetComponent<Rigidbody>();
+
+		if (rb == nullptr)
+		{
+			continue;
+		}
+
+		Vector2 rV;
+		Vector2 rA;
+		Vector2 dV = rb->GetVelocity();
+		Vector2 dA = rb->GetAcceleration();
+
+		//TODO:: Make it set poss, not sure why?
+		if (rb->GetCollisionType() == CollisionTypes::Sphere)
+		{
+			Vector2 n = (obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition()).Normalize();
+
+			rV = dV - (n * (2 * dV.Dot(n)));
+			rA = dA - (n * (2 * dA.Dot(n)));
+
+			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * (GetRadius() + rb->GetRadius()));
+
+			obj->GetTransform()->SetPosition(newPos);
+		}
+		else if(rb->GetCollisionType() == CollisionTypes::AABB)
+		{
+			Vector2 n = (obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition()).Normalize();
+
+			n.X = std::round(n.X);
+			n.Y = std::round(n.Y);
+
+			Debug::getInstance()->Log(n);
+
+			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * ((GetAABBRect() / 2.0f) + (rb->GetAABBRect() / 2.0f)));
+			
+			rV = dV - (n * (2 * dV.Dot(n)));
+			rA = dA - (n * (2 * dA.Dot(n)));
+
+			obj->GetTransform()->SetPosition(newPos);
+		}
+
+		if (rV != Vector2())
+		{
+			SetVelocity(rV);
+		}
+		else
+		{
+			SetVelocity(-GetVelocity());
+		}
+
+		if (rA != Vector2())
+		{
+			SetAcceleration(rA);
+		}
+		else
+		{
+			SetAcceleration(-GetAcceleration());
+		}
 	}
+}
+
+bool Rigidbody::CheckColliding(std::vector<GameObject*>* collidingObjects)
+{
+	m_isColliding = collidingObjects->size() == 0 ? false : true;
+
+	return m_isColliding;
+}
+
+bool Rigidbody::CheckColliding(GameObject* checkObject, std::vector<GameObject*>* collidingObjects)
+{
+	return std::find(collidingObjects->begin(), collidingObjects->end(), checkObject) == collidingObjects->end() ? false : true;
 }

@@ -8,6 +8,7 @@
 #include "../../Time.h"
 #include "../../../SceneManager/SceneManager.h"
 #include "../../Debug.h"
+#include "../../../Code/EngineBase/Game Systems/Input.h"
 
 enum class PhysicsTypes
 {
@@ -22,6 +23,12 @@ enum class MovementIgnore
 	ACCEL = 1,
 	MASS = 2,
 	MASSACCEL = 3,
+};
+
+struct Force
+{
+	Vector2 force;
+	MovementIgnore moveIgnore = MovementIgnore::NONE;
 };
 
 class Rigidbody : public Component
@@ -45,7 +52,7 @@ public:
 	/// Adds the force to the next frames Rigidbody calculation
 	/// </summary>
 	/// <param name="force"></param>
-	void AddForce(Vector2 force) { m_Forces.push_back(force); }
+	void AddForce(Force force) { m_Forces.push_back(force); }
 
 	void SetMass(float mass) { m_Mass = mass <= 0 ? 1.0f : mass; }
 	float GetMass() { return m_Mass; }
@@ -67,16 +74,28 @@ public:
 	bool GetCollideFlag() { return m_PhysicsChecked; }
 	void ResetCollideFlag() { m_PhysicsChecked = false; }
 
-	void SetUseAccel(MovementIgnore IgnoreFlag) { m_MoveIgnoreFlag = IgnoreFlag; }
-
+	void SetAcceleration(Vector2 accel) { m_Acceleration = accel; }
 	Vector2 GetAcceleration() { return m_Acceleration; }
+
+	void SetVelocity(Vector2 velo) { m_Velocity = velo; }
 	Vector2 GetVelocity() { return m_Velocity; }
 
+	void setStatic(bool isStatic) { m_IsStatic = isStatic; }
+	bool getIsStatic() { return m_IsStatic; }
+
+	bool GetCollidingBool() { return m_isColliding; }
+	bool CheckColliding(std::vector<GameObject*>* collidingObjects);
+	bool CheckColliding(GameObject* checkObject, std::vector<GameObject*>* collidingObjects);
+
 	std::vector<GameObject*> GetCollidedObjects() { return m_CollidingObjects; }
+
+
 
 private:
 	void PhysicsCollide();
 	
+	bool m_isColliding;
+
 	PhysicsTypes m_PhysicsType = PhysicsTypes::RB;
 
 	Vector2 m_Velocity;
@@ -84,16 +103,15 @@ private:
 	
 	float m_Mass = 1.0f;
 
-	std::vector<Vector2> m_Forces;
-	MovementIgnore m_MoveIgnoreFlag = MovementIgnore::NONE;
+	std::vector<Force> m_Forces;
 
 	Trigger* mp_Trigger;
 	GravityEmitter* mp_GravEmitter;
 
 	bool m_IsStatic = false;
 
-	float m_Radius = 0.0f;
-	Vector2 m_AABBRect = Vector2();
+	float m_Radius = 1.0f;
+	Vector2 m_AABBRect = Vector2(1.0f, 1.0f);
 
 	CollisionTypes m_CollisionType = CollisionTypes::Sphere;
 

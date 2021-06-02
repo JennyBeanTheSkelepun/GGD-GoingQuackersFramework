@@ -4,6 +4,9 @@
 
 #include "Component.h"
 #include "../../Data Structures/Vectors.h"
+#include "../GameObject.h"
+#include "Physics/Rigidbody.h"
+#include "AudioSource.h"
 
 class Player : public Component
 {
@@ -29,13 +32,25 @@ public:
 	GRAPPLE_STATE GetGrappleState() { return m_grappleState; };
 	void SetGrappleState(GRAPPLE_STATE state);
 
-	
-
-	bool grabbed;
+	bool wallGrabbed;
 private:
 	GRAPPLE_STATE m_grappleState;
-	void GrabWall();
+	void HandleInput();
 	void GrappleFire(Vector2 targetPos);
+	void GrappleReturn();
+	void GrappleRetract();
+
+	void WallPush();
+	bool wallPushPressed;
+	bool wallPushCollided;
+	const float wallPushTimerMax = 500.f; // milliseconds
+	float wallPushPressTimer;
+	float wallPushCollideTimer;
+
+	void GrabWall();
+	GameObject* playerObj;
+	std::vector<GameObject*> wallObj;
+	Rigidbody* playerRB;
 };
 
 #endif // !PLAYER_H
