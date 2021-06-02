@@ -365,7 +365,10 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 
 			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * (GetRadius() + rb->GetRadius()));
 
-			obj->GetTransform()->SetPosition(newPos);
+			if (!rb->getIsStatic())
+			{
+				obj->GetTransform()->SetPosition(newPos);
+			}
 		}
 		else if(rb->GetCollisionType() == CollisionTypes::AABB)
 		{
@@ -381,7 +384,10 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 			rV = dV - (n * (2 * dV.Dot(n)));
 			rA = dA - (n * (2 * dA.Dot(n)));
 
-			obj->GetTransform()->SetPosition(newPos);
+			if (!rb->getIsStatic())
+			{
+				obj->GetTransform()->SetPosition(newPos);
+			}
 		}
 
 		if (rV != Vector2())
