@@ -8,7 +8,9 @@ VirtualCamera::VirtualCamera(GameObject* owner) : Component(owner, ComponentType
 	Position = Vector3(0, 0, -5);
 	Rotation = Vector3(0, 0, 0);
 	ObjectToFollow = nullptr;
-
+	ObjectToFollowID = "NONE";
+	isFollowing = false;
+	ActiveCam = false;
 	ObjectNameInput = new char[100] { "" };
 }
 

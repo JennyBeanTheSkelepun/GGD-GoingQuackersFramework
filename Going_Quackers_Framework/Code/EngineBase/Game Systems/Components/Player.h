@@ -5,6 +5,7 @@
 #include "Component.h"
 #include "../../Data Structures/Vectors.h"
 #include "../GameObject.h"
+#include "Physics/Rigidbody.h"
 
 class Player : public Component
 {
@@ -37,9 +38,18 @@ private:
 	void GrappleFire(Vector2 targetPos);
 	void GrappleReturn();
 	void GrappleRetract();
+
 	void WallPush();
+	bool wallPushPressed;
+	bool wallPushCollided;
+	const float wallPushTimerMax = 500.f; // milliseconds
+	float wallPushPressTimer;
+	float wallPushCollideTimer;
+
 	void GrabWall();
 	GameObject* playerObj;
+	std::vector<GameObject*> wallObj;
+	Rigidbody* playerRB;
 };
 
 #endif // !PLAYER_H

@@ -58,7 +58,6 @@ void SpriteRenderer::SceneLoad(json* componentJSON)
 	m_TextureLocation = (*componentJSON)["TextureLocation"];
 	m_ShaderLocation = (*componentJSON)["ShaderLocation"];
 
-
 	if (m_TextureLocation != "" && m_ShaderLocation != "") {
 		std::string s(m_ShaderLocation);
 		std::wstring ws;
