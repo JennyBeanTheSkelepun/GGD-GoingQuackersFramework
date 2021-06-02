@@ -30,7 +30,9 @@ void GrapplingHook::Update()
 
 	//If reached max length, Stop
 	if (GetHookDistance() >= m_hookRange)
-		return;
+	{
+		mp_handler->GetComponent<Player>()->SetGrappleState(Player::GRAPPLE_STATE::RETURNING);
+	}
 
 	if (!(CheckForWallCollision()))
 	{
@@ -52,6 +54,19 @@ void GrapplingHook::Update()
 			ResetHook();
 		}
 	}
+	else if (mp_handler->GetComponent<Player>()->GetGrappleState() == Player::GRAPPLE_STATE::RETURNING)
+	{
+		Vector2 direction = mp_handler->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
+		direction.Normalize();
+
+		Vector2 returnVector = direction * m_returnSpeed * Time::GetDeltaTime();		
+		GetOwner()->GetTransform()->SetPosition(GetOwner()->GetTransform()->GetPosition() + returnVector);
+
+		if (GetHookDistance() <= m_retractMinimum)
+		{
+			ResetHook();
+		}
+	}
 }
 
 void GrapplingHook::ImGUIUpdate()
@@ -60,6 +75,7 @@ void GrapplingHook::ImGUIUpdate()
 	ImGui::InputFloat("Hook Range", &m_hookRange);
 	ImGui::InputFloat("Retract Speed", &m_retractSpeed);
 	ImGui::InputFloat("Retract Minimum", &m_retractMinimum);
+	ImGui::InputFloat("Return Speed", &m_returnSpeed);
 }
 
 json* GrapplingHook::SceneSave()
@@ -68,7 +84,8 @@ json* GrapplingHook::SceneSave()
 		{"Fire Speed", m_fireSpeed},
 		{"Hook Range", m_hookRange},
 		{"Retract Speed", m_retractSpeed},
-		{"Retract Minimum", m_retractMinimum}
+		{"Retract Minimum", m_retractMinimum},
+		{"Return Speed", m_returnSpeed}
 		});
 
 	return returnObj;
@@ -80,6 +97,7 @@ void GrapplingHook::SceneLoad(json* componentJSON)
 	m_hookRange = (*componentJSON)["Hook Range"];
 	m_retractSpeed = (*componentJSON)["Retract Speed"];
 	m_retractMinimum = (*componentJSON)["Retract Minimum"];
+	m_returnSpeed = (*componentJSON)["Return Speed"];
 }
 
 void GrapplingHook::Fire(Vector2 targetPos, GameObject* handler)
@@ -100,6 +118,11 @@ void GrapplingHook::Fire(Vector2 targetPos, GameObject* handler)
 
 void GrapplingHook::Retract()
 {
+}
+
+void GrapplingHook::Return()
+{
+
 }
 
 void GrapplingHook::ResetHook()

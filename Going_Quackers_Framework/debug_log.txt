@@ -11,16 +11,22 @@ X: 0.000000 Y: 0.000000
 attached
 [ERROR] the player doesn't have a audio source component
 Player: fire grapple
-X: 1.000000 Y: -0.000000
+X: 1.000000 Y: -1.000000
 Player: release grapple
+X: 1.000000 Y: -0.000000
 Obj GameObject 11942 Collided with Obj GameObject 24464
-X: 1.000000 Y: 0.000000
+X: 1.000000 Y: 1.000000
 Obj GameObject 24464 Collided with Obj GameObject 11942
-X: -1.000000 Y: -0.000000
+X: -1.000000 Y: -1.000000
 Player: grapple is attached and not unmoving
 retracting grapple
 Player: start retracting grapple
-X: 0.708018 Y: -0.706194
+X: 0.759153 Y: -0.650912
 X: -1.000000 Y: 0.000000
-X: -0.988205 Y: 0.153138
+Obj GameObject 14604 Collided with Obj GameObject 24464
+Obj GameObject 24464 Collided with Obj GameObject 14604
+X: 0.692904 Y: -0.721030
+X: 0.811198 Y: -0.584771
+X: 0.774219 Y: -0.632918
+X: -0.999875 Y: 0.015832
 

@@ -27,6 +27,9 @@ public:
 	///<summary>Retracts the Grappling Hook to pull the Player Closer. Must of been Fired first</summary>
 	void Retract();
 
+	///<summary>Returns the Grappling Hook to the Player</summary>
+	void Return();
+
 	///<summary>Resets the Hooks Propoties to allow it to be Re-Fired</summary>
 	void ResetHook();
 
@@ -56,6 +59,8 @@ private:
 
 	float m_retractSpeed; //The Speed that the Player is pulled towards the Grappling Hook
 	float m_retractMinimum; //The Minimum Range the Grappling Hook should retract before it is fully retracted
+
+	float m_returnSpeed; //The Speed that the Grappling Hook returns to the Player
 };
 
 #endif // !_GRAPPINGHOOK_H_
