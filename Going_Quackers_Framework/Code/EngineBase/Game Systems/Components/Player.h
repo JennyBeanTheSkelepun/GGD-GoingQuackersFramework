@@ -31,6 +31,7 @@ public:
 	
 	GRAPPLE_STATE GetGrappleState() { return m_grappleState; };
 	void SetGrappleState(GRAPPLE_STATE state);
+	void Die();
 
 	bool wallGrabbed;
 private:
@@ -46,6 +47,7 @@ private:
 	const float wallPushTimerMax = 500.f; // milliseconds
 	float wallPushPressTimer;
 	float wallPushCollideTimer;
+	const float startSpeed = 1.f; // subject to change
 
 	void GrabWall();
 	GameObject* playerObj;
