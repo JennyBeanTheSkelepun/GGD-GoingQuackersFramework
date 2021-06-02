@@ -17,6 +17,12 @@ VirtualCamera::VirtualCamera(GameObject* owner) : Component(owner, ComponentType
 //- Deconstructors -//
 VirtualCamera::~VirtualCamera()
 {
+	if (ActiveCam)
+	{
+		Graphics::getInstance()->NullVirtualCamera();
+	}
+	delete[] ObjectIDInput;
+	ObjectToFollow = nullptr;
 }
 
 void VirtualCamera::OnDestroy()
