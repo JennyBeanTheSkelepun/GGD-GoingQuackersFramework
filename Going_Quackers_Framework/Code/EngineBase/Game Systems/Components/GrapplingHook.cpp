@@ -123,8 +123,8 @@ bool GrapplingHook::CheckForWallCollision()
 	std::vector<GameObject*> collidingObjects = GetOwner()->GetComponent<Rigidbody>()->GetCollidedObjects();
 	for (size_t i = 0; i < collidingObjects.size(); i++)
 	{
-		std::string objName = collidingObjects[i]->GetID();
-		if (objName == "GameObject 11942") //TODO: CHANGE TO BE BASED OFF THE NAME
+		std::string objName = collidingObjects[i]->GetName();
+		if (objName == "Wall")
 		{
 			return true;
 		}

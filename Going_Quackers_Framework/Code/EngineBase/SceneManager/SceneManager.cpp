@@ -298,6 +298,7 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 
 		// Get Object name
 		std::string ls_name = ap_Scene->GetObjectByIndex(i)->GetName();
+		ls_name.erase(std::find(ls_name.begin(), ls_name.end(), '\0'), ls_name.end());
 
 		json l_object = {
 			{"id", ls_id},
