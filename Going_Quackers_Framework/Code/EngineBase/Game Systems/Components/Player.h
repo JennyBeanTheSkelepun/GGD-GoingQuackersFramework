@@ -7,6 +7,7 @@
 #include "../GameObject.h"
 #include "Physics/Rigidbody.h"
 #include "AudioSource.h"
+#include "GrapplingHook.h"
 
 class Player : public Component
 {

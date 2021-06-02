@@ -7,7 +7,7 @@
 
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
 {
-	m_grappleState = GRAPPLE_STATE::ATTACHED;
+	m_grappleState = GRAPPLE_STATE::INACTIVE;
 	wallGrabbed = true;
 
 	wallPushPressed = false;
@@ -205,6 +205,9 @@ void Player::SetGrappleState(Player::GRAPPLE_STATE state)
 
 void Player::GrappleFire(Vector2 targetPos)
 {
+	GameObject* grapplingHook = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID("GameObject 24464");
+	grapplingHook->GetComponent<GrapplingHook>()->Fire(targetPos, this->GetOwner());
+
 	// calculate direction to cursor position
 	Vector2 playerPos = this->GetOwner()->GetComponent<Transform>()->GetPosition();
 
