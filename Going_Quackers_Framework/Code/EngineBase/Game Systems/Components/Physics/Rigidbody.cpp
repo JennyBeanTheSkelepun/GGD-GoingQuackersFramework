@@ -25,13 +25,6 @@ void Rigidbody::Update()
 
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
-		if (Collision::getInstance()->Raycast(Vector2(1.0f, 0.0f), Vector2(0.0f, 0.0f), GetOwner()))
-		{
-			Force newForce;
-			newForce.force = -GetOwner()->GetTransform()->GetPosition() / 10.0f;
-			AddForce(newForce);
-		}
-
 		PhysicsCollide();
 
 		if (m_PhysicsType == PhysicsTypes::RB && !m_IsStatic)
