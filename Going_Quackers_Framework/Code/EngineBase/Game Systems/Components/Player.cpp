@@ -279,4 +279,81 @@ void Player::WallPush()
 
 void Player::GrabWall()
 {
+	if (wallGrabbed == false)
+	{
+		if (playerObj->GetComponent<AudioSource>() != nullptr)
+		{
+			playerObj->GetComponent<AudioSource>()->Stop();
+		}
+
+	}
+	if (playerObj->GetComponent<Rigidbody>() == nullptr)
+	{
+		Debug::getInstance()->LogError("the player doesn't have a rigidbody component");
+	}
+	//todo add rope length to the if statement
+	else if (m_grappleState == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true)
+	{
+
+		wallGrabbed = true;
+
+		//this gets the object the player is colliding with and puts it into a variable to use 
+		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
+
+		Debug::getInstance()->Log(wallGrabbed);
+		Debug::getInstance()->Log("wall grabbed");
+
+	}
+	else if (playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true && m_grappleState == GRAPPLE_STATE::RETURNING /*&& rope length is less than 1*/)
+	{
+		wallGrabbed = true;
+
+		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
+		Debug::getInstance()->Log(wallGrabbed);
+		Debug::getInstance()->Log("wall grabbed");
+	}
+	else
+	{
+		//for testing
+		Debug::getInstance()->Log("wall not grabbed");
+	}
+
+
+	if (wallGrabbed)
+	{
+		//this takes the wall objects the player has collided with and finds the one that it is currently colliding with 
+		for (GameObject* obj : wallObj)
+		{
+			Rigidbody* playerRigidbody = playerObj->GetComponent<Rigidbody>();
+
+			if (playerRigidbody == nullptr)
+			{
+				return;
+			}
+
+			//this is meant to keep the player at the same position by moving them towards the wall with a small force
+			Vector2 vectorBetweenPlayerAndWall = (obj->GetTransform()->GetPosition() + obj->GetComponent<Rigidbody>()->GetAABBRect()) - playerObj->GetTransform()->GetPosition();
+			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
+			Vector2 force = directionForPlayer;
+			Force realForce;
+			realForce.force = force;
+			realForce.moveIgnore = MovementIgnore::ACCEL;
+			Debug::getInstance()->Log(force);
+			playerRigidbody->AddForce(realForce);
+			if (vectorBetweenPlayerAndWall.Length() <= 1)
+			{
+				playerRigidbody->setStatic(true);
+				Debug::getInstance()->Log("attached");
+				if (playerObj->GetComponent<AudioSource>() == nullptr)
+				{
+					Debug::getInstance()->LogError("the player doesn't have a audio source component");
+				}
+				else
+				{
+					playerObj->GetComponent<AudioSource>()->Play();
+				}
+			}
+		}
+
+	}
 }
