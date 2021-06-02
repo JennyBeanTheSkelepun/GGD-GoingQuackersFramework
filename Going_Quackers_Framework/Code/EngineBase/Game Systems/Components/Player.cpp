@@ -241,7 +241,7 @@ void Player::WallPush()
 	}
 
 	// vector from collided position to player
-	Vector2 wallToPlayer = collPos - playerObj->GetTransform()->GetPosition();
+	Vector2 wallToPlayer = playerObj->GetTransform()->GetPosition() - collPos;
 	pushForce.force = wallToPlayer;
 	pushForce.force.Normalize();
 
@@ -256,11 +256,12 @@ void Player::WallPush()
 			SetGrappleState(GRAPPLE_STATE::INACTIVE);
 			// if grapple is long, set to retracting
 		}
+		pushForce.force *= startSpeed;
 	}
-	else // pushing off a wall while moving
+	else
 	{
-		pushForce.force *= playerRB->GetVelocity().Length();
-		pushForce.force * 5.f; // get faster
+		// maintain speed
+		pushForce.force *= playerObj->GetComponent<Rigidbody>()->GetVelocity().Length();
 	}
 
 	// move player away
@@ -322,14 +323,17 @@ void Player::GrabWall()
 			}
 
 			//this is meant to keep the player at the same position by moving them towards the wall with a small force
-			Vector2 vectorBetweenPlayerAndWall = (obj->GetTransform()->GetPosition() + obj->GetComponent<Rigidbody>()->GetAABBRect()) - playerObj->GetTransform()->GetPosition();
+			Vector2 vectorBetweenPlayerAndWall = playerObj->GetTransform()->GetPosition() - (obj->GetTransform()->GetPosition() + obj->GetComponent<Rigidbody>()->GetAABBRect());
 			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
-			Vector2 force = directionForPlayer;
-			Force realForce;
-			realForce.force = force;
-			realForce.moveIgnore = MovementIgnore::ACCEL;
-			Debug::getInstance()->Log(force);
-			playerRB->AddForce(realForce);
+			if (vectorBetweenPlayerAndWall.Length() > 1)
+			{
+				Vector2 force = directionForPlayer;
+				Force realForce;
+				realForce.force = force;
+				realForce.moveIgnore = MovementIgnore::ACCEL;
+				Debug::getInstance()->Log(force);
+				playerRB->AddForce(realForce);
+			}
 			if (vectorBetweenPlayerAndWall.Length() <= 1)
 			{
 				playerRB->setStatic(true);
@@ -346,4 +350,20 @@ void Player::GrabWall()
 		}
 
 	}
+}
+
+void Player::Die()
+{
+	// todo play a sound
+
+	// reset player on death
+	playerObj->GetTransform()->SetPosition(Vector2(0, 0));
+	playerObj->GetTransform()->SetRotation(0);
+	playerRB->SetVelocity(Vector2(0, 0));
+
+	SetGrappleState(GRAPPLE_STATE::ATTACHED);
+	wallGrabbed = true;
+	wallPushPressed = false;
+	wallPushCollided = false;
+	wallObj.clear();
 }
