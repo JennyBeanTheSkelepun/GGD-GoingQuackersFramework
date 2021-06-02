@@ -22,12 +22,6 @@ void Rigidbody::OnDestroy()
 //- Update Render Functions -//
 void Rigidbody::Update()
 {
-	if (Input::getInstance()->isKeyPressedDown(KeyCode::H))
-	{
-		Force newForce;
-		newForce.force = -GetOwner()->GetTransform()->GetPosition() / 10.0f;
-		AddForce(newForce);
-	}
 
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
@@ -349,33 +343,6 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 {
 	for (GameObject* obj : *collidingObjects)
 	{
-		/*Rigidbody* rb = obj->GetComponent<Rigidbody>();
-		if (rb->GetCollideFlag())
-		{
-			continue;
-		}
-
-		Vector2 vectorBetweenObjs = obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
-		float distance = vectorBetweenObjs.Length();
-
-		Vector2 forceDirection = vectorBetweenObjs.Normalize();
-
-		if (distance == 0)
-		{
-			continue;
-		}
-
-		Vector2 force = forceDirection * (distance / 2.0f);
-
-		Force appForce;
-		appForce.force = force;
-		appForce.moveIgnore = MovementIgnore::NONE;
-
-		rb->AddForce(appForce);
-
-		appForce.force = -appForce.force;
-		AddForce(appForce);*/
-
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();
 
 		if (rb == nullptr)
@@ -398,7 +365,10 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 
 			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * (GetRadius() + rb->GetRadius()));
 
-			obj->GetTransform()->SetPosition(newPos);
+			if (!rb->getIsStatic())
+			{
+				obj->GetTransform()->SetPosition(newPos);
+			}
 		}
 		else if(rb->GetCollisionType() == CollisionTypes::AABB)
 		{
@@ -414,7 +384,10 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 			rV = dV - (n * (2 * dV.Dot(n)));
 			rA = dA - (n * (2 * dA.Dot(n)));
 
-			obj->GetTransform()->SetPosition(newPos);
+			if (!rb->getIsStatic())
+			{
+				obj->GetTransform()->SetPosition(newPos);
+			}
 		}
 
 		if (rV != Vector2())

@@ -9,6 +9,7 @@
 #include "Components/SpringJoint.h"
 #include "Components/LineRenderer.h"
 #include "Components/Pickup.h"
+#include "Components/KillPlayer.h"
 #include "Components/MovingObstacle.h"
 #include "Debug.h"
 
@@ -113,6 +114,9 @@ void GameObject::ImGUIUpdate()
 					break;
 				case 7:
 					AddComponent<Pickup>();
+					break;
+				case 8:
+					AddComponent<KillPlayer>();
 					break;
 				case 9:
 					AddComponent<MovingObstacle>();

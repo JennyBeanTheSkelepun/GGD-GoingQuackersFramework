@@ -66,51 +66,61 @@ bool Collision::CollisionSphericalAABB(GameObject* checkObjectA, GameObject* che
 
 	Vector2 obj1Pos = checkObjectA->GetTransform()->GetPosition();
 
-	Vector2 WidthHeight1 = checkObjectA->GetComponent<Rigidbody>()->GetAABBRect();
+	Vector2 WidthHeight;
+	float Radius;
 
-	Vector2 minPoint = Vector2(obj1Pos - (WidthHeight1 / 2.0f));
-	Vector2 maxPoint = Vector2(obj1Pos + (WidthHeight1 / 2.0f));
+	if (checkObjectA->GetComponent<Rigidbody>()->GetCollisionType() == CollisionTypes::AABB)
+	{
+		WidthHeight = checkObjectA->GetComponent<Rigidbody>()->GetAABBRect();
+		Radius = checkObjectB->GetComponent<Rigidbody>()->GetRadius();
+	}
+	else
+	{
+		WidthHeight = checkObjectB->GetComponent<Rigidbody>()->GetAABBRect();
+		Radius = checkObjectA->GetComponent<Rigidbody>()->GetRadius();
+	}
+
+
+	Vector2 minPoint = Vector2(obj1Pos - (WidthHeight / 2.0f));
+	Vector2 maxPoint = Vector2(obj1Pos + (WidthHeight / 2.0f));
 
 	Vector2 obj2Pos = checkObjectB->GetTransform()->GetPosition();
-
-	float radius = checkObjectB->GetComponent<Rigidbody>()->GetRadius();
 
 	closestPoint.X = max(minPoint.X, min(obj2Pos.X, maxPoint.X));
 	closestPoint.Y = max(minPoint.Y, min(obj2Pos.Y, maxPoint.Y));
 
 	float distance = sqrt(pow(closestPoint.X - obj2Pos.X, 2) + pow(closestPoint.Y - obj2Pos.Y, 2));
 
-	return distance > radius;
+	return distance < Radius;
 }
 
 bool Collision::RaycastSphere(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject)
 {
+	Rigidbody* rb = checkObject->GetComponent<Rigidbody>();
+	if (rb == nullptr) return false;
+
 	Vector2 RayEnd = RayOrigin + Ray;
 
-	Rigidbody* rb = checkObject->GetComponent<Rigidbody>();
+	float a = RayEnd.Y - RayOrigin.Y;
+	float b = RayOrigin.X - RayEnd.X;
+	float c = a * RayOrigin.X + b * RayOrigin.Y;
+	c = -c;
 
-	if (rb == nullptr)
-		return false;
+	Vector2 pos = checkObject->GetTransform()->GetPosition();
 
-	Vector2 CircleCentre = checkObject->GetTransform()->GetPosition();
-	float CircleRadius = rb->GetRadius();
+	float dist = (abs(a * pos.X + b * pos.Y + c) / sqrt(a * a + b * b));
 
-	Vector2 RayStartShifted = RayOrigin - CircleCentre;
-	Vector2 RayEndShifted = RayEnd - CircleCentre;
+	Vector2 OrigToCheck = pos - RayOrigin;
 
-	float m = (RayEndShifted.Y - RayStartShifted.Y) / (RayEndShifted.X - RayStartShifted.X);
-	float c = RayStartShifted.Y - m * RayStartShifted.X;
+	float angleBetweenRayAndObj = acos(Ray.Dot(OrigToCheck) / (Ray.Length() * OrigToCheck.Length()));
 
-	float underRadical = pow((pow(CircleRadius, 2) * pow(m, 2) + 1), 2) - pow(c, 2);
+	Debug::getInstance()->Log(angleBetweenRayAndObj);
 
-	if (underRadical < 0)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+	if (dist > rb->GetRadius()) return false;
+
+	if(angleBetweenRayAndObj < 1.5708f || angleBetweenRayAndObj > 4.71239f) return true;
+
+	return false;
 }
 
 bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject)
@@ -124,23 +134,68 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 
 	Vector2 rect = rb->GetAABBRect();
 	Vector2 pos = checkObject->GetTransform()->GetPosition();
+	Vector2 RayEnd = RayOrigin + Ray;
 
-	Vector2 corner1 = pos  - (rect / 2.0f);
-	Vector2 corner2 = Vector2(pos.X + (rect.X / 2.0f), pos.Y - (rect.Y / 2.0f));
-	Vector2 corner3 = Vector2(pos.X - (rect.X / 2.0f), pos.Y + (rect.Y / 2.0f));
-	Vector2 corner4 = pos + (rect / 2.0f);
+	Vector2 OrigToCheck = pos - RayOrigin;
 
-	bool collide = false;
+	float angleBetweenRayAndObj = acos(Ray.Dot(OrigToCheck) / (Ray.Length() * OrigToCheck.Length()));
 
-	collide = DoIntersect(corner1, corner2, RayOrigin, rayEnd);
-	collide = DoIntersect(corner2, corner3, RayOrigin, rayEnd);
-	collide = DoIntersect(corner4, corner3, RayOrigin, rayEnd);
-	collide = DoIntersect(corner3, corner1, RayOrigin, rayEnd);
+	Debug::getInstance()->Log(angleBetweenRayAndObj);
 
-	return collide;
+	if (angleBetweenRayAndObj > 1.5708f && angleBetweenRayAndObj < 4.71239f) return false;
+
+	if (Ray.Y == 0.0f)
+	{
+		if ((pos.Y + (rect.Y / 2.0f)) > RayOrigin.Y > (pos.Y - (rect.Y / 2.0f)))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	if (Ray.X == 0.0f)
+	{
+		if ((pos.X + (rect.X / 2.0f)) > RayOrigin.X > (pos.X - (rect.X / 2.0f)))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	float m = Ray.Y / Ray.X;
+	float c = RayOrigin.Y - m * RayOrigin.X;
+
+	float topIntercept = ((pos.Y + (rect.Y / 2.0f)) - c) / m;
+	float botIntercept = ((pos.Y - (rect.Y / 2.0f)) - c) / m;
+	float leftIntercept = m * (pos.X - (rect.X / 2.0f)) + c;
+	float rightIntercept = m * (pos.X + (rect.X / 2.0f)) + c;
+
+	if ((pos.X + (rect.X / 2.0f)) > topIntercept > (pos.X - (rect.X / 2.0f)))
+	{
+		return true;
+	}
+
+	if ((pos.X + (rect.X / 2.0f)) > botIntercept > (pos.X - (rect.X / 2.0f)))
+	{
+		return true;
+	}
+
+	if ((pos.Y + (rect.Y / 2.0f)) > leftIntercept > (pos.Y - (rect.Y / 2.0f)))
+	{
+		return true;
+	}
+
+	if ((pos.Y + (rect.Y / 2.0f)) > rightIntercept > (pos.Y - (rect.Y / 2.0f)))
+	{
+		return true;
+	}
+
+	//TODO:: Build AABB with 4 line line intersects and check the points of intersect between the corners
 }
 
-std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin, bool debug)
+std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin)
 {
 	std::vector<GameObject*> sceneObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
 	std::vector<GameObject*> collidedObjects;
@@ -173,9 +228,9 @@ std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin, bool
 	return collidedObjects;
 }
 
-bool Collision::Raycast(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject, bool debug)
+bool Collision::Raycast(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject)
 {
-	std::vector<GameObject*> collidedObjects = Raycast(Ray, RayOrigin, debug);
+	std::vector<GameObject*> collidedObjects = Raycast(Ray, RayOrigin);
 
 	if (std::find(collidedObjects.begin(), collidedObjects.end(), checkObject) != collidedObjects.end())
 	{
@@ -212,7 +267,7 @@ bool Collision::DoIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2)
 	int o3 = Orientation(p2, q2, p1);
 	int o4 = Orientation(p2, q2, q1);
 
-	if (o1 != o2 && 03 != o4) return true;
+	if (o1 != o2 && o3 != o4) return true;
 
 	if (o1 == 0 && OnSeg(p1, p2, q1)) return true;
 
