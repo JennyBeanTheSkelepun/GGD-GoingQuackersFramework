@@ -1,6 +1,7 @@
 #include "GrapplingHook.h"
 #include "../GameObject.h"
 #include "AudioSource.h"
+#include "Physics/Rigidbody.h"
 #include "../Time.h"
 
 GrapplingHook::GrapplingHook(GameObject* owner) : Component(owner, ComponentTypes::GRAPPLINGHOOK, "Grappling Hook")
@@ -27,6 +28,8 @@ void GrapplingHook::Update()
 
 	Vector2 fireVector = m_fireDirection * m_fireSpeed * Time::GetDeltaTime();
 	GetOwner()->GetTransform()->SetPosition(GetOwner()->GetTransform()->GetPosition() + fireVector);
+
+	int num = GetOwner()->GetComponent<Rigidbody>()->GetCollidedObjects().size();
 }
 
 void GrapplingHook::ImGUIUpdate()
