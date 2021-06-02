@@ -1,3 +1,0 @@
-Loading Scene from path: SceneConfig/default.json
-Scene load complete.
-
