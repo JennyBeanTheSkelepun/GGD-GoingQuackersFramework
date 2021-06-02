@@ -9,7 +9,7 @@
 #include "Components/SpringJoint.h"
 #include "Components/LineRenderer.h"
 #include "Components/Pickup.h"
-#include"Components/KillPlayer.h"
+#include "Components/KillPlayer.h"
 #include "Debug.h"
 
 GameObject::GameObject(const char* name, GameObject* parent)

@@ -23,7 +23,7 @@ private:
 	GameObject* KillObj;
 	std::vector<GameObject*> playerObj;
 	Rigidbody* killRB;
-}
+};
 
 
 #endif // !KILLPLAYER_H

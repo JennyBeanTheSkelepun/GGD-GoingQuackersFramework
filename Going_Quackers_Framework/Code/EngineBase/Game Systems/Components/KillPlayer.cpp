@@ -20,7 +20,7 @@ void KillPlayer::OnDestroy()
 }
 void KillPlayer::Update()
 {
-
+	KillThePlayer();
 }
 void KillPlayer::ImGUIUpdate()
 {
@@ -28,7 +28,11 @@ void KillPlayer::ImGUIUpdate()
 }
 json* KillPlayer::SceneSave()
 {
+	json* returnObj = new json({
+		{}
+		});
 
+	return returnObj;
 }
 void KillPlayer::SceneLoad(json* componentJSON)
 {
