@@ -30,7 +30,7 @@ public:
 	template<class T>
 	T* AddComponent()
 	{
-		if (std::is_base_of<Component, T>::value && GetComponent<T>() == nullptr )
+		if (std::is_base_of<Component, T>::value && GetComponent<T>() == nullptr)
 		{
 			m_components.push_back(static_cast<Component*>(new T(this)));
 			return static_cast<T*>(m_components[m_components.size() - 1]);

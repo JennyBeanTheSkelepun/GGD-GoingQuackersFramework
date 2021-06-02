@@ -216,9 +216,6 @@
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXGraphics.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
-      <Filter>Source Files\Engine\Rendering\DirectX11 Element</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\DirectX11 Elements\DirectXCamera.cpp">
       <Filter>Source Files\Engine\Rendering\DirectX11 Element\DirectX Camera</Filter>
     </ClCompile>
@@ -293,6 +290,9 @@
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Pickup.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
