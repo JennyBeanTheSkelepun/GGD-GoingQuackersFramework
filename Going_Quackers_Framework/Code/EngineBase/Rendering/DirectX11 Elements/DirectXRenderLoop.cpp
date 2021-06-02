@@ -115,7 +115,7 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 	bool result;
 
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
-	ar_DirectX.mp_deviceContext->OMSetRenderTargets(1, &ar_DirectX.mp_renderTextureRenderTargetView, ar_DirectX.mp_depthStencilView);
+	ar_DirectX.mp_deviceContext->OMSetRenderTargets(1, &ar_DirectX.mp_renderTargetView, ar_DirectX.mp_depthStencilView);
 
 	// Clear the buffers to begin the scene.
 	ar_DirectX.BeginGameScene(0.0f, 0.0f, 0.0f, 1.0f);
@@ -155,9 +155,8 @@ bool DirectXRenderLoop::ActiveGameRender(DirectXClass& ar_DirectX, DirectXCamera
 		DirectXShader* tempShader = ar_Shader.GetShader(m_linesToRender[i]->GetShader());
 		Texture2D* tempTexture = ar_texture.GetTexture(m_linesToRender[i]->GetTexture());
 
-		GameObject* tempGameObject = m_linesToRender[i]->GetOwner();
+		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, m_linesToRender[i]->GetLocalTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
 
-		result = tempShader->Render(ar_DirectX.GetDeviceContext(), 6, tempGameObject->GetTransform()->GetLocalToWorldMatrix(), viewMatrix, projectionMatrix, tempTexture->GetTexture());
 		if (!result)
 		{
 			return false;
