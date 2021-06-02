@@ -25,8 +25,6 @@ public:
 	inline std::string GetNextSceneID() { return ""; }
 	inline void SetNextSceneID() { ""; }
 
-	void OnTrigger();
-
 private:
 	std::string m_NextSceneID;
 	char* m_SceneIDInput;

@@ -1,5 +1,7 @@
 #include "SceneTransition.h"
 #include "../../SceneManager/SceneManager.h"
+#include "Physics/Rigidbody.h"
+#include "Player.h"
 
 //- Constructors -//
 SceneTransition::SceneTransition(GameObject* owner) : Component(owner, ComponentTypes::SCENETRANSITION, "Scene Transition")
@@ -23,8 +25,19 @@ void SceneTransition::OnDestroy()
 void SceneTransition::Update()
 {
 	// when player collides, go to next level
-	if (false) {
-		OnTrigger();
+	if (mp_owner->GetComponent<Rigidbody>() != nullptr) {
+		std::vector<GameObject*> collidedObjects = mp_owner->GetComponent<Rigidbody>()->GetCollidedObjects();
+		for (int i = 0; i < collidedObjects.size(); i++) {
+			if (collidedObjects[i]->GetComponent<Player>() != nullptr) {
+				mp_owner->GetComponent<Rigidbody>()->ResetCollideFlag();
+				collidedObjects[i]->GetComponent<Rigidbody>()->ResetCollideFlag();
+				SceneManager::GetInstance()->ChangeSceneNextFrame(m_NextSceneID);
+				break;
+			}
+		}
+	}
+	else {
+		Debug::getInstance()->LogError("Please put a rigidbody on the Scene Transition Object");
 	}
 }
 
@@ -68,11 +81,6 @@ json* SceneTransition::SceneSave()
 void SceneTransition::SceneLoad(json* componentJSON)
 {
 	m_NextSceneID = (*componentJSON)["TargetSceneID"];
-}
-
-void SceneTransition::OnTrigger()
-{
-	SceneManager::GetInstance()->ChangeScene(m_NextSceneID, false);
 }
 
 //- Other Functions -//

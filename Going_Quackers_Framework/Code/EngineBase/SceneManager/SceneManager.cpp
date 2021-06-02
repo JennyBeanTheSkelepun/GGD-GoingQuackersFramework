@@ -42,6 +42,9 @@ SceneManager::SceneManager()
 {
 	mp_CurrentScene = nullptr;
 	mb_doAutoSave = false;
+	mb_doSceneChange = false;
+	ms_SceneChangeID = "";
+
 }
 
 SceneManager::~SceneManager()
@@ -77,6 +80,12 @@ void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
 	}
 }
 
+void SceneManager::ChangeSceneNextFrame(std::string as_SceneID)
+{
+	ms_SceneChangeID = as_SceneID;
+	mb_doSceneChange = true;
+}
+
 
 /// <summary>
 /// Creates a blank scene
@@ -106,9 +115,13 @@ void SceneManager::SaveCurrentScene()
 /// Updates the current scene
 /// </summary>
 /// <param name="af_deltaTime">Delta time</param>
-void SceneManager::Update(float af_deltaTime)
+void SceneManager::Update()
 {
-	mp_CurrentScene->Update(af_deltaTime);
+	if (mb_doSceneChange) {
+		ChangeScene(ms_SceneChangeID, false);
+		mb_doSceneChange = false;
+		ms_SceneChangeID = "";
+	}
 }
 
 /// <summary>
