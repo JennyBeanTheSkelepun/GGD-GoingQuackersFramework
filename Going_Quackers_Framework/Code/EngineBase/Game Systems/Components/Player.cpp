@@ -16,7 +16,11 @@ Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Pl
 	wallPushCollideTimer = 0.f;
 
 	playerObj = this->GetOwner();
-	playerRB = playerObj->GetComponent<Rigidbody>();
+	if (playerObj->GetComponent<Rigidbody>() == nullptr)
+	{
+		Debug::getInstance()->LogError("The player doesn't have a Rigidbody component!");
+	}
+	else playerRB = playerObj->GetComponent<Rigidbody>();
 }
 
 Player::~Player()
@@ -255,7 +259,7 @@ void Player::WallPush()
 	}
 	else // pushing off a wall while moving
 	{
-		pushForce.force *= playerObj->GetComponent<Rigidbody>()->GetVelocity().Length();
+		pushForce.force *= playerRB->GetVelocity().Length();
 		pushForce.force * 5.f; // get faster
 	}
 
@@ -278,28 +282,25 @@ void Player::GrabWall()
 		}
 
 	}
-	if (playerObj->GetComponent<Rigidbody>() == nullptr)
-	{
-		Debug::getInstance()->LogError("the player doesn't have a rigidbody component");
-	}
+	
 	//todo add rope length to the if statement
-	else if (m_grappleState == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true)
+	if (m_grappleState == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerRB->GetCollidedObjects().empty() != true)
 	{
 
 		wallGrabbed = true;
 
 		//this gets the object the player is colliding with and puts it into a variable to use 
-		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
+		wallObj = playerRB->GetCollidedObjects();
 
 		Debug::getInstance()->Log(wallGrabbed);
 		Debug::getInstance()->Log("wall grabbed");
 
 	}
-	else if (playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true && m_grappleState == GRAPPLE_STATE::RETURNING /*&& rope length is less than 1*/)
+	else if (playerRB->GetCollidedObjects().empty() != true && m_grappleState == GRAPPLE_STATE::RETRACTING /*&& rope length is less than 1*/)
 	{
 		wallGrabbed = true;
 
-		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
+		wallObj = playerRB->GetCollidedObjects();
 		Debug::getInstance()->Log(wallGrabbed);
 		Debug::getInstance()->Log("wall grabbed");
 	}
@@ -315,9 +316,7 @@ void Player::GrabWall()
 		//this takes the wall objects the player has collided with and finds the one that it is currently colliding with 
 		for (GameObject* obj : wallObj)
 		{
-			Rigidbody* playerRigidbody = playerObj->GetComponent<Rigidbody>();
-
-			if (playerRigidbody == nullptr)
+			if (playerRB == nullptr)
 			{
 				return;
 			}
@@ -330,10 +329,10 @@ void Player::GrabWall()
 			realForce.force = force;
 			realForce.moveIgnore = MovementIgnore::ACCEL;
 			Debug::getInstance()->Log(force);
-			playerRigidbody->AddForce(realForce);
+			playerRB->AddForce(realForce);
 			if (vectorBetweenPlayerAndWall.Length() <= 1)
 			{
-				playerRigidbody->setStatic(true);
+				playerRB->setStatic(true);
 				Debug::getInstance()->Log("attached");
 				if (playerObj->GetComponent<AudioSource>() == nullptr)
 				{
