@@ -20,6 +20,7 @@ enum class ComponentTypes
 	LINERENDERER = 8,
 	PICKUP = 9,
 	KILLPLAYER=10,
+    ROPE = 11
 };
 
 class Component

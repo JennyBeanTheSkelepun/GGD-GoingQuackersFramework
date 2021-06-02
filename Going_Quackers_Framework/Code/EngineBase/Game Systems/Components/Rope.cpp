@@ -16,6 +16,7 @@ void Rope::OnDestroy() {
 }
 
 void Rope::Update() {
+	return;
 	if (mb_checkForNodes) {
 		for (size_t i = 0; i < m_nodeIDs.size(); i++) {
 			m_nodes.push_back(SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(m_nodeIDs[i]));
@@ -33,6 +34,14 @@ void Rope::Update() {
 
 		Vector2 ray = m_nodes[i + 1]->GetTransform()->GetPosition() - nodePosition;
 		std::vector<GameObject*> collisions = Collision::getInstance()->Raycast(ray, nodePosition);
+
+		//Move this to the end of the loop once all the returns are removed
+		if (nodePosition != m_nodePreviousPositions[i]) {
+			m_nodes[i]->GetComponent<LineRenderer>()->SetStartPos(nodePosition);
+
+			if (i != 0)
+				m_nodes[i - 1]->GetComponent<LineRenderer>()->SetEndPos(nodePosition);
+		}
 
 		//Remove non physical colliders
 		for (size_t j = 0; j < collisions.size(); j++) {
@@ -76,6 +85,11 @@ void Rope::Update() {
 		}
 	}
 
+	//Update last part of line renderer chain
+	if (m_nodes[m_nodes.size() - 1]->GetTransform()->GetPosition() != m_nodePreviousPositions[m_nodes.size() - 1])
+		m_nodes[m_nodes.size() - 2]->GetComponent<LineRenderer>()->SetEndPos(m_nodes[m_nodes.size() - 1]->GetTransform()->GetPosition());
+
+	//Update all previous positions
 	for (size_t i = 0; i < m_nodePreviousPositions.size(); i++)
 		m_nodePreviousPositions[i] = m_nodes[i]->GetTransform()->GetPosition();
 }
@@ -90,6 +104,8 @@ void Rope::ImGUIUpdate() {
 		GameObject* baseNode = new GameObject("Rope Node 1");
 		GetOwner()->AddChild(baseNode);
 		baseNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
+
+		baseNode->AddComponent<LineRenderer>();
 
 		m_nodes.push_back(baseNode);
 		m_nodePreviousPositions.push_back(baseNode->GetTransform()->GetPosition());
@@ -200,12 +216,21 @@ void Rope::SphereCollision(GameObject* ap_collision, int ai_collidingNodeIndex) 
 }
 
 void Rope::SplitSection(int ai_nodeIndex, Vector2 a_newNodePos) {
+	if (ai_nodeIndex > m_nodeIDs.size() - 2 || ai_nodeIndex < 1) {
+		Debug::getInstance()->Log("Cannot add rope section. Index must fall between the start and end node index.");
+		return;
+	}
+
 	GameObject* newNode = new GameObject(("Rope Node " + std::to_string(m_nodes.size() + 1)).c_str());
 	GetOwner()->AddChild(newNode);
 	newNode->GetTransform()->SetLocalPosition(a_newNodePos);
 
 	Rigidbody* rigidbody = newNode->AddComponent<Rigidbody>();
 	rigidbody->SetType(PhysicsTypes::Trig);
+
+	LineRenderer* lineRenderer = newNode->AddComponent<LineRenderer>();
+	lineRenderer->SetStartPos(m_nodes[ai_nodeIndex]->GetTransform()->GetPosition());
+	lineRenderer->SetEndPos(m_nodes[ai_nodeIndex + 1]->GetTransform()->GetPosition());
 
 	m_nodes[ai_nodeIndex]->GetComponent<SpringJoint>()->SetConnectedObject(newNode);
 
