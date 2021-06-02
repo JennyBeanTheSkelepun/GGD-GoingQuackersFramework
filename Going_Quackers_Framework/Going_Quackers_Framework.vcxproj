@@ -143,6 +143,7 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\AudioSource.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\GrapplingHook.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\KillPlayer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\LineRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Collision.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\AudioSource.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\GrapplingHook.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\KillPlayer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\LineRenderer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Collision.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h" />

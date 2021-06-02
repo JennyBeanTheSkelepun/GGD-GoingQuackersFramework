@@ -121,7 +121,6 @@ void GameObject::ImGUIUpdate()
 				case 9:
 					AddComponent<KillPlayer>();
 					break;
-	
 				default:
 						Debug::getInstance()->LogError("Component Type Not Recognized");
 					break;

@@ -41,6 +41,7 @@ private:
 	void GrappleFire(Vector2 targetPos);
 	void GrappleReturn();
 	void GrappleRetract();
+	GrapplingHook* mp_grapplingHook;
 
 	void WallPush();
 	bool wallPushPressed;

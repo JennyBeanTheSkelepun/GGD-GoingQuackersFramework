@@ -206,7 +206,8 @@ void Player::SetGrappleState(Player::GRAPPLE_STATE state)
 void Player::GrappleFire(Vector2 targetPos)
 {
 	GameObject* grapplingHook = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID("GameObject 24464");
-	grapplingHook->GetComponent<GrapplingHook>()->Fire(targetPos, this->GetOwner());
+	mp_grapplingHook = grapplingHook->GetComponent<GrapplingHook>();
+	mp_grapplingHook->Fire(targetPos, this->GetOwner());
 
 	// calculate direction to cursor position
 	Vector2 playerPos = this->GetOwner()->GetComponent<Transform>()->GetPosition();
@@ -223,6 +224,7 @@ void Player::GrappleReturn()
 }
 void Player::GrappleRetract()
 {
+	mp_grapplingHook->Retract();
 	// move player towards rope end
 	// tell rope to shrink?
 	Debug::getInstance()->Log("retracting grapple");

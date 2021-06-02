@@ -3,9 +3,12 @@
 #include "AudioSource.h"
 #include "Physics/Rigidbody.h"
 #include "../Time.h"
+#include "Player.h"
 
 GrapplingHook::GrapplingHook(GameObject* owner) : Component(owner, ComponentTypes::GRAPPLINGHOOK, "Grappling Hook")
 {
+	m_hit = false;
+	m_fired = false;
 }
 
 GrapplingHook::~GrapplingHook()
@@ -22,27 +25,50 @@ void GrapplingHook::Update()
 	if (mp_handler == nullptr)
 		return;
 
+	if (!m_fired)
+		return;
+
 	//If reached max length, Stop
 	if (GetHookDistance() >= m_hookRange)
 		return;
 
-	Vector2 fireVector = m_fireDirection * m_fireSpeed * Time::GetDeltaTime();
-	GetOwner()->GetTransform()->SetPosition(GetOwner()->GetTransform()->GetPosition() + fireVector);
+	if (!(CheckForWallCollision()))
+	{
+		Vector2 fireVector = m_fireDirection * m_fireSpeed * Time::GetDeltaTime();
+		GetOwner()->GetTransform()->SetPosition(GetOwner()->GetTransform()->GetPosition() + fireVector);
+	}
+	else
+	{
+		HitWall();
+	}
 
-	int num = GetOwner()->GetComponent<Rigidbody>()->GetCollidedObjects().size();
+	if (mp_handler->GetComponent<Player>()->GetGrappleState() == Player::GRAPPLE_STATE::RETRACTING)
+	{
+		Vector2 retractVector = m_fireDirection * m_retractSpeed * Time::GetDeltaTime();
+		mp_handler->GetTransform()->SetPosition(mp_handler->GetTransform()->GetPosition() + retractVector);
+
+		if (GetHookDistance() <= m_retractMinimum)
+		{
+			ResetHook();
+		}
+	}
 }
 
 void GrapplingHook::ImGUIUpdate()
 {
 	ImGui::InputFloat("Fire Speed", &m_fireSpeed);
 	ImGui::InputFloat("Hook Range", &m_hookRange);
+	ImGui::InputFloat("Retract Speed", &m_retractSpeed);
+	ImGui::InputFloat("Retract Minimum", &m_retractMinimum);
 }
 
 json* GrapplingHook::SceneSave()
 {
 	json* returnObj = new json({
 		{"Fire Speed", m_fireSpeed},
-		{"Hook Range", m_hookRange}
+		{"Hook Range", m_hookRange},
+		{"Retract Speed", m_retractSpeed},
+		{"Retract Minimum", m_retractMinimum}
 		});
 
 	return returnObj;
@@ -52,6 +78,8 @@ void GrapplingHook::SceneLoad(json* componentJSON)
 {
 	m_fireSpeed = (*componentJSON)["Fire Speed"];
 	m_hookRange = (*componentJSON)["Hook Range"];
+	m_retractSpeed = (*componentJSON)["Retract Speed"];
+	m_retractMinimum = (*componentJSON)["Retract Minimum"];
 }
 
 void GrapplingHook::Fire(Vector2 targetPos, GameObject* handler)
@@ -64,8 +92,23 @@ void GrapplingHook::Fire(Vector2 targetPos, GameObject* handler)
 	direction.Normalize();
 	m_fireDirection = direction;
 
+	m_fired = true;
+
 	//Play Sound Effect
 	GetOwner()->GetComponent<AudioSource>()->Play();
+}
+
+void GrapplingHook::Retract()
+{
+}
+
+void GrapplingHook::ResetHook()
+{
+	mp_handler->GetComponent<Player>()->SetGrappleState(Player::GRAPPLE_STATE::INACTIVE);
+	m_hit = false;
+	m_fired = false;
+	GetOwner()->GetTransform()->SetPosition(mp_handler->GetTransform()->GetPosition());
+	GetOwner()->GetComponent<AudioSource>()->SetAudioPath("Hook_Shoot.wav"); //Set Audio Back
 }
 
 float GrapplingHook::GetHookDistance()
@@ -73,4 +116,32 @@ float GrapplingHook::GetHookDistance()
 	Vector2 hookPos = GetOwner()->GetTransform()->GetPosition();
 	Vector2 handlerPos = mp_handler->GetTransform()->GetPosition();
 	return handlerPos.Distance(hookPos);
+}
+
+bool GrapplingHook::CheckForWallCollision()
+{
+	std::vector<GameObject*> collidingObjects = GetOwner()->GetComponent<Rigidbody>()->GetCollidedObjects();
+	for (size_t i = 0; i < collidingObjects.size(); i++)
+	{
+		std::string objName = collidingObjects[i]->GetID();
+		if (objName == "GameObject 11942") //TODO: CHANGE TO BE BASED OFF THE NAME
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void GrapplingHook::HitWall()
+{
+	if (!m_hit)
+	{
+		m_hit = true;
+		mp_handler->GetComponent<Player>()->SetGrappleState(Player::GRAPPLE_STATE::ATTACHED);
+
+		//Change and Play Audio Hit Sound
+		GetOwner()->GetComponent<AudioSource>()->SetAudioPath("Hook_Hit.wav");
+		GetOwner()->GetComponent<AudioSource>()->Play();
+	}
 }
