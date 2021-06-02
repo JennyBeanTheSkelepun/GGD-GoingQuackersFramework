@@ -294,6 +294,9 @@
     <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
       <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\KillPlayer.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SceneTransition.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
@@ -456,6 +459,9 @@
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\LineRenderer.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\KillPlayer.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SceneTransition.h">
