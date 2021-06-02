@@ -9,6 +9,7 @@
 #include "Components/SpringJoint.h"
 #include "Components/LineRenderer.h"
 #include "Components/Pickup.h"
+#include "Components/GrapplingHook.h"
 #include "Debug.h"
 
 GameObject::GameObject(const char* name, GameObject* parent)
@@ -79,7 +80,7 @@ void GameObject::Update()
 
 void GameObject::ImGUIUpdate()
 {
-	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint", "Line Renderer", "Pickup"};
+	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint", "Line Renderer", "Pickup", "Grappling Hook"};
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{
@@ -113,7 +114,9 @@ void GameObject::ImGUIUpdate()
 				case 7:
 					AddComponent<Pickup>();
 					break;
-		
+				case 8:
+					AddComponent<GrapplingHook>();
+					break;
 				default:
 						Debug::getInstance()->LogError("Component Type Not Recognized");
 					break;
