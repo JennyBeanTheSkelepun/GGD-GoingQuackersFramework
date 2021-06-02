@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{4da784a7-d310-4713-81be-51ff7cb68aea}</ProjectGuid>
     <RootNamespace>GoingQuackersFramework</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -143,6 +143,7 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\AudioSource.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\LineRenderer.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\MovingObstacle.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Collision.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\AudioSource.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\LineRenderer.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\MovingObstacle.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Collision.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h" />

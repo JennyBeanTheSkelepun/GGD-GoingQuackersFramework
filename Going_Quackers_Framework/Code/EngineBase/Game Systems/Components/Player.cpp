@@ -72,8 +72,13 @@ void Player::ImGUIUpdate()
 json* Player::SceneSave()
 {
 	json* returnObj = new json({
-		{"Grappling Hook's State", m_grappleState}
-		});
+		{"Grappling Hook's State", m_grappleState},
+		{"Wall Grabbed", wallGrabbed},
+		{"Wall Push Variables",
+			{{"Pressed", wallPushPressed}, {"Collided", wallPushCollided},
+			{"PressedTimer", wallPushPressTimer},{"CollidedTimer",wallPushCollideTimer}}
+		}
+	});
 
 	return returnObj;
 }
@@ -81,6 +86,11 @@ json* Player::SceneSave()
 void Player::SceneLoad(json* componentJSON)
 {
 	m_grappleState = (*componentJSON)["Grappling Hook's State"];
+	wallGrabbed = (*componentJSON)["Wall Grabbed"];
+	wallPushPressed = (*componentJSON)["Wall Push Variables"]["Pressed"];
+	wallPushCollided = (*componentJSON)["Wall Push Variables"]["Collided"];
+	wallPushPressTimer = (*componentJSON)["Wall Push Variables"]["PressedTimer"];
+	wallPushCollideTimer = (*componentJSON)["Wall Push Variables"]["CollidedTimer"];
 }
 
 void Player::HandleInput()

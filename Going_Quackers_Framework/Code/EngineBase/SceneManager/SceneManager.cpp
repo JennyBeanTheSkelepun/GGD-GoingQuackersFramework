@@ -9,6 +9,8 @@
 #include "../Game Systems/Components/LineRenderer.h"
 #include "../Game Systems/Components/Pickup.h"
 
+#include "../Game Systems/Components/MovingObstacle.h"
+
 #include "../Game Systems/Debug.h"
 #include "../Rendering/Graphics.h"
 
@@ -184,6 +186,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINERENDERER"]);
 		}
 
+		if (newObject.value().contains("MOVINGOBSTACLE")) {
+			LoadComponentFromScene<MovingObstacle>(lp_newObject, &newObject.value()["MOVINGOBSTACLE"]);
+		}
+
 		if (newObject.value()["children"].size() > 0)
 		{
 			LoadChildren(lp_newObject, &newObject.value());
@@ -235,6 +241,10 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 
 		if (child.value().contains("PICKUP")) {
 			LoadComponentFromScene<Pickup>(lp_newObject, &child.value()["PICKUP"]);
+		}
+
+		if (child.value().contains("MOVINGOBSTACLE")) {
+			LoadComponentFromScene<MovingObstacle>(lp_newObject, &child.value()["MOVINGOBSTACLE"]);
 		}
 
 		lp_newObject->SetParent(ap_object);
@@ -330,6 +340,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::LINERENDERER:
 				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
 				break;
+			case ComponentTypes::MOVINGOBSTACLE:
+				SaveComponent<MovingObstacle>("MOVINGOBSTACLE", component, &componentType);
+				break;
 			default:
 				componentType = "MISSING";
 				break;
@@ -411,6 +424,9 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				break;
 			case ComponentTypes::PICKUP:
 				SaveComponent<Pickup>("PICKUP", component, &componentType);
+				break;
+			case ComponentTypes::MOVINGOBSTACLE:
+				SaveComponent<MovingObstacle>("MOVINGOBSTACLE", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
