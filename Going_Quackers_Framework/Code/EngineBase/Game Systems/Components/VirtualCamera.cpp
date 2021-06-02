@@ -8,8 +8,10 @@ VirtualCamera::VirtualCamera(GameObject* owner) : Component(owner, ComponentType
 	Position = Vector3(0, 0, -5);
 	Rotation = Vector3(0, 0, 0);
 	ObjectToFollow = nullptr;
-
-	ObjectNameInput = new char[100] { "" };
+	ObjectToFollowID = "NONE";
+	isFollowing = false;
+	ActiveCam = false;
+	ObjectIDInput = new char[100] { "" };
 }
 
 //- Deconstructors -//
@@ -32,7 +34,7 @@ void VirtualCamera::Update()
 			-5);
 	}
 	else if (isFollowing && ObjectToFollow == nullptr && ObjectToFollowID != "NONE") {
-		ObjectToFollow = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByName(ObjectToFollowID);
+		ObjectToFollow = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(ObjectToFollowID);
 		if (ObjectToFollow == nullptr) {
 			Debug::getInstance()->LogError("Virtual Camera: Error when finding object to follow, could not find object with ID: " + ObjectToFollowID);
 			isFollowing = false;
@@ -55,20 +57,20 @@ void VirtualCamera::ImGUIUpdate()
 	ImGui::Text((ActiveCam) ? "This is the active Camera" : "This isn't the active Camera" );
 
 
-	ImGui::InputText("Target Object Name: ", ObjectNameInput, 100);
+	ImGui::InputText("Target Object ID: ", ObjectIDInput, 100);
 	if (ImGui::Button("Follow Object"))
 	{
 		std::vector<GameObject*> sceneObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
-		std::string objectNameInputString(ObjectNameInput);
+		std::string objectIDInputString(ObjectIDInput);
 
 		for (size_t i = 0; i < sceneObjects.size(); i++) {
-			std::string objectName = sceneObjects[i]->GetName();
-			int garbageStart = objectName.find('\0');
+			std::string objectID = sceneObjects[i]->GetID();
+			int garbageStart = objectID.find('\0');
 
 			if (garbageStart != std::string::npos)
-				objectName.erase(objectName.find('\0'));
+				objectID.erase(objectID.find('\0'));
 
-			if (objectName == objectNameInputString) {
+			if (objectID == objectIDInputString) {
 				if (ObjectToFollow != sceneObjects[i]) {
 					ObjectToFollow = sceneObjects[i];
 

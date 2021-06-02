@@ -6,6 +6,7 @@
 
 #include "Components/Component.h"
 #include "Components/Transform.h"
+#include "Components/LineRenderer.h"
 
 #include "Debug.h"
 
@@ -33,6 +34,19 @@ public:
 		{
 			m_components.push_back(static_cast<Component*>(new T(this)));
 			return static_cast<T*>(m_components[m_components.size() - 1]);
+		}
+		else
+		{
+			Debug::getInstance()->LogError("Gameobject cant contain duplicate components");
+		}
+	}
+
+	LineRenderer* AddLineRendererComponent()
+	{
+		if (std::is_base_of<Component, LineRenderer>::value)
+		{
+			m_components.push_back(static_cast<Component*>(new LineRenderer(this)));
+			return static_cast<LineRenderer*>(m_components[m_components.size() - 1]);
 		}
 		else
 		{

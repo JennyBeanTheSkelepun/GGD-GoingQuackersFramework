@@ -2,13 +2,22 @@
 #include "../Input.h"
 #include "Transform.h"
 #include "../Debug.h"
+#include "../Time.h"
 
 
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
 {
 	m_grappleState = GRAPPLE_STATE::INACTIVE;
-	wallGrabbed = false;
+
+	wallGrabbed = true;
+
+	wallPushPressed = false;
+	wallPushCollided = false;
+	wallPushPressTimer = 0.f;
+	wallPushCollideTimer = 0.f;
+
 	playerObj = this->GetOwner();
+	playerRB = playerObj->GetComponent<Rigidbody>();
 }
 
 Player::~Player()
@@ -23,11 +32,32 @@ void Player::OnDestroy()
 
 void Player::Update()
 {
-	// ignore input in editor mode
+	// don't do anything in editor mode
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
 		HandleInput();
 		GrabWall();
+
+		// check collision for pushing off a wall
+		if (playerRB->GetCollidingBool() && !wallPushCollided)
+		{
+			wallPushCollided = true;
+			wallPushCollideTimer = wallPushTimerMax;
+			if (wallObj.size() == 0)
+				wallObj = playerRB->GetCollidedObjects();
+		}
+		if (wallPushPressed && wallPushCollided)
+		{
+			WallPush();
+		}
+
+		// minimum speed; todo adjust value
+		Vector2 velocity = playerRB->GetVelocity();
+		if (!wallGrabbed && velocity.Length() < 0.001 && velocity.Length() != 0)
+		{
+			velocity *= (0.001 / velocity.Length());
+			playerRB->SetVelocity(velocity);
+		}
 	}
 }
 
@@ -79,20 +109,19 @@ void Player::HandleInput()
 	Vector3 mousePos = Input::getInstance()->GetWorldSpaceMousePos();
 	Vector2 playerPos = playerTransform->GetPosition();
 
-	// calculate vectors, centered on the centre of the player
+	// calculate vectors, relative to the player
 	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - playerPos;
-	Vector2 upVector = Vector2(playerPos.X, playerPos.Y + 1);
+	Vector2 upVector = Vector2(0, 1); // magnitude is always 1
 	float mouseMagnitude = mouseVector.Length();
-	float upMagnitude = upVector.Length();
 
 	// just don't change the angle if it would divide by zero
-	if (mouseMagnitude != 0 && upMagnitude != 0)
+	if (mouseMagnitude != 0)
 	{
 		// use dot product and determinant
-		Vector2 mouseNormal = mouseVector.Normalize();
-		Vector2 upNormal = upVector.Normalize();
-		float dot = upNormal.Dot(mouseNormal);
-		float determinant = upNormal.X * mouseNormal.Y - upNormal.Y * mouseNormal.X;
+		mouseVector.Normalize();
+		upVector.Normalize();
+		float dot = mouseVector.Dot(upVector);
+		float determinant = mouseVector.X * upVector.Y - mouseVector.Y * upVector.X;
 		float angle = std::atan2f(determinant, dot);
 		// radians to degrees
 		angle *= 180 / 3.1415;
@@ -138,11 +167,25 @@ void Player::HandleInput()
 
 #pragma endregion
 
-	// if near a wall, press space to push off it
-	if (false && Input::getInstance()->isKeyPressedDown(KeyCode::Space))
+	// count down wall-pushing input buffer timers
+	if (wallPushPressed)
 	{
-		WallPush();
-		GrabWall();
+		wallPushPressTimer -= Time::GetDeltaTime() * 1000;
+		if (wallPushPressTimer < 0)
+			wallPushPressed = false;
+	}
+	if (wallPushCollided)
+	{
+		wallPushCollideTimer -= Time::GetDeltaTime() * 1000;
+		if (wallPushCollideTimer < 0)
+			wallPushCollided = false;
+	}
+
+	// if near a wall, press space to push off it
+	if (Input::getInstance()->isKeyPressedDown(KeyCode::Space))
+	{
+		wallPushPressed = true;
+		wallPushPressTimer = wallPushTimerMax;
 	}
 }
 
@@ -194,86 +237,46 @@ void Player::GrappleRetract()
 
 void Player::WallPush()
 {
+	Force pushForce;
+
+	// average of collided objects' positions
+	Vector2 collPos = Vector2(0, 0);
+	if (wallObj.size() > 0) // should always be at least one, but just in case
+	{
+		for (int i = 0; i < wallObj.size(); i++)
+		{
+			collPos += wallObj[i]->GetTransform()->GetPosition();
+		}
+		collPos /= wallObj.size();
+	}
+
+	// pushing off a wall from a standstill
+	if (wallGrabbed)
+	{
+		wallGrabbed = false;
+		playerRB->setStatic(false);
+		// reflect (not perpendicular) vector between player and collided position
+		Vector2 playerToWall = collPos - playerObj->GetTransform()->GetPosition();
+		pushForce.force = playerToWall * -1;
+		pushForce.force.Normalize();
+	}
+	else // pushing off a wall while moving
+	{
+		// calculate midpoint between current velocity and collided position 
+		Vector2 vel = playerObj->GetComponent<Rigidbody>()->GetVelocity();
+		Vector2 midpoint = (vel + collPos) / 2;
+		pushForce.force = midpoint;
+	}
+
 	// move player away
+	playerRB->AddForce(pushForce);
+	
+	// cleanup
+	wallPushPressed = false;
+	wallPushCollided = false;
+	wallObj.clear();
 }
 
 void Player::GrabWall()
 {
-	if (wallGrabbed == false)
-	{
-		if (playerObj->GetComponent<AudioSource>() != nullptr)
-		{
-			playerObj->GetComponent<AudioSource>()->Stop();
-		}
-		
-	}
-	if (playerObj->GetComponent<Rigidbody>() == nullptr)
-	{
-		Debug::getInstance()->LogError("the player doesn't have a rigidbody component");
-	}
-	//todo add rope length to the if statement
-	else if (m_grappleState == GRAPPLE_STATE::ATTACHED /*&& rope length is less than 1*/ && playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true)
-	{
-
-		wallGrabbed = true;
-
-		//this gets the object the player is colliding with and puts it into a variable to use 
-		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
-
-		Debug::getInstance()->Log(wallGrabbed);
-		Debug::getInstance()->Log("wall grabbed");
-
-	}
-	else if (playerObj->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true  && m_grappleState == GRAPPLE_STATE::RETURNING /*&& rope length is less than 1*/ )
-	{
-		wallGrabbed = true;
-
-		wallObj = playerObj->GetComponent<Rigidbody>()->GetCollidedObjects();
-		Debug::getInstance()->Log(wallGrabbed);
-		Debug::getInstance()->Log("wall grabbed");
-	}
-	else
-	{
-		//for testing
-		Debug::getInstance()->Log("wall not grabbed");
-	}
-
-
-	if (wallGrabbed)
-	{
-		//this takes the wall objects the player has collided with and finds the one that it is currently colliding with 
-		for (GameObject* obj : wallObj)
-		{
-			Rigidbody* playerRigidbody = playerObj->GetComponent<Rigidbody>();
-
-			if (playerRigidbody == nullptr)
-			{
-				return;
-			}
-
-			//this is meant to keep the player at the same position by moving them towards the wall with a small force
-			Vector2 vectorBetweenPlayerAndWall = (obj->GetTransform()->GetPosition()+obj->GetComponent<Rigidbody>()->GetAABBRect()) - playerObj->GetTransform()->GetPosition();
-			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
-			Vector2 force = directionForPlayer;
-			Force realForce;
-			realForce.force = force;
-			realForce.moveIgnore = MovementIgnore::ACCEL;
-			Debug::getInstance()->Log(force);
-			playerRigidbody->AddForce(realForce);
-			if (vectorBetweenPlayerAndWall.Length()<=1)
-			{
-				playerRigidbody->setStatic(true);
-				Debug::getInstance()->Log("attached");
-				if (playerObj->GetComponent<AudioSource>() == nullptr)
-				{
-					Debug::getInstance()->LogError("the player doesn't have a audio source component");
-				}
-				else
-				{
-					playerObj->GetComponent<AudioSource>()->Play();
-				}
-			}
-		}
-
-	}
 }
