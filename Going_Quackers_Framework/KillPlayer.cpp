@@ -1,12 +1,18 @@
 #include "KillPlayer.h"
 
-KillPlayer::KillPlayer(GameObject* owner) : Component(owner, ComponentTypes::KillPLAYER, "Kill Player")
+KillPlayer::KillPlayer(GameObject* owner) : Component(owner, ComponentTypes::KILLPLAYER, "kill player")
 {
-	KillObject = this->GetOwner();
+	KillObj = this->GetOwner();
+	if (KillObj->GetComponent<Rigidbody>() == nullptr)
+	{
+		Debug::getInstance()->LogError("the kill object doesn't have a rigidbody component");
+	}
+	else
+		killRB = KillObj->GetComponent<Rigidbody>();
 }
 KillPlayer::~KillPlayer()
 {
-	KillObject = nullptr;
+	KillObj = nullptr;
 }
 void KillPlayer::OnDestroy()
 {
@@ -30,13 +36,13 @@ void KillPlayer::SceneLoad(json* componentJSON)
 }
 void KillPlayer::KillThePlayer()
 {
-	if (KillObject->GetComponent<Rigidbody>() == nullptr)
+	if (killRB == nullptr)
 	{
-		Debug::getInstance()->LogError("the player doesn't have a rigidbody component");
+		return;
 	}
-	else if (KillObject->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true)
+	else if (killRB->GetCollidedObjects().empty() != true)
 	{
-		playerObj = KillObject->GetComponent<Rigidbody>()->GetCollidedObjects();
+		playerObj = killRB->GetCollidedObjects();
 		
 		for (GameObject* obj : playerObj)
 		{

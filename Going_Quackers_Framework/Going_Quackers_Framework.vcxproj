@@ -142,6 +142,7 @@
     <ClCompile Include="Code\EngineBase\EngineMain.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\AudioSource.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\KillPlayer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\LineRenderer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Collision.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp" />
@@ -180,7 +181,6 @@
     <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp" />
     <ClCompile Include="Code\EngineBase\SceneManager\Scene.cpp" />
     <ClCompile Include="Code\EngineBase\SceneManager\SceneManager.cpp" />
-    <ClCompile Include="KillPlayer.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +189,7 @@
     <ClInclude Include="Code\EngineBase\EngineMain.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\AudioSource.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\KillPlayer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\LineRenderer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Collision.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h" />
@@ -230,7 +231,6 @@
     <ClInclude Include="Code\EngineBase\Rendering\Interface\Graphics_API_Interface.h" />
     <ClInclude Include="Code\EngineBase\SceneManager\Scene.h" />
     <ClInclude Include="Code\EngineBase\SceneManager\SceneManager.h" />
-    <ClInclude Include="KillPlayer.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
