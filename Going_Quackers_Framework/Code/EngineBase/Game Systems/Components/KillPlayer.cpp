@@ -39,3 +39,5 @@ void KillPlayer::KillThePlayer()
 		playerObj = KillObject->AddComponent<Rigidbody>()->GetCollidedObjects();
 	}
 }
+
+
