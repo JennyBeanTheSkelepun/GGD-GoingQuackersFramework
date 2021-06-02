@@ -14,11 +14,11 @@ void KillPlayer::OnDestroy()
 }
 void KillPlayer::Update()
 {
-	
+
 }
 void KillPlayer::ImGUIUpdate()
 {
-	
+
 }
 json* KillPlayer::SceneSave()
 {
@@ -26,7 +26,7 @@ json* KillPlayer::SceneSave()
 }
 void KillPlayer::SceneLoad(json* componentJSON)
 {
-	
+
 }
 void KillPlayer::KillThePlayer()
 {
@@ -34,10 +34,16 @@ void KillPlayer::KillThePlayer()
 	{
 		Debug::getInstance()->LogError("the player doesn't have a rigidbody component");
 	}
-	else if (KillObject->AddComponent<Rigidbody>()->GetCollidedObjects().empty() != true)
+	else if (KillObject->GetComponent<Rigidbody>()->GetCollidedObjects().empty() != true)
 	{
-		playerObj = KillObject->AddComponent<Rigidbody>()->GetCollidedObjects();
+		playerObj = KillObject->GetComponent<Rigidbody>()->GetCollidedObjects();
+		
+		for (GameObject* obj : playerObj)
+		{
+			if (obj->GetComponent<Player>() != nullptr)
+			{
+				obj->GetComponent<Player>()->Die();
+			}
+		}
 	}
 }
-
-

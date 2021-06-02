@@ -5,6 +5,7 @@
 #include "Code/EngineBase/Game Systems/Components/Component.h"
 #include "Code/EngineBase/Game Systems/Components/Physics/Trigger.h"
 #include "Code/EngineBase/Game Systems/GameObject.h"
+#include "Code/EngineBase/Game Systems/Components/Player.h"
 
 class KillPlayer : public Component
 {
@@ -23,5 +24,4 @@ private:
 	std::vector<GameObject*> playerObj;
 
 
-#endif // !KILLPLAYER
-
+#endif // !KILLPLAYER_H
