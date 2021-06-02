@@ -66,21 +66,32 @@ bool Collision::CollisionSphericalAABB(GameObject* checkObjectA, GameObject* che
 
 	Vector2 obj1Pos = checkObjectA->GetTransform()->GetPosition();
 
-	Vector2 WidthHeight1 = checkObjectA->GetComponent<Rigidbody>()->GetAABBRect();
+	Vector2 WidthHeight;
+	float Radius;
 
-	Vector2 minPoint = Vector2(obj1Pos - (WidthHeight1 / 2.0f));
-	Vector2 maxPoint = Vector2(obj1Pos + (WidthHeight1 / 2.0f));
+	if (checkObjectA->GetComponent<Rigidbody>()->GetCollisionType() == CollisionTypes::AABB)
+	{
+		WidthHeight = checkObjectA->GetComponent<Rigidbody>()->GetAABBRect();
+		Radius = checkObjectB->GetComponent<Rigidbody>()->GetRadius();
+	}
+	else
+	{
+		WidthHeight = checkObjectB->GetComponent<Rigidbody>()->GetAABBRect();
+		Radius = checkObjectA->GetComponent<Rigidbody>()->GetRadius();
+	}
+
+
+	Vector2 minPoint = Vector2(obj1Pos - (WidthHeight / 2.0f));
+	Vector2 maxPoint = Vector2(obj1Pos + (WidthHeight / 2.0f));
 
 	Vector2 obj2Pos = checkObjectB->GetTransform()->GetPosition();
-
-	float radius = checkObjectB->GetComponent<Rigidbody>()->GetRadius();
 
 	closestPoint.X = max(minPoint.X, min(obj2Pos.X, maxPoint.X));
 	closestPoint.Y = max(minPoint.Y, min(obj2Pos.Y, maxPoint.Y));
 
 	float distance = sqrt(pow(closestPoint.X - obj2Pos.X, 2) + pow(closestPoint.Y - obj2Pos.Y, 2));
 
-	return distance > radius;
+	return distance < Radius;
 }
 
 bool Collision::RaycastSphere(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject)
