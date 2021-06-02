@@ -7,8 +7,7 @@
 
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
 {
-	m_grappleState = GRAPPLE_STATE::INACTIVE;
-
+	m_grappleState = GRAPPLE_STATE::ATTACHED;
 	wallGrabbed = true;
 
 	wallPushPressed = false;
@@ -63,28 +62,6 @@ void Player::Update()
 
 void Player::ImGUIUpdate()
 {
-	// todo remove this later? used for debugging
-	switch (m_grappleState)
-	{
-	case GRAPPLE_STATE::INACTIVE:
-		ImGui::Text("Grapple: Not Attached, Not Moving");
-		break;
-	case GRAPPLE_STATE::ATTACHED:
-		ImGui::Text("Grapple: Attached, Not Moving");
-		break;
-	case GRAPPLE_STATE::EXTENDING:
-		ImGui::Text("Grapple: Not Attached, Grapple Moving To Target");
-		break;
-	case GRAPPLE_STATE::RETRACTING:
-		ImGui::Text("Grapple: Attached, Player Moving To Target");
-		break;
-	case GRAPPLE_STATE::RETURNING:
-		ImGui::Text("Grapple: Not Attached, Grapple Moving To Player");
-		break;
-	default:
-		ImGui::Text("UNKNOWN GRAPPLE STATE");
-		break;
-	}
 }
 
 json* Player::SceneSave()
@@ -104,42 +81,51 @@ void Player::SceneLoad(json* componentJSON)
 void Player::HandleInput()
 {
 #pragma region Look At Cursor
-	// aim grapple at cursor position; rotate to face it
-	Transform* playerTransform = playerObj->GetComponent<Transform>();
 	Vector3 mousePos = Input::getInstance()->GetWorldSpaceMousePos();
-	Vector2 playerPos = playerTransform->GetPosition();
 
-	// calculate vectors, relative to the player
-	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - playerPos;
-	Vector2 upVector = Vector2(0, 1); // magnitude is always 1
-	float mouseMagnitude = mouseVector.Length();
-
-	// just don't change the angle if it would divide by zero
-	if (mouseMagnitude != 0)
+	// don't rotate if grappling hook is out
+	if (GetGrappleState() == GRAPPLE_STATE::INACTIVE)
 	{
-		// use dot product and determinant
-		mouseVector.Normalize();
-		upVector.Normalize();
-		float dot = mouseVector.Dot(upVector);
-		float determinant = mouseVector.X * upVector.Y - mouseVector.Y * upVector.X;
-		float angle = std::atan2f(determinant, dot);
-		// radians to degrees
-		angle *= 180 / 3.1415;
-		playerObj->GetComponent<Transform>()->SetLocalRotation(angle);
+		// aim grapple at cursor position; rotate to face it
+		Transform* playerTransform = playerObj->GetComponent<Transform>();
+		Vector2 playerPos = playerTransform->GetPosition();
+
+		// calculate vectors, relative to the player
+		Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - playerPos;
+		Vector2 upVector = Vector2(0, 1); // magnitude is always 1
+		float mouseMagnitude = mouseVector.Length();
+
+		// just don't change the angle if it would divide by zero
+		if (mouseMagnitude != 0)
+		{
+			// use dot product and determinant
+			mouseVector.Normalize();
+			upVector.Normalize();
+			float dot = mouseVector.Dot(upVector);
+			float determinant = mouseVector.X * upVector.Y - mouseVector.Y * upVector.X;
+			float angle = std::atan2f(determinant, dot);
+			// radians to degrees
+			angle *= 180 / 3.1415;
+			playerObj->GetComponent<Transform>()->SetLocalRotation(angle);
+		}
 	}
 #pragma endregion
 
 #pragma region Grapple Controls
-	// this assumes that the grapple is a separate object or objects
-
-	// fire grapple on left click down
+	// fire loose grapple on left click down
 	if (GetGrappleState() == GRAPPLE_STATE::INACTIVE && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
 	{
 		GrappleFire(Vector2(mousePos.X, mousePos.Y));
 	}
 
-	// release grapple on left click up
-	if ((GetGrappleState() == GRAPPLE_STATE::EXTENDING || GetGrappleState() == GRAPPLE_STATE::ATTACHED) && Input::getInstance()->isKeyPressedUp(KeyCode::LeftMouse))
+	// release attached grapple on left click down
+	if (GetGrappleState() == GRAPPLE_STATE::ATTACHED && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
+	{
+		GrappleReturn();
+	}
+
+	// cancel grapple extension on left click up
+	if (GetGrappleState() == GRAPPLE_STATE::EXTENDING && Input::getInstance()->isKeyPressedUp(KeyCode::LeftMouse))
 	{
 		GrappleReturn();
 		// note: moving from the returning state to the inactive state is handled by the grapple
@@ -250,22 +236,27 @@ void Player::WallPush()
 		collPos /= wallObj.size();
 	}
 
+	// vector from collided position to player
+	Vector2 wallToPlayer = collPos - playerObj->GetTransform()->GetPosition();
+	pushForce.force = wallToPlayer;
+	pushForce.force.Normalize();
+
 	// pushing off a wall from a standstill
 	if (wallGrabbed)
 	{
 		wallGrabbed = false;
 		playerRB->setStatic(false);
-		// reflect (not perpendicular) vector between player and collided position
-		Vector2 playerToWall = collPos - playerObj->GetTransform()->GetPosition();
-		pushForce.force = playerToWall * -1;
-		pushForce.force.Normalize();
+		if (GetGrappleState() == GRAPPLE_STATE::ATTACHED || GetGrappleState() == GRAPPLE_STATE::RETRACTING)
+		{
+			// if grapple is short
+			SetGrappleState(GRAPPLE_STATE::INACTIVE);
+			// if grapple is long, set to retracting
+		}
 	}
 	else // pushing off a wall while moving
 	{
-		// calculate midpoint between current velocity and collided position 
-		Vector2 vel = playerObj->GetComponent<Rigidbody>()->GetVelocity();
-		Vector2 midpoint = (vel + collPos) / 2;
-		pushForce.force = midpoint;
+		pushForce.force *= playerObj->GetComponent<Rigidbody>()->GetVelocity().Length();
+		pushForce.force * 5.f; // get faster
 	}
 
 	// move player away
