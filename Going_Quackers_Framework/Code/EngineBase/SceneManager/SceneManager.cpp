@@ -6,6 +6,8 @@
 #include "../Game Systems/Components/VirtualCamera.h"
 #include "../Game Systems/Components/Player.h"
 #include "../Game Systems/Components/AudioSource.h"
+#include "../Game Systems/Components/LineRenderer.h"
+#include "../Game Systems/Components/Pickup.h"
 
 #include "../Game Systems/Debug.h"
 #include "../Rendering/Graphics.h"
@@ -64,7 +66,7 @@ void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
 	UnloadScene(as_SaveToJSON);
 	// Get path to JSON scene config
 	std::string ls_SceneConfigPath = "SceneConfig/" + as_SceneID + ".json";
-	
+
 	// Load new Scene
 	Scene* scene = LoadScene(ls_SceneConfigPath);
 
@@ -170,8 +172,16 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<AudioSource>(lp_newObject, &newObject.value()["AUDIOSOURCE"]);
 		}
 
+		if (newObject.value().contains("PICKUP")) {
+			LoadComponentFromScene<Pickup>(lp_newObject, &newObject.value()["PICKUP"]);
+		}
+
 		if (newObject.value().contains("SPRINGJOINT")) {
 			LoadComponentFromScene<SpringJoint>(lp_newObject, &newObject.value()["SPRINGJOINT"]);
+		}
+
+		if (newObject.value().contains("LINERENDERER")) {
+			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINERENDERER"]);
 		}
 
 		if (newObject.value()["children"].size() > 0)
@@ -217,6 +227,14 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 
 		if (child.value().contains("AUDIOSOURCE")) {
 			LoadComponentFromScene<AudioSource>(lp_newObject, &child.value()["AUDIOSOURCE"]);
+		}
+
+		if (child.value().contains("LINERENDERER")) {
+			LoadComponentFromScene<LineRenderer>(lp_newObject, &child.value()["LINERENDERER"]);
+		}
+
+		if (child.value().contains("PICKUP")) {
+			LoadComponentFromScene<Pickup>(lp_newObject, &child.value()["PICKUP"]);
 		}
 
 		lp_newObject->SetParent(ap_object);
@@ -303,9 +321,15 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				break;
 			case ComponentTypes::AUDIOSOURCE:
 				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
+				break;
+			case ComponentTypes::PICKUP:
+				SaveComponent<Pickup>("PICKUP", component, &componentType);
 			break;
 			case ComponentTypes::SPRINGJOINT:
 				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
+				break;
+			case ComponentTypes::LINERENDERER:
+				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
@@ -382,6 +406,12 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				break;
 			case ComponentTypes::AUDIOSOURCE:
 				SaveComponent<AudioSource>("AUDIOSOURCE", component, &componentType);
+				break;
+			case ComponentTypes::LINERENDERER:
+				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
+				break;
+			case ComponentTypes::PICKUP:
+				SaveComponent<Pickup>("PICKUP", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";

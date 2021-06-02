@@ -16,7 +16,9 @@ enum class ComponentTypes
 	VIRTUALCAMERA = 4,
 	PLAYER = 5,
 	AUDIOSOURCE = 6,
-	SPRINGJOINT = 7
+	SPRINGJOINT = 7,
+	LINERENDERER = 8,
+	PICKUP = 9,
 };
 
 class Component
@@ -24,13 +26,13 @@ class Component
 public:
 	Component(GameObject* owner, ComponentTypes a_type, std::string typeName);
 	~Component();
-	
+
 	virtual void OnDestroy() = 0;
 	virtual void Update() = 0;
 	virtual void ImGUIUpdate() = 0;
 	virtual json* SceneSave() = 0;
 	virtual void SceneLoad(json* componentJSON) = 0;
-	
+
 	void ImGUIDisplay();
 	GameObject* GetOwner();
 	ComponentTypes GetType();
