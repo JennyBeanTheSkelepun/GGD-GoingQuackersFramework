@@ -313,25 +313,31 @@ void Player::GrabWall()
 		}
 
 	}
+	std::vector<GameObject*> collidedObjects = playerRB->GetCollidedObjects();
+	for (size_t i = 0; i < collidedObjects.size(); i++)
+	{
+		std::string objName = collidedObjects[i]->GetName();
+		if (objName == "wall")
+		{
+			wallObj = playerRB->GetCollidedObjects();
+		}
+	}
 	
 	//todo add rope length to the if statement
-	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 2 && playerRB->GetCollidedObjects().empty() != true)
+	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 2 && wallObj.empty() != true)
 	{
 
 		wallGrabbed = true;
 
-		//this gets the object the player is colliding with and puts it into a variable to use 
-		wallObj = playerRB->GetCollidedObjects();
 
 		Debug::getInstance()->Log(wallGrabbed);
 		Debug::getInstance()->Log("wall grabbed");
 
 	}
-	else if (playerRB->GetCollidedObjects().empty() != true && m_grappleState == GRAPPLE_STATE::RETURNING && mp_grapplingHook->GetHookDistance()<=2)
+	else if (wallObj.empty() != true && m_grappleState == GRAPPLE_STATE::RETURNING && mp_grapplingHook->GetHookDistance()<=2)
 	{
 		wallGrabbed = true;
 
-		wallObj = playerRB->GetCollidedObjects();
 		Debug::getInstance()->Log(wallGrabbed);
 		Debug::getInstance()->Log("wall grabbed");
 	}
