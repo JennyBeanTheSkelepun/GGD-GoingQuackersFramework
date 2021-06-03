@@ -11,6 +11,8 @@
 #include "../Game Systems/Components/GrapplingHook.h"
 #include "../Game Systems/Components/SceneTransition.h"
 
+#include "../Game Systems/Components/MovingObstacle.h"
+
 #include "../Game Systems/Debug.h"
 #include "../Rendering/Graphics.h"
 
@@ -207,6 +209,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<SceneTransition>(lp_newObject, &newObject.value()["SCENETRANSITION"]);
 		}
 
+		if (newObject.value().contains("MOVINGOBSTACLE")) {
+			LoadComponentFromScene<MovingObstacle>(lp_newObject, &newObject.value()["MOVINGOBSTACLE"]);
+		}
+
 		if (newObject.value()["children"].size() > 0)
 		{
 			LoadChildren(lp_newObject, &newObject.value());
@@ -266,6 +272,10 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 
 		if (child.value().contains("SCENETRANSITION")) {
 			LoadComponentFromScene<SceneTransition>(lp_newObject, &child.value()["SCENETRANSITION"]);
+		}
+
+		if (child.value().contains("MOVINGOBSTACLE")) {
+			LoadComponentFromScene<MovingObstacle>(lp_newObject, &child.value()["MOVINGOBSTACLE"]);
 		}
 
 		lp_newObject->SetParent(ap_object);
@@ -368,6 +378,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::SCENETRANSITION:
 				SaveComponent<SceneTransition>("SCENETRANSITION", component, &componentType);
 				break;
+			case ComponentTypes::MOVINGOBSTACLE:
+				SaveComponent<MovingObstacle>("MOVINGOBSTACLE", component, &componentType);
+				break;
 			default:
 				componentType = "MISSING";
 				break;
@@ -455,6 +468,9 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				break;
 			case ComponentTypes::SCENETRANSITION:
 				SaveComponent<SceneTransition>("SCENETRANSITION", component, &componentType);
+				break;
+			case ComponentTypes::MOVINGOBSTACLE:
+				SaveComponent<MovingObstacle>("MOVINGOBSTACLE", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
