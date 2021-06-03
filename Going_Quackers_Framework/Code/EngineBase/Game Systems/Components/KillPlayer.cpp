@@ -29,7 +29,7 @@ void KillPlayer::ImGUIUpdate()
 json* KillPlayer::SceneSave()
 {
 	json* returnObj = new json({
-		{}
+		
 		});
 
 	return returnObj;
