@@ -10,6 +10,7 @@
 #include "../Game Systems/Components/Pickup.h"
 #include "../Game Systems/Components/GrapplingHook.h"
 #include "../Game Systems/Components/SceneTransition.h"
+#include "../Game Systems/Components/KillPlayer.h"
 
 #include "../Game Systems/Components/MovingObstacle.h"
 
@@ -213,6 +214,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<MovingObstacle>(lp_newObject, &newObject.value()["MOVINGOBSTACLE"]);
 		}
 
+		if (newObject.value().contains("KILLPLAYER")) {
+			LoadComponentFromScene<KillPlayer>(lp_newObject, &newObject.value()["KILLPLAYER"]);
+		}
+
 		if (newObject.value()["children"].size() > 0)
 		{
 			LoadChildren(lp_newObject, &newObject.value());
@@ -276,6 +281,10 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 
 		if (child.value().contains("MOVINGOBSTACLE")) {
 			LoadComponentFromScene<MovingObstacle>(lp_newObject, &child.value()["MOVINGOBSTACLE"]);
+		}
+
+		if (child.value().contains("KILLPLAYER")) {
+			LoadComponentFromScene<KillPlayer>(lp_newObject, &child.value()["KILLPLAYER"]);
 		}
 
 		lp_newObject->SetParent(ap_object);
@@ -381,6 +390,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::MOVINGOBSTACLE:
 				SaveComponent<MovingObstacle>("MOVINGOBSTACLE", component, &componentType);
 				break;
+			case ComponentTypes::KILLPLAYER:
+				SaveComponent<KillPlayer>("KILLPLAYER", component, &componentType);
+				break;
 			default:
 				componentType = "MISSING";
 				break;
@@ -471,6 +483,9 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				break;
 			case ComponentTypes::MOVINGOBSTACLE:
 				SaveComponent<MovingObstacle>("MOVINGOBSTACLE", component, &componentType);
+				break;
+			case ComponentTypes::KILLPLAYER:
+				SaveComponent<KillPlayer>("KILLPLAYER", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
