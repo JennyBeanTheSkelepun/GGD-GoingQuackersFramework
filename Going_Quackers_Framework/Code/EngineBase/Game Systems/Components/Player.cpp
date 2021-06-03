@@ -7,7 +7,7 @@
 
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
 {
-	m_grappleState = GRAPPLE_STATE::ATTACHED;
+	m_grappleState = GRAPPLE_STATE::INACTIVE;
 	wallGrabbed = true;
 
 	wallPushPressed = false;
@@ -116,42 +116,46 @@ void Player::HandleInput()
 #pragma endregion
 
 #pragma region Grapple Controls
-	// fire loose grapple on left click down
-	if (GetGrappleState() == GRAPPLE_STATE::INACTIVE && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
-	{
-		GrappleFire(Vector2(mousePos.X, mousePos.Y));
-	}
 
-	// release attached grapple on left click down
-	if (GetGrappleState() == GRAPPLE_STATE::ATTACHED && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
+	if (GetGrappleState() != GRAPPLE_STATE::RETURNING)
 	{
-		GrappleReturn();
-	}
+		// fire loose grapple on left click down
+		if (GetGrappleState() == GRAPPLE_STATE::INACTIVE && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
+		{
+			GrappleFire(Vector2(mousePos.X, mousePos.Y));
+		}
 
-	// cancel grapple extension on left click up
-	if (GetGrappleState() == GRAPPLE_STATE::EXTENDING && Input::getInstance()->isKeyPressedUp(KeyCode::LeftMouse))
-	{
-		GrappleReturn();
-		// note: moving from the returning state to the inactive state is handled by the grapple
-	}
+		// release attached grapple on left click down
+		if (GetGrappleState() == GRAPPLE_STATE::ATTACHED && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
+		{
+			GrappleReturn();
+		}
 
-	// start retracting grapple on right click down
-	if (GetGrappleState() == GRAPPLE_STATE::ATTACHED && Input::getInstance()->isKeyPressedDown(KeyCode::RightMouse))
-	{
-		GrappleRetract();
-		SetGrappleState(GRAPPLE_STATE::RETRACTING);
-	}
+		// cancel grapple extension on left click up
+		if (GetGrappleState() == GRAPPLE_STATE::EXTENDING && Input::getInstance()->isKeyPressedUp(KeyCode::LeftMouse))
+		{
+			GrappleReturn();
+			// note: moving from the returning state to the inactive state is handled by the grapple
+		}
 
-	// continue retracting if right click is held; stop if it's released (rope stays connected)
-	if (GetGrappleState() == GRAPPLE_STATE::RETRACTING)
-	{
-		if (Input::getInstance()->isKeyHeldDown(KeyCode::RightMouse))
+		// start retracting grapple on right click down
+		if (GetGrappleState() == GRAPPLE_STATE::ATTACHED && Input::getInstance()->isKeyPressedDown(KeyCode::RightMouse))
 		{
 			GrappleRetract();
+			SetGrappleState(GRAPPLE_STATE::RETRACTING);
 		}
-		else if (Input::getInstance()->isKeyPressedUp(KeyCode::RightMouse))
+
+		// continue retracting if right click is held; stop if it's released (rope stays connected)
+		if (GetGrappleState() == GRAPPLE_STATE::RETRACTING)
 		{
-			SetGrappleState(GRAPPLE_STATE::ATTACHED);
+			if (Input::getInstance()->isKeyHeldDown(KeyCode::RightMouse))
+			{
+				GrappleRetract();
+			}
+			else if (Input::getInstance()->isKeyPressedUp(KeyCode::RightMouse))
+			{
+				SetGrappleState(GRAPPLE_STATE::ATTACHED);
+			}
 		}
 	}
 
@@ -205,6 +209,10 @@ void Player::SetGrappleState(Player::GRAPPLE_STATE state)
 
 void Player::GrappleFire(Vector2 targetPos)
 {
+	GameObject* grapplingHook = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID("GameObject 24464");
+	mp_grapplingHook = grapplingHook->GetComponent<GrapplingHook>();
+	mp_grapplingHook->Fire(targetPos, this->GetOwner());
+
 	// calculate direction to cursor position
 	Vector2 playerPos = this->GetOwner()->GetComponent<Transform>()->GetPosition();
 
@@ -220,6 +228,7 @@ void Player::GrappleReturn()
 }
 void Player::GrappleRetract()
 {
+	mp_grapplingHook->Retract();
 	// move player towards rope end
 	// tell rope to shrink?
 	Debug::getInstance()->Log("retracting grapple");
