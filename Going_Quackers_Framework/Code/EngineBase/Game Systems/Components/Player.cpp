@@ -315,7 +315,7 @@ void Player::GrabWall()
 	}
 	
 	//todo add rope length to the if statement
-	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING)/*&& rope length is less than 1*/ && playerRB->GetCollidedObjects().empty() != true)
+	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 2 && playerRB->GetCollidedObjects().empty() != true)
 	{
 
 		wallGrabbed = true;
@@ -327,7 +327,7 @@ void Player::GrabWall()
 		Debug::getInstance()->Log("wall grabbed");
 
 	}
-	else if (playerRB->GetCollidedObjects().empty() != true && m_grappleState == GRAPPLE_STATE::RETURNING /*&& rope length is less than 1*/)
+	else if (playerRB->GetCollidedObjects().empty() != true && m_grappleState == GRAPPLE_STATE::RETURNING && mp_grapplingHook->GetHookDistance()<=2)
 	{
 		wallGrabbed = true;
 
