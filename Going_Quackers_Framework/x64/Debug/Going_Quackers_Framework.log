@@ -1,4 +1,5 @@
 ﻿  KillPlayer.cpp
+<<<<<<< HEAD
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(42,57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(44,67): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
@@ -40,3 +41,11 @@ G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(42): warning C4715: 'GameObject::AddComponent<KillPlayer>': not all control paths return a value
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(199): warning C4715: 'Collision::RaycastAABB': not all control paths return a value
   Going_Quackers_Framework.vcxproj -> G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+=======
+c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(42): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(22): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\audiosource.h(34): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  Going_Quackers_Framework.vcxproj -> C:\Users\mccan\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+>>>>>>> main

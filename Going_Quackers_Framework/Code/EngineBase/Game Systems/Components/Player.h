@@ -49,12 +49,17 @@ private:
 	const float wallPushTimerMax = 500.f; // milliseconds
 	float wallPushPressTimer;
 	float wallPushCollideTimer;
-	const float startSpeed = 1.f; // subject to change
+	const float startSpeed = 1.f;
 
 	void GrabWall();
 	GameObject* playerObj;
 	std::vector<GameObject*> wallObj;
 	Rigidbody* playerRB;
+
+	void Bounce();
+	bool canBounce;
+	const float bounceMinAngle = 10.f;
+	const float bounceSpeedLoss = 0.5f;
 };
 
 #endif // !PLAYER_H
