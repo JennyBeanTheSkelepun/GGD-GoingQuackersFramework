@@ -276,9 +276,6 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp">
       <Filter>Source Files\Engine\Game Systems\Components\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.cpp">
-      <Filter>Source Files\Engine\Game Systems\Components\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="Code\EngineBase\Game Systems\Components\VirtualCamera.cpp">
       <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
@@ -293,6 +290,18 @@
     </ClCompile>
     <ClCompile Include="Code\EngineBase\Rendering\Graphics.cpp">
       <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\GrapplingHook.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\KillPlayer.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\SceneTransition.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\MovingObstacle.cpp">
+      <Filter>Source Files\Engine\Game Systems\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -434,9 +443,6 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h">
       <Filter>Header Files\Engine\Game Systems\Components\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.h">
-      <Filter>Header Files\Engine\Game Systems\Components\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\VirtualCamera.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
@@ -453,6 +459,18 @@
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
     <ClInclude Include="Code\EngineBase\Game Systems\Components\LineRenderer.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\GrapplingHook.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\KillPlayer.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\SceneTransition.h">
+      <Filter>Header Files\Engine\Game Systems\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\MovingObstacle.h">
       <Filter>Header Files\Engine\Game Systems\Components</Filter>
     </ClInclude>
   </ItemGroup>

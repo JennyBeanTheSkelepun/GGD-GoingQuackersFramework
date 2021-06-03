@@ -4,14 +4,12 @@
 Rigidbody::Rigidbody(GameObject* owner) : Component(owner, ComponentTypes::RIGIDBODY, "RigidBody")
 {
 	mp_GravEmitter = new GravityEmitter();
-	mp_Trigger = new Trigger();
 }
 
 //- Descructor -//
 Rigidbody::~Rigidbody()
 {
 	delete mp_GravEmitter;
-	delete mp_Trigger;
 }
 
 void Rigidbody::OnDestroy()
@@ -22,12 +20,6 @@ void Rigidbody::OnDestroy()
 //- Update Render Functions -//
 void Rigidbody::Update()
 {
-	if (Input::getInstance()->isKeyPressedDown(KeyCode::H))
-	{
-		Force newForce;
-		newForce.force = -GetOwner()->GetTransform()->GetPosition() / 10.0f;
-		AddForce(newForce);
-	}
 
 	if (EngineGuiClass::getInstance()->IsInPlayMode())
 	{
@@ -217,23 +209,23 @@ void Rigidbody::CalculateVelocity()
 	Vector2 totalForceMASS;
 	Vector2 totalForceMASSACCEL;
 
-	for (Force force : m_Forces)
+	for (Force forcek : m_Forces)
 	{
-		if (force.moveIgnore == MovementIgnore::NONE)
+		if (forcek.moveIgnore == MovementIgnore::NONE)
 		{
-			totalForceNONE += force.force;
+			totalForceNONE += forcek.force;
 		}
-		else if (force.moveIgnore == MovementIgnore::ACCEL)
+		else if (forcek.moveIgnore == MovementIgnore::ACCEL)
 		{
-			totalForceACCEL += force.force;
+			totalForceACCEL += forcek.force;
 		}
-		else if (force.moveIgnore == MovementIgnore::MASS)
+		else if (forcek.moveIgnore == MovementIgnore::MASS)
 		{
-			totalForceMASS += force.force;
+			totalForceMASS += forcek.force;
 		}
-		else if (force.moveIgnore == MovementIgnore::MASSACCEL)
+		else if (forcek.moveIgnore == MovementIgnore::MASSACCEL)
 		{
-			totalForceMASSACCEL += force.force;
+			totalForceMASSACCEL += forcek.force;
 		}
 	}
 
@@ -331,17 +323,17 @@ void Rigidbody::PhysicsCollide()
 	{
 	case PhysicsTypes::GE:
 		mp_GravEmitter->ApplyGravity(GetOwner(), &m_CollidingObjects);
-		CheckColliding(&m_CollidingObjects);
+		CheckColliding();
 		break;
 	case PhysicsTypes::RB:
 		RigidbodyCollide(&m_CollidingObjects);
-		CheckColliding(&m_CollidingObjects);
+		CheckColliding();
 		break;
 	case PhysicsTypes::Trig:
-		CheckColliding(&m_CollidingObjects);
+		CheckColliding();
 		break;
 	}
-	
+
 	m_PhysicsChecked = true;
 }
 
@@ -349,33 +341,6 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 {
 	for (GameObject* obj : *collidingObjects)
 	{
-		/*Rigidbody* rb = obj->GetComponent<Rigidbody>();
-		if (rb->GetCollideFlag())
-		{
-			continue;
-		}
-
-		Vector2 vectorBetweenObjs = obj->GetTransform()->GetPosition() - GetOwner()->GetTransform()->GetPosition();
-		float distance = vectorBetweenObjs.Length();
-
-		Vector2 forceDirection = vectorBetweenObjs.Normalize();
-
-		if (distance == 0)
-		{
-			continue;
-		}
-
-		Vector2 force = forceDirection * (distance / 2.0f);
-
-		Force appForce;
-		appForce.force = force;
-		appForce.moveIgnore = MovementIgnore::NONE;
-
-		rb->AddForce(appForce);
-
-		appForce.force = -appForce.force;
-		AddForce(appForce);*/
-
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();
 
 		if (rb == nullptr)
@@ -398,7 +363,10 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 
 			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * (GetRadius() + rb->GetRadius()));
 
-			obj->GetTransform()->SetPosition(newPos);
+			if (!rb->getIsStatic())
+			{
+				obj->GetTransform()->SetPosition(newPos);
+			}
 		}
 		else if(rb->GetCollisionType() == CollisionTypes::AABB)
 		{
@@ -414,7 +382,10 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 			rV = dV - (n * (2 * dV.Dot(n)));
 			rA = dA - (n * (2 * dA.Dot(n)));
 
-			obj->GetTransform()->SetPosition(newPos);
+			if (!rb->getIsStatic())
+			{
+				obj->GetTransform()->SetPosition(newPos);
+			}
 		}
 
 		if (rV != Vector2())
@@ -437,14 +408,14 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 	}
 }
 
-bool Rigidbody::CheckColliding(std::vector<GameObject*>* collidingObjects)
+bool Rigidbody::CheckColliding()
 {
-	m_isColliding = collidingObjects->size() == 0 ? false : true;
+	m_isColliding = m_CollidingObjects.size() == 0 ? false : true;
 
 	return m_isColliding;
 }
 
-bool Rigidbody::CheckColliding(GameObject* checkObject, std::vector<GameObject*>* collidingObjects)
+bool Rigidbody::CheckColliding(GameObject* checkObject)
 {
-	return std::find(collidingObjects->begin(), collidingObjects->end(), checkObject) == collidingObjects->end() ? false : true;
+	return std::find(m_CollidingObjects.begin(), m_CollidingObjects.end(), checkObject) == m_CollidingObjects.end() ? false : true;
 }
