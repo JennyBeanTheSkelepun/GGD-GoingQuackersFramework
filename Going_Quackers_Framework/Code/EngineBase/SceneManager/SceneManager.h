@@ -37,10 +37,11 @@ public:
 
 	void Initialize();
 	void ChangeScene(std::string as_SceneID, bool as_SaveToJSON);
+	void ChangeSceneNextFrame(std::string as_SceneID);
 	void NewScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType, bool as_SaveToJSON);
 	void SaveCurrentScene();
 
-	void Update(float af_deltaTime);
+	void Update();
 
 	inline Scene* GetCurrentScene() { return mp_CurrentScene; };
 
@@ -50,6 +51,8 @@ public:
 private:
 	Scene* mp_CurrentScene;
 	bool mb_doAutoSave;
+	bool mb_doSceneChange;
+	std::string ms_SceneChangeID;
 
 	Scene* LoadScene(std::string as_Path);
 	void LoadChildren(GameObject* ap_object, json* ap_json);
