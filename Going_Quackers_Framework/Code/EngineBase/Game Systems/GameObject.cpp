@@ -85,7 +85,6 @@ void GameObject::Update()
 void GameObject::ImGUIUpdate()
 {
 	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint", "Line Renderer", "Pickup", "Grappling Hook", "Kill Player", "Scene Transition", "Moving Obstacle", "Rope"};
-	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint", "Line Renderer", "Pickup", "Grappling Hook", "Kill Player", "Scene Transition", "Moving Obstacle"};
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{

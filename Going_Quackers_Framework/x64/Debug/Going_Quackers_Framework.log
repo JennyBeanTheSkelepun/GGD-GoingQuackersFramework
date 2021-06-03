@@ -1,38 +1,19 @@
-﻿  Player.cpp
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(42): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(22): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\audiosource.h(34): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(133): warning C4305: '*=': truncation from 'double' to 'float'
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(270): warning C4244: 'argument': conversion from 'unsigned __int64' to 'const float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(415): warning C4244: 'argument': conversion from 'unsigned __int64' to 'const float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(416): warning C4244: 'argument': conversion from 'unsigned __int64' to 'const float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(432): warning C4305: '*=': truncation from 'double' to 'float'
-  VirtualCamera.cpp
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(42): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\virtualcamera.cpp(68): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  DirectXTwoDObject.cpp
-  SceneManager.cpp
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(42): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(22): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\audiosource.h(34): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\scenemanager\scenemanager.cpp(324): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<SpriteRenderer>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<Player>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<VirtualCamera>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<AudioSource>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<LineRenderer>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<Pickup>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<GrapplingHook>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<SceneTransition>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<MovingObstacle>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<KillPlayer>': not all control paths return a value
-c:\users\co0ki\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<SpringJoint>': not all control paths return a value
-  Going_Quackers_Framework.vcxproj -> C:\Users\co0ki\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+﻿  Rope.cpp
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(41,57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(43,67): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(26,55): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(77,67): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(93,7): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(94,22): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(104,60): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(104,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(107,46): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(221,38): warning C4804: '-': unsafe use of type 'bool' in operation
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(221,97): warning C4804: '-': unsafe use of type 'bool' in operation
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(221,151): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(221,92): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(42): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
+G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(42): warning C4715: 'GameObject::AddComponent<SpringJoint>': not all control paths return a value
+  Going_Quackers_Framework.vcxproj -> G:\Work\Game Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

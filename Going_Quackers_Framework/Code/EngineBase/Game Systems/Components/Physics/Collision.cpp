@@ -129,8 +129,6 @@ bool Collision::RaycastSphere(Vector2 Ray, Vector2 RayOrigin, GameObject* checkO
 
 bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObject)
 {
-	Vector2 rayEnd = Ray + RayOrigin;
-
 	Rigidbody* rb = checkObject->GetComponent<Rigidbody>();
 
 	if (Ray == Vector2()) return false;
@@ -153,7 +151,7 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 
 	if (Ray.Y == 0.0f)
 	{
-		if ((pos.Y + (rect.Y / 2.0f)) > RayOrigin.Y > (pos.Y - (rect.Y / 2.0f)))
+		if ((pos.Y + (rect.Y / 2.0f)) > RayOrigin.Y && RayOrigin.Y > (pos.Y - (rect.Y / 2.0f)))
 		{
 			return true;
 		}
@@ -163,7 +161,7 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 
 	if (Ray.X == 0.0f)
 	{
-		if ((pos.X + (rect.X / 2.0f)) > RayOrigin.X > (pos.X - (rect.X / 2.0f)))
+		if ((pos.X + (rect.X / 2.0f)) > RayOrigin.X && RayOrigin.X > (pos.X - (rect.X / 2.0f)))
 		{
 			return true;
 		}
@@ -179,22 +177,22 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 	float leftIntercept = m * (pos.X - (rect.X / 2.0f)) + c;
 	float rightIntercept = m * (pos.X + (rect.X / 2.0f)) + c;
 
-	if ((pos.X + (rect.X / 2.0f)) > topIntercept > (pos.X - (rect.X / 2.0f)))
+	if ((pos.X + (rect.X / 2.0f)) > topIntercept && topIntercept > (pos.X - (rect.X / 2.0f)))
 	{
 		return true;
 	}
 
-	if ((pos.X + (rect.X / 2.0f)) > botIntercept > (pos.X - (rect.X / 2.0f)))
+	if ((pos.X + (rect.X / 2.0f)) > botIntercept && botIntercept > (pos.X - (rect.X / 2.0f)))
 	{
 		return true;
 	}
 
-	if ((pos.Y + (rect.Y / 2.0f)) > leftIntercept > (pos.Y - (rect.Y / 2.0f)))
+	if ((pos.Y + (rect.Y / 2.0f)) > leftIntercept && leftIntercept > (pos.Y - (rect.Y / 2.0f)))
 	{
 		return true;
 	}
 
-	if ((pos.Y + (rect.Y / 2.0f)) > rightIntercept > (pos.Y - (rect.Y / 2.0f)))
+	if ((pos.Y + (rect.Y / 2.0f)) > rightIntercept && rightIntercept > (pos.Y - (rect.Y / 2.0f)))
 	{
 		return true;
 	}

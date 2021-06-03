@@ -23,6 +23,8 @@ public:
 	void SceneLoad(json* componentJSON) override;
 
 private:
+	void CreateRope();
+
 	Vector2 GetAABBCollisionPoint(GameObject* ap_collision, int ai_collidingNodeIndex);
 	Vector2 GetSphereCollisionPoint(GameObject* ap_collision, int ai_collidingNodeIndex);
 

@@ -22,11 +22,37 @@ void Rope::Update() {
 			m_nodePreviousPositions.push_back(m_nodes[i]->GetTransform()->GetPosition());
 		}
 
+		for (size_t i = 1; i < m_nodes.size() - 1; i++) {
+			m_nodeRightwardBend.push_back(IsNodeBendRightward(i));
+		}
+
 		mb_checkForNodes = false;
 	}
 
+	if (!EngineGuiClass::getInstance()->IsInPlayMode()) {
+		//Handle line renderer
+		for (size_t i = 0; i < m_nodes.size() - 1; i++) {
+			if (m_nodes[i]->GetTransform()->GetPosition() != m_nodePreviousPositions[i]) {
+				m_nodes[i]->GetComponent<LineRenderer>()->SetStartPos(m_nodes[i]->GetTransform()->GetPosition());
+
+				if (i != 0)
+					m_nodes[i - 1]->GetComponent<LineRenderer>()->SetEndPos(m_nodes[i]->GetTransform()->GetPosition());
+			}
+		}
+
+		//Update last part of line renderer chain
+		if (m_nodes[m_nodes.size() - 1]->GetTransform()->GetPosition() != m_nodePreviousPositions[m_nodes.size() - 1])
+			m_nodes[m_nodes.size() - 2]->GetComponent<LineRenderer>()->SetEndPos(m_nodes[m_nodes.size() - 1]->GetTransform()->GetPosition());
+
+		//Update all previous positions
+		for (size_t i = 0; i < m_nodePreviousPositions.size(); i++)
+			m_nodePreviousPositions[i] = m_nodes[i]->GetTransform()->GetPosition();
+
+		return;
+	}
+
 	if (m_nodes.size() < 2)
-		return; //TODO make it instead create a rope
+		return;
 
 	for (size_t i = 0; i < m_nodes.size() - 1; i++)	{
 		Vector2 nodePosition = m_nodes[i]->GetTransform()->GetPosition();
@@ -50,9 +76,6 @@ void Rope::Update() {
 
 			Vector2 collisionPoint = GetAABBCollisionPoint(collisions[j], i);
 
-			if (i == 1)
-				Debug::getInstance()->Log(collisionPoint);
-
 			if (m_nodes[i + 1]->GetTransform()->GetPosition() == collisionPoint || nodePosition == collisionPoint)
 				continue;
 
@@ -70,12 +93,6 @@ void Rope::Update() {
 			}
 
 			continue;
-		}
-
-		//Handle collisions
-		if (m_nodes.size() > 4) {
-			Debug::getInstance()->LogError("Somethings gone wrong and there's too many nodes"); //remove when this is no longer a sign of infinite points adding
-			return;
 		}
 
 		Rigidbody* rigidbody = closestCollider->GetComponent<Rigidbody>();
@@ -108,48 +125,7 @@ void Rope::Update() {
 
 void Rope::ImGUIUpdate() {
 	if (ImGui::Button("Create Rope")) {
-		for (size_t i = 0; i < m_nodes.size(); i++) {
-			m_nodes[i]->SetToDestroy();
-		}
-		m_nodes.clear();
-
-		GameObject* baseNode = new GameObject("Rope Node 1", GetOwner());
-		GetOwner()->AddChild(baseNode);
-		//baseNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
-		baseNode->GetTransform()->SetLocalPosition(Vector2(-2, 0.25f)); //temp
-
-		//Force world positition update to work correctly
-		//baseNode->GetTransform()->GetLocalToWorldMatrix();
-
-		Vector2 baseNodePosition = baseNode->GetTransform()->GetPosition();
-
-		LineRenderer* lineRenderer = baseNode->AddLineRendererComponent();
-		lineRenderer->SetTexture("Assets/rope.tga");
-		lineRenderer->SetWidth(1);
-
-		m_nodes.push_back(baseNode);
-		m_nodePreviousPositions.push_back(baseNodePosition);
-
-		GameObject* endNode = new GameObject("Rope Node 2", GetOwner());
-		Rigidbody* rigidbody = endNode->AddComponent<Rigidbody>();
-		rigidbody->SetType(PhysicsTypes::Trig);
-
-		GetOwner()->AddChild(endNode);
-		//endNode->GetTransform()->SetLocalPosition(Vector2(0.5f, 0));
-		endNode->GetTransform()->SetLocalPosition(Vector2(2, 2)); //temp
-
-		//Force world positition update to work correctly
-		//endNode->GetTransform()->GetLocalToWorldMatrix();
-
-		Vector2 endNodePosition = endNode->GetTransform()->GetPosition();
-
-		m_nodes.push_back(endNode);
-		m_nodePreviousPositions.push_back(endNodePosition);
-
-		SpringJoint* springJoint = baseNode->AddComponent<SpringJoint>();
-		springJoint->SetConnectedObject(endNode);
-		springJoint->SetSpringMode(SpringMode::REPEL_ONLY);
-		springJoint->SetSelfAdjustDesiredLength(true);
+		CreateRope();
 	}
 
 	if (ImGui::Button("Destroy Rope")) {
@@ -180,6 +156,53 @@ void Rope::SceneLoad(json* componentJSON) {
 	m_nodeIDs = nodeIDs;
 
 	mb_checkForNodes = true;
+}
+
+void Rope::CreateRope() {
+	for (size_t i = 0; i < m_nodes.size(); i++) {
+		m_nodes[i]->SetToDestroy();
+	}
+	m_nodes.clear();
+
+	GameObject* baseNode = new GameObject("Rope Node 1", GetOwner());
+	GetOwner()->AddChild(baseNode);
+	baseNode->GetTransform()->SetLocalPosition(Vector2(0, 0));
+
+	//Force world positition update to work correctly
+	baseNode->GetTransform()->GetLocalToWorldMatrix();
+
+	Vector2 baseNodePosition = baseNode->GetTransform()->GetPosition();
+
+	LineRenderer* lineRenderer = baseNode->AddLineRendererComponent();
+	lineRenderer->SetTexture("Assets/rope.tga");
+	lineRenderer->SetWidth(1);
+
+	m_nodes.push_back(baseNode);
+	m_nodePreviousPositions.push_back(baseNodePosition);
+
+	GameObject* endNode = new GameObject("Rope Node 2", GetOwner());
+	Rigidbody* rigidbody = endNode->AddComponent<Rigidbody>();
+	rigidbody->SetType(PhysicsTypes::Trig);
+	rigidbody->setStatic(true);
+
+	GetOwner()->AddChild(endNode);
+	endNode->GetTransform()->SetLocalPosition(Vector2(0.5f, 0));
+
+	//Force world positition update to work correctly
+	endNode->GetTransform()->GetLocalToWorldMatrix();
+
+	Vector2 endNodePosition = endNode->GetTransform()->GetPosition();
+
+	lineRenderer->SetStartPos(baseNodePosition);
+	lineRenderer->SetEndPos(endNodePosition);
+
+	m_nodes.push_back(endNode);
+	m_nodePreviousPositions.push_back(endNodePosition);
+
+	SpringJoint* springJoint = baseNode->AddComponent<SpringJoint>();
+	springJoint->SetConnectedObject(endNode);
+	springJoint->SetSpringMode(SpringMode::REPEL_ONLY);
+	springJoint->SetSelfAdjustDesiredLength(true);
 }
 
 Vector2 Rope::GetAABBCollisionPoint(GameObject* ap_collision, int ai_collidingNodeIndex) {
@@ -228,6 +251,7 @@ void Rope::SplitSection(int ai_nodeIndex, Vector2 a_newNodePos) {
 
 	Rigidbody* rigidbody = newNode->AddComponent<Rigidbody>();
 	rigidbody->SetType(PhysicsTypes::Trig);
+	rigidbody->setStatic(true);
 
 	//Line renderers
 	LineRenderer* lineRenderer = newNode->AddLineRendererComponent();
