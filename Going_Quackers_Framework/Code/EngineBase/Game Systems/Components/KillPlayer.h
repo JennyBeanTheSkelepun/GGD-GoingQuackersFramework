@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Component.h"
-#include "Physics/Trigger.h"
+#include "Physics/Rigidbody.h"
 #include "../GameObject.h"
 #include "Player.h"
 

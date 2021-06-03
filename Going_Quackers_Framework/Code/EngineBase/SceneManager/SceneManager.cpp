@@ -9,6 +9,11 @@
 #include "../Game Systems/Components/AudioSource.h"
 #include "../Game Systems/Components/LineRenderer.h"
 #include "../Game Systems/Components/Pickup.h"
+#include "../Game Systems/Components/GrapplingHook.h"
+#include "../Game Systems/Components/SceneTransition.h"
+#include "../Game Systems/Components/KillPlayer.h"
+
+#include "../Game Systems/Components/MovingObstacle.h"
 
 #include "../Game Systems/Debug.h"
 #include "../Rendering/Graphics.h"
@@ -42,6 +47,9 @@ SceneManager::SceneManager()
 {
 	mp_CurrentScene = nullptr;
 	mb_doAutoSave = false;
+	mb_doSceneChange = false;
+	ms_SceneChangeID = "";
+
 }
 
 SceneManager::~SceneManager()
@@ -77,6 +85,12 @@ void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
 	}
 }
 
+void SceneManager::ChangeSceneNextFrame(std::string as_SceneID)
+{
+	ms_SceneChangeID = as_SceneID;
+	mb_doSceneChange = true;
+}
+
 
 /// <summary>
 /// Creates a blank scene
@@ -106,9 +120,13 @@ void SceneManager::SaveCurrentScene()
 /// Updates the current scene
 /// </summary>
 /// <param name="af_deltaTime">Delta time</param>
-void SceneManager::Update(float af_deltaTime)
+void SceneManager::Update()
 {
-	mp_CurrentScene->Update(af_deltaTime);
+	if (mb_doSceneChange) {
+		ChangeScene(ms_SceneChangeID, false);
+		mb_doSceneChange = false;
+		ms_SceneChangeID = "";
+	}
 }
 
 /// <summary>
@@ -185,6 +203,22 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINERENDERER"]);
 		}
 
+		if (newObject.value().contains("GRAPPLINGHOOK")) {
+			LoadComponentFromScene<GrapplingHook>(lp_newObject, &newObject.value()["GRAPPLINGHOOK"]);
+		}
+
+		if (newObject.value().contains("SCENETRANSITION")) {
+			LoadComponentFromScene<SceneTransition>(lp_newObject, &newObject.value()["SCENETRANSITION"]);
+		}
+
+		if (newObject.value().contains("MOVINGOBSTACLE")) {
+			LoadComponentFromScene<MovingObstacle>(lp_newObject, &newObject.value()["MOVINGOBSTACLE"]);
+		}
+
+		if (newObject.value().contains("KILLPLAYER")) {
+			LoadComponentFromScene<KillPlayer>(lp_newObject, &newObject.value()["KILLPLAYER"]);
+		}
+
 		if (newObject.value().contains("ROPE")) {
 			LoadComponentFromScene<Rope>(lp_newObject, &newObject.value()["ROPE"]);
 		}
@@ -243,6 +277,22 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 			LoadComponentFromScene<Pickup>(lp_newObject, &child.value()["PICKUP"]);
 		}
 
+		if (child.value().contains("GRAPPLINGHOOK")) {
+			LoadComponentFromScene<GrapplingHook>(lp_newObject, &child.value()["GRAPPLINGHOOK"]);
+		}
+
+		if (child.value().contains("SCENETRANSITION")) {
+			LoadComponentFromScene<SceneTransition>(lp_newObject, &child.value()["SCENETRANSITION"]);
+		}
+
+		if (child.value().contains("MOVINGOBSTACLE")) {
+			LoadComponentFromScene<MovingObstacle>(lp_newObject, &child.value()["MOVINGOBSTACLE"]);
+		}
+
+		if (child.value().contains("KILLPLAYER")) {
+			LoadComponentFromScene<KillPlayer>(lp_newObject, &child.value()["KILLPLAYER"]);
+		}
+
 		if (child.value().contains("SPRINGJOINT")) {
 			LoadComponentFromScene<SpringJoint>(lp_newObject, &child.value()["SPRINGJOINT"]);
 		}
@@ -270,6 +320,7 @@ void SceneManager::UnloadScene(bool as_SaveToJSON)
 	if (as_SaveToJSON) {
 		SaveToJSON(mp_CurrentScene);
 	}
+	Graphics::getInstance()->NullVirtualCamera();
 
 	delete mp_CurrentScene;
 }
@@ -303,6 +354,7 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 
 		// Get Object name
 		std::string ls_name = ap_Scene->GetObjectByIndex(i)->GetName();
+		ls_name.erase(std::find(ls_name.begin(), ls_name.end(), '\0'), ls_name.end());
 
 		json l_object = {
 			{"id", ls_id},
@@ -343,6 +395,18 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				break;
 			case ComponentTypes::LINERENDERER:
 				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
+				break;
+			case ComponentTypes::GRAPPLINGHOOK:
+				SaveComponent<GrapplingHook>("GRAPPLINGHOOK", component, &componentType);
+				break;
+			case ComponentTypes::SCENETRANSITION:
+				SaveComponent<SceneTransition>("SCENETRANSITION", component, &componentType);
+				break;
+			case ComponentTypes::MOVINGOBSTACLE:
+				SaveComponent<MovingObstacle>("MOVINGOBSTACLE", component, &componentType);
+				break;
+			case ComponentTypes::KILLPLAYER:
+				SaveComponent<KillPlayer>("KILLPLAYER", component, &componentType);
 				break;
 			case ComponentTypes::ROPE:
 				SaveComponent<Rope>("ROPE", component, &componentType);
@@ -428,6 +492,18 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				break;
 			case ComponentTypes::PICKUP:
 				SaveComponent<Pickup>("PICKUP", component, &componentType);
+				break;
+			case ComponentTypes::GRAPPLINGHOOK:
+				SaveComponent<GrapplingHook>("GRAPPLINGHOOK", component, &componentType);
+				break;
+			case ComponentTypes::SCENETRANSITION:
+				SaveComponent<SceneTransition>("SCENETRANSITION", component, &componentType);
+				break;
+			case ComponentTypes::MOVINGOBSTACLE:
+				SaveComponent<MovingObstacle>("MOVINGOBSTACLE", component, &componentType);
+				break;
+			case ComponentTypes::KILLPLAYER:
+				SaveComponent<KillPlayer>("KILLPLAYER", component, &componentType);
 				break;
 			case ComponentTypes::SPRINGJOINT:
 				SaveComponent<SpringJoint>("SPRINGJOINT", component, &componentType);
