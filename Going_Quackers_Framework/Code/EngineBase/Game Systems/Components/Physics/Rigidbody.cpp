@@ -4,14 +4,12 @@
 Rigidbody::Rigidbody(GameObject* owner) : Component(owner, ComponentTypes::RIGIDBODY, "RigidBody")
 {
 	mp_GravEmitter = new GravityEmitter();
-	mp_Trigger = new Trigger();
 }
 
 //- Descructor -//
 Rigidbody::~Rigidbody()
 {
 	delete mp_GravEmitter;
-	delete mp_Trigger;
 }
 
 void Rigidbody::OnDestroy()
@@ -325,17 +323,17 @@ void Rigidbody::PhysicsCollide()
 	{
 	case PhysicsTypes::GE:
 		mp_GravEmitter->ApplyGravity(GetOwner(), &m_CollidingObjects);
-		CheckColliding(&m_CollidingObjects);
+		CheckColliding();
 		break;
 	case PhysicsTypes::RB:
 		RigidbodyCollide(&m_CollidingObjects);
-		CheckColliding(&m_CollidingObjects);
+		CheckColliding();
 		break;
 	case PhysicsTypes::Trig:
-		CheckColliding(&m_CollidingObjects);
+		CheckColliding();
 		break;
 	}
-	
+
 	m_PhysicsChecked = true;
 }
 
@@ -410,14 +408,14 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 	}
 }
 
-bool Rigidbody::CheckColliding(std::vector<GameObject*>* collidingObjects)
+bool Rigidbody::CheckColliding()
 {
-	m_isColliding = collidingObjects->size() == 0 ? false : true;
+	m_isColliding = m_CollidingObjects.size() == 0 ? false : true;
 
 	return m_isColliding;
 }
 
-bool Rigidbody::CheckColliding(GameObject* checkObject, std::vector<GameObject*>* collidingObjects)
+bool Rigidbody::CheckColliding(GameObject* checkObject)
 {
-	return std::find(collidingObjects->begin(), collidingObjects->end(), checkObject) == collidingObjects->end() ? false : true;
+	return std::find(m_CollidingObjects.begin(), m_CollidingObjects.end(), checkObject) == m_CollidingObjects.end() ? false : true;
 }

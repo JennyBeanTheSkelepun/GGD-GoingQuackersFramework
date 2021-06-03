@@ -146,7 +146,6 @@
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Collision.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp" />
-    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Pickup.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpringJoint.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Player.cpp" />
@@ -192,7 +191,6 @@
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Collision.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h" />
-    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Pickup.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpringJoint.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Player.h" />

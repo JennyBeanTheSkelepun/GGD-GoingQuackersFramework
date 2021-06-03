@@ -3,7 +3,6 @@
 
 #include "Collision.h"
 #include "GravityEmitter.h"
-#include "Trigger.h"
 #include "../Component.h"
 #include "../../Time.h"
 #include "../../../SceneManager/SceneManager.h"
@@ -84,8 +83,8 @@ public:
 	bool getIsStatic() { return m_IsStatic; }
 
 	bool GetCollidingBool() { return m_isColliding; }
-	bool CheckColliding(std::vector<GameObject*>* collidingObjects);
-	bool CheckColliding(GameObject* checkObject, std::vector<GameObject*>* collidingObjects);
+	bool CheckColliding();
+	bool CheckColliding(GameObject* checkObject);
 
 	std::vector<GameObject*> GetCollidedObjects() { return m_CollidingObjects; }
 
@@ -105,7 +104,6 @@ private:
 
 	std::vector<Force> m_Forces;
 
-	Trigger* mp_Trigger;
 	GravityEmitter* mp_GravEmitter;
 
 	bool m_IsStatic = false;
