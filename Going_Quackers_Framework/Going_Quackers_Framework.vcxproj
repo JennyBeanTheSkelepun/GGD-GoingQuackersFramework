@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{4da784a7-d310-4713-81be-51ff7cb68aea}</ProjectGuid>
     <RootNamespace>GoingQuackersFramework</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -142,12 +142,15 @@
     <ClCompile Include="Code\EngineBase\EngineMain.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\AudioSource.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Component.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\GrapplingHook.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\KillPlayer.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\LineRenderer.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\MovingObstacle.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Collision.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.cpp" />
-    <ClCompile Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Pickup.cpp" />
+    <ClCompile Include="Code\EngineBase\Game Systems\Components\SceneTransition.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpringJoint.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\Player.cpp" />
     <ClCompile Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.cpp" />
@@ -188,12 +191,15 @@
     <ClInclude Include="Code\EngineBase\EngineMain.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\AudioSource.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Component.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\GrapplingHook.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\KillPlayer.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\LineRenderer.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\MovingObstacle.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Collision.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\GravityEmitter.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Rigidbody.h" />
-    <ClInclude Include="Code\EngineBase\Game Systems\Components\Physics\Trigger.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Pickup.h" />
+    <ClInclude Include="Code\EngineBase\Game Systems\Components\SceneTransition.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpringJoint.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\Player.h" />
     <ClInclude Include="Code\EngineBase\Game Systems\Components\SpriteRenderer.h" />

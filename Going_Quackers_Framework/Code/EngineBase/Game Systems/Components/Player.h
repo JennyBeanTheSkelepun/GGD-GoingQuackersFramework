@@ -6,6 +6,8 @@
 #include "../../Data Structures/Vectors.h"
 #include "../GameObject.h"
 #include "Physics/Rigidbody.h"
+#include "AudioSource.h"
+#include "GrapplingHook.h"
 
 class Player : public Component
 {
@@ -30,6 +32,7 @@ public:
 	
 	GRAPPLE_STATE GetGrappleState() { return m_grappleState; };
 	void SetGrappleState(GRAPPLE_STATE state);
+	void Die();
 
 	bool wallGrabbed;
 private:
@@ -38,6 +41,7 @@ private:
 	void GrappleFire(Vector2 targetPos);
 	void GrappleReturn();
 	void GrappleRetract();
+	GrapplingHook* mp_grapplingHook;
 
 	void WallPush();
 	bool wallPushPressed;
@@ -45,11 +49,17 @@ private:
 	const float wallPushTimerMax = 500.f; // milliseconds
 	float wallPushPressTimer;
 	float wallPushCollideTimer;
+	const float startSpeed = 1.f;
 
 	void GrabWall();
 	GameObject* playerObj;
 	std::vector<GameObject*> wallObj;
 	Rigidbody* playerRB;
+
+	void Bounce();
+	bool canBounce;
+	const float bounceMinAngle = 10.f;
+	const float bounceSpeedLoss = 0.5f;
 };
 
 #endif // !PLAYER_H

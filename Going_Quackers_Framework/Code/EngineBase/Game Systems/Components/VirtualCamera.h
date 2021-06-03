@@ -40,7 +40,7 @@ private:
 	Vector3 Rotation;
 	bool ActiveCam;
 
-	char* ObjectNameInput;
+	char* ObjectIDInput;
 	std::string ObjectToFollowID;
 	GameObject* ObjectToFollow;
 	bool isFollowing;

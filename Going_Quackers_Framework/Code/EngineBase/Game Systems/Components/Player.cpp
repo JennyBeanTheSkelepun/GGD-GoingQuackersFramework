@@ -8,8 +8,8 @@
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
 {
 	m_grappleState = GRAPPLE_STATE::INACTIVE;
-
 	wallGrabbed = true;
+	canBounce = false;
 
 	wallPushPressed = false;
 	wallPushCollided = false;
@@ -17,7 +17,11 @@ Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Pl
 	wallPushCollideTimer = 0.f;
 
 	playerObj = this->GetOwner();
-	playerRB = playerObj->GetComponent<Rigidbody>();
+	if (playerObj->GetComponent<Rigidbody>() == nullptr)
+	{
+		Debug::getInstance()->LogError("The player doesn't have a Rigidbody component!");
+	}
+	else playerRB = playerObj->GetComponent<Rigidbody>();
 }
 
 Player::~Player()
@@ -38,60 +42,53 @@ void Player::Update()
 		HandleInput();
 		GrabWall();
 
-		// check collision for pushing off a wall
-		if (playerRB->GetCollidingBool() && !wallPushCollided)
+		if (playerRB->GetCollidingBool())
 		{
 			wallPushCollided = true;
 			wallPushCollideTimer = wallPushTimerMax;
 			if (wallObj.size() == 0)
 				wallObj = playerRB->GetCollidedObjects();
+			if (!wallGrabbed) canBounce = true;
 		}
+
 		if (wallPushPressed && wallPushCollided)
 		{
 			WallPush();
+			canBounce = false;
 		}
 
-		// minimum speed; todo adjust value
+		if (canBounce) Bounce();
+
+		// minimum speed
 		Vector2 velocity = playerRB->GetVelocity();
-		if (!wallGrabbed && velocity.Length() < 0.001 && velocity.Length() != 0)
+		if (!wallGrabbed && velocity.Length() < 0.05f)
 		{
-			velocity *= (0.001 / velocity.Length());
-			playerRB->SetVelocity(velocity);
+			if (velocity.Length() == 0) // shouldn't happen, but just in case
+			{
+				velocity = (Vector2(0, 0.05f));
+			}
+			else {
+				velocity *= (0.05f / velocity.Length());
+				playerRB->SetVelocity(velocity);
+			}
 		}
 	}
 }
 
 void Player::ImGUIUpdate()
 {
-	// todo remove this later? used for debugging
-	switch (m_grappleState)
-	{
-	case GRAPPLE_STATE::INACTIVE:
-		ImGui::Text("Grapple: Not Attached, Not Moving");
-		break;
-	case GRAPPLE_STATE::ATTACHED:
-		ImGui::Text("Grapple: Attached, Not Moving");
-		break;
-	case GRAPPLE_STATE::EXTENDING:
-		ImGui::Text("Grapple: Not Attached, Grapple Moving To Target");
-		break;
-	case GRAPPLE_STATE::RETRACTING:
-		ImGui::Text("Grapple: Attached, Player Moving To Target");
-		break;
-	case GRAPPLE_STATE::RETURNING:
-		ImGui::Text("Grapple: Not Attached, Grapple Moving To Player");
-		break;
-	default:
-		ImGui::Text("UNKNOWN GRAPPLE STATE");
-		break;
-	}
 }
 
 json* Player::SceneSave()
 {
 	json* returnObj = new json({
-		{"Grappling Hook's State", m_grappleState}
-		});
+		{"Grappling Hook's State", m_grappleState},
+		{"Wall Grabbed", wallGrabbed},
+		{"Wall Push Variables",
+			{{"Pressed", wallPushPressed}, {"Collided", wallPushCollided},
+			{"PressedTimer", wallPushPressTimer},{"CollidedTimer",wallPushCollideTimer}}
+		}
+	});
 
 	return returnObj;
 }
@@ -99,69 +96,87 @@ json* Player::SceneSave()
 void Player::SceneLoad(json* componentJSON)
 {
 	m_grappleState = (*componentJSON)["Grappling Hook's State"];
+	wallGrabbed = (*componentJSON)["Wall Grabbed"];
+	wallPushPressed = (*componentJSON)["Wall Push Variables"]["Pressed"];
+	wallPushCollided = (*componentJSON)["Wall Push Variables"]["Collided"];
+	wallPushPressTimer = (*componentJSON)["Wall Push Variables"]["PressedTimer"];
+	wallPushCollideTimer = (*componentJSON)["Wall Push Variables"]["CollidedTimer"];
 }
 
 void Player::HandleInput()
 {
 #pragma region Look At Cursor
-	// aim grapple at cursor position; rotate to face it
-	Transform* playerTransform = playerObj->GetComponent<Transform>();
 	Vector3 mousePos = Input::getInstance()->GetWorldSpaceMousePos();
-	Vector2 playerPos = playerTransform->GetPosition();
 
-	// calculate vectors, relative to the player
-	Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - playerPos;
-	Vector2 upVector = Vector2(0, 1); // magnitude is always 1
-	float mouseMagnitude = mouseVector.Length();
-
-	// just don't change the angle if it would divide by zero
-	if (mouseMagnitude != 0)
+	// don't rotate if grappling hook is out
+	if (GetGrappleState() == GRAPPLE_STATE::INACTIVE)
 	{
-		// use dot product and determinant
-		mouseVector.Normalize();
-		upVector.Normalize();
-		float dot = mouseVector.Dot(upVector);
-		float determinant = mouseVector.X * upVector.Y - mouseVector.Y * upVector.X;
-		float angle = std::atan2f(determinant, dot);
-		// radians to degrees
-		angle *= 180 / 3.1415;
-		playerObj->GetComponent<Transform>()->SetLocalRotation(angle);
+		// aim grapple at cursor position; rotate to face it
+		Transform* playerTransform = playerObj->GetComponent<Transform>();
+		Vector2 playerPos = playerTransform->GetPosition();
+
+		// calculate vectors, relative to the player
+		Vector2 mouseVector = Vector2(mousePos.X, mousePos.Y) - playerPos;
+		Vector2 upVector = Vector2(0, 1); // magnitude is always 1
+		float mouseMagnitude = mouseVector.Length();
+
+		// just don't change the angle if it would divide by zero
+		if (mouseMagnitude != 0)
+		{
+			// use dot product and determinant
+			mouseVector.Normalize();
+			upVector.Normalize();
+			float dot = mouseVector.Dot(upVector);
+			float determinant = mouseVector.X * upVector.Y - mouseVector.Y * upVector.X;
+			float angle = std::atan2f(determinant, dot);
+			// radians to degrees
+			angle *= 180 / 3.1415;
+			playerObj->GetComponent<Transform>()->SetLocalRotation(angle);
+		}
 	}
 #pragma endregion
 
 #pragma region Grapple Controls
-	// this assumes that the grapple is a separate object or objects
 
-	// fire grapple on left click down
-	if (GetGrappleState() == GRAPPLE_STATE::INACTIVE && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
+	if (GetGrappleState() != GRAPPLE_STATE::RETURNING)
 	{
-		GrappleFire(Vector2(mousePos.X, mousePos.Y));
-	}
+		// fire loose grapple on left click down
+		if (GetGrappleState() == GRAPPLE_STATE::INACTIVE && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
+		{
+			GrappleFire(Vector2(mousePos.X, mousePos.Y));
+		}
 
-	// release grapple on left click up
-	if ((GetGrappleState() == GRAPPLE_STATE::EXTENDING || GetGrappleState() == GRAPPLE_STATE::ATTACHED) && Input::getInstance()->isKeyPressedUp(KeyCode::LeftMouse))
-	{
-		GrappleReturn();
-		// note: moving from the returning state to the inactive state is handled by the grapple
-	}
+		// release attached grapple on left click down
+		if (GetGrappleState() == GRAPPLE_STATE::ATTACHED && Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
+		{
+			GrappleReturn();
+		}
 
-	// start retracting grapple on right click down
-	if (GetGrappleState() == GRAPPLE_STATE::ATTACHED && Input::getInstance()->isKeyPressedDown(KeyCode::RightMouse))
-	{
-		GrappleRetract();
-		SetGrappleState(GRAPPLE_STATE::RETRACTING);
-	}
+		// cancel grapple extension on left click up
+		if (GetGrappleState() == GRAPPLE_STATE::EXTENDING && Input::getInstance()->isKeyPressedUp(KeyCode::LeftMouse))
+		{
+			GrappleReturn();
+			// note: moving from the returning state to the inactive state is handled by the grapple
+		}
 
-	// continue retracting if right click is held; stop if it's released (rope stays connected)
-	if (GetGrappleState() == GRAPPLE_STATE::RETRACTING)
-	{
-		if (Input::getInstance()->isKeyHeldDown(KeyCode::RightMouse))
+		// start retracting grapple on right click down
+		if (GetGrappleState() == GRAPPLE_STATE::ATTACHED && Input::getInstance()->isKeyPressedDown(KeyCode::RightMouse))
 		{
 			GrappleRetract();
+			SetGrappleState(GRAPPLE_STATE::RETRACTING);
 		}
-		else if (Input::getInstance()->isKeyPressedUp(KeyCode::RightMouse))
+
+		// continue retracting if right click is held; stop if it's released (rope stays connected)
+		if (GetGrappleState() == GRAPPLE_STATE::RETRACTING)
 		{
-			SetGrappleState(GRAPPLE_STATE::ATTACHED);
+			if (Input::getInstance()->isKeyHeldDown(KeyCode::RightMouse))
+			{
+				GrappleRetract();
+			}
+			else if (Input::getInstance()->isKeyPressedUp(KeyCode::RightMouse))
+			{
+				SetGrappleState(GRAPPLE_STATE::ATTACHED);
+			}
 		}
 	}
 
@@ -215,6 +230,10 @@ void Player::SetGrappleState(Player::GRAPPLE_STATE state)
 
 void Player::GrappleFire(Vector2 targetPos)
 {
+	GameObject* grapplingHook = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID("GameObject 24464");
+	mp_grapplingHook = grapplingHook->GetComponent<GrapplingHook>();
+	mp_grapplingHook->Fire(targetPos, this->GetOwner());
+
 	// calculate direction to cursor position
 	Vector2 playerPos = this->GetOwner()->GetComponent<Transform>()->GetPosition();
 
@@ -230,6 +249,7 @@ void Player::GrappleReturn()
 }
 void Player::GrappleRetract()
 {
+	mp_grapplingHook->Retract();
 	// move player towards rope end
 	// tell rope to shrink?
 	Debug::getInstance()->Log("retracting grapple");
@@ -250,22 +270,28 @@ void Player::WallPush()
 		collPos /= wallObj.size();
 	}
 
+	// vector from collided position to player
+	Vector2 wallToPlayer = playerObj->GetTransform()->GetPosition() - collPos;
+	pushForce.force = wallToPlayer;
+	pushForce.force.Normalize();
+
 	// pushing off a wall from a standstill
 	if (wallGrabbed)
 	{
 		wallGrabbed = false;
 		playerRB->setStatic(false);
-		// reflect (not perpendicular) vector between player and collided position
-		Vector2 playerToWall = collPos - playerObj->GetTransform()->GetPosition();
-		pushForce.force = playerToWall * -1;
-		pushForce.force.Normalize();
+		if (GetGrappleState() == GRAPPLE_STATE::ATTACHED || GetGrappleState() == GRAPPLE_STATE::RETRACTING)
+		{
+			// if grapple is short
+			SetGrappleState(GRAPPLE_STATE::INACTIVE);
+			// if grapple is long, set to retracting
+		}
+		pushForce.force *= startSpeed;
 	}
-	else // pushing off a wall while moving
+	else
 	{
-		// calculate midpoint between current velocity and collided position 
-		Vector2 vel = playerObj->GetComponent<Rigidbody>()->GetVelocity();
-		Vector2 midpoint = (vel + collPos) / 2;
-		pushForce.force = midpoint;
+		// maintain speed
+		pushForce.force *= playerObj->GetComponent<Rigidbody>()->GetVelocity().Length();
 	}
 
 	// move player away
@@ -279,4 +305,155 @@ void Player::WallPush()
 
 void Player::GrabWall()
 {
+	if (wallGrabbed == false)
+	{
+		if (playerObj->GetComponent<AudioSource>() != nullptr)
+		{
+			playerObj->GetComponent<AudioSource>()->Stop();
+		}
+
+	}
+	
+	//todo add rope length to the if statement
+	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 2 && playerRB->GetCollidedObjects().empty() != true)
+	{
+
+		wallGrabbed = true;
+
+		//this gets the object the player is colliding with and puts it into a variable to use 
+		wallObj = playerRB->GetCollidedObjects();
+
+		Debug::getInstance()->Log(wallGrabbed);
+		Debug::getInstance()->Log("wall grabbed");
+
+	}
+	else if (playerRB->GetCollidedObjects().empty() != true && m_grappleState == GRAPPLE_STATE::RETURNING && mp_grapplingHook->GetHookDistance()<=2)
+	{
+		wallGrabbed = true;
+
+		wallObj = playerRB->GetCollidedObjects();
+		Debug::getInstance()->Log(wallGrabbed);
+		Debug::getInstance()->Log("wall grabbed");
+	}
+
+
+	if (wallGrabbed)
+	{
+		//this takes the wall objects the player has collided with and finds the one that it is currently colliding with 
+		for (GameObject* obj : wallObj)
+		{
+			if (playerRB == nullptr)
+			{
+				return;
+			}
+
+			//this is meant to keep the player at the same position by moving them towards the wall with a small force
+			Vector2 vectorBetweenPlayerAndWall = playerObj->GetTransform()->GetPosition() - (obj->GetTransform()->GetPosition() + obj->GetComponent<Rigidbody>()->GetAABBRect());
+			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
+			if (vectorBetweenPlayerAndWall.Length() > 1)
+			{
+				Vector2 force = directionForPlayer;
+				Force realForce;
+				realForce.force = force;
+				realForce.moveIgnore = MovementIgnore::ACCEL;
+				Debug::getInstance()->Log(force);
+				playerRB->AddForce(realForce);
+			}
+			if (vectorBetweenPlayerAndWall.Length() <= 1 && !playerRB->getIsStatic()) // only attach once
+			{
+				playerRB->setStatic(true);
+				Debug::getInstance()->Log("attached");
+				if (playerObj->GetComponent<AudioSource>() == nullptr)
+				{
+					Debug::getInstance()->LogError("the player doesn't have a audio source component");
+				}
+				else
+				{
+					playerObj->GetComponent<AudioSource>()->Play();
+				}
+			}
+		}
+
+	}
+}
+
+void Player::Die()
+{
+	// todo play a sound
+
+	// reset player on death
+	playerObj->GetTransform()->SetPosition(Vector2(0, 0));
+	playerObj->GetTransform()->SetRotation(0);
+	playerRB->SetVelocity(Vector2(0, 0));
+
+	SetGrappleState(GRAPPLE_STATE::ATTACHED);
+	wallGrabbed = true;
+	wallPushPressed = false;
+	wallPushCollided = false;
+	wallObj.clear();
+}
+
+void Player::Bounce()
+{
+	canBounce = false;
+
+	// average of collided objects
+	Vector2 midpoint = Vector2(0, 0);
+	Vector2 midScale = Vector2(0, 0);
+	for (int i = 0; i < wallObj.size(); i++)
+	{
+		
+		midpoint += wallObj[i]->GetTransform()->GetPosition();
+		midScale += wallObj[i]->GetComponent<Rigidbody>()->GetAABBRect();
+	}
+	midpoint /= wallObj.size();
+	midScale /= wallObj.size();
+
+	// figure out which quadrant the player is in
+	Vector2 deltaPos = playerObj->GetTransform()->GetPosition() - midpoint;
+	Vector2 axis;
+	if ((deltaPos.Y > (midpoint.Y + midScale.Y)) || deltaPos.Y < (midpoint.Y -midScale.Y)) // above or below
+	{
+		// side is a horizontal line
+		axis = Vector2(1, 0);
+	}
+	else
+		axis = Vector2(0, 1); 
+
+	// figure out angle between axis and relative player position
+	float angle = axis.Dot(deltaPos) / (axis.Length() * deltaPos.Length());
+	angle = acosf(angle);
+	angle *= 180 / 3.1415;
+	float rAngle = angle;
+	if (angle > 90.f) rAngle = 180 - angle;
+
+	Vector2 newVelocity = playerRB->GetVelocity();
+	if (rAngle > bounceMinAngle)
+	{
+		// reflect player velocity by perpendicular axis
+		if (axis.X == 1) newVelocity.X = -newVelocity.X;
+		else newVelocity.Y = -newVelocity.Y;
+		
+		// lerp to decrease speed based on proximity to perpendicular
+		float proximity = rAngle/90;
+		float reductionFactor = 1 - (proximity * bounceSpeedLoss);
+		newVelocity *= reductionFactor;
+	}
+	else
+	{
+		// set velocity to +/- axis; glide
+		if (angle < 90.f) newVelocity = -axis;
+		else newVelocity = axis;
+	}
+	Force bounce;
+	// bring force up to minimum velocity
+	bounce.force = newVelocity * (0.05f / newVelocity.Length());
+	playerRB->AddForce(bounce);
+	wallObj.clear();
+
+	// cancel out default bounce
+	Force negate;
+	negate.force = -playerRB->GetVelocity();
+	negate.moveIgnore = MovementIgnore::MASSACCEL;
+	playerRB->AddForce(negate);
 }
