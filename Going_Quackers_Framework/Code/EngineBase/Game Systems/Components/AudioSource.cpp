@@ -125,6 +125,12 @@ void AudioSource::SetPath()
 	this->m_selectedAudioPath;
 }
 
+void AudioSource::SetAudioPath(std::string path)
+{
+	m_inputPath = path;
+	SubmitPath();
+}
+
 void AudioSource::SetMute(bool value)
 {
 	m_muted = value;

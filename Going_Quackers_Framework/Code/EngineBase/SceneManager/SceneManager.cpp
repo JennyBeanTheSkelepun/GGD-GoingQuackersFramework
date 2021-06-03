@@ -8,7 +8,7 @@
 #include "../Game Systems/Components/AudioSource.h"
 #include "../Game Systems/Components/LineRenderer.h"
 #include "../Game Systems/Components/Pickup.h"
-#include "../Game Systems/Components/SceneTransition.h"
+#include "../Game Systems/Components/GrapplingHook.h"
 
 #include "../Game Systems/Debug.h"
 #include "../Rendering/Graphics.h"
@@ -198,8 +198,8 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINERENDERER"]);
 		}
 
-		if (newObject.value().contains("SCENETRANSITION")) {
-			LoadComponentFromScene<SceneTransition>(lp_newObject, &newObject.value()["SCENETRANSITION"]);
+		if (newObject.value().contains("GRAPPLINGHOOK")) {
+			LoadComponentFromScene<GrapplingHook>(lp_newObject, &newObject.value()["GRAPPLINGHOOK"]);
 		}
 
 		if (newObject.value()["children"].size() > 0)
@@ -255,8 +255,8 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 			LoadComponentFromScene<Pickup>(lp_newObject, &child.value()["PICKUP"]);
 		}
 
-		if (child.value().contains("SCENETRANSITION")) {
-			LoadComponentFromScene<SceneTransition>(lp_newObject, &child.value()["SCENETRANSITION"]);
+		if (child.value().contains("GRAPPLINGHOOK")) {
+			LoadComponentFromScene<GrapplingHook>(lp_newObject, &child.value()["GRAPPLINGHOOK"]);
 		}
 
 		lp_newObject->SetParent(ap_object);
@@ -311,6 +311,7 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 
 		// Get Object name
 		std::string ls_name = ap_Scene->GetObjectByIndex(i)->GetName();
+		ls_name.erase(std::find(ls_name.begin(), ls_name.end(), '\0'), ls_name.end());
 
 		json l_object = {
 			{"id", ls_id},
@@ -352,8 +353,8 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::LINERENDERER:
 				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
 				break;
-			case ComponentTypes::SCENETRANSITION:
-				SaveComponent<SceneTransition>("SCENETRANSITION", component, &componentType);
+			case ComponentTypes::GRAPPLINGHOOK:
+				SaveComponent<GrapplingHook>("GRAPPLINGHOOK", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
@@ -437,8 +438,8 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 			case ComponentTypes::PICKUP:
 				SaveComponent<Pickup>("PICKUP", component, &componentType);
 				break;
-			case ComponentTypes::SCENETRANSITION:
-				SaveComponent<SceneTransition>("SCENETRANSITION", component, &componentType);
+			case ComponentTypes::GRAPPLINGHOOK:
+				SaveComponent<GrapplingHook>("GRAPPLINGHOOK", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
