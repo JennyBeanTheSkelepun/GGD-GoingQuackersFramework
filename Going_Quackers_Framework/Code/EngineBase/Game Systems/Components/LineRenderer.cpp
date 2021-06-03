@@ -97,6 +97,20 @@ void LineRenderer::SceneLoad(json* componentJSON)
 	CalculateRequiredPositionRoatationScale();
 }
 
+void LineRenderer::SetTexture(std::string as_textureLocation) {
+	if (mi_Texture != -1) {
+		mi_Texture = Graphics::getInstance()->RemoveTexture(mi_Texture);
+	}
+
+	//- If Texture/mp_shader/Object is instantiated then dont try and remake it  -//
+	if (mi_Texture == -1) {
+		mi_Texture = Graphics::getInstance()->LoadTexture(as_textureLocation);
+	}
+
+	m_TextureLocation = as_textureLocation;
+	as_textureLocation.copy(TextureSelectionInput, as_textureLocation.size());
+}
+
 Transform* LineRenderer::GetLocalTransform()
 {
 	return LocalTransform;
@@ -119,8 +133,6 @@ void LineRenderer::CalculateRequiredPositionRoatationScale()
 	angle *= 180 / 3.1415;
 	
 	roatation = angle;
-
-	Debug::getInstance()->Log(roatation);
 
 	//- Scale -//
 	Scale.X = m_startPos.Distance(m_endPos);

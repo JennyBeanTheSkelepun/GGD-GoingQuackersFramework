@@ -147,7 +147,7 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 
 	float angleBetweenRayAndObj = acos(Ray.Dot(OrigToCheck) / (Ray.Length() * OrigToCheck.Length()));
 
-	Debug::getInstance()->Log(angleBetweenRayAndObj);
+	//Debug::getInstance()->Log(angleBetweenRayAndObj);
 
 	if (angleBetweenRayAndObj > 1.5708f && angleBetweenRayAndObj < 4.71239f) return false;
 

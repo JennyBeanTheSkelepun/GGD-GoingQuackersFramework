@@ -23,12 +23,15 @@ public:
 	void SceneLoad(json* componentJSON) override;
 
 private:
-	void AABBCollision(GameObject* ap_collision, int ai_collidingNodeIndex);
-	void SphereCollision(GameObject* ap_collision, int ai_collidingNodeIndex);
+	Vector2 GetAABBCollisionPoint(GameObject* ap_collision, int ai_collidingNodeIndex);
+	Vector2 GetSphereCollisionPoint(GameObject* ap_collision, int ai_collidingNodeIndex);
+
+	bool IsNodeBendRightward(int ai_nodeIndex);
 
 	std::vector<GameObject*> m_nodes;
 	std::vector<std::string> m_nodeIDs;
 	std::vector<Vector2> m_nodePreviousPositions;
+	std::vector<bool> m_nodeRightwardBend;
 	bool mb_checkForNodes;
 };
 

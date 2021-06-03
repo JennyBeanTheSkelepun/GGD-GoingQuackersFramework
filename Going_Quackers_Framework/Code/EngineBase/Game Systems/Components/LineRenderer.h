@@ -29,6 +29,7 @@ public:
 	inline int GetTexture() { return mi_Texture; };
 	inline int GetShader() { return mi_Shader; };
 
+	void SetTexture(std::string as_textureLocation);
 	void SetStartPos(Vector2 a_startPos) { m_startPos = a_startPos; };
 	void SetEndPos(Vector2 a_endPos) { m_endPos = a_endPos; };
 	void SetWidth(float af_width) { mf_width = af_width; };

@@ -25,8 +25,7 @@ void Transform::OnDestroy() {
 }
 
 void Transform::Update() {
-	if (GetOwner()->GetComponent<SpriteRenderer>() == nullptr)
-		GetLocalToWorldMatrix();
+	GetLocalToWorldMatrix();
 }
 
 void Transform::ImGUIUpdate() {
