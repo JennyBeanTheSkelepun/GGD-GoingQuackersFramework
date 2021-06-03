@@ -9,24 +9,4 @@ c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framew
 c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(415): warning C4244: 'argument': conversion from 'unsigned __int64' to 'const float', possible loss of data
 c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(416): warning C4244: 'argument': conversion from 'unsigned __int64' to 'const float', possible loss of data
 c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\player.cpp(432): warning C4305: '*=': truncation from 'double' to 'float'
-  SceneManager.cpp
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(42): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\transform.h(44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\debug.h(100): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\time.h(22): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\components\audiosource.h(34): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\scenemanager\scenemanager.cpp(323): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<Player>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<SpriteRenderer>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<VirtualCamera>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<AudioSource>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<LineRenderer>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<Pickup>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<GrapplingHook>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<SceneTransition>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<MovingObstacle>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<KillPlayer>': not all control paths return a value
-c:\users\mccan\documents\github\ggd-goingquackersframework\going_quackers_framework\code\enginebase\game systems\gameobject.h(42): warning C4715: 'GameObject::AddComponent<SpringJoint>': not all control paths return a value
   Going_Quackers_Framework.vcxproj -> C:\Users\mccan\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
