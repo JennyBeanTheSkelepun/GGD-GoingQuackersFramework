@@ -47,7 +47,7 @@ private:
 	const float wallPushTimerMax = 500.f; // milliseconds
 	float wallPushPressTimer;
 	float wallPushCollideTimer;
-	const float startSpeed = 0.0001f; // subject to change
+	const float startSpeed = 1.f; // subject to change
 
 	void GrabWall();
 	GameObject* playerObj;
@@ -57,7 +57,7 @@ private:
 	void Bounce();
 	bool canBounce;
 	const float bounceMinAngle = 10.f;
-	const float bounceSpeedLoss = 0.2f;
+	const float bounceSpeedLoss = 0.5f;
 };
 
 #endif // !PLAYER_H

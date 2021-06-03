@@ -50,7 +50,8 @@ void Player::Update()
 				wallObj = playerRB->GetCollidedObjects();
 			if (!wallGrabbed) canBounce = true;
 		}
-
+		else Debug::getInstance()->Log("a");
+;
 		if (wallPushPressed && wallPushCollided)
 		{
 			WallPush();
@@ -401,15 +402,15 @@ void Player::Bounce()
 	midScale /= wallObj.size();
 
 	// figure out which quadrant the player is in
-	Vector2 deltaPos = midpoint - playerObj->GetTransform()->GetPosition();
+	Vector2 deltaPos = playerObj->GetTransform()->GetPosition() - midpoint;
 	Vector2 axis;
 	if ((deltaPos.Y > (midpoint.Y + midScale.Y)) || deltaPos.Y < (midpoint.Y -midScale.Y)) // above or below
 	{
-		// reflect along x-axis
+		// side is a horizontal line
 		axis = Vector2(1, 0);
 	}
 	else
-		axis = Vector2(0, 1);
+		axis = Vector2(0, 1); 
 
 	// figure out angle between axis and relative player position
 	float angle = axis.Dot(deltaPos) / (axis.Length() * deltaPos.Length());
@@ -421,13 +422,12 @@ void Player::Bounce()
 	Vector2 newVelocity = playerRB->GetVelocity();
 	if (rAngle > bounceMinAngle)
 	{
-		// reflect player velocity by axis
-		if (axis.X == 0) newVelocity.X = -newVelocity.X;
+		// reflect player velocity by perpendicular axis
+		if (axis.X == 1) newVelocity.X = -newVelocity.X;
 		else newVelocity.Y = -newVelocity.Y;
 		
 		// lerp to decrease speed based on proximity to perpendicular
 		float proximity = rAngle/90;
-		if (proximity < 0) proximity = 0;
 		float reductionFactor = 1 - (proximity * bounceSpeedLoss);
 		newVelocity *= reductionFactor;
 	}
@@ -438,7 +438,14 @@ void Player::Bounce()
 		else newVelocity = axis;
 	}
 	Force bounce;
-	bounce.force = newVelocity;
-	bounce.moveIgnore = MovementIgnore::ACCEL;
+	// bring force up to minimum velocity
+	bounce.force = newVelocity * (0.05f / newVelocity.Length());
 	playerRB->AddForce(bounce);
+	wallObj.clear();
+
+	// cancel out default bounce
+	Force negate;
+	negate.force = -playerRB->GetVelocity();
+	negate.moveIgnore = MovementIgnore::MASSACCEL;
+	playerRB->AddForce(negate);
 }
