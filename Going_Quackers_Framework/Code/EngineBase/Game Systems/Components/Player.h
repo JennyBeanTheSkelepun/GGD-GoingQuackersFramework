@@ -49,7 +49,7 @@ private:
 	const float wallPushTimerMax = 500.f; // milliseconds
 	float wallPushPressTimer;
 	float wallPushCollideTimer;
-	const float startSpeed = 1.f; // subject to change
+	const float startSpeed = 1.f;
 
 	void GrabWall();
 	GameObject* playerObj;

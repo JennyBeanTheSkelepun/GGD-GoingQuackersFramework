@@ -50,8 +50,7 @@ void Player::Update()
 				wallObj = playerRB->GetCollidedObjects();
 			if (!wallGrabbed) canBounce = true;
 		}
-		else Debug::getInstance()->Log("a");
-;
+
 		if (wallPushPressed && wallPushCollided)
 		{
 			WallPush();
@@ -60,7 +59,7 @@ void Player::Update()
 
 		if (canBounce) Bounce();
 
-		// minimum speed; todo adjust value
+		// minimum speed
 		Vector2 velocity = playerRB->GetVelocity();
 		if (!wallGrabbed && velocity.Length() < 0.05f)
 		{
