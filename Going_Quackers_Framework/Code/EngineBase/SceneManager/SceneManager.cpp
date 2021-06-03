@@ -8,6 +8,7 @@
 #include "../Game Systems/Components/AudioSource.h"
 #include "../Game Systems/Components/LineRenderer.h"
 #include "../Game Systems/Components/Pickup.h"
+#include "../Game Systems/Components/SceneTransition.h"
 
 #include "../Game Systems/Debug.h"
 #include "../Rendering/Graphics.h"
@@ -41,6 +42,9 @@ SceneManager::SceneManager()
 {
 	mp_CurrentScene = nullptr;
 	mb_doAutoSave = false;
+	mb_doSceneChange = false;
+	ms_SceneChangeID = "";
+
 }
 
 SceneManager::~SceneManager()
@@ -76,6 +80,12 @@ void SceneManager::ChangeScene(std::string as_SceneID, bool as_SaveToJSON)
 	}
 }
 
+void SceneManager::ChangeSceneNextFrame(std::string as_SceneID)
+{
+	ms_SceneChangeID = as_SceneID;
+	mb_doSceneChange = true;
+}
+
 
 /// <summary>
 /// Creates a blank scene
@@ -105,9 +115,13 @@ void SceneManager::SaveCurrentScene()
 /// Updates the current scene
 /// </summary>
 /// <param name="af_deltaTime">Delta time</param>
-void SceneManager::Update(float af_deltaTime)
+void SceneManager::Update()
 {
-	mp_CurrentScene->Update(af_deltaTime);
+	if (mb_doSceneChange) {
+		ChangeScene(ms_SceneChangeID, false);
+		mb_doSceneChange = false;
+		ms_SceneChangeID = "";
+	}
 }
 
 /// <summary>
@@ -184,6 +198,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<LineRenderer>(lp_newObject, &newObject.value()["LINERENDERER"]);
 		}
 
+		if (newObject.value().contains("SCENETRANSITION")) {
+			LoadComponentFromScene<SceneTransition>(lp_newObject, &newObject.value()["SCENETRANSITION"]);
+		}
+
 		if (newObject.value()["children"].size() > 0)
 		{
 			LoadChildren(lp_newObject, &newObject.value());
@@ -235,6 +253,10 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 
 		if (child.value().contains("PICKUP")) {
 			LoadComponentFromScene<Pickup>(lp_newObject, &child.value()["PICKUP"]);
+		}
+
+		if (child.value().contains("SCENETRANSITION")) {
+			LoadComponentFromScene<SceneTransition>(lp_newObject, &child.value()["SCENETRANSITION"]);
 		}
 
 		lp_newObject->SetParent(ap_object);
@@ -330,6 +352,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::LINERENDERER:
 				SaveComponent<LineRenderer>("LINERENDERER", component, &componentType);
 				break;
+			case ComponentTypes::SCENETRANSITION:
+				SaveComponent<SceneTransition>("SCENETRANSITION", component, &componentType);
+				break;
 			default:
 				componentType = "MISSING";
 				break;
@@ -411,6 +436,9 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				break;
 			case ComponentTypes::PICKUP:
 				SaveComponent<Pickup>("PICKUP", component, &componentType);
+				break;
+			case ComponentTypes::SCENETRANSITION:
+				SaveComponent<SceneTransition>("SCENETRANSITION", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
