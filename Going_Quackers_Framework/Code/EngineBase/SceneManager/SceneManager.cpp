@@ -10,6 +10,7 @@
 #include "../Game Systems/Components/Pickup.h"
 #include "../Game Systems/Components/GrapplingHook.h"
 #include "../Game Systems/Components/SceneTransition.h"
+#include "../Game Systems/Components/KillPlayer.h"
 
 #include "../Game Systems/Components/MovingObstacle.h"
 
@@ -213,6 +214,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<MovingObstacle>(lp_newObject, &newObject.value()["MOVINGOBSTACLE"]);
 		}
 
+		if (newObject.value().contains("KILLPLAYER")) {
+			LoadComponentFromScene<KillPlayer>(lp_newObject, &newObject.value()["KILLPLAYER"]);
+		}
+
 		if (newObject.value()["children"].size() > 0)
 		{
 			LoadChildren(lp_newObject, &newObject.value());
@@ -278,6 +283,10 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 			LoadComponentFromScene<MovingObstacle>(lp_newObject, &child.value()["MOVINGOBSTACLE"]);
 		}
 
+		if (child.value().contains("KILLPLAYER")) {
+			LoadComponentFromScene<KillPlayer>(lp_newObject, &child.value()["KILLPLAYER"]);
+		}
+
 		lp_newObject->SetParent(ap_object);
 
 		if (child.value()["children"].size() > 0)
@@ -297,6 +306,7 @@ void SceneManager::UnloadScene(bool as_SaveToJSON)
 	if (as_SaveToJSON) {
 		SaveToJSON(mp_CurrentScene);
 	}
+	Graphics::getInstance()->NullVirtualCamera();
 
 	delete mp_CurrentScene;
 }
@@ -380,6 +390,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 				break;
 			case ComponentTypes::MOVINGOBSTACLE:
 				SaveComponent<MovingObstacle>("MOVINGOBSTACLE", component, &componentType);
+				break;
+			case ComponentTypes::KILLPLAYER:
+				SaveComponent<KillPlayer>("KILLPLAYER", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
@@ -471,6 +484,9 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				break;
 			case ComponentTypes::MOVINGOBSTACLE:
 				SaveComponent<MovingObstacle>("MOVINGOBSTACLE", component, &componentType);
+				break;
+			case ComponentTypes::KILLPLAYER:
+				SaveComponent<KillPlayer>("KILLPLAYER", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";

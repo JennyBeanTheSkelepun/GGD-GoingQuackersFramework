@@ -31,7 +31,7 @@ void VirtualCamera::Update()
 		Position = Vector3(
 			ObjectToFollow->GetTransform()->GetPosition().X,
 			ObjectToFollow->GetTransform()->GetPosition().Y,
-			-5);
+			Position.Z);
 	}
 	else if (isFollowing && ObjectToFollow == nullptr && ObjectToFollowID != "NONE") {
 		ObjectToFollow = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(ObjectToFollowID);
