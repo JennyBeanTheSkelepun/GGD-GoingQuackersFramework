@@ -22,11 +22,6 @@ Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Pl
 		Debug::getInstance()->LogError("The player doesn't have a Rigidbody component!");
 	}
 	else playerRB = playerObj->GetComponent<Rigidbody>();
-	GameObject* grapplingHook = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByName("Grappling Hook");
-	if (grapplingHook == nullptr) {
-		Debug::getInstance()->LogError("There is no grappling hook in the scene!");
-	}
-	else mp_grapplingHook = grapplingHook->GetComponent<GrapplingHook>();
 }
 
 Player::~Player()
@@ -220,10 +215,17 @@ void Player::SetGrappleState(Player::GRAPPLE_STATE state)
 
 void Player::GrappleFire(Vector2 targetPos)
 {
+	if (mp_grapplingHook == nullptr)
+	{
+		GameObject* grapplingHook = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByName("Grappling Hook");
+		if (grapplingHook == nullptr) {
+			Debug::getInstance()->LogError("There is no grappling hook in the scene!");
+		}
+		else mp_grapplingHook = grapplingHook->GetComponent<GrapplingHook>();
+	}
 	mp_grapplingHook->Fire(targetPos, this->GetOwner());
 
 	SetGrappleState(GRAPPLE_STATE::EXTENDING);
-	// note: moving from the extending state to the attached state is handled by the grapple
 }
 void Player::GrappleReturn()
 {
@@ -299,7 +301,7 @@ void Player::GrabWall()
 		}
 	}
 	
-	/*if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 2 && playerRB->GetCollidedObjects().empty() != true)
+	/*
 	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 2 && wallObj.empty() != true)
 	{
 
@@ -316,7 +318,7 @@ void Player::GrabWall()
 
 		Debug::getInstance()->Log(wallGrabbed);
 		Debug::getInstance()->Log("wall grabbed");
-	}
+	}*/
 
 
 	if (wallGrabbed)
@@ -366,9 +368,10 @@ void Player::Die()
 	// reset player on death
 	playerObj->GetTransform()->SetPosition(Vector2(0, 0));
 	playerObj->GetTransform()->SetRotation(0);
+	playerRB->ClearForces();
 	playerRB->SetVelocity(Vector2(0, 0));
 
-	SetGrappleState(GRAPPLE_STATE::ATTACHED);
+	mp_grapplingHook->ResetHook();
 	wallGrabbed = true;
 	wallPushPressed = false;
 	wallPushCollided = false;

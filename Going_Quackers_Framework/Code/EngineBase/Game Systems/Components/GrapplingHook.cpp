@@ -9,6 +9,7 @@ GrapplingHook::GrapplingHook(GameObject* owner) : Component(owner, ComponentType
 {
 	m_hit = false;
 	m_fired = false;
+	m_retractMinimum = 0.5f;
 }
 
 GrapplingHook::~GrapplingHook()
@@ -31,7 +32,8 @@ void GrapplingHook::Update()
 	//If reached max length, Stop
 	if (GetHookDistance() >= m_hookRange)
 	{
-		mp_handler->GetComponent<Player>()->SetGrappleState(Player::GRAPPLE_STATE::RETURNING);
+		if (mp_handler->GetComponent<Player>()->GetGrappleState() != Player::GRAPPLE_STATE::INACTIVE)
+			mp_handler->GetComponent<Player>()->SetGrappleState(Player::GRAPPLE_STATE::RETURNING);
 	}
 
 	if (!(CheckForWallCollision()))
@@ -52,6 +54,7 @@ void GrapplingHook::Update()
 		if (GetHookDistance() <= m_retractMinimum)
 		{
 			ResetHook();
+			mp_handler->GetComponent<Player>()->wallGrabbed = true;
 		}
 	}
 	else if (mp_handler->GetComponent<Player>()->GetGrappleState() == Player::GRAPPLE_STATE::RETURNING)
