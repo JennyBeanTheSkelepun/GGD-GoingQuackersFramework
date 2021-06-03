@@ -21,6 +21,7 @@ enum class ComponentTypes
 	PICKUP = 9,
 	GRAPPLINGHOOK = 10,
 	KILLPLAYER= 11,
+	SCENETRANSITION= 12,
 };
 
 class Component

@@ -9,6 +9,7 @@
 #include "../Game Systems/Components/LineRenderer.h"
 #include "../Game Systems/Components/Pickup.h"
 #include "../Game Systems/Components/GrapplingHook.h"
+#include "../Game Systems/Components/SceneTransition.h"
 
 #include "../Game Systems/Debug.h"
 #include "../Rendering/Graphics.h"
@@ -202,6 +203,10 @@ Scene* SceneManager::LoadScene(std::string as_Path)
 			LoadComponentFromScene<GrapplingHook>(lp_newObject, &newObject.value()["GRAPPLINGHOOK"]);
 		}
 
+		if (newObject.value().contains("SCENETRANSITION")) {
+			LoadComponentFromScene<SceneTransition>(lp_newObject, &newObject.value()["SCENETRANSITION"]);
+		}
+
 		if (newObject.value()["children"].size() > 0)
 		{
 			LoadChildren(lp_newObject, &newObject.value());
@@ -257,6 +262,10 @@ void SceneManager::LoadChildren(GameObject* ap_object, json* ap_json)
 
 		if (child.value().contains("GRAPPLINGHOOK")) {
 			LoadComponentFromScene<GrapplingHook>(lp_newObject, &child.value()["GRAPPLINGHOOK"]);
+		}
+
+		if (child.value().contains("SCENETRANSITION")) {
+			LoadComponentFromScene<SceneTransition>(lp_newObject, &child.value()["SCENETRANSITION"]);
 		}
 
 		lp_newObject->SetParent(ap_object);
@@ -356,6 +365,9 @@ void SceneManager::SaveToJSON(Scene* ap_Scene)
 			case ComponentTypes::GRAPPLINGHOOK:
 				SaveComponent<GrapplingHook>("GRAPPLINGHOOK", component, &componentType);
 				break;
+			case ComponentTypes::SCENETRANSITION:
+				SaveComponent<SceneTransition>("SCENETRANSITION", component, &componentType);
+				break;
 			default:
 				componentType = "MISSING";
 				break;
@@ -440,6 +452,9 @@ void SceneManager::SaveChildren(GameObject* lp_object, json* ap_json)
 				break;
 			case ComponentTypes::GRAPPLINGHOOK:
 				SaveComponent<GrapplingHook>("GRAPPLINGHOOK", component, &componentType);
+				break;
+			case ComponentTypes::SCENETRANSITION:
+				SaveComponent<SceneTransition>("SCENETRANSITION", component, &componentType);
 				break;
 			default:
 				componentType = "MISSING";
