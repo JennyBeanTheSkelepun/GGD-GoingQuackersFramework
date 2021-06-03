@@ -306,6 +306,7 @@ void SceneManager::UnloadScene(bool as_SaveToJSON)
 	if (as_SaveToJSON) {
 		SaveToJSON(mp_CurrentScene);
 	}
+	Graphics::getInstance()->NullVirtualCamera();
 
 	delete mp_CurrentScene;
 }
