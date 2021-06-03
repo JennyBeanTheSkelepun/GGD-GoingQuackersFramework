@@ -9,7 +9,9 @@
 #include "Components/SpringJoint.h"
 #include "Components/LineRenderer.h"
 #include "Components/Pickup.h"
+#include "Components/GrapplingHook.h"
 #include "Components/KillPlayer.h"
+#include "Components/SceneTransition.h"
 #include "Components/MovingObstacle.h"
 #include "Debug.h"
 
@@ -116,18 +118,17 @@ void GameObject::ImGUIUpdate()
 					AddComponent<Pickup>();
 					break;
 				case 8:
-					// AddComponent<GrapplingHook>();
+					AddComponent<GrapplingHook>();
 					break;
 				case 9:
 					AddComponent<KillPlayer>();
 					break;
 				case 10:
-					// AddComponent<SceneTransition>();
+					AddComponent<SceneTransition>();
 					break;
 				case 11:
 					AddComponent<MovingObstacle>();
 					break;
-		
 				default:
 						Debug::getInstance()->LogError("Component Type Not Recognized");
 					break;

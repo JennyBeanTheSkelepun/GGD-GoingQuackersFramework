@@ -7,6 +7,7 @@
 #include "../GameObject.h"
 #include "Physics/Rigidbody.h"
 #include "AudioSource.h"
+#include "GrapplingHook.h"
 
 class Player : public Component
 {
@@ -40,6 +41,7 @@ private:
 	void GrappleFire(Vector2 targetPos);
 	void GrappleReturn();
 	void GrappleRetract();
+	GrapplingHook* mp_grapplingHook;
 
 	void WallPush();
 	bool wallPushPressed;
