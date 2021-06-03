@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  EngineMain.cpp
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(42,57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
@@ -95,3 +96,12 @@ G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(42): warning C4715: 'GameObject::AddComponent<AudioSource>': not all control paths return a value
 G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(196): warning C4715: 'Collision::RaycastAABB': not all control paths return a value
   Going_Quackers_Framework.vcxproj -> G:\Desktop\Work\Year 3\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+=======
+﻿  GrapplingHook.cpp
+C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(42,57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(44,67): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\AudioSource.h(34,29): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Going_Quackers_Framework.vcxproj -> C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+>>>>>>> main

@@ -89,6 +89,9 @@ bool EngineMain::UpdateRenderLoop()
 
 	//- UPDATE LOOP START-//
 
+	// This does NOT update game objects. It is here to transition scenes in game.
+	SceneManager::GetInstance()->Update();
+
 	for (size_t i = 0; i < SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects().size(); i++)
 	{
 		if (SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->ShouldDestroy())
