@@ -99,6 +99,10 @@ bool Collision::RaycastSphere(Vector2 Ray, Vector2 RayOrigin, GameObject* checkO
 	Rigidbody* rb = checkObject->GetComponent<Rigidbody>();
 	if (rb == nullptr) return false;
 
+	if (Ray == Vector2()) return false;
+
+	if (checkObject->GetTransform()->GetPosition() == RayOrigin) return true;
+
 	Vector2 RayEnd = RayOrigin + Ray;
 
 	float a = RayEnd.Y - RayOrigin.Y;
@@ -129,8 +133,11 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 
 	Rigidbody* rb = checkObject->GetComponent<Rigidbody>();
 
-	if (rb == nullptr)
-		return false;
+	if (Ray == Vector2()) return false;
+
+	if (rb == nullptr) return false;
+
+	if (checkObject->GetTransform()->GetPosition() == RayOrigin) return true;
 
 	Vector2 rect = rb->GetAABBRect();
 	Vector2 pos = checkObject->GetTransform()->GetPosition();
