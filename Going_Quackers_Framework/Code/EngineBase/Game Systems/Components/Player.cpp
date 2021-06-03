@@ -9,6 +9,7 @@ Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Pl
 {
 	m_grappleState = GRAPPLE_STATE::INACTIVE;
 	wallGrabbed = true;
+	canBounce = false;
 
 	wallPushPressed = false;
 	wallPushCollided = false;
@@ -41,25 +42,35 @@ void Player::Update()
 		HandleInput();
 		GrabWall();
 
-		// check collision for pushing off a wall
-		if (playerRB->GetCollidingBool() && !wallPushCollided)
+		if (playerRB->GetCollidingBool())
 		{
 			wallPushCollided = true;
 			wallPushCollideTimer = wallPushTimerMax;
 			if (wallObj.size() == 0)
 				wallObj = playerRB->GetCollidedObjects();
+			if (!wallGrabbed) canBounce = true;
 		}
+
 		if (wallPushPressed && wallPushCollided)
 		{
 			WallPush();
+			canBounce = false;
 		}
 
-		// minimum speed; todo adjust value
+		if (canBounce) Bounce();
+
+		// minimum speed
 		Vector2 velocity = playerRB->GetVelocity();
-		if (!wallGrabbed && velocity.Length() < 0.001 && velocity.Length() != 0)
+		if (!wallGrabbed && velocity.Length() < 0.05f)
 		{
-			velocity *= (0.001 / velocity.Length());
-			playerRB->SetVelocity(velocity);
+			if (velocity.Length() == 0) // shouldn't happen, but just in case
+			{
+				velocity = (Vector2(0, 0.05f));
+			}
+			else {
+				velocity *= (0.05f / velocity.Length());
+				playerRB->SetVelocity(velocity);
+			}
 		}
 	}
 }
@@ -71,8 +82,13 @@ void Player::ImGUIUpdate()
 json* Player::SceneSave()
 {
 	json* returnObj = new json({
-		{"Grappling Hook's State", m_grappleState}
-		});
+		{"Grappling Hook's State", m_grappleState},
+		{"Wall Grabbed", wallGrabbed},
+		{"Wall Push Variables",
+			{{"Pressed", wallPushPressed}, {"Collided", wallPushCollided},
+			{"PressedTimer", wallPushPressTimer},{"CollidedTimer",wallPushCollideTimer}}
+		}
+	});
 
 	return returnObj;
 }
@@ -80,6 +96,11 @@ json* Player::SceneSave()
 void Player::SceneLoad(json* componentJSON)
 {
 	m_grappleState = (*componentJSON)["Grappling Hook's State"];
+	wallGrabbed = (*componentJSON)["Wall Grabbed"];
+	wallPushPressed = (*componentJSON)["Wall Push Variables"]["Pressed"];
+	wallPushCollided = (*componentJSON)["Wall Push Variables"]["Collided"];
+	wallPushPressTimer = (*componentJSON)["Wall Push Variables"]["PressedTimer"];
+	wallPushCollideTimer = (*componentJSON)["Wall Push Variables"]["CollidedTimer"];
 }
 
 void Player::HandleInput()
@@ -314,11 +335,6 @@ void Player::GrabWall()
 		Debug::getInstance()->Log(wallGrabbed);
 		Debug::getInstance()->Log("wall grabbed");
 	}
-	else
-	{
-		//for testing
-		Debug::getInstance()->Log("wall not grabbed");
-	}
 
 
 	if (wallGrabbed)
@@ -343,7 +359,7 @@ void Player::GrabWall()
 				Debug::getInstance()->Log(force);
 				playerRB->AddForce(realForce);
 			}
-			if (vectorBetweenPlayerAndWall.Length() <= 1)
+			if (vectorBetweenPlayerAndWall.Length() <= 1 && !playerRB->getIsStatic()) // only attach once
 			{
 				playerRB->setStatic(true);
 				Debug::getInstance()->Log("attached");
@@ -375,4 +391,69 @@ void Player::Die()
 	wallPushPressed = false;
 	wallPushCollided = false;
 	wallObj.clear();
+}
+
+void Player::Bounce()
+{
+	canBounce = false;
+
+	// average of collided objects
+	Vector2 midpoint = Vector2(0, 0);
+	Vector2 midScale = Vector2(0, 0);
+	for (int i = 0; i < wallObj.size(); i++)
+	{
+		
+		midpoint += wallObj[i]->GetTransform()->GetPosition();
+		midScale += wallObj[i]->GetComponent<Rigidbody>()->GetAABBRect();
+	}
+	midpoint /= wallObj.size();
+	midScale /= wallObj.size();
+
+	// figure out which quadrant the player is in
+	Vector2 deltaPos = playerObj->GetTransform()->GetPosition() - midpoint;
+	Vector2 axis;
+	if ((deltaPos.Y > (midpoint.Y + midScale.Y)) || deltaPos.Y < (midpoint.Y -midScale.Y)) // above or below
+	{
+		// side is a horizontal line
+		axis = Vector2(1, 0);
+	}
+	else
+		axis = Vector2(0, 1); 
+
+	// figure out angle between axis and relative player position
+	float angle = axis.Dot(deltaPos) / (axis.Length() * deltaPos.Length());
+	angle = acosf(angle);
+	angle *= 180 / 3.1415;
+	float rAngle = angle;
+	if (angle > 90.f) rAngle = 180 - angle;
+
+	Vector2 newVelocity = playerRB->GetVelocity();
+	if (rAngle > bounceMinAngle)
+	{
+		// reflect player velocity by perpendicular axis
+		if (axis.X == 1) newVelocity.X = -newVelocity.X;
+		else newVelocity.Y = -newVelocity.Y;
+		
+		// lerp to decrease speed based on proximity to perpendicular
+		float proximity = rAngle/90;
+		float reductionFactor = 1 - (proximity * bounceSpeedLoss);
+		newVelocity *= reductionFactor;
+	}
+	else
+	{
+		// set velocity to +/- axis; glide
+		if (angle < 90.f) newVelocity = -axis;
+		else newVelocity = axis;
+	}
+	Force bounce;
+	// bring force up to minimum velocity
+	bounce.force = newVelocity * (0.05f / newVelocity.Length());
+	playerRB->AddForce(bounce);
+	wallObj.clear();
+
+	// cancel out default bounce
+	Force negate;
+	negate.force = -playerRB->GetVelocity();
+	negate.moveIgnore = MovementIgnore::MASSACCEL;
+	playerRB->AddForce(negate);
 }
