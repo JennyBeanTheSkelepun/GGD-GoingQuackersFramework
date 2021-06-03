@@ -88,7 +88,7 @@ public:
 
 	std::vector<GameObject*> GetCollidedObjects() { return m_CollidingObjects; }
 
-
+	void ClearForces() { m_Forces.clear(); }
 
 private:
 	void PhysicsCollide();
