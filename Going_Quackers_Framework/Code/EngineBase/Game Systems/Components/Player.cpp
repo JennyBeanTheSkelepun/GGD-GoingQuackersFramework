@@ -8,7 +8,7 @@
 Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Player")
 {
 	m_grappleState = GRAPPLE_STATE::INACTIVE;
-	wallGrabbed = true;
+	wallGrabbed = false;
 	canBounce = false;
 
 	wallPushPressed = false;
@@ -44,11 +44,20 @@ void Player::Update()
 
 		if (playerRB->GetCollidingBool())
 		{
-			wallPushCollided = true;
-			wallPushCollideTimer = wallPushTimerMax;
-			if (wallObj.size() == 0)
-				wallObj = playerRB->GetCollidedObjects();
-			if (!wallGrabbed) canBounce = true;
+			std::vector<GameObject*> allObj = playerRB->GetCollidedObjects();
+			wallObj.clear();
+			for (int i = 0; i < allObj.size(); i++)
+			{
+				if (allObj[i]->GetComponent<Rigidbody>()->GetType() != PhysicsTypes::RB) continue;
+				wallObj.push_back(allObj[i]);
+			}
+			if (wallObj.size() > 0)
+			{
+				wallPushCollided = true;
+				wallPushCollideTimer = wallPushTimerMax;
+				if (!wallGrabbed)
+					canBounce = true;
+			}
 		}
 
 		if (wallPushPressed && wallPushCollided)
@@ -63,11 +72,8 @@ void Player::Update()
 		Vector2 velocity = playerRB->GetVelocity();
 		if (!wallGrabbed && velocity.Length() < minSpeed)
 		{
-			if (velocity.Length() == 0) // shouldn't happen, but just in case
+			if (velocity.Length() != 0)
 			{
-				velocity = (Vector2(0, minSpeed));
-			}
-			else {
 				velocity *= (minSpeed / velocity.Length());
 				playerRB->SetVelocity(velocity);
 			}
@@ -162,6 +168,7 @@ void Player::HandleInput()
 		// start retracting grapple on right click down
 		if (GetGrappleState() == GRAPPLE_STATE::ATTACHED && Input::getInstance()->isKeyPressedDown(KeyCode::RightMouse))
 		{
+			if (playerRB->getIsStatic()) playerRB->setStatic(false);
 			GrappleRetract();
 			SetGrappleState(GRAPPLE_STATE::RETRACTING);
 		}
@@ -280,7 +287,7 @@ void Player::WallPush()
 
 void Player::GrabWall()
 {
-	if (wallGrabbed == false)
+	if (!wallGrabbed)
 	{
 		if (playerObj->GetComponent<AudioSource>() != nullptr)
 		{
@@ -288,76 +295,27 @@ void Player::GrabWall()
 		}
 
 	}
-	std::vector<GameObject*> collidedObjects = playerRB->GetCollidedObjects();
-	if (!collidedObjects.empty())
+	else if (!playerRB->getIsStatic())
 	{
+		std::vector<GameObject*> collidedObjects = playerRB->GetCollidedObjects();
 		for (size_t i = 0; i < collidedObjects.size(); i++)
 		{
 			std::string objName = collidedObjects[i]->GetName();
 			if (objName == "Wall")
 			{
-				wallObj = playerRB->GetCollidedObjects();
+				wallObj.push_back(collidedObjects[i]);
 			}
 		}
-	}
-	
-	/*
-	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 2 && wallObj.empty() != true)
-	{
-
-		wallGrabbed = true;
-
-
-		Debug::getInstance()->Log(wallGrabbed);
-		Debug::getInstance()->Log("wall grabbed");
-
-	}
-	else if (wallObj.empty() != true && m_grappleState == GRAPPLE_STATE::RETURNING && mp_grapplingHook->GetHookDistance()<=0.5f)
-	{
-		wallGrabbed = true;
-
-		Debug::getInstance()->Log(wallGrabbed);
-		Debug::getInstance()->Log("wall grabbed");
-	}*/
-
-
-	if (wallGrabbed)
-	{
-		//this takes the wall objects the player has collided with and finds the one that it is currently colliding with 
-		for (GameObject* obj : wallObj)
+		playerRB->setStatic(true);
+		Debug::getInstance()->Log("attached");
+		if (playerObj->GetComponent<AudioSource>() == nullptr)
 		{
-			if (playerRB == nullptr)
-			{
-				return;
-			}
-
-			//this is meant to keep the player at the same position by moving them towards the wall with a small force
-			Vector2 vectorBetweenPlayerAndWall = playerObj->GetTransform()->GetPosition() - (obj->GetTransform()->GetPosition() + obj->GetComponent<Rigidbody>()->GetAABBRect());
-			Vector2 directionForPlayer = vectorBetweenPlayerAndWall.Normalize();
-			if (vectorBetweenPlayerAndWall.Length() > 1)
-			{
-				Vector2 force = directionForPlayer;
-				Force realForce;
-				realForce.force = force;
-				realForce.moveIgnore = MovementIgnore::ACCEL;
-				Debug::getInstance()->Log(force);
-				playerRB->AddForce(realForce);
-			}
-			if (vectorBetweenPlayerAndWall.Length() <= 1 && !playerRB->getIsStatic()) // only attach once
-			{
-				playerRB->setStatic(true);
-				Debug::getInstance()->Log("attached");
-				if (playerObj->GetComponent<AudioSource>() == nullptr)
-				{
-					Debug::getInstance()->LogError("the player doesn't have a audio source component");
-				}
-				else
-				{
-					playerObj->GetComponent<AudioSource>()->Play();
-				}
-			}
+			Debug::getInstance()->LogError("the player doesn't have a audio source component");
 		}
-
+		else
+		{
+			playerObj->GetComponent<AudioSource>()->Play();
+		}
 	}
 }
 
@@ -372,7 +330,7 @@ void Player::Die()
 	playerRB->SetVelocity(Vector2(0, 0));
 
 	mp_grapplingHook->ResetHook();
-	wallGrabbed = true;
+	wallGrabbed = false;
 	wallPushPressed = false;
 	wallPushCollided = false;
 	wallObj.clear();
