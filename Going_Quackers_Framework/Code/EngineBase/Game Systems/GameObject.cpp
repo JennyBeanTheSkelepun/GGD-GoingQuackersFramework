@@ -81,7 +81,7 @@ void GameObject::Update()
 
 void GameObject::ImGUIUpdate()
 {
-	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint", "Line Renderer", "Pickup", "Kill Player", "Moving Obstacle"};
+	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint", "Line Renderer", "Pickup", "Grappling Hook", "Kill Player", "Scene Transition", "Moving Obstacle"};
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{
@@ -116,9 +116,15 @@ void GameObject::ImGUIUpdate()
 					AddComponent<Pickup>();
 					break;
 				case 8:
-					AddComponent<KillPlayer>();
+					// AddComponent<GrapplingHook>();
 					break;
 				case 9:
+					AddComponent<KillPlayer>();
+					break;
+				case 10:
+					// AddComponent<SceneTransition>();
+					break;
+				case 11:
 					AddComponent<MovingObstacle>();
 					break;
 		
