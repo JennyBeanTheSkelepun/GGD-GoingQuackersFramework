@@ -19,7 +19,8 @@ enum class ComponentTypes
 	SPRINGJOINT = 7,
 	LINERENDERER = 8,
 	PICKUP = 9,
-	KILLPLAYER=10,
+	GRAPPLINGHOOK = 10,
+	KILLPLAYER= 11,
 };
 
 class Component

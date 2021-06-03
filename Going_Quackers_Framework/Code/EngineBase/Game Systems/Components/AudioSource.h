@@ -28,6 +28,7 @@ public:
 	void Pause();
 
 	void SetPath();
+	void SetAudioPath(std::string path);
 
 	void SetVolume(int volume) { m_volume = volume; }
 	float GetVolume() { return m_volume; }
