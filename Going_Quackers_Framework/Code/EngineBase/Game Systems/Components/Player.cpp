@@ -66,14 +66,14 @@ void Player::Update()
 
 		// minimum speed
 		Vector2 velocity = playerRB->GetVelocity();
-		if (!wallGrabbed && velocity.Length() < 0.05f)
+		if (!wallGrabbed && velocity.Length() < minSpeed)
 		{
 			if (velocity.Length() == 0) // shouldn't happen, but just in case
 			{
-				velocity = (Vector2(0, 0.05f));
+				velocity = (Vector2(0, minSpeed));
 			}
 			else {
-				velocity *= (0.05f / velocity.Length());
+				velocity *= (minSpeed / velocity.Length());
 				playerRB->SetVelocity(velocity);
 			}
 		}
@@ -214,22 +214,7 @@ void Player::SetGrappleState(Player::GRAPPLE_STATE state)
 	// ignore if it's trying to change to the same state
 	if (state == m_grappleState) return;
 
-	// any state-specific entry logic
-	switch (state)
-	{
-	case GRAPPLE_STATE::EXTENDING:
-		Debug::getInstance()->Log("Player: fire grapple");
-		break;
-	case GRAPPLE_STATE::ATTACHED:
-		Debug::getInstance()->Log("Player: grapple is attached and not unmoving");
-		break;
-	case GRAPPLE_STATE::RETRACTING:
-		Debug::getInstance()->Log("Player: start retracting grapple");
-		break;
-	case GRAPPLE_STATE::RETURNING:
-		Debug::getInstance()->Log("Player: release grapple");
-		break;
-	}
+	// no state-specific entry logic
 	m_grappleState = state;
 }
 
@@ -237,25 +222,16 @@ void Player::GrappleFire(Vector2 targetPos)
 {
 	mp_grapplingHook->Fire(targetPos, this->GetOwner());
 
-	// calculate direction to cursor position
-	Vector2 playerPos = this->GetOwner()->GetComponent<Transform>()->GetPosition();
-
-	// create grapple at player position?? pass the direction to the grapple??
-
 	SetGrappleState(GRAPPLE_STATE::EXTENDING);
 	// note: moving from the extending state to the attached state is handled by the grapple
 }
 void Player::GrappleReturn()
 {
-	// tell grapple to shrink in the direction of the player
 	SetGrappleState(GRAPPLE_STATE::RETURNING);
 }
 void Player::GrappleRetract()
 {
 	mp_grapplingHook->Retract();
-	// move player towards rope end
-	// tell rope to shrink?
-	Debug::getInstance()->Log("retracting grapple");
 }
 
 void Player::WallPush()
@@ -283,12 +259,6 @@ void Player::WallPush()
 	{
 		wallGrabbed = false;
 		playerRB->setStatic(false);
-		if (GetGrappleState() == GRAPPLE_STATE::ATTACHED || GetGrappleState() == GRAPPLE_STATE::RETRACTING)
-		{
-			// if grapple is short
-			SetGrappleState(GRAPPLE_STATE::INACTIVE);
-			// if grapple is long, set to retracting
-		}
 		pushForce.force *= startSpeed;
 	}
 	else
@@ -329,7 +299,8 @@ void Player::GrabWall()
 		}
 	}
 	
-	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 0.5f && wallObj.empty() != true)
+	/*if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 2 && playerRB->GetCollidedObjects().empty() != true)
+	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 2 && wallObj.empty() != true)
 	{
 
 		wallGrabbed = true;
@@ -458,7 +429,7 @@ void Player::Bounce()
 	}
 	Force bounce;
 	// bring force up to minimum velocity
-	bounce.force = newVelocity * (0.05f / newVelocity.Length());
+	bounce.force = newVelocity * (minSpeed / newVelocity.Length());
 	playerRB->AddForce(bounce);
 	wallObj.clear();
 

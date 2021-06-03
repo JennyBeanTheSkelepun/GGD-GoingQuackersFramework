@@ -13,11 +13,11 @@ GrapplingHook::GrapplingHook(GameObject* owner) : Component(owner, ComponentType
 
 GrapplingHook::~GrapplingHook()
 {
-	this->~GrapplingHook();
 }
 
 void GrapplingHook::OnDestroy()
 {
+	this->~GrapplingHook();
 }
 
 void GrapplingHook::Update()
