@@ -82,7 +82,19 @@ void GameObject::Update()
 
 void GameObject::ImGUIUpdate()
 {
-	const char* components[] = { "Sprite Renderer", "RigidBody", "Virtual Camera", "Player", "Audio Source", "Spring Joint", "Line Renderer", "Pickup", "Grappling Hook", "Kill Player"};
+	const char* components[] = {
+		"Sprite Renderer",
+		"RigidBody",
+		"Virtual Camera",
+		"Player",
+		"Audio Source",
+		"Spring Joint",
+		"Line Renderer",
+		"Pickup",
+		"Grappling Hook",
+		"Kill Player",
+		"Scene Transition"
+	};
 	int selectedComponent = -1;
 	if (ImGui::BeginPopup("Component List"))
 	{
@@ -121,6 +133,9 @@ void GameObject::ImGUIUpdate()
 					break;
 				case 9:
 					AddComponent<KillPlayer>();
+					break;
+				case 10:
+					AddComponent<SceneTransition>();
 					break;
 				default:
 						Debug::getInstance()->LogError("Component Type Not Recognized");
