@@ -22,6 +22,11 @@ Player::Player(GameObject* owner) : Component(owner, ComponentTypes::PLAYER, "Pl
 		Debug::getInstance()->LogError("The player doesn't have a Rigidbody component!");
 	}
 	else playerRB = playerObj->GetComponent<Rigidbody>();
+	GameObject* grapplingHook = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByName("Grappling Hook");
+	if (grapplingHook == nullptr) {
+		Debug::getInstance()->LogError("There is no grappling hook in the scene!");
+	}
+	else mp_grapplingHook = grapplingHook->GetComponent<GrapplingHook>();
 }
 
 Player::~Player()
@@ -230,8 +235,6 @@ void Player::SetGrappleState(Player::GRAPPLE_STATE state)
 
 void Player::GrappleFire(Vector2 targetPos)
 {
-	GameObject* grapplingHook = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID("GameObject 24464");
-	mp_grapplingHook = grapplingHook->GetComponent<GrapplingHook>();
 	mp_grapplingHook->Fire(targetPos, this->GetOwner());
 
 	// calculate direction to cursor position
@@ -314,17 +317,19 @@ void Player::GrabWall()
 
 	}
 	std::vector<GameObject*> collidedObjects = playerRB->GetCollidedObjects();
-	for (size_t i = 0; i < collidedObjects.size(); i++)
+	if (!collidedObjects.empty())
 	{
-		std::string objName = collidedObjects[i]->GetName();
-		if (objName == "Wall")
+		for (size_t i = 0; i < collidedObjects.size(); i++)
 		{
-			wallObj = playerRB->GetCollidedObjects();
+			std::string objName = collidedObjects[i]->GetName();
+			if (objName == "Wall")
+			{
+				wallObj = playerRB->GetCollidedObjects();
+			}
 		}
 	}
 	
-	//todo add rope length to the if statement
-	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 2 && wallObj.empty() != true)
+	if ((m_grappleState == GRAPPLE_STATE::ATTACHED || m_grappleState == GRAPPLE_STATE::RETRACTING) && mp_grapplingHook->GetHookDistance() <= 0.5f && wallObj.empty() != true)
 	{
 
 		wallGrabbed = true;
@@ -334,7 +339,7 @@ void Player::GrabWall()
 		Debug::getInstance()->Log("wall grabbed");
 
 	}
-	else if (wallObj.empty() != true && m_grappleState == GRAPPLE_STATE::RETURNING && mp_grapplingHook->GetHookDistance()<=2)
+	else if (wallObj.empty() != true && m_grappleState == GRAPPLE_STATE::RETURNING && mp_grapplingHook->GetHookDistance()<=0.5f)
 	{
 		wallGrabbed = true;
 
