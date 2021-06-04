@@ -168,22 +168,19 @@ void Player::HandleInput()
 		// start retracting grapple on right click down
 		if (GetGrappleState() == GRAPPLE_STATE::ATTACHED && Input::getInstance()->isKeyPressedDown(KeyCode::RightMouse))
 		{
-			if (playerRB->getIsStatic()) playerRB->setStatic(false);
 			GrappleRetract();
-			SetGrappleState(GRAPPLE_STATE::RETRACTING);
 		}
 
-		// continue retracting if right click is held; stop if it's released (rope stays connected)
-		if (GetGrappleState() == GRAPPLE_STATE::RETRACTING)
+		// stop retracting if right click is released (rope stays connected)
+		if (GetGrappleState() == GRAPPLE_STATE::RETRACTING &&  Input::getInstance()->isKeyPressedUp(KeyCode::RightMouse))
 		{
-			if (Input::getInstance()->isKeyHeldDown(KeyCode::RightMouse))
-			{
-				GrappleRetract();
-			}
-			else if (Input::getInstance()->isKeyPressedUp(KeyCode::RightMouse))
-			{
-				SetGrappleState(GRAPPLE_STATE::ATTACHED);
-			}
+			// slow down movement, but don't stop
+			/*Vector2 velocity = playerRB->GetVelocity();
+			velocity *= (minSpeed / velocity.Length());
+			playerRB->SetVelocity(velocity);*/
+			playerRB->ClearForces(); // just stop.
+			playerRB->SetVelocity(Vector2(0, 0));
+			SetGrappleState(GRAPPLE_STATE::ATTACHED);
 		}
 	}
 
@@ -215,8 +212,7 @@ void Player::SetGrappleState(Player::GRAPPLE_STATE state)
 {
 	// ignore if it's trying to change to the same state
 	if (state == m_grappleState) return;
-
-	// no state-specific entry logic
+	
 	m_grappleState = state;
 }
 
@@ -240,6 +236,8 @@ void Player::GrappleReturn()
 }
 void Player::GrappleRetract()
 {
+	if (playerRB->getIsStatic()) playerRB->setStatic(false);
+	SetGrappleState(GRAPPLE_STATE::RETRACTING);
 	mp_grapplingHook->Retract();
 }
 
@@ -355,7 +353,7 @@ void Player::Bounce()
 	// figure out which quadrant the player is in
 	Vector2 deltaPos = playerObj->GetTransform()->GetPosition() - midpoint;
 	Vector2 axis;
-	if ((deltaPos.Y > (midpoint.Y + midScale.Y)) || deltaPos.Y < (midpoint.Y -midScale.Y)) // above or below
+	if ((deltaPos.Y > midScale.Y) || deltaPos.Y < -midScale.Y) // above or below
 	{
 		// side is a horizontal line
 		axis = Vector2(1, 0);

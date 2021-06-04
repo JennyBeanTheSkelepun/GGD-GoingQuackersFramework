@@ -48,9 +48,6 @@ void GrapplingHook::Update()
 
 	if (mp_handler->GetComponent<Player>()->GetGrappleState() == Player::GRAPPLE_STATE::RETRACTING)
 	{
-		Vector2 retractVector = m_fireDirection * m_retractSpeed * Time::GetDeltaTime();
-		mp_handler->GetTransform()->SetPosition(mp_handler->GetTransform()->GetPosition() + retractVector);
-
 		if (GetHookDistance() <= m_retractMinimum)
 		{
 			ResetHook();
@@ -121,6 +118,10 @@ void GrapplingHook::Fire(Vector2 targetPos, GameObject* handler)
 
 void GrapplingHook::Retract()
 {
+	Force retract;
+	retract.force = m_fireDirection;
+	retract.force.Normalize();
+	mp_handler->GetComponent<Rigidbody>()->AddForce(retract);
 }
 
 void GrapplingHook::Return()
