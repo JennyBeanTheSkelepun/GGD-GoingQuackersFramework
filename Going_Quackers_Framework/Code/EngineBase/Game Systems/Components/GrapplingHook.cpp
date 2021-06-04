@@ -155,6 +155,7 @@ bool GrapplingHook::CheckForWallCollision()
 		if (objName == "Wall")
 		{
 			// inside a wall? move out of it
+			/*
 			Vector2 objSize = collidingObjects[i]->GetTransform()->GetScale() / 2;
 			Vector2 objPos = collidingObjects[i]->GetTransform()->GetPosition();
 			bool Xstuck = false;
@@ -182,6 +183,7 @@ bool GrapplingHook::CheckForWallCollision()
 				}
 			}
 			GetOwner()->GetTransform()->SetPosition(hookPosition);
+			*/
 			return true;
 		}
 	}
