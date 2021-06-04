@@ -317,7 +317,7 @@ void Player::GrabWall()
 		for (size_t i = 0; i < collidedObjects.size(); i++)
 		{
 			std::string objName = collidedObjects[i]->GetName();
-			if (objName == "Wall")
+			if (objName == "Wall" || objName == "wall")
 			{
 				wallObj.push_back(collidedObjects[i]);
 			}
