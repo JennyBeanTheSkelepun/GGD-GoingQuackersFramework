@@ -1,10 +1,19 @@
-﻿  Collision.cpp
+﻿  Rope.cpp
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
 C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(41,57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(43,67): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
 C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(23,142): warning C4390: ';': empty controlled statement found; is this the intent?
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(41,143): warning C4390: ';': empty controlled statement found; is this the intent?
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(92,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Physics\Collision.cpp(262,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(29,55): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(130,67): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(157,7): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(158,22): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(168,60): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(168,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(171,46): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(286,38): warning C4804: '-': unsafe use of type 'bool' in operation
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(286,97): warning C4804: '-': unsafe use of type 'bool' in operation
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(286,151): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Rope.cpp(286,92): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(42): warning C4715: 'GameObject::AddComponent<Rigidbody>': not all control paths return a value
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(42): warning C4715: 'GameObject::AddComponent<SpringJoint>': not all control paths return a value
   Going_Quackers_Framework.vcxproj -> C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

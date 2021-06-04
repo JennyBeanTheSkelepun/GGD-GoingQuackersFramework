@@ -1,0 +1,99 @@
+Loading Scene from path: SceneConfig/default.json
+[ERROR] Scene Load Error: Sprite Renderer for object Grappling Hook is missing either a Texture or Shader location. 
+To prevent this error in future, please remember to update Texture/Shader in component settings and save the scene after. - Jen
+[ERROR] Scene Load Error: Sprite Renderer for object Wall is missing either a Texture or Shader location. 
+To prevent this error in future, please remember to update Texture/Shader in component settings and save the scene after. - Jen
+Scene load complete.
+Loading Scene from path: SceneConfig/RopeTest.json
+[ERROR] Scene Load Error: Sprite Renderer for object Collider is missing either a Texture or Shader location. 
+To prevent this error in future, please remember to update Texture/Shader in component settings and save the scene after. - Jen
+Raycast go brrr
+[WARNING] X: 4.000000 Y: 0.000000
+[WARNING] X: 1.500000 Y: 0.500000
+[WARNING] X: 2.500000 Y: -0.500000
+[WARNING] X: 1.000000 Y: 0.000000
+[WARNING] X: 1.500000 Y: -0.500000
+Obj Rope Node 3 Collided with Obj Collider
+Obj Rope Node 4 Collided with Obj Collider
+[WARNING] X: 0.935098 Y: -1.163697
+[WARNING] X: 0.688496 Y: -1.403370
+[WARNING] X: 0.655188 Y: -1.553098
+Obj Rope Node 2 Collided with Obj Collider
+[WARNING] X: 0.691463 Y: -1.692393
+[WARNING] X: 0.746043 Y: -1.837793
+[WARNING] X: 0.803950 Y: -1.994583
+[WARNING] X: 0.860329 Y: -2.165593
+[WARNING] X: 0.912911 Y: -2.353010
+[WARNING] X: 0.959927 Y: -2.558804
+[WARNING] X: 0.999510 Y: -2.784821
+[WARNING] X: 1.029499 Y: -3.032762
+[WARNING] X: 1.047396 Y: -3.304118
+[WARNING] X: 1.050367 Y: -3.600096
+[WARNING] X: 1.035295 Y: -3.921525
+[WARNING] X: 0.998850 Y: -4.268771
+[WARNING] X: 0.937605 Y: -4.641666
+[WARNING] X: 0.848171 Y: -5.039450
+[WARNING] X: 0.727359 Y: -5.460750
+[WARNING] X: 0.572350 Y: -5.903601
+[WARNING] X: 0.380860 Y: -6.365507
+[WARNING] X: 0.151291 Y: -6.843544
+[WARNING] X: -0.117159 Y: -7.334502
+[WARNING] X: 0.000000 Y: -1.000000
+[WARNING] X: -0.117159 Y: -6.334502
+Obj Rope Node 5 Collided with Obj Collider
+[WARNING] X: -0.369026 Y: -5.834232
+[WARNING] X: -0.475626 Y: -5.345840
+[WARNING] X: -0.406112 Y: -4.866136
+[WARNING] X: -0.125904 Y: -4.368702
+[WARNING] X: 0.396230 Y: -4.777638
+[WARNING] X: 0.501413 Y: -5.188282
+[WARNING] X: 0.485075 Y: -5.618526
+[WARNING] X: 0.385183 Y: -6.069523
+[WARNING] X: 0.220896 Y: -6.538857
+[WARNING] X: 0.002358 Y: -7.023272
+[WARNING] X: -0.264528 Y: -7.519324
+[WARNING] X: -0.264528 Y: -6.519324
+[WARNING] X: -0.630867 Y: -6.023376
+[WARNING] X: -0.882123 Y: -5.544257
+[WARNING] X: -0.996224 Y: -5.092020
+[WARNING] X: -0.949987 Y: -4.669008
+[WARNING] X: -0.715108 Y: -4.259815
+[WARNING] X: -0.257359 Y: -3.812601
+[WARNING] X: 0.441403 Y: -4.203501
+[WARNING] X: 0.632410 Y: -4.572088
+[WARNING] X: 0.680984 Y: -4.961974
+[WARNING] X: 0.640069 Y: -5.377005
+[WARNING] X: 0.534191 Y: -5.815290
+[WARNING] X: 0.374966 Y: -6.273854
+[WARNING] X: 0.168083 Y: -6.749440
+[WARNING] X: -0.083347 Y: -7.238664
+[WARNING] X: -0.083347 Y: -6.238664
+[WARNING] X: -0.287061 Y: -5.735586
+[WARNING] X: -0.332938 Y: -5.240335
+[WARNING] X: -0.187215 Y: -4.741576
+[WARNING] X: 0.185958 Y: -5.195429
+[WARNING] X: 0.282528 Y: -5.639525
+[WARNING] X: 0.248376 Y: -6.096785
+[WARNING] X: 0.122864 Y: -6.569969
+[WARNING] X: -0.072679 Y: -7.057209
+[WARNING] X: -0.072679 Y: -6.057209
+[WARNING] X: -0.198979 Y: -5.550160
+[WARNING] X: -0.148202 Y: -5.042572
+[WARNING] X: 0.116241 Y: -5.506969
+[WARNING] X: 0.167832 Y: -5.967561
+[WARNING] X: 0.097891 Y: -6.439906
+[WARNING] X: -0.059517 Y: -6.925570
+[WARNING] X: -0.059517 Y: -5.925570
+[WARNING] X: -0.128738 Y: -5.414227
+[WARNING] X: -0.500000 Y: -5.414227
+[WARNING] X: 1.500000 Y: -6.414227
+[WARNING] X: -0.007189 Y: -4.893289
+[WARNING] X: 0.342062 Y: -5.320296
+[WARNING] X: 0.356423 Y: -5.762043
+[WARNING] X: 0.270063 Y: -6.221467
+[WARNING] X: 0.109096 Y: -6.697466
+[WARNING] X: -0.112222 Y: -7.187120
+[WARNING] X: -0.112222 Y: -6.187120
+[WARNING] X: -0.301768 Y: -5.684962
+[WARNING] X: -0.330342 Y: -5.190437
+

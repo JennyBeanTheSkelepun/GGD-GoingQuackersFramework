@@ -34,18 +34,67 @@ void Rope::Update() {
 	if (m_nodes.size() < 2)
 		return;
 
-	if (!EngineGuiClass::getInstance()->IsInPlayMode()) {
-		//Handle line renderer
-		for (size_t i = 0; i < m_nodes.size() - 1; i++) {
-			if (m_nodes[i]->GetTransform()->GetPosition() != m_nodePreviousPositions[i]) {
-				m_nodes[i]->GetComponent<LineRenderer>()->SetStartPos(m_nodes[i]->GetTransform()->GetPosition());
+	if (Input::getInstance()->isKeyHeldDown(KeyCode::W))
+	{
+		m_nodes[2]->GetTransform()->SetLocalPosition(Vector2(0.0f, 0.1f));
+	}
+	else if(Input::getInstance()->isKeyHeldDown(KeyCode::S))
+	{
+		m_nodes[2]->GetTransform()->SetLocalPosition(Vector2(0.0f, -0.1f));
+	}
 
-				if (i != 0)
-					m_nodes[i - 1]->GetComponent<LineRenderer>()->SetEndPos(m_nodes[i]->GetTransform()->GetPosition());
-			}
+	//if (!EngineGuiClass::getInstance()->IsInPlayMode()) {
+	//	//Handle line renderer
+	//	for (size_t i = 0; i < m_nodes.size() - 1; i++) {
+	//		if (m_nodes[i]->GetTransform()->GetPosition() != m_nodePreviousPositions[i]) {
+	//			m_nodes[i]->GetComponent<LineRenderer>()->SetStartPos(m_nodes[i]->GetTransform()->GetPosition());
+
+	//			if (i != 0)
+	//				m_nodes[i - 1]->GetComponent<LineRenderer>()->SetEndPos(m_nodes[i]->GetTransform()->GetPosition());
+
+	//			if (i != 0)
+	//			{
+	//				SpringJoint* oldNodeSpringJoint = m_nodes[i - 1]->GetComponent<SpringJoint>();
+	//				oldNodeSpringJoint->SetCurrentDesiredLength(m_nodes[i - 1]->GetTransform()->GetPosition().Distance(m_nodes[i]->GetTransform()->GetPosition()));
+	//				oldNodeSpringJoint->SetDefaultDesiredLength(m_nodes[i - 1]->GetTransform()->GetPosition().Distance(m_nodes[i]->GetTransform()->GetPosition()));
+	//			}
+
+	//			if (i != m_nodes.size() - 2)
+	//			{
+	//				SpringJoint* newNodeSpringJoint = m_nodes[i]->GetComponent<SpringJoint>();
+	//				newNodeSpringJoint->SetCurrentDesiredLength(m_nodes[i + 1]->GetTransform()->GetPosition().Distance(m_nodes[i]->GetTransform()->GetPosition()));
+	//				newNodeSpringJoint->SetDefaultDesiredLength(m_nodes[i + 1]->GetTransform()->GetPosition().Distance(m_nodes[i]->GetTransform()->GetPosition()));
+	//			}
+	//		}
+	//	}
+
+	//	//Update last part of line renderer chain
+	//	if (m_nodes[m_nodes.size() - 1]->GetTransform()->GetPosition() != m_nodePreviousPositions[m_nodes.size() - 1])
+	//		m_nodes[m_nodes.size() - 2]->GetComponent<LineRenderer>()->SetEndPos(m_nodes[m_nodes.size() - 1]->GetTransform()->GetPosition());
+
+	//	//Update all previous positions
+	//	for (size_t i = 0; i < m_nodePreviousPositions.size(); i++)
+	//		m_nodePreviousPositions[i] = m_nodes[i]->GetTransform()->GetPosition();
+
+	//	return;
+	//}
+
+	for (size_t i = 0; i < m_nodes.size() - 1; i++) {
+		if (m_nodes[i] == nullptr) continue;
+		if (i != 0)
+		{
+			SpringJoint* oldNodeSpringJoint = m_nodes[i - 1]->GetComponent<SpringJoint>();
+			oldNodeSpringJoint->SetCurrentDesiredLength(m_nodes[i - 1]->GetTransform()->GetPosition().Distance(m_nodes[i]->GetTransform()->GetPosition()));
+			oldNodeSpringJoint->SetDefaultDesiredLength(m_nodes[i - 1]->GetTransform()->GetPosition().Distance(m_nodes[i]->GetTransform()->GetPosition()));
 		}
 
-		//Update last part of line renderer chain
+		if (i != m_nodes.size() - 1)
+		{
+			SpringJoint* newNodeSpringJoint = m_nodes[i]->GetComponent<SpringJoint>();
+			newNodeSpringJoint->SetCurrentDesiredLength(m_nodes[i + 1]->GetTransform()->GetPosition().Distance(m_nodes[i]->GetTransform()->GetPosition()));
+			newNodeSpringJoint->SetDefaultDesiredLength(m_nodes[i + 1]->GetTransform()->GetPosition().Distance(m_nodes[i]->GetTransform()->GetPosition()));
+		}
+
 		if (m_nodes[m_nodes.size() - 1]->GetTransform()->GetPosition() != m_nodePreviousPositions[m_nodes.size() - 1])
 			m_nodes[m_nodes.size() - 2]->GetComponent<LineRenderer>()->SetEndPos(m_nodes[m_nodes.size() - 1]->GetTransform()->GetPosition());
 
@@ -53,10 +102,6 @@ void Rope::Update() {
 		for (size_t i = 0; i < m_nodePreviousPositions.size(); i++)
 			m_nodePreviousPositions[i] = m_nodes[i]->GetTransform()->GetPosition();
 
-		return;
-	}
-
-	for (size_t i = 0; i < m_nodes.size() - 1; i++)	{
 		Vector2 nodePosition = m_nodes[i]->GetTransform()->GetPosition();
 
 		Vector2 ray = m_nodes[i + 1]->GetTransform()->GetPosition() - nodePosition;
@@ -66,7 +111,7 @@ void Rope::Update() {
 		GameObject* closestCollider = nullptr;
 		float rayLength = ray.Length();
 		float closestColliderDistance = rayLength;
-		
+
 		Debug::getInstance()->LogWarning(ray);
 
 		for (size_t j = 0; j < collisions.size(); j++) {
@@ -74,7 +119,7 @@ void Rope::Update() {
 				continue;
 
 			//While there is no sphere handling
-			if (collisions[j]->GetComponent<Rigidbody>()->GetCollisionType() != CollisionTypes::Sphere)
+			if (collisions[j]->GetComponent<Rigidbody>()->GetCollisionType() == CollisionTypes::Sphere)
 				continue;
 
 			float collisionDistance = nodePosition.Distance(collisions[j]->GetTransform()->GetPosition());
@@ -84,8 +129,22 @@ void Rope::Update() {
 
 			Vector2 collisionPoint = GetAABBCollisionPoint(collisions[j], i);
 
-			if (m_nodes[i + 1]->GetTransform()->GetPosition() == collisionPoint || nodePosition == collisionPoint)
+			bool check = false;
+
+			for (GameObject* node : m_nodes)
+			{
+				if (node->GetTransform()->GetPosition() == collisionPoint)
+				{
+					check = true;
+					break;
+				}
+			}
+
+			if (check)
 				continue;
+
+			/*if (m_nodes[i + 1]->GetTransform()->GetPosition() == collisionPoint || nodePosition == collisionPoint)
+				continue;*/
 
 			if (collisionDistance < closestColliderDistance) {
 				closestCollider = collisions[j];
@@ -104,13 +163,13 @@ void Rope::Update() {
 		}
 
 		Rigidbody* rigidbody = closestCollider->GetComponent<Rigidbody>();
-			
+
 		if (rigidbody->GetCollisionType() == CollisionTypes::AABB) {
 			SplitSection(i, GetAABBCollisionPoint(closestCollider, i));
 		}
 		else if (rigidbody->GetCollisionType() == CollisionTypes::Sphere)
 			GetSphereCollisionPoint(closestCollider, i);
-		
+
 		//Handle line renderer
 		if (m_nodes[i]->GetTransform()->GetPosition() != m_nodePreviousPositions[i]) {
 			m_nodes[i]->GetComponent<LineRenderer>()->SetStartPos(nodePosition);
@@ -210,6 +269,7 @@ void Rope::CreateRope() {
 	SpringJoint* springJoint = baseNode->AddComponent<SpringJoint>();
 	springJoint->SetConnectedObject(endNode);
 	springJoint->SetSpringMode(SpringMode::REPEL_ONLY);
+	//springJoint->SetSpringMode(SpringMode::NEITHER);
 	springJoint->SetSelfAdjustDesiredLength(true);
 }
 
@@ -273,9 +333,19 @@ void Rope::SplitSection(int ai_nodeIndex, Vector2 a_newNodePos) {
 	//Spring joints
 	SpringJoint* oldNodeSpringJoint = m_nodes[ai_nodeIndex]->GetComponent<SpringJoint>();
 	oldNodeSpringJoint->SetConnectedObject(newNode);
+	if (ai_nodeIndex != 0)
+	{
+		oldNodeSpringJoint->SetCurrentDesiredLength(m_nodes[ai_nodeIndex - 1]->GetTransform()->GetPosition().Distance(a_newNodePos));
+		oldNodeSpringJoint->SetDefaultDesiredLength(m_nodes[ai_nodeIndex - 1]->GetTransform()->GetPosition().Distance(a_newNodePos));
+	}
 
 	SpringJoint* newNodeSpringJoint = newNode->AddComponent<SpringJoint>();
 	newNodeSpringJoint->SetConnectedObject(m_nodes[ai_nodeIndex + 1]);
+	if (ai_nodeIndex != m_nodes.size() - 2)
+	{
+		newNodeSpringJoint->SetCurrentDesiredLength(m_nodes[ai_nodeIndex + 1]->GetTransform()->GetPosition().Distance(a_newNodePos));
+		newNodeSpringJoint->SetDefaultDesiredLength(m_nodes[ai_nodeIndex + 1]->GetTransform()->GetPosition().Distance(a_newNodePos));
+	}
 
 	if (ai_nodeIndex == m_nodes.size() - 2) {
 		oldNodeSpringJoint->SetSpringMode(SpringMode::NEITHER);
@@ -296,6 +366,8 @@ void Rope::SplitSection(int ai_nodeIndex, Vector2 a_newNodePos) {
 void Rope::JoinSection(int ai_nodeIndex) {
 	m_nodes[ai_nodeIndex - 1]->GetComponent<LineRenderer>()->SetEndPos(m_nodes[ai_nodeIndex + 1]->GetTransform()->GetPosition());
 	m_nodes[ai_nodeIndex - 1]->GetComponent<SpringJoint>()->SetConnectedObject(m_nodes[ai_nodeIndex + 1]);
+	m_nodes[ai_nodeIndex - 1]->GetComponent<SpringJoint>()->SetCurrentDesiredLength(m_nodes[ai_nodeIndex + 1]->GetTransform()->GetPosition().Distance(m_nodes[ai_nodeIndex + 1]->GetTransform()->GetPosition()));
+	m_nodes[ai_nodeIndex - 1]->GetComponent<SpringJoint>()->SetDefaultDesiredLength(m_nodes[ai_nodeIndex + 1]->GetTransform()->GetPosition().Distance(m_nodes[ai_nodeIndex + 1]->GetTransform()->GetPosition()));
 	m_nodes[ai_nodeIndex]->SetToDestroy();
 
 	//Update lists
