@@ -43,3 +43,8 @@ C:\Users\j017000i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\
 C:\Users\j017000i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xapobaseredist.pdb
 C:\Users\j017000i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.pdb
 C:\Users\j017000i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.dll
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.vcxproj.CopyComplete
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xapobaseredist.pdb
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.pdb
+C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.dll

@@ -61,7 +61,8 @@ private:
 
 	bool mb_maxEditor = false;
 	bool mb_maxOnPlay = false;
-	bool mb_playGame = false;
+	bool mb_InMainMenu = true;
+	bool mb_playGame = true;
 	bool mb_closeEditor = false;
 
 	std::string outputText;
