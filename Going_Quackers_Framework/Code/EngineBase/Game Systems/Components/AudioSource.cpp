@@ -168,6 +168,9 @@ const wchar_t* AudioSource::CharToWchar(const char* ch)
 
 void AudioSource::SubmitPath()
 {
+	if (m_audioSource == nullptr)
+		return;
+
 	m_audioSource.release();
 	m_audioSource.reset();
 	m_audioSource = std::make_unique<SoundEffect>(AudioManager::GetInstance()->m_audioEngine.get(), CharToWchar(m_selectedAudioPath));
