@@ -1,15 +1,8 @@
-﻿  DirectXClass.cpp
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(107,15): warning C4101: 'numModes': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(111,6): warning C4101: 'error': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(109,18): warning C4101: 'displayModeList': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(106,15): warning C4101: 'adapterOutput': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(107,39): warning C4101: 'denominator': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(105,16): warning C4101: 'adapter': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(107,28): warning C4101: 'numerator': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(107,25): warning C4101: 'i': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(110,20): warning C4101: 'adapterDesc': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(113,20): warning C4101: 'featureLevel': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(112,23): warning C4101: 'swapChainDesc': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(108,21): warning C4101: 'stringLength': unreferenced local variable
-C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Rendering\DirectX11 Elements\DirectXClass.cpp(104,16): warning C4101: 'factory': unreferenced local variable
-  Going_Quackers_Framework.vcxproj -> C:\Users\b010731i\Documents\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+﻿  GrapplingHook.cpp
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(42,57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\Transform.h(44,67): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Debug.h(100,2): warning C4091: 'static ': ignored on left of 'Debug' when no variable is declared
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Components\AudioSource.h(34,29): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\Time.h(22,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\Code\EngineBase\Game Systems\GameObject.h(42): warning C4715: 'GameObject::AddComponent<SpringJoint>': not all control paths return a value
+  Going_Quackers_Framework.vcxproj -> C:\Users\r015290h\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe

@@ -84,7 +84,7 @@ public:
 		{
 			if (dynamic_cast<T*>(m_components[i]) != nullptr)
 			{
-				m_components.erase(m_components.begin(), m_components.begin() + i);
+				m_components.erase(m_components.begin() + i);
 				return; //Only deletes the first instance
 			}
 		}
