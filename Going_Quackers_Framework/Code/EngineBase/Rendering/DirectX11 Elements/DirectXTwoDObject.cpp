@@ -52,8 +52,8 @@ bool DirectXTwoDObject::InitializeBuffers(ID3D11Device* ap_device, RenderObjectT
 	case (int)RenderObjectType::SQUARE:
 		l_vertices =
 		{
-			Vertex2D(-1.0f, 1.0f, 0.0f, 0.0f), Vertex2D(1.0f, 1.0f, 1.0f, 0.0f), //Top Right
-			Vertex2D(-1.0f, -1.0f, 0.0f, 1.0f), Vertex2D(1.0f, -1.0f, 1.0f, 1.0f), //Bottom right
+			Vertex2D(-0.5f, 0.5f, 0.0f, 0.0f), Vertex2D(0.5f, 0.5f, 1.0f, 0.0f), //Top Right
+			Vertex2D(-0.5f, -0.5f, 0.0f, 1.0f), Vertex2D(0.5f, -0.5f, 1.0f, 1.0f), //Bottom right
 		};
 		break;
 	case (int)RenderObjectType::LINE:

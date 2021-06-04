@@ -1,5 +1,6 @@
 #include "DirectXTexture2D.h"
 #include "../../Game Systems/Debug.h"
+#include "../../../../pch.h"
 
 Texture2D::Texture2D()
 {
@@ -108,6 +109,20 @@ void Texture2D::Shutdown()
 ID3D11ShaderResourceView* Texture2D::GetTexture()
 {
 	return m_textureView;
+}
+
+bool Texture2D::LoadDDSTexture(ID3D11Device* device, const wchar_t* filename)
+{
+	HRESULT hasWorked = DirectX::CreateDDSTextureFromFile(device, filename, nullptr, &m_textureView);
+
+	if (hasWorked == S_OK)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool Texture2D::LoadTarga(const char* filename, int& height, int& width)
