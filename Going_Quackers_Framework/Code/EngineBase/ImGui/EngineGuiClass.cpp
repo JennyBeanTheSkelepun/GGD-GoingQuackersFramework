@@ -52,9 +52,34 @@ void EngineGuiClass::Update()
 
 void EngineGuiClass::GameUpdate()
 {
-	ImGui::Begin("In Game GUI");
+	/*ImGui::Begin("In Game GUI");
 	if (ImGui::Button("Exit Play Mode")) { mb_playGame = false; }
-	ImGui::End();
+	ImGui::End();*/
+
+	if (mb_InMainMenu)
+	{
+		ImGui::Begin(" ");
+		ImGui::Text("Orbitalis");
+		if (ImGui::Button("Level 1"))
+		{
+			SceneManager::GetInstance()->ChangeSceneNextFrame("Level1");
+			mb_InMainMenu = false;
+		}
+		
+		if (ImGui::Button("Level 2"))
+		{
+
+			SceneManager::GetInstance()->ChangeSceneNextFrame("Level2");
+		}
+
+		if (ImGui::Button("Exit Game"))
+		{
+			mb_playGame = false;
+		}
+
+		ImGui::End();
+	}
+
 }
 
 void EngineGuiClass::EditorUpdate()

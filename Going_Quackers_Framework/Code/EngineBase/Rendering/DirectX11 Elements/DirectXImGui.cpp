@@ -36,19 +36,17 @@ bool DirectXImGui::Update(ID3D11ShaderResourceView* ap_renderTexture, float widt
 			ImGui::SetNextWindowPos(EngineGuiClass::getInstance()->GetWindowInfo()->positions[2]);
 			ImGui::SetNextWindowSize(EngineGuiClass::getInstance()->GetWindowInfo()->dimensions[2]);
 		}
-		ImGui::Begin("Game/Scene View");
+		//ImGui::Begin("Game/Scene View");
 		//ImGui::Image(RenderTexture, ImVec2((ImGui::GetWindowWidth() - 15), (ImGui::GetWindowHeight() - 35)));
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::SameLine();
-		ImGui::InputFloat("input float", &m_scale, 0.5f);
-		ImGui::Image(RenderTexture, ImVec2(width / m_scale, height / m_scale));
+		//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		//ImGui::SameLine();
+		//ImGui::InputFloat("input float", &m_scale, 0.5f);
+		//ImGui::Image(RenderTexture, ImVec2(width / m_scale, height / m_scale));
 
 		EngineGuiClass::getInstance()->GetWindowInfo()->positions[2].x = ImGui::GetWindowPos().x;
 		EngineGuiClass::getInstance()->GetWindowInfo()->positions[2].y = ImGui::GetWindowPos().y;
 		EngineGuiClass::getInstance()->GetWindowInfo()->dimensions[2].x = ImGui::GetWindowWidth();
 		EngineGuiClass::getInstance()->GetWindowInfo()->dimensions[2].y = ImGui::GetWindowHeight();
-
-		ImGui::End();
 	}
 
 	ImGui::EndFrame();

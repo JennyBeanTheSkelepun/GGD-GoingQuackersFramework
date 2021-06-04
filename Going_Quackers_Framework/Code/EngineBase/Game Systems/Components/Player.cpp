@@ -327,7 +327,11 @@ void Player::Die()
 	playerRB->ClearForces();
 	playerRB->SetVelocity(Vector2(0, 0));
 
-	mp_grapplingHook->ResetHook();
+	if (mp_grapplingHook != nullptr)
+	{
+		mp_grapplingHook->ResetHook();
+	}
+
 	wallGrabbed = false;
 	wallPushPressed = false;
 	wallPushCollided = false;
