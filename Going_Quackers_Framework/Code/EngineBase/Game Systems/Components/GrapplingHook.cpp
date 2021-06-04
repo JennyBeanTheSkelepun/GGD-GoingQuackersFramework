@@ -1,6 +1,7 @@
 #include "GrapplingHook.h"
 #include "../GameObject.h"
 #include "AudioSource.h"
+#include "SpringJoint.h"
 #include "Physics/Rigidbody.h"
 #include "../Time.h"
 #include "Player.h"
@@ -61,6 +62,9 @@ void GrapplingHook::Update()
 
 		Vector2 returnVector = direction * m_returnSpeed * Time::GetDeltaTime();		
 		GetOwner()->GetTransform()->SetPosition(GetOwner()->GetTransform()->GetPosition() + returnVector);
+
+		if (GetOwner()->GetComponent<SpringJoint>() != nullptr)
+			GetOwner()->RemoveComponent<SpringJoint>();
 
 		if (GetHookDistance() <= m_retractMinimum)
 		{
@@ -201,5 +205,11 @@ void GrapplingHook::HitWall()
 		//Change and Play Audio Hit Sound
 		GetOwner()->GetComponent<AudioSource>()->SetAudioPath("Hook_Hit.wav");
 		GetOwner()->GetComponent<AudioSource>()->Play();
+
+		//SpringJoint
+		SpringJoint* springJoint = GetOwner()->AddComponent<SpringJoint>();
+		springJoint->SetSpringMode(SpringMode::REPEL_ONLY);
+		springJoint->SetDefaultDesiredLength(GetHookDistance());
+		springJoint->SetCurrentDesiredLength(GetHookDistance());
 	}
 }
