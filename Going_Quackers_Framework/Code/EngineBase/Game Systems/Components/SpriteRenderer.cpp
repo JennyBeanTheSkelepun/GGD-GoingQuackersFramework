@@ -57,6 +57,21 @@ void SpriteRenderer::SceneLoad(json* componentJSON)
 {
 	m_TextureLocation = (*componentJSON)["TextureLocation"];
 	m_ShaderLocation = (*componentJSON)["ShaderLocation"];
+
+	if (m_TextureLocation != "" && m_ShaderLocation != "") {
+		std::string s(m_ShaderLocation);
+		std::wstring ws;
+		ws.assign(s.begin(), s.end());
+
+		RemoveTextureShader();
+		InitialzeTextureShader(std::string(m_TextureLocation), ws);
+
+		// TODO: Weird crash when changing scene when more than one texture is loaded?
+	}
+	else {
+		Debug::getInstance()->LogError("Scene Load Error: Sprite Renderer for object " + mp_owner->GetName() + " is missing either a Texture or Shader location. \n" +
+		"To prevent this error in future, please remember to update Texture/Shader in component settings and save the scene after. - Jen");
+	}
 }
 
 json* SpriteRenderer::SceneSave()

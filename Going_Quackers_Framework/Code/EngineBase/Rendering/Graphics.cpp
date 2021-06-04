@@ -115,6 +115,15 @@ VirtualCamera* Graphics::GetActiveCamera()
 	return nullptr;
 }
 
+void Graphics::NullVirtualCamera()
+{
+	switch (CurrentApi) {
+	case API_TYPE::DIRECT_X_11:
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->NullVirtualCamera();
+		break;
+	}
+}
+
 int Graphics::LoadTexture(std::string TextureLocation)
 {
 	switch (CurrentApi) {
@@ -180,11 +189,29 @@ int Graphics::RemoveShader(int index)
 	}
 }
 
-Vector2 Graphics::GetWindowDimentions()
+Vector2 Graphics::GetWindowDimensions()
 {
 	switch (CurrentApi) {
 	case API_TYPE::DIRECT_X_11:
-		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->GetWindowDimentions();
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->GetWindowDimensions();
+		break;
+	}
+}
+
+LineRenderer* Graphics::AddLineRenderer(LineRenderer* toAdd)
+{
+	switch (CurrentApi) {
+	case API_TYPE::DIRECT_X_11:
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->AddLineRenderer(toAdd);
+		break;
+	}
+}
+
+LineRenderer* Graphics::RemoveLineRenderer(LineRenderer* toRemove)
+{
+	switch (CurrentApi) {
+	case API_TYPE::DIRECT_X_11:
+		return reinterpret_cast<DirectXGraphics*>(CurrentGraphicsAPI)->RemoveLineRenderer(toRemove);
 		break;
 	}
 }

@@ -103,16 +103,25 @@ void DirectXCamera::GetViewMatrix(DirectX::XMMATRIX& viewMatrix)
 
 void DirectXCamera::SetNewVirtualCamera(VirtualCamera* newCam)
 {
-	if (CurrentVirtualCamera != nullptr)
-	{
-		CurrentVirtualCamera->CamDeselected();
-	}
+	if (newCam != nullptr) {
+		if (CurrentVirtualCamera != nullptr)
+		{
+			CurrentVirtualCamera->CamDeselected();
+		}
 
-	CurrentVirtualCamera = newCam;
-	CurrentVirtualCamera->CamSelected();
+		CurrentVirtualCamera = newCam;
+		CurrentVirtualCamera->CamSelected();
+	}
 }
 
 VirtualCamera* DirectXCamera::GetVirtualCamera()
 {
 	return CurrentVirtualCamera;
+}
+
+void DirectXCamera::NullVirtualCamera()
+{
+	CurrentVirtualCamera = nullptr;
+	m_position = Vector3();
+	m_rotation = Vector3();
 }

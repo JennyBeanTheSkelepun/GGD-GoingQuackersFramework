@@ -25,6 +25,8 @@ public:
 	void SetNewVirtualCamera(VirtualCamera* newCam);
 	VirtualCamera* GetVirtualCamera();
 
+	void NullVirtualCamera();
+
 private:
 	Vector3 m_position;
 	Vector3 m_rotation;

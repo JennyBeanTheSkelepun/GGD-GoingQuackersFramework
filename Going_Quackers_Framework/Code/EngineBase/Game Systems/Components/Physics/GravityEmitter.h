@@ -9,29 +9,36 @@ enum class GravityTypes
 	CENTRE = 1
 };
 
-class Ridigbody;
+class Rigidbody;
 
 class GravityEmitter
 {
 public:
-	void applyGravity(GameObject* callObj, std::vector<GameObject*>* collidedObjects);
+	void ApplyGravity(GameObject* callObj, std::vector<GameObject*>* collidedObjects);
 
-	void SetGravityStrength(float strength) { m_gravityStrength = strength; }
-	float GetGravityStrength() { return m_gravityStrength; }
-	void SetGravityDirection(Vector2 direction) { m_gravityDirection = direction.Normalize(); }
-	Vector2 GetGravityDirection() { return m_gravityDirection; }
+	void SetGravityStrength(float strength) { m_GravityStrength = strength; }
+	float GetGravityStrength() { return m_GravityStrength; }
+
+	void SetGravityDirection(Vector2 direction) { m_GravityDirection = direction.Normalize(); }
+	Vector2 GetGravityDirection() { return m_GravityDirection; }
+
+	void SetGravityType(GravityTypes type) { m_GravType = type; }
+	GravityTypes GetGravityType() { return m_GravType; }
+	
+	std::string SaveGravType() { return m_GravTypeDropdownSelected; }
+	void LoadGravType(std::string gravType);
 
 	void ImGuiSetup();
 
 private:
-	float m_gravityStrength = 0.1f;
-	Vector2 m_gravityDirection = Vector2(0.0f, 1.0f);
+	float m_GravityStrength = 0.1f;
+	Vector2 m_GravityDirection = Vector2(0.0f, 1.0f);
 
-	GravityTypes m_gravType = GravityTypes::DIRECTION;
+	GravityTypes m_GravType = GravityTypes::DIRECTION;
 
-	const char* m_GravTypeDropdown[2] = { "Direction", "Centre" };
+	std::string m_GravTypeDropdown[2] = { "Direction", "Centre" };
 
-	const char* m_GravTypeDropdownSelected = "Direction";
+	std::string m_GravTypeDropdownSelected = "Direction";
 };
 
 #endif _GRAVITYEMITTER_

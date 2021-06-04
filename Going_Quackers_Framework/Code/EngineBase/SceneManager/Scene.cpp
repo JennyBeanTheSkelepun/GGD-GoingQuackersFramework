@@ -11,6 +11,10 @@ Scene::Scene(std::string as_ID, std::string as_DisplayName, std::string as_Type)
 Scene::~Scene()
 {
 	for (auto lp_object : mp_SceneObjects) {
+		for (auto lp_component : lp_object->GetComponents()) {
+			lp_component->ShouldDestroy();
+		}
+		lp_object->ShouldDestroy();
 		delete lp_object;
 	}
 	mp_SceneObjects.clear();
@@ -52,6 +56,32 @@ GameObject* Scene::GetObjectByID(std::string as_id)
 			return mp_SceneObjects[i];
 		}
 		else {
+			// Check Children
+			GameObject* child = GetChildObjectByID(as_id, mp_SceneObjects[i]);
+			if (child != nullptr) {
+				return child;
+			}
+			continue;
+		}
+	}
+	// If not found, return nullptr
+	return nullptr;
+}
+
+GameObject* Scene::GetObjectByName(std::string as_name)
+{
+	// Search for object with ID
+	for (int i = 0; i < mp_SceneObjects.size(); i++) {
+		// Return if ID matches
+		if (mp_SceneObjects[i]->GetName() == as_name) {
+			return mp_SceneObjects[i];
+		}
+		else {
+			// Check Children
+			GameObject* child = GetChildObjectByID(as_name, mp_SceneObjects[i]);
+			if (child != nullptr) {
+				return child;
+			}
 			continue;
 		}
 	}
@@ -73,4 +103,46 @@ int Scene::GetObjectIndexByID(std::string as_id)
 	}
 	// If not found, return -1
 	return -1;
+}
+
+GameObject* Scene::GetChildObjectByName(std::string as_name, GameObject* ap_parent)
+{
+	// Search for object with ID
+	for (int i = 0; i < ap_parent->GetChildren().size(); i++) {
+		// Return if ID matches
+		if (ap_parent->GetChildren()[i]->GetName() == as_name) {
+			return ap_parent->GetChildren()[i];
+		}
+		else {
+			// Check Children
+			GameObject* child = GetChildObjectByID(as_name, ap_parent->GetChildren()[i]);
+			if (child != nullptr) {
+				return child;
+			}
+			continue;
+		}
+	}
+	// If not found, return nullptr
+	return nullptr;
+}
+
+GameObject* Scene::GetChildObjectByID(std::string as_id, GameObject* ap_parent)
+{
+	// Search for object with ID
+	for (int i = 0; i < ap_parent->GetChildren().size(); i++) {
+		// Return if ID matches
+		if (ap_parent->GetChildren()[i]->GetID() == as_id) {
+			return ap_parent->GetChildren()[i];
+		}
+		else {
+			// Check Children
+			GameObject* child = GetChildObjectByID(as_id, ap_parent->GetChildren()[i]);
+			if (child != nullptr) {
+				return child;
+			}
+			continue;
+		}
+	}
+	// If not found, return nullptr
+	return nullptr;
 }
