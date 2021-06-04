@@ -1,5 +1,5 @@
-#ifndef SCENEMANAGER
-#define SCENEMANAGER
+#ifndef _SCENEMANAGER_H_
+#define _SCENEMANAGER_H_
 
 #include "../Game Systems/GameObject.h"
 #include "../SceneManager/Scene.h"
@@ -37,21 +37,42 @@ public:
 
 	void Initialize();
 	void ChangeScene(std::string as_SceneID, bool as_SaveToJSON);
+	void ChangeSceneNextFrame(std::string as_SceneID);
 	void NewScene(std::string as_SceneID, std::string as_SceneName, std::string as_SceneType, bool as_SaveToJSON);
 	void SaveCurrentScene();
 
-	void Update(float af_deltaTime);
+	void Update();
 
-	Scene* GetCurrentScene() { return mp_CurrentScene; };
+	inline Scene* GetCurrentScene() { return mp_CurrentScene; };
+
+	inline bool GetAutoSave() { return mb_doAutoSave; }
+	inline void SetAutoSave(bool value) { mb_doAutoSave = value; }
 
 private:
+	Scene* mp_CurrentScene;
+	bool mb_doAutoSave;
+	bool mb_doSceneChange;
+	std::string ms_SceneChangeID;
+
 	Scene* LoadScene(std::string as_Path);
+	void LoadChildren(GameObject* ap_object, json* ap_json);
 	void UnloadScene(bool as_SaveToJSON);
 
-	Scene* mp_CurrentScene;
-
 	void SaveToJSON(Scene* ap_Scene);
+	void SaveChildren(GameObject* lp_object, json* ap_json);
 	std::wstring stringToWString(std::string as_string);
+
+	template<typename T>
+	void LoadComponentFromScene(GameObject* ap_object, json* ap_json) {
+		ap_object->AddComponent<T>();
+		ap_object->GetComponent<T>()->SceneLoad(ap_json);
+	}
+
+	template<typename T>
+	void SaveComponent(std::string as_componentName, Component* ap_component, std::string* ap_componentType) {
+		*ap_componentType = as_componentName;
+		ap_component = static_cast<T*>(ap_component);
+	}
 };
 
-#endif /*SCENEMANAGER*/
+#endif /*_SCENEMANAGER_H_*/

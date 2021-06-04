@@ -2,6 +2,7 @@
 #include "../../Code/EngineBase/Rendering/Graphics.h"
 #include "SceneManager/SceneManager.h"
 #include "Game Systems/Components/Physics/Rigidbody.h"
+#include "Game Systems/Debug.h"
 
 EngineMain::EngineMain()
 {
@@ -52,16 +53,28 @@ void EngineMain::Run()
 
 		if (l_msg.message == WM_QUIT)
 		{
+			// If autosave on, save scene
+			if (SceneManager::GetInstance()->GetAutoSave()) {
+				SceneManager::GetInstance()->SaveCurrentScene();
+			}
+			// save debug log
+			Debug::getInstance()->FlushLog();
 			lb_done = true;
 		}
 		else
 		{
-			lb_result = UpdateRenderLoop();
-			if (!lb_result)
-				lb_done = true;
+			if (Time::GetDeltaTime() < 0.032f)
+			{
+				Time::UpdateTimeSinceLastFrameEnd();
+			}
+			else
+			{
+				lb_result = UpdateRenderLoop();
+				if (!lb_result)
+					lb_done = true;
+				Time::FrameEnd();
+			}
 		}
-
-		Time::FrameEnd();
 	}
 
 	return;
@@ -73,7 +86,11 @@ bool EngineMain::UpdateRenderLoop()
 	if (Input::getInstance()->isKeyHeldDown(KeyCode::ESCAPE))
 		return false;
 
+
 	//- UPDATE LOOP START-//
+
+	// This does NOT update game objects. It is here to transition scenes in game.
+	SceneManager::GetInstance()->Update();
 
 	for (size_t i = 0; i < SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects().size(); i++)
 	{
@@ -87,18 +104,9 @@ bool EngineMain::UpdateRenderLoop()
 
 		if (SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>() != nullptr)
 		{
-			SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>()->resetCollideFlag();
+			SceneManager::GetInstance()->GetCurrentScene()->GetObjectByIndex(i)->GetComponent<Rigidbody>()->ResetCollideFlag();
 		}
 	}
-
-	//if (Input::getInstance()->isKeyPressedDown(KeyCode::LeftMouse))
-	//{
-	//	Debug::getInstance()->Log("you did it2");
-	//}
-	//if (Input::getInstance()->isKeyPressedUp(KeyCode::RightMouse))
-	//{
-	//	Debug::getInstance()->Log("you did it1");
-	//}
 
 	Input::getInstance()->Update();
 	Graphics::getInstance()->StartApiUpdateLoop();

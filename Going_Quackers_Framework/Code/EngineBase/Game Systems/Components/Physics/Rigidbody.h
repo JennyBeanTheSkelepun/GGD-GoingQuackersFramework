@@ -3,17 +3,31 @@
 
 #include "Collision.h"
 #include "GravityEmitter.h"
-#include "Trigger.h"
 #include "../Component.h"
 #include "../../Time.h"
 #include "../../../SceneManager/SceneManager.h"
 #include "../../Debug.h"
+#include "../../../Code/EngineBase/Game Systems/Input.h"
 
 enum class PhysicsTypes
 {
 	Trig = 0, //Trigger
 	RB = 1, //Rigidbody
 	GE = 2 //Gravity Emitter
+};
+
+enum class MovementIgnore
+{
+	NONE = 0,
+	ACCEL = 1,
+	MASS = 2,
+	MASSACCEL = 3,
+};
+
+struct Force
+{
+	Vector2 force;
+	MovementIgnore moveIgnore = MovementIgnore::NONE;
 };
 
 class Rigidbody : public Component
@@ -33,59 +47,80 @@ public:
 	json* SceneSave() override;
 	void SceneLoad(json* componentJSON) override;
 
-	void AddForce(Vector2 force) { m_forces.push_back(force); }
-	void PhysicsCollide();
+	/// <summary>
+	/// Adds the force to the next frames Rigidbody calculation
+	/// </summary>
+	/// <param name="force"></param>
+	void AddForce(Force force) { m_Forces.push_back(force); }
 
-	void SetMass(float mass) { m_mass = mass <= 0 ? 1.0f : mass; }
-	float GetMass() { return m_mass; }
+	void SetMass(float mass) { m_Mass = mass <= 0 ? 1.0f : mass; }
+	float GetMass() { return m_Mass; }
 
-	void setType(PhysicsTypes type) { m_physicsType = type; }
-	PhysicsTypes getType() { return m_physicsType; }
-
-	Collision* getCollider() { return mp_collider; }
+	void SetType(PhysicsTypes type) { m_PhysicsType = type; }
+	PhysicsTypes GetType() { return m_PhysicsType; }
 
 	void RigidbodyCollide(std::vector<GameObject*>* collidingObjects);
 
-	void SetRadius(float radius) { m_radius = radius; }
-	float GetRadius() { return m_radius; }
+	void SetRadius(float radius) { m_Radius = radius; }
+	float GetRadius() { return m_Radius; }
 
 	void SetAABBRect(float width, float height) { m_AABBRect = Vector2(width, height); }
 	Vector2 GetAABBRect() { return m_AABBRect; } ///returns vec2 with x = width, y = height
 
-	void SetCollisionType(CollisionTypes colType) { m_collisionType = colType; } /// s = Spherical, a = AABB
-	CollisionTypes GetCollisionType() { return m_collisionType; }
+	void SetCollisionType(CollisionTypes colType) { m_CollisionType = colType; } /// s = Spherical, a = AABB
+	CollisionTypes GetCollisionType() { return m_CollisionType; }
 
-	bool getCollideFlag() { return physicsChecked; }
-	void resetCollideFlag() { physicsChecked = false; }
+	bool GetCollideFlag() { return m_PhysicsChecked; }
+	void ResetCollideFlag() { m_PhysicsChecked = false; }
+
+	void SetAcceleration(Vector2 accel) { m_Acceleration = accel; }
+	Vector2 GetAcceleration() { return m_Acceleration; }
+
+	void SetVelocity(Vector2 velo) { m_Velocity = velo; }
+	Vector2 GetVelocity() { return m_Velocity; }
+
+	void setStatic(bool isStatic) { m_IsStatic = isStatic; }
+	bool getIsStatic() { return m_IsStatic; }
+
+	bool GetCollidingBool() { return m_isColliding; }
+	bool CheckColliding();
+	bool CheckColliding(GameObject* checkObject);
+
+	std::vector<GameObject*> GetCollidedObjects() { return m_CollidingObjects; }
+
+	void ClearForces() { m_Forces.clear(); }
 
 private:
-	PhysicsTypes m_physicsType = PhysicsTypes::RB;
-
-	Vector2 m_velocity;
-	Vector2 m_acceleration;
+	void PhysicsCollide();
 	
-	float m_mass = 1.0f;
+	bool m_isColliding;
 
-	std::vector<Vector2> m_forces;
+	PhysicsTypes m_PhysicsType = PhysicsTypes::RB;
 
-	//TODO:: Remove when Collsion is singleton
-	Collision* mp_collider;
-	Trigger* mp_trigger;
-	GravityEmitter* mp_gravEmitter;
+	Vector2 m_Velocity;
+	Vector2 m_Acceleration;
+	
+	float m_Mass = 1.0f;
 
-	bool m_isStatic = true;
+	std::vector<Force> m_Forces;
 
-	float m_radius = 0.0f;
-	Vector2 m_AABBRect = Vector2();
+	GravityEmitter* mp_GravEmitter;
 
-	CollisionTypes m_collisionType = CollisionTypes::Sphere;
+	bool m_IsStatic = false;
+
+	float m_Radius = 1.0f;
+	Vector2 m_AABBRect = Vector2(1.0f, 1.0f);
+
+	CollisionTypes m_CollisionType = CollisionTypes::Sphere;
 
 	void CalculateVelocity();
 
-	bool physicsChecked = false;
+	bool m_PhysicsChecked = false;
 
-	std::string m_physicsTypeDropDown[3] = {"Rigidbody", "Trigger", "Gravity Zone"};
-	std::string  m_colliderShapeDropDown[2] = { "Sphere", "AABB" };
+	std::vector<GameObject*> m_CollidingObjects;
+
+	std::string m_PhysicsTypeDropDown[3] = {"Rigidbody", "Trigger", "Gravity Zone"};
+	std::string  m_ColliderShapeDropDown[2] = { "Sphere", "AABB" };
 
 	std::string  m_DropdownPhysicsTypeSelected = "Rigidbody";
 	std::string  m_DropdownColliderShapeSelected = "Sphere";

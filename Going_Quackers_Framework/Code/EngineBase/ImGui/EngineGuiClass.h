@@ -16,7 +16,7 @@ struct LayoutSettings
 {
 	std::string name;
 	std::vector<ImVec2> positions;
-	std::vector<ImVec2> dimentions;
+	std::vector<ImVec2> dimensions;
 };
 
 class EngineGuiClass
@@ -33,8 +33,6 @@ private:
 	EngineGuiClass();
 	~EngineGuiClass();
 
-	void DisplayChildren(GameObject* gameObject);
-
 public:
 	void InitializeObjectList(std::vector<GameObject*>* gameObjects);
 
@@ -47,12 +45,20 @@ public:
 
 	inline bool IsInPlayMode() { return mb_playGame; }
 
-	bool SelectableTreeNode(const char* label, bool isSelected);
 	LayoutSettings* GetWindowInfo() { return &CurrentWindowPosition; };
 
 	bool isRecording() { return !RecordingLayout; }
 
+	inline void ClearInspector() { currentSelected = nullptr; }
+
 private:
+	void DisplayObjects(std::vector<GameObject*>& gameObjects);
+
+	void LoadWindowPositions();
+	void SaveWindowPositionsToFile();
+	
+	std::vector<int> m_selectionList;
+
 	bool mb_maxEditor = false;
 	bool mb_maxOnPlay = false;
 	bool mb_playGame = false;
@@ -67,11 +73,11 @@ private:
 	char* NewSceneID;
 	char* NewSceneName;
 	char* NewSceneType;
+	char* ChangeSceneName;
+	char* ChangeSceneType;
 	std::vector<LayoutSettings> WindowPositions;
+	std::vector<int> WindowPosToDelete;
 	LayoutSettings CurrentWindowPosition;
-
-	void LoadWindowPositions();
-	void SaveWindowPositionsToFile();
 
 	std::vector<GameObject*>* gameObjects; //List of GameObjects
 	GameObject* currentSelected; //The Currently Selected GameObject

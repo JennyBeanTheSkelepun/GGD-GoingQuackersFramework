@@ -1,7 +1,7 @@
 #include "GravityEmitter.h"
 #include "Rigidbody.h"
 
-void GravityEmitter::applyGravity(GameObject* callObj, std::vector<GameObject*>* CollidedObjects)
+void GravityEmitter::ApplyGravity(GameObject* callObj, std::vector<GameObject*>* CollidedObjects)
 {
 	Vector2 gravityPosition = callObj->GetTransform()->GetPosition();
 	
@@ -10,42 +10,57 @@ void GravityEmitter::applyGravity(GameObject* callObj, std::vector<GameObject*>*
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();
 		if (rb != nullptr)
 		{
-
-			switch (m_gravType)
+			Force appForce;
+			switch (m_GravType)
 			{
 			case GravityTypes::DIRECTION:
-				rb->AddForce(m_gravityDirection * m_gravityStrength);
+				appForce.force = m_GravityDirection * m_GravityStrength;
+				rb->AddForce(appForce);
 				break;
 			case GravityTypes::CENTRE:
-				Vector2 force = (gravityPosition - obj->GetTransform()->GetPosition()).Normalize() * m_gravityStrength;
-				obj->GetComponent<Rigidbody>()->AddForce(force);
+				appForce.force = (gravityPosition - obj->GetTransform()->GetPosition()).Normalize() * m_GravityStrength;
+				obj->GetComponent<Rigidbody>()->AddForce(appForce);
 				break;
 			}
 		}
 	}
 }
 
+void GravityEmitter::LoadGravType(std::string gravType)
+{
+	m_GravTypeDropdownSelected = gravType;
+
+	if (m_GravTypeDropdownSelected == "Direction")
+	{
+		m_GravType = GravityTypes::DIRECTION;
+	}
+	else if (m_GravTypeDropdownSelected == "Centre")
+	{
+		m_GravType = GravityTypes::CENTRE;
+	}
+}
+
 void GravityEmitter::ImGuiSetup()
 {
-	ImGui::InputFloat("Gravity Strength", &m_gravityStrength);
+	ImGui::InputFloat("Gravity Strength", &m_GravityStrength);
 
-	if (ImGui::BeginCombo("Gravity Type", m_GravTypeDropdownSelected))
+	if (ImGui::BeginCombo("Gravity Type", m_GravTypeDropdownSelected.c_str()))
 	{
 		for (int i = 0; i < IM_ARRAYSIZE(m_GravTypeDropdown); i++)
 		{
 			bool is_selected = (m_GravTypeDropdownSelected == m_GravTypeDropdown[i]);
 
-			if (ImGui::Selectable(m_GravTypeDropdown[i], is_selected))
+			if (ImGui::Selectable(m_GravTypeDropdown[i].c_str(), is_selected))
 			{
 				m_GravTypeDropdownSelected = m_GravTypeDropdown[i];
 
 				if (m_GravTypeDropdownSelected == "Direction")
 				{
-					m_gravType = GravityTypes::DIRECTION;
+					m_GravType = GravityTypes::DIRECTION;
 				}
 				else if (m_GravTypeDropdownSelected == "Centre")
 				{
-					m_gravType = GravityTypes::CENTRE;
+					m_GravType = GravityTypes::CENTRE;
 				}
 			}
 

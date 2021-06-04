@@ -11,6 +11,7 @@ DirectXImGui::DirectXImGui(HWND hwnd, DirectXClass* mp_DirectX)
 	ImGui::StyleColorsDark();
 
 	EngineGuiClass::getInstance()->SetImGuiStyle();
+	m_scale = 2.0f;
 }
 
 DirectXImGui::~DirectXImGui()
@@ -18,7 +19,7 @@ DirectXImGui::~DirectXImGui()
 
 }
 
-bool DirectXImGui::Update(ID3D11ShaderResourceView* ap_renderTexture)
+bool DirectXImGui::Update(ID3D11ShaderResourceView* ap_renderTexture, float width, float height)
 {
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
@@ -33,15 +34,19 @@ bool DirectXImGui::Update(ID3D11ShaderResourceView* ap_renderTexture)
 		if (EngineGuiClass::getInstance()->isRecording())
 		{
 			ImGui::SetNextWindowPos(EngineGuiClass::getInstance()->GetWindowInfo()->positions[2]);
-			ImGui::SetNextWindowSize(EngineGuiClass::getInstance()->GetWindowInfo()->dimentions[2]);
+			ImGui::SetNextWindowSize(EngineGuiClass::getInstance()->GetWindowInfo()->dimensions[2]);
 		}
 		ImGui::Begin("Game/Scene View");
-		ImGui::Image(RenderTexture, ImVec2((ImGui::GetWindowWidth() - 15), (ImGui::GetWindowHeight() - 35)));
-		
+		//ImGui::Image(RenderTexture, ImVec2((ImGui::GetWindowWidth() - 15), (ImGui::GetWindowHeight() - 35)));
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::SameLine();
+		ImGui::InputFloat("input float", &m_scale, 0.5f);
+		ImGui::Image(RenderTexture, ImVec2(width / m_scale, height / m_scale));
+
 		EngineGuiClass::getInstance()->GetWindowInfo()->positions[2].x = ImGui::GetWindowPos().x;
 		EngineGuiClass::getInstance()->GetWindowInfo()->positions[2].y = ImGui::GetWindowPos().y;
-		EngineGuiClass::getInstance()->GetWindowInfo()->dimentions[2].x = ImGui::GetWindowWidth();
-		EngineGuiClass::getInstance()->GetWindowInfo()->dimentions[2].y = ImGui::GetWindowHeight();
+		EngineGuiClass::getInstance()->GetWindowInfo()->dimensions[2].x = ImGui::GetWindowWidth();
+		EngineGuiClass::getInstance()->GetWindowInfo()->dimensions[2].y = ImGui::GetWindowHeight();
 
 		ImGui::End();
 	}
