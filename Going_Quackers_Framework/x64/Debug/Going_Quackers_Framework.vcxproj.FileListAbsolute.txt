@@ -38,3 +38,8 @@ C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\
 C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xapobaseredist.pdb
 C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.pdb
 C:\Users\codel\Documents\Visual Studio 2019\Projects\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.dll
+C:\Users\m013002i\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.vcxproj.CopyComplete
+C:\Users\m013002i\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\Going_Quackers_Framework.exe
+C:\Users\m013002i\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xapobaseredist.pdb
+C:\Users\m013002i\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.pdb
+C:\Users\m013002i\Documents\GitHub\GGD-GoingQuackersFramework\Going_Quackers_Framework\x64\Debug\xaudio2_9redist.dll

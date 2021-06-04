@@ -220,11 +220,29 @@ void Player::GrappleFire(Vector2 targetPos)
 {
 	if (mp_grapplingHook == nullptr)
 	{
-		GameObject* grapplingHook = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByName("Grappling Hook");
-		if (grapplingHook == nullptr) {
-			Debug::getInstance()->LogError("There is no grappling hook in the scene!");
+		std::vector<GameObject*> sceneObjects = SceneManager::GetInstance()->GetCurrentScene()->GetSceneObjects();
+
+		for (size_t i = 0; i < sceneObjects.size(); i++) {
+			//TODO - Remove string cleaning section when name GetName bug is fixed
+			std::string objectName = sceneObjects[i]->GetName();
+			int garbageStart = objectName.find('\0');
+
+			if (garbageStart != std::string::npos)
+				objectName.erase(objectName.find('\0'));
+			//End of string cleaning
+
+			if (sceneObjects[i]->GetComponent<GrapplingHook>() != nullptr) {
+				
+					mp_grapplingHook = sceneObjects[i]->GetComponent<GrapplingHook>();
+
+				return;
+			}
 		}
-		else mp_grapplingHook = grapplingHook->GetComponent<GrapplingHook>();
+		if (mp_grapplingHook == nullptr) {
+			Debug::getInstance()->LogError("There is no grappling hook in the scene!");
+			return;
+		}
+		
 	}
 	mp_grapplingHook->Fire(targetPos, this->GetOwner());
 
