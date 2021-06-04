@@ -36,8 +36,11 @@ public:
 
 	bool wallGrabbed;
 private:
-	GRAPPLE_STATE m_grappleState;
 	void HandleInput();
+	const float startSpeed = 1.f;
+	const float minSpeed = 0.05f;
+
+	GRAPPLE_STATE m_grappleState;
 	void GrappleFire(Vector2 targetPos);
 	void GrappleReturn();
 	void GrappleRetract();
@@ -49,7 +52,6 @@ private:
 	const float wallPushTimerMax = 500.f; // milliseconds
 	float wallPushPressTimer;
 	float wallPushCollideTimer;
-	const float startSpeed = 1.f;
 
 	void GrabWall();
 	GameObject* playerObj;
