@@ -146,12 +146,41 @@ float GrapplingHook::GetHookDistance()
 
 bool GrapplingHook::CheckForWallCollision()
 {
+	Vector2 hookPosition = GetOwner()->GetTransform()->GetPosition();
 	std::vector<GameObject*> collidingObjects = GetOwner()->GetComponent<Rigidbody>()->GetCollidedObjects();
 	for (size_t i = 0; i < collidingObjects.size(); i++)
 	{
 		std::string objName = collidingObjects[i]->GetName();
 		if (objName == "Wall")
 		{
+			// inside a wall? move out of it
+			Vector2 objSize = collidingObjects[i]->GetTransform()->GetScale() / 2;
+			Vector2 objPos = collidingObjects[i]->GetTransform()->GetPosition();
+			bool Xstuck = false;
+			bool Ystuck = false;
+			if (hookPosition.X < objPos.X + objSize.X && hookPosition.X > objPos.X - objSize.X)
+				Xstuck = true;
+			if (hookPosition.Y < objPos.Y + objSize.Y && hookPosition.Y > objPos.Y - objSize.Y)
+				Ystuck = true;
+			if (Xstuck && Ystuck)
+			{
+				float deltaX = hookPosition.X - objPos.X;
+				if (deltaX < 0) deltaX *= -1;
+				float deltaY = hookPosition.Y - objPos.Y;
+				if (deltaY < 0) deltaY *= -1;
+				Vector2 ownSize = GetOwner()->GetTransform()->GetScale() / 2;
+				if (deltaX > deltaY)
+				{
+					if (hookPosition.X - objPos.X > 0) hookPosition.X = objPos.X + objSize.X + ownSize.X;
+					else hookPosition.X = objPos.X - objSize.X - ownSize.X;
+				}
+				else
+				{
+					if (hookPosition.Y - objPos.Y > 0) hookPosition.Y = objPos.Y + objSize.Y + ownSize.Y;
+					else hookPosition.Y = objPos.Y - objSize.Y - ownSize.Y;
+				}
+			}
+			GetOwner()->GetTransform()->SetPosition(hookPosition);
 			return true;
 		}
 	}
