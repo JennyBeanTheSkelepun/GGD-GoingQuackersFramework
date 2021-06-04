@@ -16,6 +16,8 @@ public:
 
 	ID3D11ShaderResourceView* GetTexture();
 
+	bool LoadDDSTexture(ID3D11Device* device, const wchar_t* filename);
+
 private:
 	struct TargaHeader
 	{
