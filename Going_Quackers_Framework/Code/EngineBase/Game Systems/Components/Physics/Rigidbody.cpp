@@ -202,6 +202,38 @@ json* Rigidbody::SceneSave()
 }
 
 //- Custom Functions -//
+void Rigidbody::SetType(PhysicsTypes type)
+{
+	m_PhysicsType = type;
+
+	if (m_PhysicsType == PhysicsTypes::RB)
+	{
+		m_DropdownPhysicsTypeSelected = "Rigidbody";
+	}
+	else if (m_PhysicsType == PhysicsTypes::Trig)
+	{
+		m_DropdownPhysicsTypeSelected = "Trigger";
+	}
+	else if (m_PhysicsType == PhysicsTypes::GE)
+	{
+		m_DropdownPhysicsTypeSelected = "Gravity Zone";
+	}
+}
+
+void Rigidbody::SetCollisionType(CollisionTypes colType)
+{
+	m_CollisionType = colType;
+
+	if (m_CollisionType == CollisionTypes::Sphere)
+	{
+		m_DropdownColliderShapeSelected = "Sphere";
+	}
+	else if (m_CollisionType == CollisionTypes::AABB)
+	{
+		m_DropdownColliderShapeSelected = "AABB";
+	}
+}
+
 void Rigidbody::CalculateVelocity()
 {
 	Vector2 totalForceNONE;
@@ -285,14 +317,14 @@ void Rigidbody::PhysicsCollide()
 				if (Collision::getInstance()->CollisionAABB(GetOwner(), obj)) 
 				{ 
 					m_CollidingObjects.push_back(obj); 
-					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID()); 
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetName() + " Collided with Obj " + obj->GetName()); 
 				}
 				break;
 			case CollisionTypes::Sphere:
 				if(Collision::getInstance()->CollisionSphericalAABB(GetOwner(), obj))
 				{
 					m_CollidingObjects.push_back(obj); 
-					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetName() + " Collided with Obj " + obj->GetName());
 				}
 				break;
 			}
@@ -304,14 +336,14 @@ void Rigidbody::PhysicsCollide()
 				if(Collision::getInstance()->CollisionSphericalAABB(GetOwner(), obj))
 				{
 					m_CollidingObjects.push_back(obj);
-					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetName() + " Collided with Obj " + obj->GetName());
 				}
 				break;
 			case CollisionTypes::Sphere:
 				if(Collision::getInstance()->CollisionSpherical(GetOwner(), obj))
 				{
 					m_CollidingObjects.push_back(obj);
-					Debug::getInstance()->Log("Obj " + GetOwner()->GetID() + " Collided with Obj " + obj->GetID());
+					Debug::getInstance()->Log("Obj " + GetOwner()->GetName() + " Collided with Obj " + obj->GetName());
 				}
 				break;
 			}
@@ -319,7 +351,7 @@ void Rigidbody::PhysicsCollide()
 		}
 	}
 
-	switch (m_PhysicsType)
+	switch (GetType())
 	{
 	case PhysicsTypes::GE:
 		mp_GravEmitter->ApplyGravity(GetOwner(), &m_CollidingObjects);
@@ -343,10 +375,9 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 	{
 		Rigidbody* rb = obj->GetComponent<Rigidbody>();
 
-		if (rb == nullptr)
-		{
-			continue;
-		}
+		if (rb == nullptr) continue;
+
+		if (rb->GetType() != PhysicsTypes::RB) continue;
 
 		Vector2 rV;
 		Vector2 rA;
@@ -374,8 +405,6 @@ void Rigidbody::RigidbodyCollide(std::vector<GameObject*>* collidingObjects)
 
 			n.X = std::round(n.X);
 			n.Y = std::round(n.Y);
-
-			Debug::getInstance()->Log(n);
 
 			Vector2 newPos = GetOwner()->GetTransform()->GetPosition() + (n * ((GetAABBRect() / 2.0f) + (rb->GetAABBRect() / 2.0f)));
 			

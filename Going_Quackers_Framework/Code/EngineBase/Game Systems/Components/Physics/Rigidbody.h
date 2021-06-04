@@ -56,7 +56,7 @@ public:
 	void SetMass(float mass) { m_Mass = mass <= 0 ? 1.0f : mass; }
 	float GetMass() { return m_Mass; }
 
-	void SetType(PhysicsTypes type) { m_PhysicsType = type; }
+	void SetType(PhysicsTypes type);
 	PhysicsTypes GetType() { return m_PhysicsType; }
 
 	void RigidbodyCollide(std::vector<GameObject*>* collidingObjects);
@@ -67,7 +67,7 @@ public:
 	void SetAABBRect(float width, float height) { m_AABBRect = Vector2(width, height); }
 	Vector2 GetAABBRect() { return m_AABBRect; } ///returns vec2 with x = width, y = height
 
-	void SetCollisionType(CollisionTypes colType) { m_CollisionType = colType; } /// s = Spherical, a = AABB
+	void SetCollisionType(CollisionTypes colType);
 	CollisionTypes GetCollisionType() { return m_CollisionType; }
 
 	bool GetCollideFlag() { return m_PhysicsChecked; }

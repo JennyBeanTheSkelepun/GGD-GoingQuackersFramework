@@ -18,16 +18,21 @@ void Rope::OnDestroy() {
 void Rope::Update() {
 	if (mb_checkForNodes) {
 		for (size_t i = 0; i < m_nodeIDs.size(); i++) {
-			m_nodes.push_back(SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(m_nodeIDs[i]));
+			GameObject* tempNode = SceneManager::GetInstance()->GetCurrentScene()->GetObjectByID(m_nodeIDs[i]);
+			//Force world positition update to work correctly
+			tempNode->GetTransform()->GetLocalToWorldMatrix();
+			m_nodes.push_back(tempNode);
 			m_nodePreviousPositions.push_back(m_nodes[i]->GetTransform()->GetPosition());
 		}
 
-		for (size_t i = 1; i < m_nodes.size() - 1; i++) {
+		for (size_t i = 1; i < m_nodes.size() - 1; i++) 
 			m_nodeRightwardBend.push_back(IsNodeBendRightward(i));
-		}
 
 		mb_checkForNodes = false;
 	}
+	
+	if (m_nodes.size() < 2)
+		return;
 
 	if (!EngineGuiClass::getInstance()->IsInPlayMode()) {
 		//Handle line renderer
@@ -51,9 +56,6 @@ void Rope::Update() {
 		return;
 	}
 
-	if (m_nodes.size() < 2)
-		return;
-
 	for (size_t i = 0; i < m_nodes.size() - 1; i++)	{
 		Vector2 nodePosition = m_nodes[i]->GetTransform()->GetPosition();
 
@@ -65,8 +67,14 @@ void Rope::Update() {
 		float rayLength = ray.Length();
 		float closestColliderDistance = rayLength;
 		
+		Debug::getInstance()->LogWarning(ray);
+
 		for (size_t j = 0; j < collisions.size(); j++) {
 			if (collisions[j]->GetComponent<Rigidbody>()->GetType() != PhysicsTypes::RB)
+				continue;
+
+			//While there is no sphere handling
+			if (collisions[j]->GetComponent<Rigidbody>()->GetCollisionType() != CollisionTypes::Sphere)
 				continue;
 
 			float collisionDistance = nodePosition.Distance(collisions[j]->GetTransform()->GetPosition());

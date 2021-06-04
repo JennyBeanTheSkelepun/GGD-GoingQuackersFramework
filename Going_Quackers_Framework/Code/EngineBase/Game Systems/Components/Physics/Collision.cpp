@@ -145,8 +145,6 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 
 	float angleBetweenRayAndObj = acos(Ray.Dot(OrigToCheck) / (Ray.Length() * OrigToCheck.Length()));
 
-	//Debug::getInstance()->Log(angleBetweenRayAndObj);
-
 	if (angleBetweenRayAndObj > 1.5708f && angleBetweenRayAndObj < 4.71239f) return false;
 
 	if (Ray.Y == 0.0f)
@@ -197,7 +195,7 @@ bool Collision::RaycastAABB(Vector2 Ray, Vector2 RayOrigin, GameObject* checkObj
 		return true;
 	}
 
-	//TODO:: Build AABB with 4 line line intersects and check the points of intersect between the corners
+	return false;
 }
 
 std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin)
@@ -219,12 +217,15 @@ std::vector<GameObject*> Collision::Raycast(Vector2 Ray, Vector2 RayOrigin)
 			if (RaycastAABB(Ray, RayOrigin, obj))
 			{
 				collidedObjects.push_back(obj);
+
+				Debug::getInstance()->Log("Raycast go brrr");
 			}
 			break;
 		case CollisionTypes::Sphere:
 			if (RaycastSphere(Ray, RayOrigin, obj))
 			{
 				collidedObjects.push_back(obj);
+				Debug::getInstance()->Log("Raycast go brrr");
 			}
 			break;
 		}
