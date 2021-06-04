@@ -207,9 +207,13 @@ void GrapplingHook::HitWall()
 		GetOwner()->GetComponent<AudioSource>()->Play();
 
 		//SpringJoint
-		SpringJoint* springJoint = GetOwner()->AddComponent<SpringJoint>();
-		springJoint->SetSpringMode(SpringMode::REPEL_ONLY);
-		springJoint->SetDefaultDesiredLength(GetHookDistance());
-		springJoint->SetCurrentDesiredLength(GetHookDistance());
+		SpringJoint* springJoint = nullptr;
+		if ((springJoint = GetOwner()->GetComponent<SpringJoint>()) == nullptr)
+		{
+			SpringJoint* springJoint = GetOwner()->AddComponent<SpringJoint>();
+			springJoint->SetSpringMode(SpringMode::REPEL_ONLY);
+			springJoint->SetDefaultDesiredLength(GetHookDistance());
+			springJoint->SetCurrentDesiredLength(GetHookDistance());
+		}
 	}
 }
