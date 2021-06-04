@@ -171,6 +171,35 @@ bool DirectXGraphics::Initialize()
 
 
 	mp_TextureManager = new DirectXTextureManager(*mp_DirectX, "Assets/stone.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\meteorBrown_big1.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\meteorBrown_big2.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_001.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_002.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_003.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_004.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_005.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_006.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_007.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_008.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_009.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_010.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_011.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_012.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_013.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_014.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_015.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_016.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_017.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_018.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_019.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_020.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_021.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_022.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_023.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_024.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\World\spaceBuilding_025.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\grappleBlue.tga");
+	mp_TextureManager->CreateTexture(*mp_DirectX, "Assets/Assets\Textures\Astronauts\spaceAstronauts_001.tga");
 	if (!mp_TextureManager)
 	{
 		MessageBox(mp_Window->m_hwnd, L"Could not initialize the Texture Manager object.", L"Error", MB_OK);
