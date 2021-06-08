@@ -1,8 +1,8 @@
 # GGD-GoingQuackersFramework
-Game engine created in a group project for university
+Game engine and game created in a group project for university
 
 Credits:
-Taylor David, 
+David Taylor, 
 Jennifer Field, 
 Adam Raybould, 
 Eden Beales Harper, 
